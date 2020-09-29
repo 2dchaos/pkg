@@ -3,6 +3,7 @@ use uo;
 use cfgfile;
 
 include ":gumps:gumps";
+include ":gumps:gumps_ex";
 include "include/arrays";
 include ":fls_core:fls_characters";
 

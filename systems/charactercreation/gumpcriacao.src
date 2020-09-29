@@ -15,7 +15,7 @@ include ":datafile:datafile";
 
 //cores: 1153 -> 2103 -> 2105
 
-const OK_BUTTON			:= 10;
+//const OK_BUTTON			:= 10;
 
 function RaceGump(who, byref  chardata)
 
@@ -1160,7 +1160,7 @@ program createchar(who)
 
 	//TODOS OS GUMPS:
 	RaceGump(who, chardata);
-//	VantagemRacial(who, chardata);
+	//	VantagemRacial(who, chardata);
 	Classe(who, chardata);
 	Atributos(who, chardata, 80);
 	BuyKits(who, chardata);
@@ -1232,14 +1232,14 @@ program createchar(who)
 
 	var ganheispell := 0;
 	setObjproperty(who, "kit", chardata.kit);
-	if (chardata.kit == "Defensor do Reino Zharkes")
+	/*if (chardata.kit == "Defensor do Reino Zharkes")
 		var capa := CreateItemInBackpack(who, 0x1541, 1); //bodysash
 		capa.color := 2117;
 		SetObjProperty(capa, "description", "Faixa de Defensor de Zharkia de " + who.name + "<BR>");
 		SetObjProperty(capa, "cannotdye", 1);
 		SetObjProperty(capa, "descmod", "Defensor Zharkês");
-		SetName(capa, "Faixa");
-	elseif (chardata.kit == "Shimoriano")
+		SetName(capa, "Faixa");*/
+	/*elseif (chardata.kit == "Shimoriano")
 		var ordem := CreateItemInBackpack(who, 8792, 1);
 		SetName(ordem, "Aurotização de Shimoria para " + who.name);
 		var df := DFOpenDataFile(":tn:shimoria");
@@ -1267,39 +1267,39 @@ program createchar(who)
 		spellinfo.id := 28;
 		SetObjProperty(p1, "spellinfo", spellinfo);
 		
-		ganheispell := 1;
-	elseif  (chardata.kit == "Acolito do Panteao Zhark")
+		ganheispell := 1;*/
+	if  (chardata.kit == "Acolito")
 		var robe := CreateItemInBackpack(who, 0x1389, 1); //bodysash
 		SetObjProperty(robe, "description", "Robe com bordado do simbolo do clero de Zharkia");
 		SetObjProperty(robe, "cannotdye", 1);
-		SetObjProperty(robe, "descmod", "Acólito de Zhark");
+		SetObjProperty(robe, "descmod", "Acólito");
 		createiteminbackpack(who, "runaarmasagrada");
 		createiteminbackpack(who, "runacuraleve");
 		createiteminbackpack(who, "runadescanso");
 		ganheispell := 1;
-	elseif (chardata.kit == "Membro da Nobreza")
-		if (who.graphic == 400)
+	elseif (chardata.kit == "Nobre Decadente")
+		/*if (who.graphic == 400)
 			who.title_prefix := "Sir";
 		else
 			who.title_prefix := "Lady";
-		endif
+		endif*/
 		var ring := CreateItemInBackpack(who, 0x108a, 1); //ring
 		var NomeDaFamilia := cstr(RequestGump(who, "Escreva o Nome da sua Família"));
-		var FamiliaVassala := cstr(RadioGump(who, 270, 200, "Para quem ira prestar Vassalagem?", array{"Rothenien","Khumardigann","Hivyttain","Zanshirdd"}));
+		/*var FamiliaVassala := cstr(RadioGump(who, 270, 200, "Para quem ira prestar Vassalagem?", array{"Rothenien","Khumardigann","Hivyttain","Zanshirdd"}));
 		if (FamiliaVassala != "Nenhuma")
 			SetObjProperty(ring, "description", "Anel Da Família: " + NomeDaFamilia + "<br> Vassala Dos: " + FamiliaVassala);
 		else
 			SetObjProperty(ring, "description", "Anel Da Família: " + NomeDaFamilia);
-		endif
+		endif*/
+		SetObjProperty(ring, "description", "Anel Da Família: " + NomeDaFamilia);
 		SetObjProperty(ring, "familia", NomeDaFamilia);
-		SetObjProperty(ring, "description", "Anel Da Família: " + NomeDaFamilia + "<br> Vassala Dos: " + FamiliaVassala);
+		//SetObjProperty(ring, "description", "Anel Da Família: " + NomeDaFamilia + "<br> Vassala Dos: " + FamiliaVassala);
 		SetName(ring, "Anel com Símbolo de Familia");
 	elseif (chardata.kit == "Corpulento")
 		AP_SetTrueStat(who, STRENGTH, chardata.str+10);		
 		AP_SetTrueStat(who, DEXTERITY, chardata.dex-10);
-	elseif (chardata.kit == "Genio")
-		AP_SetTrueStat(who, STRENGTH, chardata.str-10);		
-		AP_SetTrueStat(who, INTELLIGENCE, chardata.int+10);
+	elseif (chardata.kit == "Estudioso")	
+		AP_SetTrueStat(who, "manamod", 40);
 	elseif (chardata.kit == "Agil")
 		AP_SetTrueStat(who, STRENGTH, chardata.str-10);		
 		AP_SetTrueStat(who, DEXTERITY, chardata.dex+10);
@@ -1311,11 +1311,6 @@ program createchar(who)
 		AP_SetTrueStat(who, INTELLIGENCE, chardata.int+20);
 		AP_SetTrueStat(who, DEXTERITY, chardata.dex-10);
 	elseif (chardata.kit == "Duro de Matar")
-		AP_SetTrueStat(who, STRENGTH, chardata.str-10);		
-		AP_SetTrueStat(who, INTELLIGENCE, chardata.int-10);
-		AP_SetTrueStat(who, DEXTERITY, chardata.dex-10);
-		SetObjProperty(who, "dpmod", 20);
-	elseif (chardata.kit == "Pacto com Asan")
 		SetObjProperty(who, "dpmod", 10);
 	elseif (chardata.kit == "Totemista")
 		var totem := CreateItemInBackpack(who, "totem", 1);
@@ -1327,7 +1322,7 @@ program createchar(who)
 	endif
 
 	if (chardata.classe == "Sabio")
-		if (chardata.povo == "Balmute") //bariyano eh sempre mesum
+		if (chardata.povo == "Balmute") //Balmute eh sempre mesum
 				if (ganheispell == 0)
 					var grimorio := createiteminbackpack(who, "grimorio", 1);
 					CreateItemInBackpack(who, "gravedust", 10);
@@ -1362,9 +1357,11 @@ program createchar(who)
 
 				GFTextLine(gump2, 40, 70, 1153, "Necromante");
 				GFTextLine(gump2, 40, 90, 1153, "Feiticeiro");
+				GFTextLine(gump2, 40, 110, 1153, "Acolito");
 
 				GfAddButton(gump2, 20, 73, 2117, 2118, GF_CLOSE_BTN,  10);
 				GfAddButton(gump2, 20, 94 , 2117, 2118, GF_CLOSE_BTN,  20);
+				GfAddButton(gump2, 20, 115 , 2117, 2118, GF_CLOSE_BTN,  30);
 
 				var input2 := GFSendGump(who, gump2);
 				input2 := input2[0];

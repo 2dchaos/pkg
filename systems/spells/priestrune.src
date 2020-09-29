@@ -7,7 +7,7 @@ include ":charactercreation:habilidades";
 
 program usavarinha(who, wand)
 
-	if (GetObjProperty(who, "kit") != "Acolito do Panteao Zhark")
+	if (GetObjProperty(who, "kit") != "Acolito")
 		return 1;
 	endif
 
