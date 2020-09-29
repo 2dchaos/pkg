@@ -47,9 +47,9 @@ function GetResist(who, resist)
 			valor := 15;
 		endif
 
-		if (vantagem == "Vontade de Ferro")
+		/*if (vantagem == "Vontade de Ferro")
 			valor := valor + 20;
-		endif
+		endif*/
 		
 		if (temHabilidade(who, "Treinamento Vigilante"))
 			valor := valor + 40;
@@ -99,7 +99,7 @@ function CheckResist(who, resist, dif, mod := 0)
 
 	if (dado + valor + mod >= dif)
 		return 1;
-	else
+	/*else
 		if ((GetObjProperty(who, "chardata")).povo == "Ferune" && IsBloodied(who))
 			// Se for Ferune e tiver Bloodied ganha segunda chance
 			dado := RandomInt(100) + 1;
@@ -108,6 +108,6 @@ function CheckResist(who, resist, dif, mod := 0)
 				return 1;
 			endif
 		endif
-		return 0;
+		return 0;*/
 	endif
 endfunction

@@ -21,6 +21,8 @@ C:\LVM\pkg\fls\fls_core\include\fls_chargumps_ex.inc
 C:\LVM\scripts\include\arrays.inc
 C:/LVM/scripts/modules/math.em
 C:\LVM\pkg\systems\charactercreation\include\habilidades.inc
+C:\LVM\scripts\include\say.inc
+C:/LVM/scripts/modules/unicode.em
 C:\LVM\pkg\systems\attributes\include\stats.inc
 C:\LVM\pkg\systems\attributes\include\vitals.inc
 C:\LVM\pkg\systems\attributes\include\attributeConstants.inc
@@ -32,8 +34,6 @@ C:/LVM/scripts/modules/file.em
 C:/LVM/scripts/modules/datafile.em
 C:\LVM\scripts\include\client.inc
 C:\LVM\pkg\items\disguise\include\disguise.inc
-C:\LVM\scripts\include\say.inc
-C:/LVM/scripts/modules/unicode.em
 C:\LVM\pkg\mobiles\timedScripts\include\timedScripts.inc
 C:\LVM\pkg\systems\charactercreation\include\createchar.inc
 C:\LVM\pkg\utils\gumps\include\yesno.inc

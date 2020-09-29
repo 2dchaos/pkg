@@ -14,7 +14,7 @@ use uo;
 use os;
 use util;
 
-include "stats";
+//include "stats";
 //include ":tn:characters";
 
 /*
@@ -306,7 +306,7 @@ function AP_CheckClassSkillCap(mobile, skill_name)
 	if ( myskills[skill_name] == error)
 		return 0;
 	elseif (myskills[skill_name] == 1)
-		if (chardata.vantagemracial == "Sabedoria dos Antigos")
+		if (chardata.vantagemracial == "Sabedoria")
 			return 50.0;
 		else
 			return 40.0;

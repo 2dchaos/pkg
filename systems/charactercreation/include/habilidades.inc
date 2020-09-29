@@ -1,3 +1,4 @@
+include "include/say";
 
 function NivelHabilidade(habilidade, classe)
 

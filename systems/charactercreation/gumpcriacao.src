@@ -46,7 +46,7 @@ var gflayout := array{
 
 		"text 150 170 2103 1",
 
-		"text 215 200 2105 8",
+//		"text 215 200 2105 8",
 
 		"text 265 240 2105 3",
 		"text 265 280 2105 4",
@@ -74,7 +74,7 @@ var gfdata := array{
 		"Balmute", //5 
 		"Picto",//6
 		"Cazar", //7
-		"Humano", //8
+//		"Humano", //8
 //		"Elfo", //9
 		"Próximo"
 		};
@@ -86,24 +86,24 @@ var gfdata := array{
 		chardata.+raca := "Humano";
 		chardata.+povo := "Bariyano";
 	elseif (2 in ret.keys)
-		if (who.graphic != 400)
+		/*if (who.graphic != 400)
 			SendSysMessageEx(who, "Apenas personagens homens podem ser thurioes.", SSM_FAIL);
 			return;
-		endif
+		endif*/
 		chardata.+raca := "Humano";
 		chardata.+povo := "Norde";
 	elseif (3 in ret.keys)
 		chardata.+raca := "Humano";
 		chardata.+povo := "Ferune";
-		chardata.+vantagemracial := "Versatilidade";
+	//	chardata.+vantagemracial := "Versatilidade";
 	elseif (4 in ret.keys)
-		chardata.+raca := "Elfo";
+		chardata.+raca := "Humano";
 		chardata.+povo := "Cazar";
 	elseif (5 in ret.keys)
-		chardata.+raca := "Elfo";
+		chardata.+raca := "Humano";
 		chardata.+povo := "Picto";
 	elseif (6 in ret.keys)
-		chardata.+raca := "Elfo";
+		chardata.+raca := "Humano";
 		chardata.+povo := "Balmute";
 	endif
 
@@ -166,15 +166,21 @@ var gfdata := array{
 		gfdata.append("Homens são movidos pela curiosidade, o que faz com que explorem várias áreas de conhecimento. Começa com +2 pontos de skills.");
 		gfdata.append("Resistentes");
 		gfdata.append("Humanos se adaptam bem a condições adversas por piores que sejam. Ganha +10 em todos os testes de resistências.");
-		gfdata.append("Aprendiz Rápido");
-		gfdata.append("É mais fácil para os homens, do que para as outras raças, aprenderem coisas novas. Regeneração mais rápida de cap.");
-		gfdata.append("Vontade de Ferro");
-		gfdata.append("Possuem uma grande força de vontade e autocontrole. Ganham +20 nos testes de Vontade.");
-		gfdata.append("Sabedoria dos Antigos");
-		gfdata.append("Seu povo é mais antigo que os outros povos e aprenderam a dar mais valor ao conhecimento.");
-		gfdata.append("Aliado da Natureza");
-		gfdata.append("O seu povo possui uma ligação maior com a natureza. Animais selvagens não o atacam.");
-		if (chardata.povo  == "Ferune")
+//		gfdata.append("Aprendiz Rápido");
+//		gfdata.append("É mais fácil para os homens, do que para as outras raças, aprenderem coisas novas. Regeneração mais rápida de cap.");
+//		gfdata.append("Vontade de Ferro");
+//		gfdata.append("Possuem uma grande força de vontade e autocontrole. Ganham +20 nos testes de Vontade.");
+		gfdata.append("Sabedoria");
+		gfdata.append("Suas terciárias vão até 50");
+		if (chardata.povo == "Picto")
+			gflayout.append("text 180 490 2105 9");			
+			gflayout.append("Radio 150 487 9726 9729 0 4");
+			gflayout.append("HtmlGump 150 520 330 60 10 3000 0");
+			gfdata.append("Aliado da Natureza");
+			gfdata.append("O seu povo possui uma ligação maior com a natureza. Animais selvagens não o atacam.");
+		endif
+
+/*		if (chardata.povo  == "Ferune")
 			gflayout.append("text 180 490 2105 9");			
 			gflayout.append("Radio 150 487 9726 9729 0 4");
 			gflayout.append("HtmlGump 150 520 330 60 10 3000 0");
@@ -186,7 +192,7 @@ var gfdata := array{
 			gflayout.append("HtmlGump 150 520 330 60 10 3000 0");
 			gfdata.append("Conhecedor da Mesum");
 			gfdata.append("A Mesum foi ensinada aos humanos por Asan, mas alguns elfos a dominam muito bem. Não sofre penalidades usando Mesum.");
-		endif
+		endif*/
 	/*elseif ( chardata.raca == "Elfo")
 	*/
 	endif
@@ -199,19 +205,9 @@ var gfdata := array{
 		elseif (2 in ret.keys)
 			chardata.+vantagemracial := "Resistentes";
 		elseif (3 in ret.keys)
-			chardata.+vantagemracial := "Aprendiz Rapido";
+			chardata.+vantagemracial := "Sabedoria";
 		elseif (4 in ret.keys)
-			chardata.+vantagemracial := "Conhecedor do Kitah";
-		endif
-	else
-		if (1 in ret.keys)
-			chardata.+vantagemracial := "Vontade de Ferro";
-		elseif (2 in ret.keys)
-			chardata.+vantagemracial := "Sentidos Aguçados";
-		elseif (3 in ret.keys)
 			chardata.+vantagemracial := "Aliado da Natureza";
-		elseif (4 in ret.keys)
-			chardata.+vantagemracial := "Conhecedor da Mesum";
 		endif
 	endif
 
@@ -1160,7 +1156,7 @@ program createchar(who)
 
 	//TODOS OS GUMPS:
 	RaceGump(who, chardata);
-	//	VantagemRacial(who, chardata);
+	VantagemRacial(who, chardata);
 	Classe(who, chardata);
 	Atributos(who, chardata, 80);
 	BuyKits(who, chardata);
@@ -1205,9 +1201,9 @@ program createchar(who)
 		AP_setTrueSkill(who, terciaria, tercvalue);
 	endforeach
 
-	if (chardata.povo == "Bariyano")
+	/*if (chardata.povo == "Bariyano")
 		SetObjProperty(who, "dpmod", 10);
-	endif
+	endif*/
 
 	//SETA O KIT
 	//printtextabove(who, "ALCHEMY1");

@@ -3,7 +3,7 @@ use uo;
 use cfgfile;
 
 include ":brainai:npcUtil";
-include ":attributes:attributes";
+//include ":attributes:attributes";
 include ":fls_core:fls_chargumps_ex";
 
 
