@@ -1295,7 +1295,7 @@ program createchar(who)
 		AP_SetTrueStat(who, STRENGTH, chardata.str+10);		
 		AP_SetTrueStat(who, DEXTERITY, chardata.dex-10);
 	elseif (chardata.kit == "Estudioso")	
-		AP_SetTrueStat(who, "manamod", 40);
+		setObjProperty(who, "manamod", 40);
 	elseif (chardata.kit == "Agil")
 		AP_SetTrueStat(who, STRENGTH, chardata.str-10);		
 		AP_SetTrueStat(who, DEXTERITY, chardata.dex+10);

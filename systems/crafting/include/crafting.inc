@@ -13,6 +13,7 @@ include "include/say";
 include ":tn:recipes";
 include ":gumps:yesno";
 include ":gumps:requestgump";
+include "toolWear";
 
 const UOBJ_BOLT_START   := 0x0f95;
 const UOBJ_BOLT_END     := 0x0f9c;
@@ -416,7 +417,7 @@ function CreateCraftedMap(who, craft_skill, use_on, objtype, amount, itemname, r
 	var theitem := CreateItemInBackpack(who, objtype, 1);
 	if(theitem)
 		if( !SubtractAmount(use_on, amount) )
-			SendSysMessage(who, "You don't have enough materials in your backpack!");
+			SendSysMessage(who, "Voce não possui materiais suficientes em sua mochila!");
 			DestroyItem(theitem);
 			return -1;
 		endif
@@ -427,13 +428,13 @@ function CreateCraftedMap(who, craft_skill, use_on, objtype, amount, itemname, r
 			reqd := 3;
 		endif
 		if(rint < reqd)
-			SendSysMessage(who, "You were barely able to make this item.  Its quality is below average.");
+			SendSysMessage(who, "Voce teve dificuldades para fazer este item. Sua qualidade e abaixo da media.");
 		else
-			SendSysMessage(who, "You create the item and put it in your backpack.");
+			SendSysMessage(who, "Você cria o item e o guarda em sua mochila.");
 		endif
 		SetName(theitem, itemname);
 	else
-		SendSysMessage(who, "You don't have enough room in your backpack!");
+		SendSysMessage(who, "Voce nao possui espaco suficiente em sua mochila!");
 		return 0;
 	endif
 	if (theitem.objtype != 0x9923)
