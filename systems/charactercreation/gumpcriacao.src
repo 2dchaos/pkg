@@ -1265,8 +1265,8 @@ program createchar(who)
 		
 		ganheispell := 1;*/
 	if  (chardata.kit == "Acolito")
-		var robe := CreateItemInBackpack(who, 0x1389, 1); //bodysash
-		SetObjProperty(robe, "description", "Robe com bordado do simbolo do clero de Zharkia");
+		var robe := CreateItemInBackpack(who, 0x1F03, 1); //Manto
+		SetObjProperty(robe, "description", "Robe com bordado do simbolo do Clero do Lirio");
 		SetObjProperty(robe, "cannotdye", 1);
 		SetObjProperty(robe, "descmod", "Acólito");
 		createiteminbackpack(who, "runaarmasagrada");
