@@ -86,7 +86,7 @@ function isotherreagent(what)
 		0xf82: return 1;
 		0xF81: return 1;
 		0xF78: return 1;
-		0x40A9: return 1;
+		0xF8F: return 1;
 		0xF90: return 1;
     
 		0xee25: return 1;
@@ -167,7 +167,7 @@ function GetReagName(objtype)
   elseif (objtype == 0xef1e)
    return "po de liche";
 
-  elseif (objtype == 0x40A9 )
+  elseif (objtype == 0xF8F )
    return "po de tumulo";
   elseif (objtype == 0xee27 )
    return "cascas vermelhas";
