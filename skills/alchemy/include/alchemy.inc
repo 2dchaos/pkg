@@ -39,7 +39,7 @@ function empty_bottle(character, potion, potiontype := 0)
     goles := cint(GetObjProperty(potion, "goles"));
   endif
   
-  if(potiontype == 1)  //eh uma poçao de 1 so gole
+  if(potiontype == 1)  //eh uma poÃ§ao de 1 so gole
    goles := -1;
   endif
   
@@ -86,7 +86,7 @@ function isotherreagent(what)
 		0xf82: return 1;
 		0xF81: return 1;
 		0xF78: return 1;
-		0xF8F: return 1;
+		0x40A9: return 1;
 		0xF90: return 1;
     
 		0xee25: return 1;
@@ -167,8 +167,8 @@ function GetReagName(objtype)
   elseif (objtype == 0xef1e)
    return "po de liche";
 
-  elseif (objtype == 0xF8F )
-   return "poeira de cripta";
+  elseif (objtype == 0x40A9 )
+   return "po de tumulo";
   elseif (objtype == 0xee27 )
    return "cascas vermelhas";
   elseif (objtype == 0xee28 )
