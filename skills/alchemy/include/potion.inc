@@ -25,7 +25,7 @@ function is_reagent(what)
 		0xf82: return 1;
 		0xF81: return 1;
 		0xF78: return 1;
-		0x40A9: return 1;
+		0xF8F: return 1;
     
 		0xee25: return 1;
 		0xee26: return 1;
@@ -82,7 +82,7 @@ function GetReagName(item)
    return "terra fertil";
   elseif (item.objtype == 0xF78 )
    return "asa de morcego";
-  elseif (item.objtype == 0x40A9 )
+  elseif (item.objtype == 0xF8F )
    return "po de tumulo";
    
   elseif (item.objtype == 0xee27 )
@@ -147,7 +147,7 @@ function GetReagObj(item)
   elseif (item == "asa de morcego")
    return 0xF78;
   elseif (item == "po de tumulo" )
-   return 0x40A9;
+   return 0xF8F;
    
   elseif (item.objtype == "cascas vermelhas" )
    return 0xee27;
