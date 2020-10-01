@@ -146,8 +146,8 @@ function GetReagObj(item)
    return 0xF81;
   elseif (item == "asa de morcego")
    return 0xF78;
-  elseif (item == "poeira de cripta" )
-   return 0xF8F;
+  elseif (item == "po de tumulo" )
+   return 0x40A9;
    
   elseif (item.objtype == "cascas vermelhas" )
    return 0xee27;
