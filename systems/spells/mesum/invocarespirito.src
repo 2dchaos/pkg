@@ -27,15 +27,15 @@ program SpellScript(params)
 	var undead;
 
 if (random < 20)
-		undead := createnpcfromtemplate(":brainai:ghost", targ.x, targ.y, targ.z, 0 , who.realm);
+		undead := createnpcfromtemplate(":brainai:ghost", who.x, who.y, who.z, 0 , who.realm);
 	elseif (random < 40)
-		undead := createnpcfromtemplate(":brainai:rusalkaatormentada", targ.x, targ.y, targ.z, 0 , who.realm);
+		undead := createnpcfromtemplate(":brainai:rusalkaatormentada", who.x, who.y, who.z, 0 , who.realm);
 	elseif (random < 50)
-		undead := createnpcfromtemplate(":brainai:shadow", targ.x, targ.y, targ.z, 0 , who.realm);
+		undead := createnpcfromtemplate(":brainai:shadow", who.x, who.y, who.z, 0 , who.realm);
 	elseif (random < 70)
-		undead := createnpcfromtemplate(":brainai:spectre", targ.x, targ.y, targ.z, 0 , who.realm);
+		undead := createnpcfromtemplate(":brainai:spectre", who.x, who.y, who.z, 0 , who.realm);
 	endif
-	PlaySoundEffect(targ, 383);
+	PlaySoundEffect(who, 383);
 
 	//var undeadtemplate;
 	//var soulconsume;
