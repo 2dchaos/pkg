@@ -15,11 +15,11 @@ include ":spells:tnmagery";
 
 program SpellScript(params)
 	var who := params[1];
-	var info := params[2];
+	var targ := params[2];
 	params := 0; // No longer needed
 
 	SendSysMEssageEx(who, "Escolha uma cimitarra.", SSM_REQUEST);
-	var targ := Target(who);
+	//var targ := Target(who);
 	if (!targ)
 		SendSysMessageEx(who, "Cancelado.", SSM_FAIL);
 		return 0;
