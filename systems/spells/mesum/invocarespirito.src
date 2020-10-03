@@ -14,32 +14,51 @@ program SpellScript(params)
 	params := 0; // No longer needed
 
 	var skill := AP_GetSkill(who, "Magery");
+	var maxsummons := Cint(skill / 25);
+
+	if (GetObjProperty(who, "NecroSummons") == maxsummons);
+		SendSysMessageEx(who, "Voce ja controla espiritos demais", SSM_FAIL);
+		return 0;
+	endif
 
 	//Random de Monstros
 
+	var random := RandomInt(Cint(skill));
 	var undead;
-	var undeadtemplate;
-	var soulconsume;
-	var souls := Cint(GetObjProperty(who, "souls"));
-	
-	if ((souls >= 100))
-	undeadtemplate := ":brainai:ghost";
-	soulconsume := 100;
-	elseif ((souls < 100) && (souls >= 70))
-	undeadtemplate := ":brainai:spectre";
-	soulconsume := 70;
-	elseif ((souls < 70) && (souls >= 50))
-	undeadtemplate := ":brainai:shadow";
-	soulconsume := 50;
-	elseif ((souls < 50) && (souls >= 30))
-	undeadtemplate := ":brainai:rusalkaatormentada";
-	soulconsume := 30;
-	else
-	SendSysMEssageEx(who, "Voce nao tem almas aprisionadas o suficiente", SSM_INFO);	
-	return 0;
-	endif 
 
-	SendSysMEssageEx(who, "Voce liberta as almas aprisionadas invocando um espirito", SSM_INFO);	
+if (random < 20)
+		undead := createnpcfromtemplate(":brainai:ghost", targ.x, targ.y, targ.z, 0 , who.realm);
+	elseif (random < 40)
+		undead := createnpcfromtemplate(":brainai:rusalkaatormentada", targ.x, targ.y, targ.z, 0 , who.realm);
+	elseif (random < 50)
+		undead := createnpcfromtemplate(":brainai:shadow", targ.x, targ.y, targ.z, 0 , who.realm);
+	elseif (random < 70)
+		undead := createnpcfromtemplate(":brainai:spectre", targ.x, targ.y, targ.z, 0 , who.realm);
+	endif
+	PlaySoundEffect(targ, 383);
+
+	//var undeadtemplate;
+	//var soulconsume;
+	//var souls := Cint(GetObjProperty(who, "souls"));
+	
+	//if ((souls >= 100))
+	//undeadtemplate := ":brainai:ghost";
+	//soulconsume := 100;
+	//elseif ((souls < 100) && (souls >= 70))
+	//undeadtemplate := ":brainai:spectre";
+	//soulconsume := 70;
+	//elseif ((souls < 70) && (souls >= 50))
+	//undeadtemplate := ":brainai:shadow";
+	//soulconsume := 50;
+	//elseif ((souls < 50) && (souls >= 30))
+	//undeadtemplate := ":brainai:rusalkaatormentada";
+	//soulconsume := 30;
+	//else
+	//SendSysMEssageEx(who, "Voce nao tem almas aprisionadas o suficiente", SSM_INFO);	
+	//return 0;
+	//endif 
+
+	//SendSysMEssageEx(who, "Voce liberta as almas aprisionadas invocando um espirito", SSM_INFO);	
 
 	//Efeito da magia
 	PlayMovingEffectXYZ( who.x, who.y, who.z, who.x, who.y + 5, who.z, 14202, 1, 0, 0, who.realm );
@@ -56,9 +75,9 @@ program SpellScript(params)
 	PlayMovingEffectXYZ( who.x, who.y, who.z, who.x - 5, who.y, who.z, 14202, 1, 0, 0, who.realm );
 
 
-	undead := createnpcfromtemplate(undeadtemplate, who.x, who.y, who.z, 0 , who.realm);
-	souls := souls - soulconsume;
-	SetObjProperty(who, "souls", souls);	
+	//undead := createnpcfromtemplate(undeadtemplate, who.x, who.y, who.z, 0 , who.realm);
+	//souls := souls - soulconsume;
+	//SetObjProperty(who, "souls", souls);	
 
 	undead.SetMaster(who);
 		
@@ -68,14 +87,21 @@ program SpellScript(params)
 	SetObjproperty(undead, "script", undead.script);
 	SetObjProperty(undead, "AntigoTreinadorID", who.serial);
 	SetObjProperty(undead, "summoned", 1);		
+	
 	undead.script := ":ghaia:tamed";
 	RestartScript(undead);
 				
 	Run_Script_To_Completion(":death:npcdeath", {undead});
 
-	TS_StartTimer(undead, "summon", GetSpellDuration(AP_GetSkill(who, MAGICLORE)));
+	SetObjProperty(undead, "Necro", 1);
+	var numbersummons := Cint(GetObjProperty(who, "NecroSummons"));
+	SetObjProperty(who, "NecroSummons", (numbersummons + 1));
 
-	SendSysMEssageEx(who, "Voce teve sucesso ao invocar um espirirto.", SSM_INFO);
+	//TS_StartTimer(undead, "summon", GetSpellDuration(AP_GetSkill(who, MAGICLORE)));
+	TS_StartTimer(undead, "summon", GetSpellDuration(AP_GetSkill(who, MAGICLORE)) / 2);
+
+
+	SendSysMEssageEx(who, "Voce teve sucesso ao invocar espirirtos.", SSM_INFO);
 	Corromper(who, 75, "0");
 	
 	return 1;
