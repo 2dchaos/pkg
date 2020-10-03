@@ -15,8 +15,8 @@ program SpellScript(params)
 	var info := params[2];
 	params := 0; // No longer needed
 
-	//SendSysMessageEx(who, "Escolha sua arma.", SSM_REQUEST);
-	var targ := who.weapon; //Spell_Target(who, TGTOPT_CHECK_LOS);
+	SendSysMessageEx(who, "Escolha sua arma.", SSM_REQUEST);
+	var targ := who.weapon; Spell_Target(who, TGTOPT_CHECK_LOS);
 	if (!targ)
 		SendSysMessageEx(who, "Cancelado", SSM_FAIL);
 		return;
