@@ -12,11 +12,11 @@ include "include/damage";
 
 program SpellScript(params)
 	var who := params[1];
-	var info := params[2];
+	var targ := params[2];
 	params := 0; // No longer needed
 
 	SendSysMessageEx(who, "Escolha sua arma.", SSM_REQUEST);
-	var targ := who.weapon; Spell_Target(who, TGTOPT_CHECK_LOS);
+	//var targ := who.weapon; Spell_Target(who, TGTOPT_CHECK_LOS);
 	if (!targ)
 		SendSysMessageEx(who, "Cancelado", SSM_FAIL);
 		return;
@@ -52,7 +52,7 @@ program SpellScript(params)
 
 		start_script( ":spells:elementalweapon", {targ, time, DMG_FIRE} );
         	PlaySoundEffect(targ, SFX_BLESS);
-		SendSysMessageEx(who, "Sua arma ficou coberta de chamas.", SSM_INFO);
+		SendSysMessageEx(who, "A arma ficou coberta de chamas.", SSM_INFO);
 	
 		return 1;
 	endif
