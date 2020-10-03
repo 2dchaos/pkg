@@ -13,12 +13,14 @@ program SpellScript(params)
 	params := 0; // No longer needed
 
 	SendSysMessageEx(who, "Escolha o alvo.", SSM_REQUEST+TGTOPT_HARMFUL);
-	//var targ := Spell_Target(who, TGTOPT_CHECK_LOS);
-	//if (!targ)
-	//	return;
-	//endif
+	var targ := Spell_Target(who, TGTOPT_CHECK_LOS);
+	if (!targ)
+		SendSysMessageEx(who, "Cencelado", SSM_FAIL);
+		return;
+	endif
 
 	if (!targ.isa(POLCLASS_MOBILE) )
+		SendSysMessageEx(who, "Voce so pode alvejar seres vivos com esta magia.", SSM_FAIL);
 		return;
 	endif
 
