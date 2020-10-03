@@ -14,7 +14,7 @@ program SpellScript(params)
 	params := 0; // No longer needed
 
 	SendSysMessageEx(who, "Escolha uma arma ou alguem armado.", SSM_REQUEST);
-	//var targ := Spell_Target(who, TGTOPT_CHECK_LOS);
+	var targ := Spell_Target(who, TGTOPT_CHECK_LOS);
 	if (!targ)
 		SendSysMessageEx(who, "Cencelado", SSM_FAIL);
 		return;
