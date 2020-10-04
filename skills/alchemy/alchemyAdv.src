@@ -245,6 +245,36 @@ function MakePotion ( pot, item, who, magic, strength := 0)
 			return;
 		endif
       
+	elseif (Cint(AP_GetSkill(who, "Alchemy")) <= 39)
+		var falha1 := RandomInt(100)+1;
+		if 	(falha1 <= 15)
+		FalhaCritica(who, item);
+		else 
+		EraseObjProperty(item, "reagentes");
+		PlaySoundEffect(who, SOUND_EFFECT_POUR);
+		SendSysMessageEx(who, "Voce nao conseguiu fazer nada com isso.", SSM_FAIL);
+		return;
+	
+	elseif (Cint(AP_GetSkill(who, "Alchemy")) <= 59)
+		var falha1 := RandomInt(100)+1;
+		if 	(falha1 <= 10)
+		FalhaCritica(who, item);
+		else 
+		EraseObjProperty(item, "reagentes");
+		PlaySoundEffect(who, SOUND_EFFECT_POUR);
+		SendSysMessageEx(who, "Voce nao conseguiu fazer nada com isso.", SSM_FAIL);
+		return;
+
+	elseif (Cint(AP_GetSkill(who, "Alchemy")) <= 70)
+		var falha1 := RandomInt(100)+1;
+		if 	(falha1 <= 5)
+		FalhaCritica(who, item);
+		else 
+		EraseObjProperty(item, "reagentes");
+		PlaySoundEffect(who, SOUND_EFFECT_POUR);
+		SendSysMessageEx(who, "Voce nao conseguiu fazer nada com isso.", SSM_FAIL);
+		return;
+
 	else
 		EraseObjProperty(item, "reagentes");
 		PlaySoundEffect(who, SOUND_EFFECT_POUR);
