@@ -7,6 +7,9 @@ include "include/sounds";
 include "include/say";
 include ":timedScripts:timedScripts";
 include ":attributes:attributes";
+include ":tn:npcutil";
+include ":brainAI:npcUtil";
+include ":ghaia:ghaia";
 
 program SpellScript(params)
 	var who := params[1];
@@ -14,7 +17,7 @@ program SpellScript(params)
 	params := 0; // No longer needed
 
 	var skill := AP_GetSkill(who, "Magery");
-	var maxsummons := Cint(skill / 25);
+	var maxsummons := Cint(skill / 20);
 
 	if (GetObjProperty(who, "NecroSummons") == maxsummons);
 		SendSysMessageEx(who, "Voce ja controla espiritos demais", SSM_FAIL);
@@ -26,7 +29,7 @@ program SpellScript(params)
 	var random := RandomInt(Cint(skill));
 	var undead;
 
-if (random < 20)
+	if (random < 20)
 		undead := createnpcfromtemplate(":brainai:ghost", who.x, who.y, who.z, 0 , who.realm);
 	elseif (random < 40)
 		undead := createnpcfromtemplate(":brainai:rusalkaatormentada", who.x, who.y, who.z, 0 , who.realm);
