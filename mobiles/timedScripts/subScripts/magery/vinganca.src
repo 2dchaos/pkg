@@ -2,26 +2,20 @@ use uo;
 use os;
 
 include ":attributes:attributes";
-include ":spells:tnmagery";
-include "include/client";
-include "include/sounds";
-include "include/say";
-include ":attributes:regen";
-include ":attributes:vitals";
-include ":attributes:attributes";
-include ":timedScripts:timedScripts";
 
 program TimedScript_Clumsy(params)
-	var who := params[1];
-	var targ := params[3];
+	var mobile := params[1];
+	var attacker := params[2];
+	var level := params[3];
 	params := 0; // Not needed anymore.
 
+	var points := AP_GetSkill(who, MAGICLORE)*0.75;
 	
-	if ( GetObjProperty(targ, "#vinganca") )
+	if ( GetObjProperty(mobile, "#vinganca") )
 		return 0;
 	endif
 
-	SetObjProperty(targ, "#vinganca", 1);
-
+	SetObjProperty(mobile, "#vinganca", points);
+	
 	return 1;
 endprogram
