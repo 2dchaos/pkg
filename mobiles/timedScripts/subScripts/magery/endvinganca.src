@@ -3,14 +3,16 @@ use os;
 use vitals;
 
 include ":attributes:attributes";
+include "include/damage";
+include "include/client";
+include "include/say";
 
 program cureScript(params)
 	var mobile := params[1];
-	var points := CInt(GetObjProperty(mobile, "#vinganca"));
+	var points := AP_GetSkill(who, MAGICLORE)*0.75;
 	
 	ApplyRawDamage(mobile, points);
 	EraseObjProperty(mobile, "#vinganca");
 	
-
 	return 1;
 endprogram
