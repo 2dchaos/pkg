@@ -19,8 +19,9 @@ program TimedScript_Clumsy(params)
 		return 0;
 	endif
 	
-	SetObjProperty(who, "#desviarprojetil", 1);
+	SetObjProperty(who, "#desviarprojetil",1);
 	
 	return 1;
 endprogram
-  
+
+  

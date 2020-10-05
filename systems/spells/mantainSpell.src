@@ -49,11 +49,11 @@ program spell(params)
 	var level := params[5];
 
 	var mana := 0;
-	var cfg := ReadConfigFile(":spells:config/tnspells");
+	var cfg := ReadConfigFile(":spells:config/allspells");
 	var elem;
 	var id := 0;
-	if (name == "weaken")
-		id := 26;
+	if (name == "vinganca")
+		id := 32;
 	elseif ( name == "mantodabesta")
 		id := 2;
 	elseif ( name == "desviarprojetil")

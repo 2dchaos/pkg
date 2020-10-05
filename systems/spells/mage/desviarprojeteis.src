@@ -24,7 +24,7 @@ program SpellScript(params)
 	endif
 
 	
-	TS_StartTimer(targ, "desviarprojetil", 120); //1 min
+	TS_StartTimer(targ, "desviarprojetil", Cint(AP_GetSkill(who, MAGICLORE)/3)); //1 min
 
 	PlaySoundEffect(targ, SFX_SPELL_STRENGTH);
 	SendSysMEssageEx(who, "O alvo esta protegido contra projeteis.", SSM_INFO);

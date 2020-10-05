@@ -185,15 +185,19 @@ exported function Attack(attacker, defender)
 
 
 	    //testa possiveis esquivas
-	    if (getObjProperty(defender, "#desviarprojetil"))
-     		 if ( (item_cfg[attacker.weapon.objtype]).Projectile )
-       			 PrintText(defender, "*esquiva-se*");
-        		SendSysMessageEx(defender, "O projetil foi desviado para longe de voce.", SSM_INFO);
-        		SendSysMessageEx(attacker, "Seu projetil foi desviado do alvo.", SSM_FAIL);
-        		EraseObjProperty(defender, "#desviarprojetil");
-        		return 1;
-      		endif
-	     endif
+		
+	    if (GetObjProperty(defender, "#desviarprojetil"))
+			if ( (item_cfg[attacker.weapon.objtype]).Projectile )
+				PrintText(defender, "*esquiva-se*");
+				SendSysMessageEx(defender, "O projetil foi desviado para longe de voce.", SSM_INFO);
+				SendSysMessageEx(attacker, "Seu projetil foi desviado do alvo.", SSM_FAIL);
+			else
+				return 1;
+			endif
+			//EraseObjProperty(defender, "#desviarprojetil");
+			return 1;
+      	endif
+
 
     		if (Cint(GetObjProperty(defender, "evasao")))
       			PrintText(defender, "*esquiva-se*");
