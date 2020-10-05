@@ -13,7 +13,7 @@ program cureScript(params)
 
 	var points := AP_GetSkill(who, MAGICLORE)*0.75;
 	
-	ApplyRawDamage(mobile, points);
+	//ApplyRawDamage(mobile, points);
 	EraseObjProperty(targ, "#vinganca");
 
 	DamageFLS(targ, points, DMG_FORCED, who);
