@@ -8,16 +8,15 @@ include "include/client";
 include "include/say";
 
 program cureScript(params)
-	var mobile := params[1];
-	var attacker := params[2];
-	var who := params[3];
+	var targ := params[1];
+	var who := params[2];
 
 	var points := AP_GetSkill(who, MAGICLORE)*0.75;
 	
 	ApplyRawDamage(mobile, points);
-	EraseObjProperty(mobile, "#vinganca");
+	EraseObjProperty(targ, "#vinganca");
 
-	DamageFLS(attacker, points, DMG_FORCED, who);
+	DamageFLS(targ, points, DMG_FORCED, who);
 
 	
 	return 1;
