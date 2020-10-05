@@ -1,3 +1,4 @@
+
 use uo;
 use os;
 
@@ -9,13 +10,12 @@ program TimedScript_Clumsy(params)
 	var level := params[3];
 	params := 0; // Not needed anymore.
 
-	var points := AP_GetSkill(who, MAGICLORE)*0.75;
 	
 	if ( GetObjProperty(mobile, "#vinganca") )
 		return 0;
 	endif
 
-	SetObjProperty(mobile, "#vinganca", points);
+	SetObjProperty(mobile, "#vinganca", AP_GetSkill(attacker, MAGICLORE)*0.75);
 	
 	return 1;
 endprogram
