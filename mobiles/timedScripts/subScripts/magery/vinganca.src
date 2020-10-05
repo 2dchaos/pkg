@@ -2,19 +2,26 @@ use uo;
 use os;
 
 include ":attributes:attributes";
+include ":spells:tnmagery";
+include "include/client";
+include "include/sounds";
+include "include/say";
+include ":attributes:regen";
+include ":attributes:vitals";
+include ":attributes:attributes";
+include ":timedScripts:timedScripts";
 
 program TimedScript_Clumsy(params)
-	var mobile := params[1];
-	var attacker := params[2];
-	var level := params[3];
+	var who := params[1];
+	var targ := params[3];
 	params := 0; // Not needed anymore.
 
 	
-	if ( GetObjProperty(mobile, "#vinganca") )
+	if ( GetObjProperty(targ, "#vinganca") )
 		return 0;
 	endif
 
-	SetObjProperty(mobile, "#vinganca", 0);
-	
+	SetObjProperty(targ, "#vinganca", 1);
+
 	return 1;
 endprogram
