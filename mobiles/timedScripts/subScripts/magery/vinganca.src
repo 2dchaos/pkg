@@ -14,7 +14,7 @@ program TimedScript_Clumsy(params)
 		return 0;
 	endif
 
-	SetObjProperty(mobile, "#vinganca", 1);
+	SetObjProperty(mobile, "#vinganca", 0);
 	
 	return 1;
 endprogram
