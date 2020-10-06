@@ -191,8 +191,6 @@ exported function Attack(attacker, defender)
 				PrintText(defender, "*esquiva-se*");
 				SendSysMessageEx(defender, "O projetil foi desviado para longe de voce.", SSM_INFO);
 				SendSysMessageEx(attacker, "Seu projetil foi desviado do alvo.", SSM_FAIL);
-			else
-				return 1;
 			endif
 			//EraseObjProperty(defender, "#desviarprojetil");
 			return 1;
