@@ -39,7 +39,7 @@ program SpellScript(params)
 		//endif
 
 		//SendSysMEssageEx(who, "A gema neutra foi ativada.", SSM_INFO);
-		//SetCooldown(targ, "habelemental", 20);
+		SetCooldown(targ, "habelemental", 20);
 		SetCooldown(targ, "ataqueespiritual", 20);
 
         	PlaySoundEffect(targ, SFX_BLESS);
