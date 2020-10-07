@@ -11,7 +11,7 @@ program clickrecipe(who, scroll)
 	
 	var cfg:= ReadConfigFile(":recipes:recipes");
 
-	var recipe:= GetObjProperty(scroll, "recipe");
+	var recipe:= GetObjProperty(scroll, "recipes");
 
 	var elem := FindConfigElem(cfg, recipe);
 	var name:= GetConfigString(elem,"name");
