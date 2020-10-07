@@ -22,8 +22,6 @@ program SpellScript(params)
 		SendSysMessageEx(who, "Cancelado", SSM_FAIL);
 		return;
 	endif
-
-	var time := GetSpellDuration( AP_GetSkill(who, MAGICLORE) );
 	
 	if (targ.isA(POLCLASS_WEAPON))
 
@@ -41,7 +39,6 @@ program SpellScript(params)
 		//SendSysMEssageEx(who, "A gema neutra foi ativada.", SSM_INFO);
 		SetCooldown(targ, "habelemental", 20);
 		SetCooldown(targ, "ataqueespiritual", 20);
-
         	PlaySoundEffect(targ, SFX_BLESS);
 	
 		return 1;

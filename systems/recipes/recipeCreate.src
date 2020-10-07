@@ -17,6 +17,6 @@ program create(item)
 	endforeach
 	var rand := RandomInt(possiveis.size()) + 1;
 	var sorteado := possiveis[rand];
-	SetObjProperty(item, "recipe",sorteado);
+	SetObjProperty(item, "recipe", sorteado);
 	
 endprogram
