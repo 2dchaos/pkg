@@ -11,7 +11,7 @@ program clickrecipe(who, scroll)
 	
 	var cfg:= ReadConfigFile(":recipes:recipes");
 
-	var recipe:= GetObjProperty(scroll, "recipes");
+	var recipe:= GetObjProperty(scroll, "recipe");
 
 	var elem := FindConfigElem(cfg, recipe);
 	var name:= GetConfigString(elem,"name");
@@ -37,7 +37,7 @@ program clickrecipe(who, scroll)
 
 	if (input[0] == 99)
 		
-		var list := GetObjProperty(who, "recipes");
+		var list := GetObjProperty(who, "recipe");
 		if (list == error)
 			list := array;
 		endif
@@ -66,7 +66,7 @@ program clickrecipe(who, scroll)
 				
 					if (classe == "Artifice")
 						list.append(recipe);
-						SetObjProperty(who, "recipes", list);
+						SetObjProperty(who, "recipe", list);
 						SendSysMessage(who, "Voce aprendeu como fazer um item novo");
 						DestroyItem(scroll);
 				
