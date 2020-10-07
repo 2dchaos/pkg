@@ -62,22 +62,22 @@ program clickrecipe(who, scroll)
 			
 					//else 
 				
-					var classe := GetObjProperty(who, "kit");
+					//var classe := GetObjProperty(who, "kit");
 				
-					if (classe == "Artifice")
+					//if (classe == "Artifice")
 						list.append(recipe);
 						SetObjProperty(who, "recipes", list);
 						SendSysMessage(who, "Voce aprendeu como fazer um item novo");
 						DestroyItem(scroll);
 				
-					else
+					//else
 						
-SendSysMessageEx(who, "Apenas artifices podem aprender isto.");
+//SendSysMessageEx(who, "Apenas artifices podem aprender isto.");
 					
-						return 1;
+						//return 1;
 					//endif
 			
-					endif
+					//endif
 			return 1;
 		
 		endif
