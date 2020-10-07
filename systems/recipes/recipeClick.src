@@ -13,7 +13,7 @@ program clickrecipe(who, scroll)
 
 	var recipe:= GetObjProperty(scroll, "recipe");
 
-	var elem := FindConfigElem(cfg, recipe);
+	var elem := FindConfigElem(cfg, recipes);
 	var name:= GetConfigString(elem,"name");
 	var text:= GetConfigString(elem,"text");
 	
