@@ -23,7 +23,7 @@ program SpellScript(params)
 		return;
 	endif
 
-	var time := GetSpellDuration( AP_GetSkill(who, MAGICLORE) );
+	var time := AP_GetSkill(who, MAGICLORE)/3;
 	
 	if (targ.isA(POLCLASS_WEAPON))
 
@@ -39,8 +39,17 @@ program SpellScript(params)
 		//endif
 
 		//SendSysMEssageEx(who, "A gema neutra foi ativada.", SSM_INFO);
-		SetCooldown(targ, "habelemental", 20);
-		SetCooldown(targ, "ataqueespiritual", 20);
+		//SetCooldown(targ, "habelemental", 20);
+		//SetCooldown(targ, "ataqueespiritual", 20);
+
+		var manadmg := cint(AP_GetSkill(attacker, MAGICLORE)/3);
+		dmg.+type := DMG_PHYSICAL;
+		dmg.+serial := who.serial;
+		AP_ConsumeVital(defender, MANA, manadmg);
+		dmg.+endtime := readgameclock() + time;
+
+		SetObjProperty(targ, "#elementalweapon", manadmg);
+
 
         	PlaySoundEffect(targ, SFX_BLESS);
 	
