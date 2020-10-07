@@ -12,10 +12,8 @@ include ":tn:cooldown";
 include "include/damage";
 
 program SpellScript(params)
-	var attacker	:= params[1];
-	var who := params[2];
-	var defender	:= params[3];
-	var targ := params[4];
+	var who := params[1];
+	var targ := params[2];
 	params := 0; // No longer needed
 
 	SendSysMessageEx(who, "Escolha sua arma.", SSM_REQUEST);
@@ -25,7 +23,7 @@ program SpellScript(params)
 		return;
 	endif
 
-	var time := AP_GetSkill(who, MAGICLORE)/3;
+	var time := GetSpellDuration( AP_GetSkill(who, MAGICLORE) );
 	
 	if (targ.isA(POLCLASS_WEAPON))
 
@@ -41,17 +39,8 @@ program SpellScript(params)
 		//endif
 
 		//SendSysMEssageEx(who, "A gema neutra foi ativada.", SSM_INFO);
-		//SetCooldown(targ, "habelemental", 20);
-		//SetCooldown(targ, "ataqueespiritual", 20);
-
-		var manadmg := cint(AP_GetSkill(attacker, MAGICLORE)/3);
-		manadmg.+type := DMG_PHYSICAL;
-		manadmg.+serial := who.serial;
-		AP_ConsumeVital(defender, MANA, manadmg);
-		manadmg.+endtime := readgameclock() + time;
-
-		SetObjProperty(targ, "#elementalweapon", manadmg);
-
+		SetCooldown(targ, "habelemental", 20);
+		SetCooldown(targ, "ataqueespiritual", 20);
 
         	PlaySoundEffect(targ, SFX_BLESS);
 	
