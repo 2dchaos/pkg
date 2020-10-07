@@ -13,7 +13,8 @@ include "include/damage";
 
 program SpellScript(params)
 	var who := params[1];
-	var targ := params[2];
+	var defender	:= params[2];
+	var targ := params[3];
 	params := 0; // No longer needed
 
 	SendSysMessageEx(who, "Escolha sua arma.", SSM_REQUEST);
@@ -43,10 +44,10 @@ program SpellScript(params)
 		//SetCooldown(targ, "ataqueespiritual", 20);
 
 		var manadmg := cint(AP_GetSkill(attacker, MAGICLORE)/3);
-		dmg.+type := DMG_PHYSICAL;
-		dmg.+serial := who.serial;
+		manadmg.+type := DMG_PHYSICAL;
+		manadmg.+serial := who.serial;
 		AP_ConsumeVital(defender, MANA, manadmg);
-		dmg.+endtime := readgameclock() + time;
+		manadmg.+endtime := readgameclock() + time;
 
 		SetObjProperty(targ, "#elementalweapon", manadmg);
 
