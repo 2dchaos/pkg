@@ -13,11 +13,10 @@ program create(item)
 		var level := GetConfigInt(elem, "level");
 		var name:= GetConfigString(elem,"name");
 		var text:= GetConfigString(elem,"text");
-		if (item.objtype == 0xF990) 
 			possiveis.append(key);
-		endif
-	endforeach	
-	var sorteado := possiveis[randomint(possiveis.size())+1];
+	endforeach
+	var rand := RandomInt(possiveis.size()) + 1;
+	var sorteado := possiveis[rand];
 	SetObjProperty(item, "recipe",sorteado);
 	
 endprogram
