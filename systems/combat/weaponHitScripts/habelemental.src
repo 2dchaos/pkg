@@ -23,11 +23,11 @@ program HitScript(params)
 		range := 2;
 	endif
 
-	if (!dmgtype || dmgtype == error)
-		dmgtype := DMG_PHYSICAL;
-	endif
+	//if (!dmgtype || dmgtype == error)
+	//	dmgtype := DMG_PHYSICAL;
+	//endif
 
-	params := 0; // Not needed anymore.
+	//params := 0; // Not needed anymore.
 
 	//gemas neutras nao podem ficar no if abaixo pq nao podem ser identificadas pelo dmgtype
 	if (GetCooldown(weapon, "romperencantamento") )
