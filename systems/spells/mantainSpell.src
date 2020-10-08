@@ -53,7 +53,7 @@ program spell(params)
 	var elem;
 	var id := 0;
 
-	if	   (name == "feebleMind")	
+	if	   (name == "weaken")	
 		id := 1;
 	elseif (name == "vinganca")
 		id := 32;
