@@ -52,7 +52,10 @@ program spell(params)
 	var cfg := ReadConfigFile(":spells:config/allspells");
 	var elem;
 	var id := 0;
-	if (name == "vinganca")
+
+	if	   (name == "feebleMind")	
+		id := 1;
+	elseif (name == "vinganca")
 		id := 32;
 	elseif ( name == "mantodabesta")
 		id := 2;
