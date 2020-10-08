@@ -55,24 +55,44 @@ program spell(params)
 
 	if	   (name == "weaken")	
 		id := 1;
-	elseif (name == "vinganca")
-		id := 32;
-	elseif ( name == "mantodabesta")
+	elseif (name == "feebleMind")
 		id := 2;
-	elseif ( name == "desviarprojetil")
-		id := 8;
-	elseif ( name== "gloria")
-		id := 15;
-	elseif ( name == "strength")
-		id := 16;
-	elseif ( name == "phmod")
+	elseif (name == "clumsy")
+		id := 3;
+	elseif (name == "apodrecer")
+		id := 11;
+	elseif (name == "atrasarmagias")
+		id := 17;
+	elseif (name == "fugademana")
 		id := 18;
-	elseif ( name == "intelligence")
-		id := 19;
-	elseif ( name == "agility")
-		id := 21;
 	elseif (name == "dmgreduction")
-		id := 34;
+		id := 29;
+	elseif (name == "vinganca")
+		id := 31;
+	elseif (name == "nocure")
+		id := 32;
+	elseif ( name == "desviarprojetil")
+		id := 43;
+	elseif ( name == "phmod")
+		id := 56;
+	elseif ( name == "fimod")
+		id := 57;
+	elseif ( name == "comod")
+		id := 58;
+	elseif ( name == "enmod")
+		id := 59;
+	elseif ( name == "pomod")
+		id := 60;
+	elseif ( name == "recuperacaosalvadora")
+		id := 73;
+	elseif ( name == "martir")
+		id := 74;
+	elseif ( name == "mantorothen")
+		id := 75;
+	elseif ( name == "gloria")
+		id := 77;
+	elseif ( name == "mantodabesta")
+		id := 94;
 	endif
 
 
