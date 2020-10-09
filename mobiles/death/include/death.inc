@@ -112,14 +112,14 @@ function RegenerateDeathPoints(who)
 			//	RegenDpStats(who, ratio);
 			//endif
 
-			var deathPointsToHeal = deathpoints - 3; //calcula quanto de stat tem q regenerar
+			var deathPointsToHeal := deathpoints - 3; //calcula quanto de stat tem q regenerar
 			if (deathPointsToHeal > 0)
 				RegenDpStats(who, deathPointsToHeal);
 			endif
 
 
 			if (deathpoints > 0)
-				deathpoints -= ratio;
+				deathpoints := ratio;
 			endif
 			if( deathpoints < 0 )
 				deathpoints := 0;
