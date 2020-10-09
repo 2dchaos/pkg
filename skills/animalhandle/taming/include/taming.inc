@@ -59,7 +59,7 @@ function GetNumPets(who)
 			if (!Cint(cfg.petslot))
 				num_tamed := num_tamed+1;
 			else
-				num_tamed := Cint(cfg.petslot);
+				num_tamed := num_tamed + Cint(cfg.petslot);
 			endif
 		elseif ( !pet || pet.master !=who )
 			tamed.erase(_serial_iter);
@@ -108,10 +108,18 @@ function AddPet(who, serial)
 endfunction
 
 //numero maximo de pets que alguem pode ter
-function GetMaxPEts(who)
+function GetMaxPets(who)
 
-	var skill := AP_GetSkill(who, HANDLEANIMAL);
-	var maxpets := 1 + cint(skill/45);
+	var skill := cint(AP_GetSkill(who, HANDLEANIMAL));
+	var maxpets := 1;
+	
+	if (skill >= 45 && skill < 75)
+		maxpets := maxpets + 1;
+	elseif (skill >= 75 && skill < 90)
+		maxpets := maxpets + 2;
+	elseif (skill >= 90)
+		maxpets := maxpets + 3;
+	endif
 
 	maxpets := maxpets + cint( GetObjProperty(who, "extrapets") );
 
