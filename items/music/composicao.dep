@@ -20,9 +20,12 @@ C:\LVM\pkg\mobiles\brainAI\include\npcUtil.inc
 C:/LVM/scripts/modules/polsys.em
 C:\LVM\pkg\fls\fls_core\include\fls_chargumps_ex.inc
 C:\LVM\pkg\utils\gumps\include\gumps.inc
+C:\LVM\pkg\utils\gumps\include\gumps_ex.inc
 C:\LVM\scripts\include\arrays.inc
 C:/LVM/scripts/modules/math.em
 C:\LVM\pkg\systems\charactercreation\include\habilidades.inc
+C:\LVM\scripts\include\say.inc
+C:/LVM/scripts/modules/unicode.em
 C:\LVM\pkg\systems\attributes\include\stats.inc
 C:\LVM\pkg\systems\attributes\include\vitals.inc
 C:\LVM\pkg\systems\attributes\include\skillCheck.inc
@@ -33,10 +36,7 @@ C:/LVM/scripts/modules/file.em
 C:/LVM/scripts/modules/datafile.em
 C:\LVM\scripts\include\client.inc
 C:\LVM\scripts\include\sounds.inc
-C:\LVM\scripts\include\say.inc
-C:/LVM/scripts/modules/unicode.em
 C:\LVM\pkg\utils\itemUtils\include\canAccess.inc
-C:\LVM\pkg\utils\gumps\include\gumps_ex.inc
 C:\LVM\pkg\utils\gumps\include\requestgump.inc
 C:\LVM\pkg\utils\gumps\include\yesno.inc
 C:\LVM\pkg\mobiles\timedScripts\include\timedScripts.inc

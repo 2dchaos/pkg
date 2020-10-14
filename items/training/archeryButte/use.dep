@@ -16,9 +16,12 @@ C:\LVM\pkg\mobiles\brainAI\include\npcUtil.inc
 C:/LVM/scripts/modules/polsys.em
 C:\LVM\pkg\fls\fls_core\include\fls_chargumps_ex.inc
 C:\LVM\pkg\utils\gumps\include\gumps.inc
+C:\LVM\pkg\utils\gumps\include\gumps_ex.inc
 C:\LVM\scripts\include\arrays.inc
 C:/LVM/scripts/modules/math.em
 C:\LVM\pkg\systems\charactercreation\include\habilidades.inc
+C:\LVM\scripts\include\say.inc
+C:/LVM/scripts/modules/unicode.em
 C:\LVM\pkg\systems\attributes\include\stats.inc
 C:\LVM\pkg\systems\attributes\include\vitals.inc
 C:\LVM\pkg\systems\attributes\include\attributeConstants.inc
@@ -32,7 +35,5 @@ C:\LVM\pkg\items\training\include\training.inc
 C:\LVM\scripts\include\client.inc
 C:\LVM\scripts\include\damage.inc
 C:\LVM\pkg\tn\include\cooldown.inc
-C:\LVM\scripts\include\say.inc
-C:/LVM/scripts/modules/unicode.em
 C:\LVM\pkg\items\blood\include\blood.inc
 C:\LVM\pkg\fls\fls_core\include\packets.inc
