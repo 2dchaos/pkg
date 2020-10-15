@@ -19,7 +19,7 @@ program DeathScript(params)
 	foreach defender in (ListMobilesNearLocation(corpse.x, corpse.y, corpse.z, 6, corpse.realm))
 		PlayObjectCenteredEffect(defender, GFX_EXPLODE_1, 7, 16);
 		PlaySoundEffect(defender, SFX_EXPLOSION_11);
-		ApplyDamageEX(defender, 100, DMG_FIRE);
+		ApplyDamageEX(defender, 80, DMG_FIRE);
 	endforeach
 
 
