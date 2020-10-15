@@ -118,12 +118,13 @@ function Fight(opponent, alerted := 0)
 //	printtextabove(me, "fui alertado, nao vou alertar");
   endif
 
-/*   var speech := GetConfigStringArray( npccfgfile[mytemplate], "InitCombatSpeech" );
+/   var speech := GetConfigStringArray( npccfgfile[mytemplate], "InitCombatSpeech" );
    if (speech.size() > 0)
-	if (RandomInt(100)  < 30) //sempre 30% de chance de falar
+	if (RandomInt(100)  < 50) //sempre 50% de chance de falar
 		Say(speech[RandomInt(speech.size()+1)]);
 	endif
-   endif*/
+   endif
+/
 
   var dist;
   while( me )
@@ -173,13 +174,15 @@ function Fight(opponent, alerted := 0)
 				SendSysMessageEx(x, opponent.name+" BERSERKER PEIDAO!", SSM_REQUEST);
 			endif
 		endforeach
-	endif*/
+	endif
+*/
       break;
     endif
 
 /*  if (hasSpecial(me))
     DoSpecial(me); // ANTIGO SISTEMA
-  endif*/
+  endif
+*/
 
   
   //se eh boss e tem eventos
