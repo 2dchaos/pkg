@@ -125,7 +125,7 @@ program core_npcDeath(params)
 
 	var speech := GetConfigStringArray( npc_cfg[template], "diespeech" );
 	if (speech.size() > 0)
-		if (RandomInt(100)  < 30) //sempre 30% de chance de falar
+		if (RandomInt(100)  < 50) //sempre 50% de chance de falar
 			printtextabove(corpse, speech[RandomInt(speech.size()+1)]);
 		endif
 	endif
