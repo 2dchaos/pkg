@@ -6,7 +6,7 @@ use util;
 
 include ":death:death";
 
-CONST MAX_RANGE	:= 8;
+CONST MAX_RANGE	:= 4;
 
 program DeathScript(params)
 	var corpse := params[1];
@@ -59,7 +59,7 @@ function ResZombie(corpse, byref pieces, template)
 		SleepMS(2);
 	endforeach
 
-	DestroyItem(corpse);
+	//DestroyItem(corpse);
 
 	Sleep(7);
 
