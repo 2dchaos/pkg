@@ -6,7 +6,7 @@ use util;
 
 include ":death:death";
 
-CONST MAX_RANGE	:= 4;
+CONST MAX_RANGE	:= 20;
 
 program DeathScript(params)
 	var corpse := params[1];
