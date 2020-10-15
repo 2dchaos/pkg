@@ -17,9 +17,9 @@ program loko(params)
 	if ( IsBloodied(who) && who.opponent) //
 		if ( !SystemFindObjectBySerial( GetObjProperty(who, "blood") ) )
 			TS_StartCooldown(who, cdname, cdtime);
-			PrintTextAbove(who, "*corta a palma da mao com a espada*", _DEFAULT_TEXT_FONT, 1361);
+			PrintTextAbove(who, "*sangue jorra de forma excessiva dos ferimentos*", _DEFAULT_TEXT_FONT, 1361);
 			sleep(1);
-			PrintTextAbove(who, "Espiritos da sangria, eu vos invoco", _DEFAULT_TEXT_FONT, 1361);
+			PrintTextAbove(who, "Grrraaaaaaaaaaaughhh", _DEFAULT_TEXT_FONT, 1361);
 			sleep(2);
 
 			detach();
