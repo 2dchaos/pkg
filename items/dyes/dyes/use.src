@@ -5,21 +5,21 @@ include ":dyes:dyes";
 
 program UseDyes(mobile, dyes)
 	if( !ReserveItem(dyes) )
-		SendSysMessage(mobile, "Those dyes are already in use.");
+		SendSysMessage(mobile, "As tintas ja estao em uso");
 		return 0;
 	elseif( !(dyes in EnumerateItemsInContainer(mobile.backpack)) )
-		SendSysMessage(mobile, "That item is not in your backpack.");
+		SendSysMessage(mobile, "Isto nao esta na sua bolsa");
 		return 0;
 	endif
 
-	SendSysMessage(mobile, "What do you want to use these dyes on?");
+	SendSysMessage(mobile, "O que voce deseja pintar?");
 	var targ := target(mobile);
 
 	if ( !targ )
-		SendSysMessage(mobile, "Cancelled");
+		SendSysMessage(mobile, "Cacelado");
 		return 0;
 	elseif( !ReserveItem(targ) )
-		SendSysMessage(mobile, "That is already in use.");
+		SendSysMessage(mobile, "Isso ja esta em uso");
 		return 0;
 	endif
 
@@ -28,10 +28,11 @@ program UseDyes(mobile, dyes)
 		if ( ValidDyeColor(mobile, color) )
 			PlaySoundEffect(mobile, 0x25);
 			targ.color := color;
+			DestroyItem(dyes);
 		endif
 		return 1;
 	else
-		SendSysMessage(mobile, "You can not dye that.");
+		SendSysMessage(mobile, "Voce nao pode pintar isto");
 		return 0;
 	endif
 endprogram
