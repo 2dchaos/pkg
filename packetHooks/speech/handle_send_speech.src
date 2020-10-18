@@ -86,7 +86,7 @@ exported function handleUCOutgoing( character, byref packet )
 		else
 			if (temHabilidade(character, "Espionar"))
 				// Viadagem do kata removida
-				if (Distance(character, source) < 12 && abs(character.z - source.z ) < 19) // A hab só serve pra ouvir até 8 tile e 19 z
+				if (Distance(character, source) < 12 && abs(character.z - source.z ) < 25) // A hab sï¿½ serve pra ouvir atï¿½ 8 tile e 19 z
 					return 0;
 				else
 					return 1;
