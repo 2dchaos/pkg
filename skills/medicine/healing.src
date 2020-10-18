@@ -163,7 +163,7 @@ program UseBandage(mobile, bandage)
 	aux_skill := AP_GetSkill(mobile, aux_skill);
 
 	if ( targ.IsA(POLCLASS_CORPSE) )
-		if (aux_skill < 40.0 or heal_skill < 40.0)
+		if (aux_skill < 40.0)
 			SendSysMessageEx(mobile, "Voce nao tem conhecimento suficiente para acordar alguem.", SSM_FAIL);
 			return 0;
 		elseif (GetObjProperty(targ, "morto"))
