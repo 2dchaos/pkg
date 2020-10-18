@@ -95,6 +95,9 @@ function isotherreagent(what)
 		0xee28: return 1;
 		0xfc5:  return 1;
 		0x0dea: return 1;
+    0xee35: return 1;
+    0xee2f: return 1;
+    0xeff0: return 1;
 
 		0x1F91: return 1;
 	endcase
@@ -183,6 +186,12 @@ function GetReagName(objtype)
    return "cinzas";
   elseif (objtype == 0x1F91 )
    return "copo de agua";
+  elseif (objtype == 0xee35 )
+   return "tinta verde";
+  elseif (objtype == 0xee2f )
+   return "tinta vermelha";
+  elseif (objtype == 0xeff0 )
+   return "tinta azul";
 
   endif
 endfunction
