@@ -74,10 +74,10 @@ program advalchemy(who, item)
 		if (!alvo)
 			return;
 		endif
-		if ( !(alvo.isReagent() || isOtherReagent(alvo)) )
-			SendSysMessageEx(who, "Isso nao parece ser um ingrediente valido!", SSM_FAIL);
-			return;
-        	endif
+		//if ( !(alvo.isReagent() || isOtherReagent(alvo)) )
+			//SendSysMessageEx(who, "Isso nao parece ser um ingrediente valido!", SSM_FAIL);
+			//return;
+        	//endif
 
 		if (reags[alvo.objtype]  >= 10 )
 			SendSysMessageEx(who, "Muitos componentes materiais desse tipo.", SSM_FAIL);
