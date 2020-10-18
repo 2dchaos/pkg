@@ -251,6 +251,7 @@ function HealPatient(mobile, targ, heal_skill, aux_skill, bonus, poison)
 	endif*/
 	if (mobile == targ)
 		heal_amt := heal_amt / 2;
+		//PrintText(mobile, "*usando ataduras em si mesmo*");
 	elseif ( Distance(mobile, targ) > 2 )
 		SendSysMessage(mobile, "Seu paciente esta muito distante.");
 		return 1;
@@ -279,6 +280,7 @@ function HealPatient(mobile, targ, heal_skill, aux_skill, bonus, poison)
 		endif
 	endif
 
+	//PrintText(mobile, "*parou de aplicar bandagens*");
 	detach();
 	SendSysMessage(targ, "Aguarde enquanto a cura faz efeito.");
 	var i;
