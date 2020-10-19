@@ -113,7 +113,7 @@ program TamedAI()
 
 					elseif ( !GetEquipmentByLayer(ev.source, LAYER_MOUNT) )
 
-						if ( IsMountable(me.graphic) && MoveObjectToLocation(ev.source, me.x, me.y, me.z, ev.source.realm))
+						/*if ( IsMountable(me.graphic) && MoveObjectToLocation(ev.source, me.x, me.y, me.z, ev.source.realm))
 
 							if (me.npctemplate == ":brainai:Unicorn")
 								if (GetObjProperty(me, "aprimorado"))
@@ -124,7 +124,15 @@ program TamedAI()
 							MP_Mount(ev.source, me);
 							me.hidden := 0;
 
+						endif*/
+						if ( (mount == 1) )
+							//if( !InDungeon(ev.source) ) algumas montarias podem ser montadas em dungeons como besouros
+								ev.source.hidden := 0;
+								MP_Mount(ev.source, me);
+								me.hidden := 0;
+							//endif
 						endif
+
 
 					endif
 
@@ -133,7 +141,7 @@ program TamedAI()
 			SYSEVENT_ITEM_GIVEN:
 
 				TakeItem(ev);
-
+		
 					
 
 		endcase
