@@ -76,6 +76,10 @@ program SpellStarter(params)
 		SendSysMessage(mobile, "Suas maos precisam estar livres para gesticular os componentes gestuais necessarios para a magia.");
 		FailSpell(mobile);
 		return 0;
+	elseif (GetEquipmentByLayer(mobile, LAYER_MOUNT))
+		SendSysMessageEx(mobile, "Voce nao pode usar magia enquanto estiver montado.", SSM_FAIL);
+		FailSpell(mobile);
+		return 0;
 	elseif ( !AP_ConsumeVital(mobile, MANA, spell_elem.ManaCost) )
 		SendSysMessage(mobile, "Voce nao possui energia arcana suficiente em seu corpo para invocar esta magia!");
 		FailSpell(mobile);

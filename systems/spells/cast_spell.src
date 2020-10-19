@@ -103,6 +103,12 @@ program SpellStarter(params)
 		EraseObjProperty(mobile, "#medding");
 		EraseObjProperty(mobile, "#Casting");
 		return 0;
+	elseif (GetEquipmentByLayer(mobile, LAYER_MOUNT))
+		SendSysMessageEx(mobile, "Voce nao pode usar magia enquanto estiver montado.", SSM_FAIL);
+		mobile.frozen := 0;
+		EraseObjProperty(mobile, "#medding");
+		EraseObjProperty(mobile, "#Casting");
+		return 0;
 	elseif ( !AP_ConsumeVital(mobile, MANA, spellinfo.mana) && !mobile.npctemplate )
 		if ( !TemHabilidade(mobile, "Determinacao Elemental")  )
 			SendSysMessageEx(mobile, "Voce nao possui energia arcana suficiente em seu corpo para invocar esta magia!", SSM_FAIL);
@@ -138,14 +144,14 @@ program SpellStarter(params)
 					PrintText(mobile, spellinfo.powerwords);
 				endif
 			endif
-			if (spellinfo.prayer[1]) //Checa orações de clérigos
+			if (spellinfo.prayer[1]) //Checa oraï¿½ï¿½es de clï¿½rigos
 				if (GetObjProperty(mobile, "#magiasilenciosa") == error)
 					if (RandomInt(100)  < 15) //15% de chance de falar
 						var Prayers := spellinfo.prayer.size();
 						Prayers := Prayers +1;
 						Prayers := RandomIntMinMax(1,Prayers);
 						var result := spellinfo.prayer[Prayers];
-						result := StrReplace(result, "&atilde;", "ã"); result := StrReplace(result, "&Atilde;", "Ã"); result := StrReplace(result, "&eacute;", "é"); result := StrReplace(result, "&eacute;", "É"); result := StrReplace(result, "&ccedil;", "ç"); result := StrReplace(result, "&Ccedil;", "Ç"); result := StrReplace(result, "&ecirc;", "ê"); result := StrReplace(result, "&Ecirc;", "Ê"); result := StrReplace(result, "&otilde;", "õ"); result := StrReplace(result, "&Otilde;", "Õ"); result := StrReplace(result, "&ocirc;", "ô"); result := StrReplace(result, "&Ocirc;", "Ô");//Transforma Entitles em acentos. Necessário, não dá para pôr em função, pois o bug é o no "return";
+						result := StrReplace(result, "&atilde;", "ï¿½"); result := StrReplace(result, "&Atilde;", "ï¿½"); result := StrReplace(result, "&eacute;", "ï¿½"); result := StrReplace(result, "&eacute;", "ï¿½"); result := StrReplace(result, "&ccedil;", "ï¿½"); result := StrReplace(result, "&Ccedil;", "ï¿½"); result := StrReplace(result, "&ecirc;", "ï¿½"); result := StrReplace(result, "&Ecirc;", "ï¿½"); result := StrReplace(result, "&otilde;", "ï¿½"); result := StrReplace(result, "&Otilde;", "ï¿½"); result := StrReplace(result, "&ocirc;", "ï¿½"); result := StrReplace(result, "&Ocirc;", "ï¿½");//Transforma Entitles em acentos. Necessï¿½rio, nï¿½o dï¿½ para pï¿½r em funï¿½ï¿½o, pois o bug ï¿½ o no "return";
 						PrintText(mobile, result);
 					endif
 				endif
@@ -302,14 +308,14 @@ program SpellStarter(params)
 			endif	
 	
 //			if (!CheckLOSAt(mobile, targ.x, targ.y, targ.z))
-			if (spellinfo.alvo != "Area") //checa se não é magia em área
+			if (spellinfo.alvo != "Area") //checa se nï¿½o ï¿½ magia em ï¿½rea
 				if (!CheckLineOfSight(mobile, targ)) //verifica se esta na LOS
 					SendsysMessageEx(mobile, "Voce nao ve o alvo.", SSM_FAIL);
 					FailSpell(mobile);
 					return 1;
 				endif
-			else //senão
-				if (!CheckLOSAt(mobile, targ.x, targ.y, targ.z)) //verifica se o ponto é vísivel
+			else //senï¿½o
+				if (!CheckLOSAt(mobile, targ.x, targ.y, targ.z)) //verifica se o ponto ï¿½ vï¿½sivel
 					SendsysMessageEx(mobile, "O ponto que voce selecionou esta fora da sua linha de visao.", SSM_FAIL);
 					FailSpell(mobile);
 					return 1;

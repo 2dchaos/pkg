@@ -53,11 +53,16 @@ program SpellStarter(params)
 		FailSpell(mobile);
 		EraseObjProperty(mobile, "#Casting");
 		return 0;
+	elseif (GetEquipmentByLayer(mobile, LAYER_MOUNT))
+		SendSysMessageEx(mobile, "Voce nao pode usar magia enquanto estiver montado.", SSM_FAIL);
+		FailSpell(mobile);
+		EraseObjProperty(mobile, "#Casting");
+		return 0;
 //	elseif (!CheckIngredients(master, ritualid) )
 //		FailSpell(mobile);
 //		EraseObjProperty(mobile, "#Casting");
 //		return 0;
-    	else
+//    	else
 		/*mobile.hidden := 0;
 		EraseObjProperty(mobile, "#Medding");
 		if (!mobile.npctemplate)
