@@ -27,9 +27,9 @@ endfunction
 
 program angry_bees (bees)
 	//the amount of time between bee attacks (in seconds), how much damage they do, and how long before they settle down
-	var time_between_attacks := 5;
-	var attack_damage := 2;
-	var attack_length := 30;
+	var time_between_attacks := 1;
+	var attack_damage := 1;
+	var attack_length := 15;
 
 	//setup for how long the bees last
 	var end_time := ReadGameClock() + attack_length;
@@ -64,7 +64,7 @@ program angry_bees (bees)
 				ApplyRawDamage(mobile, attack_damage );
 			endforeach
 			lastattack := ReadGameClock() + time_between_attacks;
-			PlaySoundEffect (bees, 0xff);
+			PlaySoundEffect (bees, 0x5CD);
 		endif
 		sleepms(250);
 		if (!mainvictim or mainvictim.dead)
@@ -97,12 +97,3 @@ program angry_bees (bees)
 	until (ReadGameClock() > end_time);
 	DestroyItem (bees);
 endprogram
-
-
-
-
-
-
-
-
-
