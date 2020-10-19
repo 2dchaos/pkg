@@ -1382,7 +1382,7 @@ program createchar(who)
 					spellinfo.id := 25;
 					SetObjProperty(p1, "spellinfo", spellinfo);
 				
-				if (input2 == 10)
+				elseif (input2 == 20)
 					var grimorio:=createiteminbackpack(who, "grimorio", 1);
 					SetObjProperty(grimorio, "serialid", who.serial);
 					CreateItemInBackpack(who, "gravedust", 10);
