@@ -115,7 +115,7 @@ program TamedAI()
 
 					elseif ( !GetEquipmentByLayer(ev.source, LAYER_MOUNT) )
 
-						if ( IsMountable(me.graphic) && MoveObjectToLocation(ev.source, me.x, me.y, me.z, ev.source.realm))
+						if ( IsMountable(me.graphic) )//&& MoveObjectToLocation(ev.source, me.x, me.y, me.z, ev.source.realm))
 
 							if (me.npctemplate == ":brainai:Unicorn")
 								if (GetObjProperty(me, "aprimorado"))
