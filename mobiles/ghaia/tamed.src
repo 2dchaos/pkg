@@ -745,3 +745,4 @@ function CastFaerieHeal(me, owner)
 	SetCooldown(me, "heal", 150);
 
 endfunction
+
