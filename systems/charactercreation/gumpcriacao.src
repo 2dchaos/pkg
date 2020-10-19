@@ -1266,7 +1266,7 @@ program createchar(who)
 		ganheispell := 1;*/
 	if  (chardata.kit == "Acolito")
 		var robe := CreateItemInBackpack(who, 0x1F03, 1); //Manto
-		SetObjProperty(robe, "description", "Robe com bordado do simbolo do Clero do Lirio");
+		SetObjProperty(robe, "description", "Robe com bordado do simbolo do Sol Invicto");
 		SetObjProperty(robe, "cannotdye", 1);
 		SetObjProperty(robe, "descmod", "Acólito");
 		createiteminbackpack(who, "runaarmasagrada");
@@ -1320,7 +1320,7 @@ program createchar(who)
 	if (chardata.classe == "Sabio")
 		if (chardata.povo == "Balmute") //Balmute eh sempre mesum
 				if (ganheispell == 0)
-					var grimorio := createiteminbackpack(who, "grimorio", 1);
+					var grimorio := createiteminbackpack(who, "grimorionecro", 1);
 					CreateItemInBackpack(who, "gravedust", 10);
 					CreateItemInBackpack(who, "BlackMoor", 10);
 					setobjproperty(grimorio, "serialid", who.serial);
@@ -1363,7 +1363,7 @@ program createchar(who)
 				input2 := input2[0];
 				
 				if (input2 == 10)
-					var grimorio:=createiteminbackpack(who, "grimorio", 1);
+					var grimorio:=createiteminbackpack(who, "grimorionecro", 1);
 					SetObjProperty(grimorio, "serialid", who.serial);
 					CreateItemInBackpack(who, "gravedust", 10);
 					CreateItemInBackpack(who, "BlackMoor", 10);
@@ -1379,11 +1379,41 @@ program createchar(who)
 					spellinfo.id := 2;
 					SetObjProperty(p1, "spellinfo", spellinfo);
 					p1 := createiteminbackpack(who, "pergaminhomagico1");
-					spellinfo.id := 28;
+					spellinfo.id := 25;
 					SetObjProperty(p1, "spellinfo", spellinfo);
 				
-				else
-					var gump3 := GFCreateGump();
+				if (input2 == 10)
+					var grimorio:=createiteminbackpack(who, "grimorio", 1);
+					SetObjProperty(grimorio, "serialid", who.serial);
+					CreateItemInBackpack(who, "gravedust", 10);
+					CreateItemInBackpack(who, "BlackMoor", 10);
+					setobjproperty(grimorio, "marked",who.name + " - " + who.acctname);
+					var spellinfo := struct;
+					var p1 := createiteminbackpack(who, "pergaminhomagico4");
+					spellinfo.+id := 33;
+					SetObjProperty(p1, "spellinfo", spellinfo);
+					p1 := createiteminbackpack(who, "pergaminhomagico4");
+					spellinfo.id := 34;
+					SetObjProperty(p1, "spellinfo", spellinfo);
+					p1 := createiteminbackpack(who, "pergaminhomagico4");
+					spellinfo.id := 35;
+					SetObjProperty(p1, "spellinfo", spellinfo);
+					p1 := createiteminbackpack(who, "pergaminhomagico4");
+					spellinfo.id := 47;
+					SetObjProperty(p1, "spellinfo", spellinfo);	
+					SetObjProperty(who, "EspadaArcana", 1);
+
+
+				elseif (input2 == 30)
+					var robe := CreateItemInBackpack(who, 0x1F03, 1); //Manto
+					SetObjProperty(robe, "description", "Robe com bordado do simbolo do Sol Invicto");
+					SetObjProperty(robe, "cannotdye", 1);
+					SetObjProperty(robe, "descmod", "Acólito");
+					createiteminbackpack(who, "runaarmasagrada");
+					createiteminbackpack(who, "runacuraleve");
+					createiteminbackpack(who, "runadescanso");
+
+					/*var gump3 := GFCreateGump();
 					GFDisposable(gump3, 0);
 					GFResizePic(gump3, 0, 25, 3600, 170, 200);	
 					GFResizePic(gump3, 15, 40, 0x13BE, 140, 170);
@@ -1412,8 +1442,8 @@ program createchar(who)
 						createiteminbackpack(who, "pedralaminaeletrificada");
 						createiteminbackpack(who, "pedraataqueelementalenergia");
 						CreateItemInBackpack(who, "Deadwood", 10);
-					endif
-					SetObjProperty(who, "EspadaArcana", 1);
+					endif*/
+					//SetObjProperty(who, "EspadaArcana", 1);
 
 				endif
 		endif
