@@ -1336,7 +1336,7 @@ program createchar(who)
 					spellinfo.id := 2;
 					SetObjProperty(p1, "spellinfo", spellinfo);
 					p1 := createiteminbackpack(who, "pergaminhomagico1");
-					spellinfo.id := 28;
+					spellinfo.id := 25;
 					SetObjProperty(p1, "spellinfo", spellinfo);
 					ganheispell := 1;
 				endif
