@@ -364,11 +364,11 @@ function TakeItem(ev)
 			PrintText(ev.source,"*prende uma mochila na llama*");
 		endif
 
-		//if(IsMountable(me.graphic))
-		//	mount := 1;
-		//else
-		//	mount := 0;
-		//endif
+		if(IsMountable(me.graphic))
+			mount := 1;
+		else
+			mount := 0;
+		endif
 	else
 		SendSysMessage(ev.source, "Nao pode dar esse item!");
 	endif	
