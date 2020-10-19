@@ -14,7 +14,7 @@ include ":tn:cooldown";
 set_script_option(SCRIPTOPT_CAN_ACCESS_OFFLINE_MOBILES, 1);
 
 var pack_animals := array(291, 292); 
-var mountables := array(200, 204, 226, 228);
+var mountables := array(0xCC, 0xC8, 0xE2, 0xE4);
 var me := self();
 var wait_time := 120;
 var next_watch := ReadGameClock();
@@ -115,7 +115,7 @@ program TamedAI()
 
 					elseif ( !GetEquipmentByLayer(ev.source, LAYER_MOUNT) )
 
-						if ( IsMountable(me.graphic) )//&& MoveObjectToLocation(ev.source, me.x, me.y, me.z, ev.source.realm))
+						if ( IsMountable(me.graphic) && MoveObjectToLocation(ev.source, me.x, me.y, me.z, ev.source.realm))
 
 							if (me.npctemplate == ":brainai:Unicorn")
 								if (GetObjProperty(me, "aprimorado"))
@@ -745,4 +745,3 @@ function CastFaerieHeal(me, owner)
 	SetCooldown(me, "heal", 150);
 
 endfunction
-
