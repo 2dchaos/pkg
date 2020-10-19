@@ -5,6 +5,7 @@ C:/LVM/scripts/modules/uo.em
 C:/LVM/scripts/modules/os.em
 C:/LVM/scripts/modules/npc.em
 C:/LVM/scripts/modules/util.em
+C:/LVM/scripts/modules/storage.em
 C:\LVM\pkg\systems\attributes\include\attributes.inc
 C:/LVM/scripts/modules/cfgfile.em
 C:/LVM/scripts/modules/vitals.em
@@ -34,5 +35,8 @@ C:/LVM/scripts/modules/datafile.em
 C:\LVM\scripts\include\sysEvent.inc
 C:\LVM\pkg\items\mounts\include\mounts.inc
 C:\LVM\scripts\include\client.inc
-C:\LVM\pkg\skills\animalhandle\taming\include\taming.inc
-C:\LVM\pkg\tn\include\cooldown.inc
+C:\LVM\pkg\utils\gumps\include\yesno.inc
+C:\LVM\pkg\tn\include\npcUtil.inc
+C:\LVM\pkg\mobiles\brainAI\include\commonFunctions.inc
+C:\LVM\pkg\mobiles\brainAI\include\npcSettings.inc
+C:\LVM\pkg\mobiles\timedScripts\include\timedScripts.inc
