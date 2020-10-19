@@ -39,6 +39,11 @@ var descmod:={};
 		return 0;
 	endif
 
+	if GetEquipmentByLayer(who, LAYER_MOUNT)
+		SendSysMessageEx(who, "Voce nao consegue se armar enquanto estiver montado.", SSM_FAIL);
+		return 0;
+	endif	
+
 	if (GetObjProperty(who, "metamorfose") != error)
 		if (TemHabilidade(who, "Adornos da Besta"))
 			if (item.isa(POLCLASS_WEAPON) || item.isa(POLCLASS_ARMOR))	
