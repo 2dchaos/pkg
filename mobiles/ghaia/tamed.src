@@ -14,7 +14,8 @@ include ":tn:cooldown";
 set_script_option(SCRIPTOPT_CAN_ACCESS_OFFLINE_MOBILES, 1);
 
 var pack_animals := array(291, 292); 
-var mountables := array(200, 204, 226, 228);
+//var mountables := array(200, 204, 226, 228);
+var mount := 0;
 var me := self();
 var wait_time := 120;
 var next_watch := ReadGameClock();
