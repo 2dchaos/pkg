@@ -1264,7 +1264,7 @@ program createchar(who)
 		SetObjProperty(p1, "spellinfo", spellinfo);
 		
 		ganheispell := 1;*/
-	if  (chardata.kit == "Acolito")
+	/*if  (chardata.kit == "Acolito")
 		var robe := CreateItemInBackpack(who, 0x1F03, 1); //Manto
 		SetObjProperty(robe, "description", "Robe com bordado do simbolo do Sol Invicto");
 		SetObjProperty(robe, "cannotdye", 1);
@@ -1273,7 +1273,8 @@ program createchar(who)
 		createiteminbackpack(who, "runacuraleve");
 		createiteminbackpack(who, "runadescanso");
 		ganheispell := 1;
-	elseif (chardata.kit == "Nobre Decadente")
+        */
+	if (chardata.kit == "Nobre Decadente")
 		/*if (who.graphic == 400)
 			who.title_prefix := "Sir";
 		else
