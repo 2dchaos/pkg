@@ -72,8 +72,8 @@ program SpellStarter(params)
 		SendSysMessage(mobile, "Voce precisa falar devido os componentes verbais da magia.");
 		FailSpell(mobile);
 		return 0;
-	elseif (equippedright and equippedleft || twohanded)
-    	SendSysMessage(character, "Voce precisa de pelo menos uma mao livre para gesticular os componentes necessarios para a magia.");
+	elseif (!maoLivre(mobile, 1))
+    	SendSysMessage(mobile, "Voce precisa de pelo menos uma mao livre para gesticular os componentes necessarios para a magia.");
     	return 0;
 	elseif (GetEquipmentByLayer(mobile, LAYER_MOUNT))
 		SendSysMessageEx(mobile, "Voce nao pode usar magia enquanto estiver montado.", SSM_FAIL);
