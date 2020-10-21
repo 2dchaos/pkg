@@ -98,13 +98,13 @@ program SpellStarter(params)
 		EraseObjProperty(mobile, "#Casting");
 		return 0;
 	elseif (!maoLivre(mobile, 1))
-		SendSysMessageEx(mobile, "Voce precisa de pelo menos uma mao livre para gesticular os componentes necessarios para a magia.", SSM_FAIL);
+		SendSysMessageEx(mobile, "Voce nao consegue invocar feiticos montado ou com as duas maos ocupadas", SSM_FAIL);
 		mobile.frozen := 0;
 		EraseObjProperty(mobile, "#medding");
 		EraseObjProperty(mobile, "#Casting");
 		return 0;
 	elseif (GetEquipmentByLayer(mobile, LAYER_MOUNT))
-		SendSysMessageEx(mobile, "Voce nao pode usar magia enquanto estiver montado.", SSM_FAIL);
+		SendSysMessageEx(mobile, "Voce nao consegue invocar feiticos montado ou com as duas maos ocupadas", SSM_FAIL);
 		mobile.frozen := 0;
 		EraseObjProperty(mobile, "#medding");
 		EraseObjProperty(mobile, "#Casting");
