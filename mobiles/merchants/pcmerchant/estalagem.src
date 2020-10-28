@@ -38,6 +38,13 @@ program MerchantMenu(params)
 	GFResizePic(gump, 15, 15, BKGND_STONESLAB, 150, 450);
 
 	var quartos := GetObjProperty(npc, "quartos");
+	var taxa;
+	var valortaxa;
+	
+	if (getObjProperty(npc, "taxap"))
+		taxa := (getObjProperty(npc, "taxap"));
+	endif
+	
 	var souInquilino := 0;
 	var meuquarto := -1;
 	var j := 1;
@@ -208,6 +215,17 @@ program MerchantMenu(params)
 				SendSysMessageEx(player, "Player " + player2.name + " do quarto " + quarto.name + " nao teve dinheiro para pagar o aluguel.", SSM_FAIL);
 			else
 				SendSysMessageEx(player, "Player " + player2.name + " do quarto " + quarto.name + " pagou o aluguel.", SSM_INFO);
+				if(getObjProperty(npc, "taxap"))
+				valortaxa := ((quartos[i].custo * taxa) / 100);
+					else
+				valortaxa := (quartos[i].custo * 0.1);
+				endif
+				
+				if (GetObjProperty(npc, "cofreid"))
+					var cofser := getObjProperty(npc, "cofreid");
+					var cofrereal := SystemFindObjectBySerial(cofser);
+					CreateItemInContainer( cofrereal, "moedacobre", valortaxa );
+				endif
 			endif
 			i := i +1;
 		endforeach

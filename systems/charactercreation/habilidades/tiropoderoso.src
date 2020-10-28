@@ -34,7 +34,14 @@ program tirodesfocado(who)
 		return 1;
 	endif
 	
+	var aljavas := array{0x791c, 0x2fb7};
 	var aljava := GetEquipmentByLayer(who, 0x14);
+	
+		if (aljava.objtype in aljavas)
+			aljava := GetEquipmentByLayer(who, 0x14);
+		else
+			aljava := GetEquipmentByLayer(who, 0xc);
+		endif
 	var ammo := GetObjProperty(who.weapon, "ammo");
 	if (!ammo)
 		SendSysMessage(who, "Voce nao definiu o tipo de flecha que vai usar. [clique 2x no arco e na flecha]");
@@ -61,8 +68,9 @@ program tirodesfocado(who)
 	var alreadydamaged := array{};
 	foreach pontos in distancia
 		var mobiles := ListMobilesNearLocation(pontos.x, pontos.y, who.z, 1, who.realm);
+		var pets := ListPetsNear(who, 8);
 		foreach mobile in mobiles
-			if (!(mobile.serial in alreadydamaged) && (mobile != who) && !(mobile in who.party.members))
+			if (!(mobile.serial in alreadydamaged) && (mobile != who) && !(mobile in who.party.members) && !(mobile in pets ))
 				alreadydamaged.Append(mobile.serial);
 				var total := cint(CalculateTotalDamage(mobile, basedamage, who, dmgList));
 				DamageFLS(mobile, total*2, DMG_FORCED, who);

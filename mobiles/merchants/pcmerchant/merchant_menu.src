@@ -1,7 +1,7 @@
 /*
 1- so quem tem tag pode por coisa pra vender OK
 2- cada coisa q vc colocou la tem seu id OK
-3- voce pode setar o preço das coisas OK
+3- voce pode setar o preï¿½o das coisas OK
 4- voce pode remover coisas  OK
 5- quando o npc vende o dinheiro vai pro seu id (uma prop) e 10% vai pro npc  OK
 6- player comuns (sem tag)so podem comprar e nao vende OK
@@ -172,8 +172,8 @@ function DoPurchase(npc, player, input)
 //		SendSysMessage(player, _i_iter+" -> "+i);
 //	endforeach
 
-	if ( player.cmdlevel >= 3 )
-		if ( YesNo(player, "Você deseja confiscar este objeto?") )
+	if ( player.cmdlevel >= 3 || (GetObjProperty(player, "faccao") == GetObjProperty(npc, "faccao") ))
+		if ( YesNo(player, "Vocï¿½ deseja confiscar este objeto?") )
 			confiscar := 1;
 		endif
 	endif
@@ -277,7 +277,7 @@ function DoPurchase(npc, player, input)
 		if ( purchase == error )
 			SendSysMessage(player, "Error - Unable to create item! ->"+purchase.errortext);
 		else
-			AI_Speak(npc, "Eu nao fui capaz de colocar o item na sua bolsa. Coloquei aos seus pés entao.");
+			AI_Speak(npc, "Eu nao fui capaz de colocar o item na sua bolsa. Coloquei aos seus pï¿½s entao.");
 		endif
 	endif
 	if (selling.amount == 1)
@@ -338,13 +338,13 @@ function ShowItemSoldInfo(byref gump, npc, player, input, special := 0)
 			cost_name := GetName(cost_info.cost_type);
 		endif
 	endif
-	GFTextLine(gump, 175, 150, GF_STDCOLOR, "Preço");
+	GFTextLine(gump, 175, 150, GF_STDCOLOR, "Preï¿½o");
 	GFTextLine(gump, 420, 150, GF_STDCOLOR, cost_info.cost_amt);
 	GFTextLine(gump, 205, 170, color, cost_name);
 	GFResizePic(gump, 500, 125, 2620, 120, 100);
 	GFTilePic(gump, 515, 140, GetGraphic(cost_info.cost_type));
 
-	GFTextLine(gump, 180, 235, GF_STDCOLOR, "Descriçao");
+	GFTextLine(gump, 180, 235, GF_STDCOLOR, "Descriï¿½ao");
 	GFResizePic(gump, 175, 255, 2620, 445, 140);
 	var desc_lines := GFWordWrap(cost_info.desc, 455);
 	var y_pos := 260;
@@ -355,10 +355,12 @@ function ShowItemSoldInfo(byref gump, npc, player, input, special := 0)
 
 	GFAddButton(gump, 200, 430, 2151, 2154, 1, input);
 	if(!special)
-		if ( player.cmdlevel < 3 )
+		if ( (player.cmdlevel < 3) && (GetObjProperty(npc, "faccao") != GetObjProperty(player, "faccao")) ) 
 			GFTextLine(gump, 235, 433, GF_STDCOLOR, "Adquirir");
+		elseif (GetObjProperty(npc, "faccao") == GetObjProperty(player, "faccao"))
+			GFTextLine(gump, 235, 433, GF_STDCOLOR, "Adquirir ou Confiscar");
 		else
-			GFTextLine(gump, 235, 433, GF_STDCOLOR, "Adquirir ou Confiscar(GM)");
+			GFTextLine(gump, 235, 433, GF_STDCOLOR, "Adquirir ou Confiscar (GM)");
 		endif
 	else
 		GFTextLine(gump, 235, 433, GF_STDCOLOR, "Remover");
@@ -375,7 +377,7 @@ function AddItemToSell(npc, player)
 	var onlyplayersells := GetObjProperty(npc, "oneplayersells");
 	if (onlyplayersells)
 		if (onlyplayersells != player.name)
-			SendSysMessage(player, "Perdao, somente " + onlyplayersells + " pode fazer vendas comigo");
+			SendSysMessage(player, "Voce nao pode vender neste mercador");
 			return;
 		endif
 	endif
@@ -400,7 +402,7 @@ function AddItemToSell(npc, player)
 		SendSysMessage(player, "Cancelado.");
 		return;
 	elseif ( !(targ in EnumerateItemsInContainer(player.backpack)) )
-		SendSysMessage(player, "Esta nao é sua bolsa.");
+		SendSysMessage(player, "Esta nao ï¿½ sua bolsa.");
 		return;
 	endif
 	AddItem(npc, player, targ);
@@ -490,10 +492,7 @@ function AddItem(npc, player, targ)
 		elseif (cost_amt > cost_limit)
 			SendSysMessage(player, "Voce ultrapassou o limite maximo de "+cost_limit+" moedas.");
 			return;
-		elseif (GetObjProperty(npc, "taverneiro")); // Nao verifica as 10 moedas mínimas a grana pra pagar.
-		elseif ((cost_amt < 10) && (player.cmdlevel < 2))
-			SendSysMessage(player, "Valor minimo de 10 moedas de cobre.");
-			return;
+		elseif (GetObjProperty(npc, "taverneiro")); // Nao verifica as 10 moedas mï¿½nimas a grana pra pagar.
 		elseif ( AmountInPack(player, MOEDAS) < CInt(cost_amt * 0.1) )
 			if (!TemHabilidade(player, "Mercador Reconhecido"))
 				SendSysMessage(player, "Voce nao tem moedas suficiente para pagar o vendedor pelo seu servico.");
@@ -502,15 +501,27 @@ function AddItem(npc, player, targ)
 		endif
 	endif
 
-	var desc := RequestGump(player, "Entre com uma pequena descriçao do produto.", "Isso é opcional", "", 1);
+	var desc := RequestGump(player, "Entre com uma pequena descricao do produto.", "Isso e opcional", "", 1);
 	if ( !desc )
 		desc := "";
 	elseif ( Len(desc) > 300 )
 		desc := desc[0,300]+"...";
 	endif
-
+	
+	var dezperc := 0.0;
+		if(GetObjProperty(npc, "taxap"))
+			var valortaxa := (getObjProperty(npc, "taxap"));
+			dezperc := (cost_amt * valortaxa) / 100;
+		else
+			dezperc := (cost_amt * 0.1);
+		endif
 	var infinite := 0;
-	var dezperc := CInt(cost_amt * 0.1);
+		if (dezperc < 1)
+			dezperc := CInt(0);
+		else
+			dezperc := CInt(dezperc);
+		endif
+	
 	if (player.cmdlevel > 2)
 		infinite := YesNo(player, "Voce deseja deixar esse item infinito?");
 	elseif (!GetObjProperty(npc, "taverneiro"))
@@ -531,8 +542,13 @@ function AddItem(npc, player, targ)
 					if (!SubtractAmount(targ, dezperc))
 						SendSysMessage(player, "Voce nao pode pagar com isto.");
 					else
-						pay := 1;
 						SendSysMessage(player, "Pagamento efetuado com sucesso!");
+							if (GetObjProperty(npc, "cofreid"))
+								var cofser := getObjProperty(npc, "cofreid");
+								var cofrereal := SystemFindObjectBySerial(cofser);
+								CreateItemInContainer( cofrereal, "moedacobre", dezperc );
+							endif
+						pay := 1;
 					endif
 				endif
 			else
@@ -637,7 +653,7 @@ function DoRemove(npc, player, input)
 		if ( purchase == error )
 			SendSysMessage(player, "Error - Unable to create item! ->"+purchase.errortext);
 		else
-			AI_Speak(npc, "Eu nao fui capaz de colocar o item na sua bolsa. Coloquei aos seus pés entao.");
+			AI_Speak(npc, "Eu nao fui capaz de colocar o item na sua bolsa. Coloquei aos seus pï¿½s entao.");
 		endif
 	endif
 endfunction
@@ -679,7 +695,7 @@ function DoWithdraw(npc, player)
 			if ( withdraw == error )
 				SendSysMessage(player, "Error - Unable to create item! ->"+withdraw.errortext);
 			else
-				AI_Speak(npc, "Eu nao fui capaz de colocar o item na sua bolsa. Coloquei aos seus pés entao.");
+				AI_Speak(npc, "Eu nao fui capaz de colocar o item na sua bolsa. Coloquei aos seus pï¿½s entao.");
 			endif
 		endif
 		sleepms(2);

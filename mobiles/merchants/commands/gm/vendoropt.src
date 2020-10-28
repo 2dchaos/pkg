@@ -50,8 +50,24 @@ program vendoropt(who)
 	else
 		opt.append(0);
 	endif
+	if ( GetObjProperty(targ, "cofre") || GetObjProperty(targ, "cofre"))
+		opt.append(1);
+	else
+		opt.append(0);
+	endif
+	if ( GetObjProperty(targ, "Taxa") || GetObjProperty(targ, "taxap"))
+		opt.append(1);
+	else
+		opt.append(0);
+	endif
+	if ( GetObjProperty(targ, "faccao") )
+	opt.append(1);
+	else
+	opt.append(0);
+	endif
+
 	
-	var result := CheckBoxGump(who, 300, 235, "Opcoes do Vendor", {"Secreto", "Kit Artifice", "Sem Limite Minimo de 10", "Apenas GM vende", "Apenas Um Player Vende", "Alterar Mensagens de Compra"}, opt);
+	var result := CheckBoxGump(who, 350, 300, "Opcoes do Vendor", {"Secreto", "Kit Artifice", "Sem Limite Minimo de 10", "Apenas GM vende", "Apenas Um Player Vende", "Alterar Mensagens de Compra", "Cofre", "Taxa", "Faccao"}, opt);
 
 	EraseObjProperty(targ, "secret");
 	EraseObjProperty(targ, "onlyartifice");
@@ -78,12 +94,27 @@ program vendoropt(who)
 			if (startbuy)
 				SetObjProperty(targ, "startbuy", startbuy);
 			endif
-			var endbuy := cstr(RequestGump(who, "Qual a mensagem de compra? [Cancele para deixar padrao]"));
+			var endbuy := cstr(RequestGump(who, "Qual a mensage? [Cancele para deixar padrao]"));
 			if (endbuy)
 				SetObjProperty(targ, "endbuy", endbuy);
 			endif
-		endif
-		
+		elseif ( r == "Cofre")
+			SendSysMessageEx(who, "Escolha o cofre", SSM_REQUEST);
+			var cofre := Target(who);
+			if (cofre.objtype == 40512)
+			SetObjProperty(targ, "cofreid", cofre.serial);
+			else
+			SendSysMessageEx(who, "Escolha um container", SSM_REQUEST);
+			return 1;
+			endif
+		elseif ( r == "Taxa")
+			var taxa := cint(RequestGump(who, "Insira a taxa cobrada em porcentagem [somente numeros inteiros]"));
+			SetObjProperty(targ, "taxap", taxa);
+		elseif ( r == "faccao")
+			var faccao := RequestGump(who, "Insira a faccao deste npc");
+			SetObjProperty(targ, "faccao", faccao);
+			endif
+
 	endforeach
 	
 endprogram
