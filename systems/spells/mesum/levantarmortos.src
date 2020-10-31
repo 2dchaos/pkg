@@ -64,19 +64,19 @@ program SpellScript(params)
 	var undead;
 	
 	if (random < 2)
-		undead := createnpcfromtemplate(":brainai:headless", targ.x, targ.y, targ.z, 0 , who.realm);
-	elseif (random < 10)
 		undead := createnpcfromtemplate(":brainai:zombie", targ.x, targ.y, targ.z, 0 , who.realm);
-	elseif (random < 20)
+	elseif (random < 10)
 		undead := createnpcfromtemplate(":brainai:skeleton1", targ.x, targ.y, targ.z, 0 , who.realm);
+	elseif (random < 20)
+		undead := createnpcfromtemplate(":brainai:skeleton3", targ.x, targ.y, targ.z, 0 , who.realm);
 	elseif (random < 50)
 		undead := createnpcfromtemplate(":brainai:ossadaescarlate", targ.x, targ.y, targ.z, 0 , who.realm);
 	elseif (random < 55)
 		undead := createnpcfromtemplate(":brainai:zombielord", targ.x, targ.y, targ.z, 0 , who.realm);
 	elseif (random < 60)
-		undead := createnpcfromtemplate(":brainai:spectre", targ.x, targ.y, targ.z, 0 , who.realm);
+		undead := createnpcfromtemplate(":brainai:monstruosidadecosturada", targ.x, targ.y, targ.z, 0 , who.realm);
 	elseif (random < 80)
-		undead := createnpcfromtemplate(":brainai:skeletonmage", targ.x, targ.y, targ.z, 0 , who.realm);
+		undead := createnpcfromtemplate(":brainai:Mummy", targ.x, targ.y, targ.z, 0 , who.realm);
 	elseif (random < 5000)
 		undead := createnpcfromtemplate(":brainai:fleshgolem", targ.x, targ.y, targ.z, 0 , who.realm);
 	endif
