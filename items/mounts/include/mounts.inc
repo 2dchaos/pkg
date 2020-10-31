@@ -162,6 +162,13 @@ function MP_Mount(mobile, npc)
 	var mount_piece := GetEquipmentByLayer(mobile, LAYER_MOUNT);
 	var npctemplate := NPC_ParseTemplateName(npc.npctemplate);
 	var cfg := ReadConfigFile(":brainai:npcdesc");
+	var equippedright := GetEquipmentByLayer(mobile, 0x01);
+	var equippedleft := GetEquipmentByLayer(mobile, 0x02);
+
+	if (equippedright || equippedleft)
+		SendSysMessage(mobile, "Voce precisa das duas maos livres!");
+		return 0;
+	endif
 	
 	if (cfg[npctemplate.template].Category != "Mount")
 		SendSysMessage(mobile, "Nao pode montar este animal.");
@@ -357,7 +364,7 @@ endfunction
  * Returns the npc that was created / restored.
  *
  */
- function ExchangeStamina(who, me)
+ /*function ExchangeStamina(who, me)
 	var my_stamina := AP_GetVital(me, "Stamina");
 	var his_stamina := AP_GetVital(who, "Stamina");
 
@@ -372,7 +379,7 @@ endfunction
 
 	AP_SetVital(who, "Stamina", my_stamina);
 	AP_SetVital(me, "Stamina", his_stamina);
-endfunction
+endfunction */
 
 
 /*
