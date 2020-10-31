@@ -35,7 +35,7 @@ function GetWoodType(tree)
 	 0x222E:
 	 0x222F:
 	 0x2230:
-        0x2231:
+	 0x2231:
 		return 0xee3c; // cogumelo
          default: 
                 return UOBJ_DEFAULT_LOG;
