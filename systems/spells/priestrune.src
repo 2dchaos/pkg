@@ -6,9 +6,10 @@ include ":tn:cooldown";
 include ":charactercreation:habilidades";
 
 program usavarinha(who, wand)
-	/*if (GetObjProperty(who, "kit") != "Acolito")
-		return 1;
-	endif*/
+	if (GetObjProperty(who, "caminho") != "Acolito")
+		SendSysMEssageEx(who, "Voce nao esta em sintonia com o poder das runas", SSM_FAIL);
+		return 0;
+	endif
 	var chardata := GetObjProperty(who, "chardata");
 	if (chardata.povo == "Bariyano" || chardata.povo == "Ferune") //verifica se o povo é Bariyano ou Ferune
 		if (getobjproperty(wand, "spellinfo") == error)

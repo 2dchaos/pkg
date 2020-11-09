@@ -1,6 +1,7 @@
 use uo;
 use cfgfile;
 
+include "include/say";
 include ":gumps:yesno";     
 include ":gumps:requestgump";
 
@@ -8,7 +9,8 @@ program totem(who, wand)
 
 	var kit := GetObjPRoperty(who, "kit");
 	if (kit != "Totemista")
-		return;
+		SendSysMEssageEx(who, "Voce nao esta em sintonia com o poder dos Totems", SSM_FAIL);
+		return 0;
 	endif 
 
 	var gump := GFCreateGump();

@@ -444,7 +444,7 @@ function GumpSkills(who, byref chardata, byref skillspoints)
 		foreach skill in primarias //reduz as primarias
 			if ( skill == "Tactics")
 				primarias.erase(i);
-				secundarias.append("Tactics");
+				quaternarias.append("Tactics");
 			endif
 			i := i + 1;
 		endforeach
@@ -1413,6 +1413,7 @@ program createchar(who)
 					createiteminbackpack(who, "runaarmasagrada");
 					createiteminbackpack(who, "runacuraleve");
 					createiteminbackpack(who, "runadescanso");
+					setObjproperty(who, "caminho", "Acolito");
 
 					/*var gump3 := GFCreateGump();
 					GFDisposable(gump3, 0);
