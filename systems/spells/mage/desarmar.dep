@@ -1,4 +1,4 @@
-c:\LVM\pkg\systems\spells\mage\desarmar.src
+C:\LVM\pkg\systems\spells\mage\desarmar.src
 C:/LVM/scripts/modules/basic.em
 C:/LVM/scripts/modules/basicio.em
 C:/LVM/scripts/modules/uo.em
@@ -30,6 +30,7 @@ C:\LVM\pkg\systems\attributes\include\attributeConstants.inc
 C:\LVM\pkg\systems\attributes\include\skillCheck.inc
 C:/LVM/scripts/modules/util.em
 C:\LVM\pkg\systems\attributes\include\advanceCheck.inc
+C:\LVM\pkg\tn\include\characters.inc
 C:\LVM\pkg\utils\datafile\include\datafile.inc
 C:/LVM/scripts/modules/file.em
 C:/LVM/scripts/modules/datafile.em

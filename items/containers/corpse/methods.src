@@ -92,13 +92,18 @@ exported function MakeRemains(corpse)
 	if (realowner)
 		remains.SetOwner(realowner);
 	endif
+
 	SetObjProperty(remains, "charname", GetObjProperty(corpse, "charname"));
-	SetName(remains, "Restos de "+GetObjProperty(corpse, "charname"));
+	SetName(remains, "Restos de Corpo");
 	if (GetObjProperty(corpse, "deathdetails"))
 		SetObjProperty(remains, "deathdetails", GetObjProperty(corpse, "deathdetails"));
-		SetName(remains, "Restos de Corpo");
 	endif
-	
+	if (GetObjProperty(corpse, "deathtimer"))
+		SetObjProperty(remains, "deathtimer", GetObjProperty(corpse, "deathtimer"));
+	endif
+	if (GetObjProperty(corpse, "WeaponKill"))
+		SetObjProperty(remains, "WeaponKill", GetObjProperty(corpse, "WeaponKill"));
+	endif
 	
 	
 	DestroyItem(corpse);

@@ -24,19 +24,25 @@ program skill_Anatomy(who)
 			var hunger := CInt(AP_GetVital(subject, "Hunger") / 10);
 			PrintTextAbovePrivate(subject, "Niveis de fome: " + hunger , who);
 		return 0;
-	elseif(subject.graphic == 0x2006)
+	elseif (subject.graphic == 0x2006)
+		var vinicial:= valorInicial(who, MEDICINE);
+		Printtext(who, "valor inicial " + vinicial);
 		PrintText(who, "*examinando o corpo*");
 		if( SkillCheck(who, MEDICINE, -1) > 0 )
 			if (GetObjProperty(subject, "morto") == 1)
 				SendSysMessageEx(who, "Parece morto para voce.", SSM_INFO);
 				if (valorInicial(who, MEDICINE) == 40);
+				PrintText(who, "entrou no forense medicine");
 					if (GetObjProperty(subject, "WeaponKill"))
+					 PrintText(who, "entrou no forense Wepkill");
 						SendSysMessageEx(who, "O corpo foi morto por: " + GetObjProperty(subject, "WeaponKill"), SSM_INFO);
 					endif
 					if (GetObjProperty(subject, "deathtimer"))
+					PrintText(who, "entrou no forense dettime");
 						SendSysMessageEx(who, "Foi morto a: " + tempoMorto(subject, "deathtimer"), SSM_INFO);
 					endif
 					if (GetObjProperty(subject, "deathdetails"))
+					PrintText(who, "entrou no forense details");
 						SendSysMessageEx(who, "Detalhes: " + GetObjProperty(subject, "deathdetails"), SSM_INFO);
 					endif
 				endif

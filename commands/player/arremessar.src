@@ -45,6 +45,9 @@ program arremesso(params)
 	elseif ( Distance(who, targ) > 1 )
 		SendSysMessageEx(who, "Muito longe.", SSM_FAIL);
 		return 0;
+	elseif ((!targ.movable) or !ReserveItem(targ))
+		SendSysMessageEx(who, "Voce nao pode arremessar isto.", SSM_FAIL);
+		return 0;	
 	elseif ( targ.isa(POLCLASS_CORPSE) )
 		SendSysMessageEx(who, "Voce nao pode arremessar corpos.", SSM_FAIL);
 		return 0;

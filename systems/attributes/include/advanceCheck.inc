@@ -14,8 +14,7 @@ use uo;
 use os;
 use util;
 
-//include "stats";
-//include ":tn:characters";
+include ":tn:characters";
 
 /*
  * CheckStatsForSkill(mobile, skill_name)
@@ -123,14 +122,14 @@ function CheckStatAdvancement(mobile, stat_name, stat_mult)
 		AP_SetTrueStat(mobile, stat_name, temp);
 		SetObjProperty(mobile, "#LastStatGain", ReadGameClock());
 
-		/*if (GetObjProperty(mobile, "owner")) //se for um pet salva a skill
+		if (GetObjProperty(mobile, "owner")) //se for um pet salva a skill
 			var myskills := GetObjProperty(npc, "myskills");
 			if (!myskills)
 				myskills := dictionary;
 			endif
 			myskills[stat_name] := temp;
 			SetObjProperty(mobile, "myskills", myskills);
-		endif*/
+		endif
 		
 		return 1;
 	endif
@@ -306,7 +305,7 @@ function AP_CheckClassSkillCap(mobile, skill_name)
 	if ( myskills[skill_name] == error)
 		return 0;
 	elseif (myskills[skill_name] == 1)
-		if (chardata.vantagemracial == "Sabedoria")
+		if (chardata.vantagemracial == "Sabedoria dos Antigos")
 			return 50.0;
 		else
 			return 40.0;
@@ -373,8 +372,7 @@ function costSkill(value)
 		return 0;
 	endif
 endfunction
-
-/*function AwardPoints(who, skill, points)
+function AwardPoints(who, skill, points)
 
 	var skills := GetObjProperty(who, "skills");
 	if (!skills)
@@ -392,7 +390,7 @@ endfunction
 	SetObjProperty(who, "skills", skills);
 	return 0;
 
-endfunction*/
+endfunction
 
 
 function PointsToIncrease(basevalue)
@@ -439,7 +437,7 @@ function limiteportempo (who)
   
    var dias := CInt(idadeChar(who)); // Colocar aqui a prop pra pegar os dias do char
 
-   var lim := 2.5; // Valor inicial
+   var lim := 10; // Valor inicial
    if (dias >= 5)
       if (dias > 75)
          if (dias > 125)
@@ -448,7 +446,7 @@ function limiteportempo (who)
             lim := 40.0 + ((dias - 75) * 0.2);
          endif
       else
-         lim := 5.0 + ((dias - 5) * 0.5);
+         lim := 6.0 + ((dias - 5) * 0.5);
       endif
    endif
       
@@ -456,7 +454,7 @@ function limiteportempo (who)
    lim := lim + (CInt(GetObjproperty(who, "nota"))*5); // Influencia de -10 -5 0 +5 +10 dependendo da nota RP
 
    if (lim < 2.5)
-      lim := 2.5; // Valor m�nimo de 2.5
+      lim := 2.5; // Valor m?nimo de 2.5
    endif
 
    return lim;

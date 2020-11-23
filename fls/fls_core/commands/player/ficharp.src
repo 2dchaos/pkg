@@ -299,8 +299,8 @@ program fichaRP(who, text)
 		GFTextMid(gumpRP, 15, 45, 270, 55, "Ficha de RP");
 		GFTextLine(gumpRP, 20, 75, 600, "Anotacoes" );
 		txt1 := GFTextEntry(gumpRP, 20, 95, 255, 200, 1153, "- ");
-//		GFTextLine(gumpRP, 40, 260, 600, "+1 [Atual: " + getGrade(who) + " ]" ); // se quiser voltar notarp
-//		GFAddButton(gumpRP, 20, 264, 2103, 2104, GF_CLOSE_BTN, 900);
+		GFTextLine(gumpRP, 40, 260, 600, "+1 [Atual: " + getGrade(who) + " ]" ); // se quiser voltar notarp
+		GFAddButton(gumpRP, 20, 264, 2103, 2104, GF_CLOSE_BTN, 900);
 		GFTextMid(gumpRP, 0, 300, 300, 600, "Essa anotacao sera acrescentada");
 		GFTextMid(gumpRP, 0, 315, 300, 600, "as ja existentes, se houver, nessa");
 		GFTextMid(gumpRP, 0, 330, 300, 600, "ficha de RP!");
@@ -312,14 +312,14 @@ program fichaRP(who, text)
 		if (input[0] == 200)
 			SendSysMessage(who, "Cancelado.");
 			return 0;
-/*		elseif (input[0] == 900) // se quiser voltar notarp
+		elseif (input[0] == 900) // se quiser voltar notarp
 			if (GetGrade(player) == 2)
 				SendSysMessage(who, "A nota ja esta no maximo.");
 				return;
 			endif
 			SendSysMessage(who, "Voce aumentou a nota");
 			incGrade(player);
-			LogAccount(player.acctname, who.acctname + " subiu nota: " + getGrade(player));*/
+			LogAccount(player.acctname, who.acctname + " subiu nota: " + getGrade(player));
 		else
 			var str :=  GFExtractData(input, txt1);
 			if (str != error)
