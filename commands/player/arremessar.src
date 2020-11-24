@@ -92,6 +92,7 @@ program arremesso(params)
 			ApplyDamageEX(alvo, RandomDiceRoll( "4d10" ), DMG_PHYSICAL);
 			PlaySoundEffect(alvo, 0x521);
 			PrintTextAbove(alvo, "*Foi acertado por " + targ.name +"*");
+			MakeBleed(alvo);
 		return 1;
 		endif
 	else

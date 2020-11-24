@@ -70,6 +70,10 @@ endfunction
 exported function GetStaminaRegenRate(mobile)
 	var base_regen := CInt(AP_GetSettingsCfgElem("Regen").Stamina) * 100;
 
+	if (TemHabilidade(mobile, "Condicionamento"))
+		base_regen := base_regen + base_regen/4;
+	endif
+
 	return base_regen + AP_GetVitalRegenRateMod(mobile, "stamina");
 endfunction
 

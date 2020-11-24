@@ -10,12 +10,14 @@ program sinais(who)
 	var mensagem := RequestGump(who, "Digite sua mensagem (evite uso de acentos e cedilhas):");
 	var tam := len(mensagem);
 
-	if (tam > 25)
+	
+	// Removido porque chama muita atencao pro ladino, agora so quem recebe a mensagem recebe os emotes
+	/*if (tam > 25)
 		PrintText(who, "*gesticula bastante*");
 	elseif(tam > 10)
 		PrintText(who, "*faz alguns gestos*");
 	endif
-	
+	*/
 	SendSysMessageEx(who, "Escolha os personagens que irao lhe entender. (Esc para Cancelar)",SSM_INFO);
 	while (1)
 		var player := Target(who);

@@ -17,7 +17,7 @@ program skill_Stealth( who )
 	endif
 
 	/*
-	Como Stealth agora eh integrado, ele só roda quando já estiver em hiding mesmo
+	Como Stealth agora eh integrado, ele sï¿½ roda quando jï¿½ estiver em hiding mesmo
 	if ( !who.hidden )
 		var script := start_script(":hiding:hiding", who);
 		while ( script.pid )
@@ -58,7 +58,7 @@ program skill_Stealth( who )
 	if( check > 0 )
 		who.stealthsteps := baseSteps;
 		/*
-		Removido pois agora Furtividade Aprimorada é como se fosse pra habilitar Stealth e não mais dar bonus
+		Removido pois agora Furtividade Aprimorada ï¿½ como se fosse pra habilitar Stealth e nï¿½o mais dar bonus
 		if (temHabilidade(who, "Furtividade Aprimorada"))
 			var bonus := cint(who.stealthsteps * 0.5);
 			who.stealthsteps := who.stealthsteps + bonus;

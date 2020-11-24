@@ -232,7 +232,7 @@ program UseBandage(mobile, bandage)
 		EraseObjProperty(targ, "curando");
 		var chance := 3;
 		//deixa isso pode ser util
-		if ( temHabilidade(mobile, "Conservar Bandagens") )
+		if ( temHabilidade(mobile, "Curandeiro Experiente") )
 			chance := 15;
 		endif
 		if (RandomInt(10) < chance)
@@ -246,9 +246,9 @@ endprogram
 function HealPatient(mobile, targ, heal_skill, aux_skill, bonus, poison)
 	var x := targ.x, y := targ.y;
 	var heal_amt := GetHealingAmt(heal_skill, aux_skill) + bonus;
-	/*if ( temHab(mobile, CURANDEIRO) )
+	if ( temHabilidade(mobile, "Curandeiro Experiente") )
 		heal_amt := heal_amt * 2;
-	endif*/
+	endif
 	if (mobile == targ)
 		heal_amt := heal_amt / 2;
 		//PrintText(mobile, "*usando ataduras em si mesmo*");

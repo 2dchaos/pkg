@@ -48,8 +48,9 @@ program skill_lockpicking( me, lockpick )
 	endif
 
 	if (GetObjProperty(chest,"level"))
+		if (!temHabilidade(me, "Especialista em Invasoes"))
 		PrintText(me, "*arrombando a fechadura*");
-		if (!Wait(me, 5))
+		elseif (!Wait(me, 5))
 			SendSysMessageEx(me, "Voce interrompeu o processo.", SSM_FAIL);
 			return;
 		endif
@@ -68,7 +69,10 @@ function PickTreasureChest(me, lockpick, chest)
 	SendSysMessageEx(me,"O alvo nao parece estar tracado.", SSM_INFO);
 	return;
   endif
-  PlaySoundEffect(chest, 0x0242);
+
+    if (!temHabilidade(me, "Especialista em Invasoes"))
+		PlaySoundEffect(chest, 0x0242);
+    endif
   sleepms(250);
   var diff;
 	case (lvl)
@@ -86,15 +90,25 @@ function PickTreasureChest(me, lockpick, chest)
 	diff := 5;
   endif
   var check := SkillCheck(me, MECHANICALAPITUDE, diff);
-  if ( check > 0 )
-	PlaySoundEffect(chest, 0x0200);
-	PrintTextAbovePrivate(chest,"*Destrancado!*",me);
-	SetObjProperty(chest, "arrombado", "" + me.name);
-	SetObjProperty(chest, "locktime", ReadGameClock());
-  	set_critical(1);
-  	chest.locked := 0;
-  	set_critical(0);
-  else
+    if ( check > 0 )
+		if (!temHabilidade(me, "Especialista em Invasoes"))
+			PrintTextAbovePrivate(chest,"*Destrancado!*",me);
+			SetObjProperty(chest, "arrombado", "" + me.name);
+			SetObjProperty(chest, "locktime", ReadGameClock());
+  			set_critical(1);
+  			chest.locked := 0;
+  			set_critical(0);
+			return;
+  		else	
+  			PlaySoundEffect(chest, 0x0200);
+			PrintTextAbovePrivate(chest,"*Destrancado!*",me);
+			SetObjProperty(chest, "arrombado", "" + me.name);
+			SetObjProperty(chest, "locktime", ReadGameClock());
+  			set_critical(1);
+  			chest.locked := 0;
+  			set_critical(0);
+		endif
+ 	else
 	SendSysMessageEx(me, "Voce falhou em arrombar a fechadura.", SSM_FAIL);
 	if (!temHabilidade(me, "Especialista em Invasoes") && check < -20)
   		PlaySoundEffect(chest,0xef);

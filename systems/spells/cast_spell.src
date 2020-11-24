@@ -30,6 +30,7 @@ program SpellStarter(params)
 	var spellinfo := params[2]; // spellinfo
 	var scroll := params[3]; // item que usou pra castar o spell (scroll, book, varinha ou nada)
 	var targ := params[4];
+	var sens := TemHabilidade(mobile, "Sensibilidade Profana");
 
 
 	if (spellinfo.id != error) //le o cfg pra escrever a info
@@ -263,12 +264,23 @@ program SpellStarter(params)
 		var difficulty := CInt(spellinfo.Difficulty);
 		
 		mobile.frozen := 0;
+		if(TemHabilidade(mobile, "Sensibilidade Profana"))
+		attribute := MECHANICALAPITUDE;
+		endif
+		
 		var skill_check := SkillCheck(mobile, attribute, difficulty);
 
 		// skill_check > 0 on success
 		if ( skill_check > 0 )
 			if (scroll.isA(POLCLASS_ITEM))
-				SubtractAmount(scroll, 1);
+				if(!TemHabilidade(mobile, "Reaproveitar Pergaminho"))
+					SubtractAmount(scroll, 1);
+				else
+					var chance := RandomIntMinMax(0,100);
+					if (chance > attribute)
+						SubtractAmount(scroll, 1);
+					endif
+				endif
 			endif
 			//escolhe o target
 			if (!targ)

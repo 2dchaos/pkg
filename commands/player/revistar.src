@@ -29,14 +29,14 @@ program textcmd_openPack(who)
 		return 0;
 	endif
 
-	var perm := YesNo(targ, "Você permite que "+who.name+" lhe reviste?" , "Sim.", "Não.");
+	var perm := YesNo(targ, "Vocï¿½ permite que "+who.name+" lhe reviste?" , "Sim.", "Nï¿½o.");
 
 	if (!perm)	
 		SendSysMessageEx(who, targ.name+" nao permitiu que voce o revistasse.", SSM_INFO);
 	else
 		var item;
-		if (TemHabilidade(targ, "Ocultar Objeto") && !GetObjProperty(targ, "ocultando"))
-			var esconde := YesNo(targ, "Voce deseja esconder algum objeto?" , "Sim.", "Não.");
+		if (TemHabilidade(targ, "Prestidigitacao") && !GetObjProperty(targ, "ocultando"))
+			var esconde := YesNo(targ, "Voce deseja esconder algum objeto?" , "Sim.", "Nï¿½o.");
 			if (esconde)
 				item := Target(targ);
 				var ok := 0;

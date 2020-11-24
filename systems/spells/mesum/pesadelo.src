@@ -27,7 +27,7 @@ program SpellScript(params)
 		dmg := dmg/2;
 	endif
 
-	if (temHabilidade(who, "Maldicao do Sangue de Asan"))
+	if (temHabilidade(who, "Elo com a Morte"))
 		if (isBloodied(who))
 			dmg := cint(dmg*0.3);
 		endif

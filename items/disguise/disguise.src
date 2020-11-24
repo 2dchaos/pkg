@@ -15,12 +15,15 @@ CONST CANCEL_BTN	:= 0xA00001;
 
 program disguise(who, kit)
 
-//	if (!TemHabilidade(who, "Disfarces") && !TemHabilidade(who, "Disfarce Simplorio"))
-//		SendSysMessageEx(who, "Voce nao sabe usar isto.", SSM_FAIL);
-//		return 1;
-//	elseif (GetObjProperty(who, "disfarce"))
-//		SendSysMessageEx(who, "Caso deseje remover o disfarce digite .removerdisfarce", SSM_INFO);
-//	endif
+	if (!TemHabilidade(who, "Disfarces"))
+		SendSysMessageEx(who, "Voce nao sabe usar isto.", SSM_FAIL);
+		return 1;
+	elseif (!TemHabilidade(who, "Disfarce Simplorio"))
+		SendSysMessageEx(who, "Voce nao sabe usar isto.", SSM_FAIL);
+		return 1;
+	elseif (GetObjProperty(who, "disfarce"))
+		SendSysMessageEx(who, "Caso deseje remover o disfarce digite .removerdisfarce", SSM_INFO);
+	endif
 
 	var disfarce := struct;
 	disfarce.+barba := "";

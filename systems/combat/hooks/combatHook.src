@@ -515,10 +515,7 @@ function CalculateHitChance(attacker, defender)
 	endif
 
 	if (TemHabilidade(defender, "Luta Defensiva"))
-		var cajados := array{ 0x0df0, 0x13f9, 0x0e8a, 0x0e81};
-		if ( defender.weapon.objtype in cajados)
-			hit_chance := hit_chance -15;
-		endif
+		hit_chance := hit_chance -10;	
 	endif
 
 	if (hit_chance < 5.0)

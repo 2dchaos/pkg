@@ -18,6 +18,7 @@ include ":tn:combat";
 include ":combat:combat";
 include ":combat:combat";
 include "include/packets";
+include ":timedscripts:timedScripts";
 
 
 program backstab(who)
@@ -32,22 +33,45 @@ program backstab(who)
 		return;
 	endif
 	
-	SendSysMessage(who, "Quem voce deseja atacar?");
+	SendSysMessageEx(who, "Quem voce deseja atacar?", SSM_REQUEST);
 	var targ := target(who, TGTOPT_HARMFUL+TGTOPT_CHECK_LOS);
 	if ( !targ.ISA(POLCLASS_MOBILE) )
-		SendSysMessage(who, "Voce nao pode atacar isto.");
+		SendSysMessageEx(who, "Voce nao pode atacar isto.", SSM_FAIL);
 		return;
 	elseif ( who.weapon != weapon )
-		SendSysMessage(who, "Voce nao pode atacar depois de ter trocado a arma.");
+		SendSysMessageEx(who, "Voce nao pode atacar depois de ter trocado a arma.", SSM_FAIL);
+		return;
+	elseif (TemHabilidade(who, "Ataque Furtivo a Distancia") && weaponBow)
+		SetObjProperty(who, "backstab", 1);
+			var rawdamage := CalculateRawDamage(who, weapon);
+			rawdamage := rawdamage*3;
+			if (rawdamage < 1)
+				rawdamage := 1;
+			endif
+
+			if ( rawdamage > 0 )
+				var dmgList := dictionary;
+				dmgList := getNewDamageList(who);
+				var basedamage := CalculateTotalDamageBonus(rawdamage, who, targ);
+				var total := CalculateTotalDamage(targ, basedamage, who, dmgList);
+				if (total < 1)
+					total := 1;
+				endif
+				ApplyRawDamage(targ, total);
+				MostraDano(who, targ, total);
+				MakeBleed(targ);
+				who.hidden := 0;
+			endif
+			EraseObjProperty(who, "backstab");
+			SendSysMessage(who, "Voce acertou seu alvo!");
 		return;
 	elseif ( Distance(who, targ) > 2 )
-		if (TemHabilidade(who, "Ataque Furtivo a Distancia") && weaponBow)
-		else
-			SendSysMessage(who, targ.name+" esta muito distante.");
-			return;
-		endif
+		SendSysMessageEx(who, targ.name+" esta muito distante ou voce ainda não possui habilidade para fazer ataques furtivos com bestas e arcos a essa distancia.", SSM_FAIL);
+		return;
+
+	
 	elseif ( targ.serial == who.serial)
-		SendSysMessage(who, "Isso nao e muito esperto.");
+		SendSysMessageEx(who, "Voce conclui que isso nao e uma boa ideia.", SSM_FAIL);
 		return;
 	elseif ( IsBehind(targ, who.x, who.y) )
 		if ( !CanBackStab(who, weapon) )
@@ -66,7 +90,7 @@ program backstab(who)
 
 			SetObjProperty(who, "backstab", 1);
 			var rawdamage := CalculateRawDamage(who, weapon);
-			rawdamage := rawdamage*2;
+			rawdamage := rawdamage*4;
 			if (rawdamage < 1)
 				rawdamage := 1;
 			endif
@@ -82,6 +106,7 @@ program backstab(who)
 				ApplyRawDamage(targ, total);
 				MostraDano(who, targ, total);
 				MakeBleed(targ);
+				TS_StartTimer(targ, "bleed", 15);
 			endif
 			EraseObjProperty(who, "backstab");
 			SendSysMessage(who, "Voce acertou seu alvo!");
