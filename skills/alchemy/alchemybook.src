@@ -122,7 +122,12 @@ function MakePotion ( pot, who)
 		set_critical(1);
 		foreach item in EnumerateItemsInContainer(who.backpack)
 			if((item.objtype == UOBJECT_EMPTY_BOTTLE) && (item.container.objtype != 0x1940))
-				if(SubtractAmount(item, 1))
+				if (temHabilidade(who, "Extrato Instantaneo Duplicado"))
+					if(SubtractAmount(item, 2))
+						hasbottle := 1;
+						break;				
+					endif
+				elseif (SubtractAmount(item, 1))
 					hasbottle := 1;
 					break;
 				endif
@@ -141,12 +146,22 @@ function MakePotion ( pot, who)
 					SetObjProperty(thing, "strength", strength);
 				endif
 				if (GetObjProperty(who, "extratoinstantaneo"))
-					SendSysMessageEx(who, "Voce fez um extrato instantaneo.", SSM_INFO);
-					var pocao := GetObjProperty(thing, "pocao");
+					if (temHabilidade(who, "Extrato Instantaneo Duplicado"))
+						SendSysMessageEx(who, "Voce fez dois extratos instantaneamente.", SSM_INFO);
+						var amt := 2;
+						var pocao := GetObjProperty(thing, "extrato");
+       					var pot := CreateItemInBackpack(who, pocao, amt);
+						SetObjProperty(pot, "strength", cint(GetObjProperty(thing, "strength")));
+						DestroyItem(thing);
+						EraseObjProperty(who, "extratoinstantaneo");
+					else 
+						SendSysMessageEx(who, "Voce fez um extrato instantaneo.", SSM_INFO);
+						var pocao := GetObjProperty(thing, "extrato");
        					var pot := CreateItemInBackpack(who, pocao, 1);
-					SetObjProperty(pot, "strength", cint(GetObjProperty(thing, "strength")));
-					DestroyItem(thing);
-					EraseObjProperty(who, "extratoinstantaneo");
+						SetObjProperty(pot, "strength", cint(GetObjProperty(thing, "strength")));
+						DestroyItem(thing);
+						EraseObjProperty(who, "extratoinstantaneo");
+					endif	
 				endif
 			endif
 			SetObjProperty(thing, "crafterskill", AP_GetSkill(who, ALCHEMY) );

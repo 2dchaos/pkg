@@ -96,7 +96,7 @@ function DigForMap(who, targ, map)
 		return;
 
 	elseif((distn < range) && (len(mobiles) > 0))
-		SendSysMessageEx(who,"voce patou de cavar porque algo esta sobre o tesouro.");
+		SendSysMessageEx(who,"voce parou de cavar porque algo esta sobre o tesouro.");
 		return;
 	else
 
@@ -108,13 +108,14 @@ function DigForMap(who, targ, map)
 		var loot := "treasuremap" + maplevel;
 
 		var chest;
-		chestz := chestz - 8;
+		chestz := chestz -8;
 		sendsysmessage(who, " " + chestz);
 		var chests := CreateTreasureChests(maplevel, 1, 0, chestx, chesty, chestz, who.realm, loot);
 		chest := chests[1];
-		if (GetObjProperty(map, "tesouroescondido") == 1)
+/*		if (GetObjProperty(map, "tesouroescondido") == 1)
 			Loot_Generate(chest, loot);
-		endif
+		endif  	*/
+
 		var ret := MoveObjectToLocation(chest, chest.x, chest.y, chestz, who.realm,  MOVEOBJECT_FORCELOCATION);
 //		sendsysmessage(who, " " + ret);
 
@@ -183,12 +184,29 @@ function DigForMap(who, targ, map)
 
 		endwhile
 
+		// Para implementar basta compilar o mining.src depois colocar mais mobs para maplevels diferentes há um bug no z, o chest sai voando mas da pra pegar
+
+		if (maplevel == 1)
+            PrintTextAbove(who, "Gritos Atacar rapazes! A pior parte já fizeram!");
+            createnpcfromtemplate(":brainai:bandoleiro", who.x, who.y, who.z +5, 0 , who.realm);
+            createnpcfromtemplate(":brainai:roguearcher", who.x, who.y, who.z +5, 0 , who.realm);
+            createnpcfromtemplate(":brainai:assassin", who.x, who.y, who.z +5, 0 , who.realm);
+      /*    elseif ( spell == "summonfire" )
+            CreateNpcFromTemplate(":brainai:fireelemental", who.x, who.y, who.z, 0, who.realm);
+          elseif ( spell == "summonair")
+                CreateNpcFromTemplate(":brainai:airelemental", who.x, who.y, who.z, 0, who.realm);
+          elseif ( spell ==  "summonearth")
+                CreateNpcFromTemplate(":brainai:earthelemental", who.x, who.y, who.z, 0, who.realm);
+          elseif ( spell ==  "summonice")
+                CreateNpcFromTemplate(":brainai:snowelemental", who.x, who.y, who.z, 0, who.realm);  */
+        endif
+
 		chest.movable := 1;
       		EraseObjProperty(map, "level");
       		EraseObjProperty(map, "chestx");
       		EraseObjProperty(map, "chesty");
       		SetObjProperty(map, "Solved", 1);
-      		map.name := "mapa de tesouro [completado por " + who.name + "]";
+      		map.name := "Mapa de tesouro [Completado por " + who.name + "]";
 
     endif
 
@@ -359,12 +377,12 @@ endfunction
 function DetermineMiningDifficulty(oretype)
 
 	case (oretype)
-	
+	/*
 		0xBD11: return 0;  //pedra pequena
 		0xBD11: return 0;  //pedra media
 		0xBD11: return 0;  //pedra grande
 		0xee99: return 0;  //calcario
-
+	*/
 		0x6300: return 0;  //iron ore
 		0x6301: return 70; //lithtan
 		0x6302: return 80; //helce
@@ -378,12 +396,12 @@ function DetermineMiningDifficulty(oretype)
  		0x6990: return 30; //estanho 
 
 		0x6075:  return 5; //areia
-		
+	/*	
 		0x6666: return 0; //id falso de pedra
 		0x8850: return 40; //marmore
 		0x8852: return 30; //arenito
 		0x5001: return 5; //id de stone
-
+	*/
 		0x6305: return 40; //golden <- nao faz nada
 		
 		default: return 100;

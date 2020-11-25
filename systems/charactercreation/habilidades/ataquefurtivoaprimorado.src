@@ -3,11 +3,15 @@ use os;
 
 
 include "include/say";
+include ":attributes:attributes";
+include ":timedScripts:timedScripts";
+include "include/say";
+include ":tn:cooldown";
 
 
 program backstab(who)
 	
-	SendSysMessageEx(who, "Voce nao sera revelado no seu proximo ataque furtivo.", SSM_INFO);
+	SendSysMessageEx(who, "Seu proximo ataque furtivo sera muito mais letal", SSM_INFO);
 	SetObjProperty(who, "ataquefurtivoaprimorado", 1);
 
 endprogram 

@@ -49,6 +49,14 @@ program backstab(who)
 				rawdamage := 1;
 			endif
 
+			if ( weaponBow)
+				if (!AmmoCheck(who, targ))
+					return 1;
+				endif
+			else
+				PerformAction(who, 0x000a );
+			endif
+
 			if ( rawdamage > 0 )
 				var dmgList := dictionary;
 				dmgList := getNewDamageList(who);
@@ -61,6 +69,7 @@ program backstab(who)
 				MostraDano(who, targ, total);
 				MakeBleed(targ);
 				who.hidden := 0;
+
 			endif
 			EraseObjProperty(who, "backstab");
 			SendSysMessage(who, "Voce acertou seu alvo!");
@@ -87,10 +96,37 @@ program backstab(who)
 				PerformAction(who, 0x000a );
 			endif
 			
+			if (GetObjProperty(who, "ataquefurtivoaprimorado") == 1 )
+				SetObjProperty(who, "backstab", 1);
+				var rawdamage := CalculateRawDamage(who, weapon);
+				rawdamage := rawdamage*4;
+				if (rawdamage < 1)
+					rawdamage := 1;
+				endif
 
+				if ( rawdamage > 0 )
+					var dmgList := dictionary;
+					dmgList := getNewDamageList(who);
+					var basedamage := CalculateTotalDamageBonus(rawdamage, who, targ);
+					var total := CalculateTotalDamage(targ, basedamage, who, dmgList);
+						if (total < 1)
+							total := 1;
+						endif				
+					DamageFLS(targ, total, DMG_FORCED, who);
+					MostraDano(who, targ, total);
+					MakeBleed(targ);
+					TS_StartTimer(targ, "bleed", 15);
+					EraseObjProperty(who, "backstab");
+					SendSysMessage(who, "Voce acertou seu alvo!");
+					EraseObjProperty(who, "ataquefurtivoaprimorado");
+					who.hidden := 0;
+					return;
+				endif	
+			endif
+	
 			SetObjProperty(who, "backstab", 1);
 			var rawdamage := CalculateRawDamage(who, weapon);
-			rawdamage := rawdamage*4;
+			rawdamage := rawdamage*2;
 			if (rawdamage < 1)
 				rawdamage := 1;
 			endif
@@ -110,12 +146,15 @@ program backstab(who)
 			endif
 			EraseObjProperty(who, "backstab");
 			SendSysMessage(who, "Voce acertou seu alvo!");
-			if ( GetObjProperty(who, "ataquefurtivoaprimorado") == 1 )
+			who.hidden := 0;
+
+			/* if ( GetObjProperty(who, "ataquefurtivoaprimorado") == 1 )
 				EraseObjProperty(who, "ataquefurtivoaprimorado");
 				who.hidden := 1;
 			else
 				who.hidden := 0;
-			endif
+			endif */
+
 		endif
 	else
 		SendSysMessage(who, "Voce deve ficar atras de " + targ.name);

@@ -48,6 +48,14 @@ program skill_Hide(who)
 			0:
 				diff := 0;
 		endcase
+
+		if ( GetObjProperty(who, "forjoumorte") == 1 )
+			diff := diff - 50;
+				if (diff <= 0)
+					diff := 5;
+				endif
+			
+		endif
 		
 		var semfalha := AP_GetSkill(who, SNEAK);
 
