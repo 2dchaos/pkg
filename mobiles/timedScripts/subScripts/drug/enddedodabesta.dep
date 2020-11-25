@@ -1,11 +1,13 @@
-Z:\pkg\skills\sneak\stealth.src
+Z:\pkg\mobiles\timedScripts\subScripts\drug\enddedodabesta.src
 Z:/scripts/modules/basic.em
 Z:/scripts/modules/basicio.em
 Z:/scripts/modules/uo.em
-Z:\pkg\systems\attributes\include\attributeConstants.inc
-Z:\pkg\systems\attributes\include\attributes.inc
 Z:/scripts/modules/os.em
+Z:/scripts/modules/util.em
+Z:\scripts\include\client.inc
+Z:\pkg\mobiles\timedScripts\include\timedScripts.inc
 Z:/scripts/modules/cfgfile.em
+Z:\pkg\systems\attributes\include\attributes.inc
 Z:/scripts/modules/vitals.em
 Z:/scripts/modules/attributes.em
 Z:\pkg\systems\attributes\include\regen.inc
@@ -24,8 +26,8 @@ Z:\scripts\include\say.inc
 Z:/scripts/modules/unicode.em
 Z:\pkg\systems\attributes\include\stats.inc
 Z:\pkg\systems\attributes\include\vitals.inc
+Z:\pkg\systems\attributes\include\attributeConstants.inc
 Z:\pkg\systems\attributes\include\skillCheck.inc
-Z:/scripts/modules/util.em
 Z:\pkg\systems\attributes\include\advanceCheck.inc
 Z:\pkg\tn\include\characters.inc
 Z:\pkg\utils\datafile\include\datafile.inc
