@@ -49,7 +49,8 @@ program skill_Hide(who)
 				diff := 0;
 		endcase
 		
-		
+		var semfalha := AP_GetSkill(who, SNEAK);
+
 		if( check > diff )
 			SendSysMessageEx(who, "Voce se escondeu.", SSM_INFO);
 			who.hidden := 1;
@@ -63,7 +64,7 @@ program skill_Hide(who)
 		elseif (check >= -25)
 			SendSysMessageEx(who, "Voce falhou ao tentar se esconder.", SSM_FAIL);
 			who.hidden := 0;
-		else // Falha Cr�tica
+		elseif (semfalha <= 80) // Falha Cr�tica
 			PrintText(who, "*tentando se esconder*");
 		endif
 	endwhile

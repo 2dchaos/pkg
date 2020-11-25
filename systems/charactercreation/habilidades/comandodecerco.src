@@ -13,6 +13,8 @@ program manobra(attacker)
 		return;
 	else
 		SendSysMessageEx(attacker, "Em 5 segundos eles ganharao um bonus no dano", SSM_INFO);
+		PrintTextAbove(attacker, "*Cerquem-no!!!*");
+		PrintTextAbove(alvo, "*Se tornou o alvo de " + attacker.name + "*");
 	endif
 
 	sleep(5);
@@ -23,7 +25,7 @@ program manobra(attacker)
 		return;
 	endif
 
-	PrintText(attacker, "*ordena os aliados*");
+	//PrintText(attacker, "*ordena os aliados*");
 
 	var testes := array;
 

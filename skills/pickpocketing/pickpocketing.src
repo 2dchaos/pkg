@@ -112,7 +112,10 @@ program skill_Stealing(mobile)
 				endif
 			elseif (steal.objtype IN {0x1011, 0x100E, 0x100F, 0x1010, 0x1012, 0x1013}) // chaves
 				diff := 60;
-			elseif (steal.objtype == 0x6100) // grimório
+				if (temHabilidade(mobile, "Punga"))
+					diff := 0;
+				endif
+			elseif (steal.objtype == 0x6100) // grimï¿½rio
 				diff := 80;
 			else
 				diff := CInt(steal.weight*10);
@@ -141,7 +144,7 @@ program skill_Stealing(mobile)
 	else
 		SendSysMessageEx(mobile, "Voce nota que o alvo percebeu algo.", SSM_FAIL);
 		SendSysMessageEx(targ, "Voce sentiu algo na sua bolsa.", SSM_INFO);
-		if (check < -10) // Falha Crítica
+		if (check < -10) // Falha Crï¿½tica
 			CriticalFailure(mobile, targ);
 		endif
 	endif
