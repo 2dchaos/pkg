@@ -51,7 +51,7 @@ function GetResist(who, resist)
 			valor := valor + 20;
 		endif*/
 		
-		if (temHabilidade(who, "Treinamento Vigilante"))
+		if (temHabilidade(who, "Resistir a Magia"))
 			valor := valor + 40;
 		endif
 

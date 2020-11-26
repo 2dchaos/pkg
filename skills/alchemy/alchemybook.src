@@ -95,8 +95,14 @@ function MakePotion ( pot, who)
 	foreach reag in (reagent_costs.keys())
 		amount := CInt( reagent_costs[reag] );
 		if (temHabilidade(who, "Economia de Reagentes"))
-			if (randomInt(100) < 20)
-				amount := amount -1;
+			if (randomInt(100) < 50)
+				amount := amount -2;
+	/*		elseif (randomInt(100) < 60)
+				amount := amount -3;
+			elseif (randomInt(100) < 70)
+				amount := amount -4;
+			elseif (randomInt(100) < 90)
+				amount := amount -6;	*/
 			endif
 		endif
 		if (!amount)

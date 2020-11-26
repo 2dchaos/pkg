@@ -46,7 +46,7 @@ var descmod:={};
 	endif	
 
 	if (GetObjProperty(who, "metamorfose") != error)
-		if (TemHabilidade(who, "Adornos da Besta"))
+		if (TemHabilidade(who, "Fera Adornada"))
 			if (item.isa(POLCLASS_WEAPON) || item.isa(POLCLASS_ARMOR))	
 				SendSysMessageEx(who, "Voce nao pode equipar nada nessa forma.");
 				return 0;
