@@ -29,6 +29,7 @@ program UseDyes(mobile, dyes)
 			PlaySoundEffect(mobile, 0x25);
 			targ.color := color;
 			DestroyItem(dyes);
+			CreateItemInBackpack(mobile, 0x0f0e, 4);
 		endif
 		return 1;
 	else

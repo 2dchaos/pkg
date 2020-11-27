@@ -772,7 +772,7 @@ function Corromper(who, spell, targ)
 		return 0;
 	endif
 	
-	SendSysMessageEx(who, "Voce falhou em resistir e perdeu parte da sua humanidade.", SSM_FAIL);
+	SendSysMessageEx(who, "Voce perde parte da sua humanidade.", SSM_FAIL);
 	//fim de checagem
 	
 	//checa se e magia banida e define a variavel
@@ -865,10 +865,9 @@ function Corromper(who, spell, targ)
 			var str := "Veias visiveis sob a pele";
 			if (GetObjProperty(who, "description"))
 				str := GetObjProperty(who, "description") + " <br> " + str;
+				SetObjProperty(who, "description", str);
+				SendSysMessageEx(who, "As veias por baixo de sua pele parece estar mais escuras!!", SSM_FAIL);
 			endif
-			SetObjProperty(who, "description", str);
-			SendSysMessageEx(who, "As veias por baixo de sua pele parece estar mais escuras!!", SSM_FAIL);			
-			endcase
 		endif
 	endif 
 	//fim da checagem

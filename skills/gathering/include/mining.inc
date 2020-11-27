@@ -99,6 +99,8 @@ function DigForMap(who, targ, map)
 		SendSysMessageEx(who,"voce parou de cavar porque algo esta sobre o tesouro.");
 		return;
 	else
+		who.frozen := 1;
+		PrintTextAbove(who, "*Comeca a cavar o tesouro*");
 
 		var i := 1;
 		var mex := who.x;
@@ -109,14 +111,14 @@ function DigForMap(who, targ, map)
 
 		var chest;
 		chestz := chestz -8;
-		sendsysmessage(who, " " + chestz);
-		var chests := CreateTreasureChests(maplevel, 1, 0, chestx, chesty, chestz, who.realm, loot);
+		sendsysmessage(who, " " + chestz-8);
+		var chests := CreateTreasureChests(maplevel, 1, 0, chestx, chesty, chestz-8, who.realm, loot);
 		chest := chests[1];
 /*		if (GetObjProperty(map, "tesouroescondido") == 1)
 			Loot_Generate(chest, loot);
 		endif  	*/
 
-		var ret := MoveObjectToLocation(chest, chest.x, chest.y, chestz, who.realm,  MOVEOBJECT_FORCELOCATION);
+		var ret := MoveObjectToLocation(chest, chest.x, chest.y, chestz-8, who.realm,  MOVEOBJECT_FORCELOCATION);
 //		sendsysmessage(who, " " + ret);
 
 		chest.movable := 0;
@@ -129,6 +131,7 @@ function DigForMap(who, targ, map)
 				break;
 			endif
 
+			PrintTextAbove(who, "*Cavando*");
 			PerformAction(who, 0x0b);
 			PlaySoundEffect(who, 0x126);
 			sleep(1);
@@ -184,21 +187,37 @@ function DigForMap(who, targ, map)
 
 		endwhile
 
+		who.frozen := 0;
+		PrintTextAbove(who, "*Termina de cavar*");
+		sleep(5);
+
 		// Para implementar basta compilar o mining.src depois colocar mais mobs para maplevels diferentes há um bug no z, o chest sai voando mas da pra pegar
 
 		if (maplevel == 1)
-            PrintTextAbove(who, "Gritos Atacar rapazes! A pior parte já fizeram!");
+            PrintTextAbove(who, "*Gritos nos arredores* Atacar rapazes! A pior parte já fizeram!");
+			sleep(2);
             createnpcfromtemplate(":brainai:bandoleiro", who.x, who.y, who.z +5, 0 , who.realm);
             createnpcfromtemplate(":brainai:roguearcher", who.x, who.y, who.z +5, 0 , who.realm);
-            createnpcfromtemplate(":brainai:assassin", who.x, who.y, who.z +5, 0 , who.realm);
-      /*    elseif ( spell == "summonfire" )
-            CreateNpcFromTemplate(":brainai:fireelemental", who.x, who.y, who.z, 0, who.realm);
-          elseif ( spell == "summonair")
-                CreateNpcFromTemplate(":brainai:airelemental", who.x, who.y, who.z, 0, who.realm);
-          elseif ( spell ==  "summonearth")
-                CreateNpcFromTemplate(":brainai:earthelemental", who.x, who.y, who.z, 0, who.realm);
-          elseif ( spell ==  "summonice")
-                CreateNpcFromTemplate(":brainai:snowelemental", who.x, who.y, who.z, 0, who.realm);  */
+			createnpcfromtemplate(":brainai:trapaceiro", who.x, who.y, who.z +5, 0 , who.realm);
+            createnpcfromtemplate(":brainai:saqueadortumulo", who.x, who.y, who.z +5, 0 , who.realm);
+            createnpcfromtemplate(":brainai:saqueadortumulo", who.x, who.y, who.z +5, 0 , who.realm);
+			sleep(15);
+			PrintTextAbove(who, "*O ataque continua e o lider se aproxima*");
+			createnpcfromtemplate(":brainai:mercenario", who.x, who.y, who.z +5, 0 , who.realm);
+      	elseif (maplevel == 2)
+		 	PrintTextAbove(who, "*Algo espreita o local*");
+			sleep(5);
+            createnpcfromtemplate(":brainai:trasgo", who.x, who.y, who.z +5, 0 , who.realm);
+        elseif (maplevel == 3)
+			PrintTextAbove(who, "*Risadas Femininas Maliciosas podem ser ouvidas de todos os lados*");
+			sleep(5);
+			CreateNpcFromTemplate(":brainai:sucubus", who.x, who.y, who.z, 0, who.realm);
+			CreateNpcFromTemplate(":brainai:sucubus", who.x, who.y, who.z, 0, who.realm);
+			CreateNpcFromTemplate(":brainai:sucubussuperior", who.x, who.y, who.z, 0, who.realm);
+		elseif (maplevel == 4)
+			PrintTextAbove(who, "*Uma criatura gigantesca guarda o local*");
+			sleep(5);
+			CreateNpcFromTemplate(":brainai:reddragon", who.x, who.y, who.z, 0, who.realm);
         endif
 
 		chest.movable := 1;
@@ -377,9 +396,9 @@ endfunction
 function DetermineMiningDifficulty(oretype)
 
 	case (oretype)
-	/*
+	
 		0xBD11: return 0;  //pedra pequena
-		0xBD11: return 0;  //pedra media
+	/*	0xBD11: return 0;  //pedra media
 		0xBD11: return 0;  //pedra grande
 		0xee99: return 0;  //calcario
 	*/
