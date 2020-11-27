@@ -11,7 +11,7 @@ include ":itemutils:canAccess";
 include ":fls_core:fls_crafting";
 include ":recipes:recipes";
 
-var item_config     := ReadConfigFile(":pkg:systems:itemdesc");
+var item_config     := ReadConfigFile(":*:itemdesc");
 var craft_config    := ReadConfigFile(":magery:runecraft");
 
 program use_Runecraft(who, tool)
@@ -68,7 +68,7 @@ function makeRuneitems(who, what, amt, tool )
 
 	
 
-	var item := CraftItem(who, "Runecraft", tool, what, amt, 0, 0);
+	var item := CraftItem(who, "Magery", tool, what, amt, 0, 0);
 	return 1;
 
 
