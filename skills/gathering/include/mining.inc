@@ -328,7 +328,7 @@ function GetResourceId(oreToSearch)
 		
 		//"ario": return 0x6312;
 		
-		"pedras": return 0x6666;
+		"pedrapequena": return 0xBD11;
 
 		"marmore": return 0x8850;
 
@@ -357,7 +357,7 @@ function DetermineOreType(who, where)
 	var skill := AP_GetSkill(who, GATHERING);
 	
 	if (GetObjProperty(who, "searchore") == error)
-		oreToSearch := "pedras";
+		oreToSearch := "pedrapequena";
 	else
 		oreToSearch := GetObjProperty(who, "searchore");
 	endif
@@ -380,8 +380,8 @@ function DetermineOreType(who, where)
 	if ( chance <= Cint(percent[i]))
 		var oreid := GetResourceId(oreToSearch);
 		//var oreid := GetResourceId("ario");
-		if (oreid == 0x6666)
-			return 0x5001;
+		if (oreid == 0xBD11)
+			return 0xBD11;
 		endif
 		return oreid;
 	else

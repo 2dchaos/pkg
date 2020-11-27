@@ -10,7 +10,7 @@ include ":attributes:skillCheck";
 include ":crafting:toolWear";
 include ":gathering:mining";
 
-const BLOCK_OF_STONE := 0x5001;
+const BLOCK_OF_STONE := 0xBD11;
 const MINING_ANIMATION := 0x0B;
 const MINING_SOUND := 0x126;
 
