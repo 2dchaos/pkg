@@ -328,7 +328,7 @@ function GetResourceId(oreToSearch)
 		
 		//"ario": return 0x6312;
 		
-		"pedrapequena": return 0xBD11;
+		"pedra": return 0xBD11;
 
 		"marmore": return 0x8850;
 
@@ -357,7 +357,7 @@ function DetermineOreType(who, where)
 	var skill := AP_GetSkill(who, GATHERING);
 	
 	if (GetObjProperty(who, "searchore") == error)
-		oreToSearch := "pedrapequena";
+		oreToSearch := "pedra";
 	else
 		oreToSearch := GetObjProperty(who, "searchore");
 	endif
@@ -380,9 +380,9 @@ function DetermineOreType(who, where)
 	if ( chance <= Cint(percent[i]))
 		var oreid := GetResourceId(oreToSearch);
 		//var oreid := GetResourceId("ario");
-		if (oreid == 0xBD11)
-			return 0xBD11;
-		endif
+	/*	if (oreid == 0x6666)
+			return 0x5001;
+		endif */
 		return oreid;
 	else
 		SendSysMessage(who, "Voce nao conseguiu achar o minerio que procura.");
@@ -415,15 +415,15 @@ function DetermineMiningDifficulty(oretype)
  		0x6990: return 30; //estanho 
 
 		0x6075:  return 5; //areia
-	/*	
-		0x6666: return 0; //id falso de pedra
+		
+	/*	0x6666: return 0; //id falso de pedra
 		0x8850: return 40; //marmore
-		0x8852: return 30; //arenito
-		0x5001: return 5; //id de stone
-	*/
+		0x8852: return 30; //arenito 
+		0x5001: return 5; //id de stone */
+	
 		0x6305: return 40; //golden <- nao faz nada
 		
-		default: return 100;
+		default: return 0;
 	endcase
 
 endfunction
