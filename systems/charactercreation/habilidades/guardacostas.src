@@ -1,0 +1,73 @@
+  use uo;
+
+include ":attributes:attributes";
+include ":timedScripts:timedScripts";
+include "include/client";
+include "include/say";
+include ":tn:tngumps";
+include "include/damage";
+
+program guardacostas(who)
+
+    var contrato := GetObjProperty(who, "contratotipo");
+	var mercenario;
+    if (contrato == error)
+        var prot := RadioGump(who, 200, 260, "Escolha o valor do contrato", {"5 Mil Cobres","10 Mil CObres", "15 Mil Cobres"});
+                SendSysMessageEx(who, "Voce escolheu o contrato de " + prot, SSM_INFO);
+            if (prot == "5 Mil Cobres")
+                createnpcfromtemplate(":brainai:saqueadorwarrior", who.x, who.y, who.z +5, 0 , who.realm);
+                SetObjProperty(mercenario, "GuardKill", 1);	
+                SetObjProperty(mercenario, "owner", who.serial);
+                SetObjProperty(mercenario, "name", mercenario.name);
+                SetObjproperty(mercenario, "script", mercenario.script);
+                SetObjProperty(mercenario, "AntigoTreinadorID", who.serial);
+                mercenario.script := ":ghaia:tamed";
+                RestartScript(mercenario);
+                PrintTextAbove(mercenario, "Estou as ordens " + who.name +"!");
+                SetObjProperty(who,"contratotipo", 1);
+                return;
+            elseif (prot == "10 Mil CObres")
+                mercenario := createnpcfromtemplate(":brainai:mercenariorecruta", who.x, who.y, who.z +5, 0 , who.realm);
+                SetObjProperty(mercenario, "GuardKill", 1);	
+                SetObjProperty(mercenario, "owner", who.serial);
+                SetObjProperty(mercenario, "name", mercenario.name);
+                SetObjproperty(mercenario, "script", mercenario.script);
+                SetObjProperty(mercenario, "AntigoTreinadorID", who.serial);
+                mercenario.script := ":ghaia:tamed";
+                RestartScript(mercenario);
+                PrintTextAbove(mercenario, "Estou as ordens " + who.name +"!");
+                SetObjProperty(who,"contratotipo", 2);
+            elseif (prot == "15 Mil Cobres");
+                mercenario := createnpcfromtemplate(":brainai:mercenario", who.x, who.y, who.z +5, 0 , who.realm);
+                SetObjProperty(mercenario, "GuardKill", 1);	
+                SetObjProperty(mercenario, "owner", who.serial);
+                SetObjProperty(mercenario, "name", mercenario.name);
+                SetObjproperty(mercenario, "script", mercenario.script);
+                SetObjProperty(mercenario, "AntigoTreinadorID", who.serial);
+                mercenario.script := ":ghaia:tamed";
+                RestartScript(mercenario);
+                PrintTextAbove(mercenario, "Estou as ordens " + who.name +"!");
+                SetObjProperty(who,"contratotipo", 3);
+            endif
+
+    elseif (contrato == 1)
+        EraseObjProperty(who,"contratotipo");
+        SetObjProperty(mercenario, "GuardKill", 1);
+		ApplyRawDamage(mercenario, CInt(AP_GetVitalMaximumValue(mercenario, "Hits")));
+        destroyitem(mercenario);
+        SendSysMEssageEx(who, "Voce encerrou o contrato e o mercenario se foi.", SSM_FAIL);
+	elseif (contrato == 2)
+        EraseObjProperty(who,"contratotipo");
+        SetObjProperty(mercenario, "GuardKill", 1);
+		ApplyRawDamage(mercenario, CInt(AP_GetVitalMaximumValue(mercenario, "Hits")));
+        destroyitem(mercenario);
+        SendSysMEssageEx(who, "Voce encerrou o contrato e o mercenario se foi.", SSM_FAIL);
+	elseif (contrato == 3)
+        EraseObjProperty(who,"contratotipo");
+        SetObjProperty(mercenario, "GuardKill", 1);
+		ApplyRawDamage(mercenario, CInt(AP_GetVitalMaximumValue(mercenario, "Hits")));
+        destroyitem(mercenario);
+        SendSysMEssageEx(who, "Voce encerrou o contrato e o mercenario se foi.", SSM_FAIL);
+	endif
+
+endprogram   

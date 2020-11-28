@@ -5,9 +5,12 @@ include ":attributes:attributes";
 include ":timedScripts:timedScripts";
 include "include/say";
 include "include/sysEvent";
+include ":brainAI:npcNerves";
+include ":brainAI:npcCommands";
+include ":brainAI:npcSounds";
 
 program manobra(who)
-	var nearby := ListHostiles(who, 10);
+	var nearby:= ListHostiles( who, range := 20, flags := 0 );
 	var hostiles := array{};
 	foreach char in nearby
 			hostiles.append(char);
@@ -15,12 +18,13 @@ program manobra(who)
 	endforeach
 	
 	foreach char in hostiles
-		SendEvent(char, struct{"type":=EVID_TAUNT, "source":=who});
-		sleepms(20);
+		SendEvent(char, struct{"type":=EVID_TAUNT, "source":=char});
 	endforeach
-	
-	who.concealed := 1;
-	sleepms(50);
-	who.concealed := 0;
-	return 1;
+
+	sleep(2);
+
+	foreach char in hostiles
+		SendEvent(char, struct{"type":=EVID_TAUNT, "source":=who});
+	endforeach
+
 endprogram  

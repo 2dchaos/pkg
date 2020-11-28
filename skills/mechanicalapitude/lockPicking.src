@@ -49,8 +49,11 @@ program skill_lockpicking( me, lockpick )
 
 	if (GetObjProperty(chest,"level"))
 		if (!temHabilidade(me, "Especialista em Invasoes"))
-		PrintText(me, "*arrombando a fechadura*");
-		elseif (!Wait(me, 5))
+			PrintText(me, "*arrombando a fechadura*");
+			PlaySoundEffect(chest, 0x0242);
+		endif
+
+		if (!Wait(me, 5))
 			SendSysMessageEx(me, "Voce interrompeu o processo.", SSM_FAIL);
 			return;
 		endif
@@ -91,22 +94,39 @@ function PickTreasureChest(me, lockpick, chest)
   endif
   var check := SkillCheck(me, MECHANICALAPITUDE, diff);
     if ( check > 0 )
-		if (!temHabilidade(me, "Especialista em Invasoes"))
+
+		if (temHabilidade(me, "Febre do Ouro"))
+			var skill := AP_GetSkill( me, MECHANICALAPITUDE );
+			if( skill >= 100 )
+			 CreateItemInBackpack(me, 0xba63, 25);
+			elseif( skill >= 80 )
+			 CreateItemInBackpack(me, 0xba63, 10);
+			elseif( skill >= 60 )
+		 	 CreateItemInBackpack(me, 0xba63, 6);
+			elseif( skill >= 40 )
+			 CreateItemInBackpack(me, 0xba63, 4);
+			elseif( skill >= 20 )
+			 CreateItemInBackpack(me, 0xba63, 2);
+			endif
+			SendSysMessageEx(me,"Voce embolsa rapidamente algumas moedas sem que ninguem perceba", SSM_INFO);
+		endif
+
+		if (temHabilidade(me, "Especialista em Invasoes"))
 			PrintTextAbovePrivate(chest,"*Destrancado!*",me);
 			SetObjProperty(chest, "arrombado", "" + me.name);
 			SetObjProperty(chest, "locktime", ReadGameClock());
-  			set_critical(1);
-  			chest.locked := 0;
-  			set_critical(0);
+			set_critical(1);
+			chest.locked := 0;
+			set_critical(0);
 			return;
-  		else	
-  			PlaySoundEffect(chest, 0x0200);
+		else	
+			PlaySoundEffect(chest, 0x0200);
 			PrintTextAbovePrivate(chest,"*Destrancado!*",me);
 			SetObjProperty(chest, "arrombado", "" + me.name);
 			SetObjProperty(chest, "locktime", ReadGameClock());
-  			set_critical(1);
-  			chest.locked := 0;
-  			set_critical(0);
+			set_critical(1);
+			chest.locked := 0;
+			set_critical(0);
 		endif
  	else
 	SendSysMessageEx(me, "Voce falhou em arrombar a fechadura.", SSM_FAIL);
