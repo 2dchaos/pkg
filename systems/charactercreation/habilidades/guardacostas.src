@@ -6,68 +6,95 @@ include "include/client";
 include "include/say";
 include ":tn:tngumps";
 include "include/damage";
+include ":gumps:yesno";
 
 program guardacostas(who)
 
     var contrato := GetObjProperty(who, "contratotipo");
-	var mercenario;
+    var mercenario;
+    //var tamed := GetObjProperty(who, "TamedPets");
     if (contrato == error)
-        var prot := RadioGump(who, 200, 260, "Escolha o valor do contrato", {"5 Mil Cobres","10 Mil CObres", "15 Mil Cobres"});
+        var prot := RadioGump(who, 200, 260, "Escolha o valor do contrato", {"5 Mil Cobres","10 Mil Cobres", "15 Mil Cobres"});
                 SendSysMessageEx(who, "Voce escolheu o contrato de " + prot, SSM_INFO);
             if (prot == "5 Mil Cobres")
-                createnpcfromtemplate(":brainai:saqueadorwarrior", who.x, who.y, who.z +5, 0 , who.realm);
-                SetObjProperty(mercenario, "GuardKill", 1);	
+                mercenario := CreateNPCFromTemplate(":brainai:saqueadorwarrior", who.x, who.y, who.z +5, 0 , who.realm);
+                sleep(1);
+                mercenario.SetMaster(who);
                 SetObjProperty(mercenario, "owner", who.serial);
                 SetObjProperty(mercenario, "name", mercenario.name);
                 SetObjproperty(mercenario, "script", mercenario.script);
-                SetObjProperty(mercenario, "AntigoTreinadorID", who.serial);
                 mercenario.script := ":ghaia:tamed";
                 RestartScript(mercenario);
-                PrintTextAbove(mercenario, "Estou as ordens " + who.name +"!");
+                PrintTextAbove(mercenario, "Nao acredito que aceitei esse contrato, tsk. Diga logo o que quer " + who.name +"!");
                 SetObjProperty(who,"contratotipo", 1);
+				SetObjProperty(who, "TamedPets", mercenario.serial);
                 return;
-            elseif (prot == "10 Mil CObres")
-                mercenario := createnpcfromtemplate(":brainai:mercenariorecruta", who.x, who.y, who.z +5, 0 , who.realm);
-                SetObjProperty(mercenario, "GuardKill", 1);	
+            elseif (prot == "10 Mil Cobres")
+                mercenario := CreateNPCFromTemplate(":brainai:mercenariorecruta", who.x, who.y, who.z +5, 0 , who.realm);
+                sleep(1);
+                mercenario.SetMaster(who);
                 SetObjProperty(mercenario, "owner", who.serial);
                 SetObjProperty(mercenario, "name", mercenario.name);
                 SetObjproperty(mercenario, "script", mercenario.script);
-                SetObjProperty(mercenario, "AntigoTreinadorID", who.serial);
                 mercenario.script := ":ghaia:tamed";
                 RestartScript(mercenario);
-                PrintTextAbove(mercenario, "Estou as ordens " + who.name +"!");
+                PrintTextAbove(mercenario, "Seguirei suas ordens enquanto forrar minha mao com seu ouro, " + who.name +"!");
                 SetObjProperty(who,"contratotipo", 2);
+                SetObjProperty(who, "TamedPets", mercenario.serial);
+                return;
             elseif (prot == "15 Mil Cobres");
-                mercenario := createnpcfromtemplate(":brainai:mercenario", who.x, who.y, who.z +5, 0 , who.realm);
-                SetObjProperty(mercenario, "GuardKill", 1);	
+                mercenario := CreateNPCFromTemplate(":brainai:mercenario", who.x, who.y, who.z +5, 0 , who.realm);
+                sleep(1);
+                mercenario.SetMaster(who);
                 SetObjProperty(mercenario, "owner", who.serial);
                 SetObjProperty(mercenario, "name", mercenario.name);
                 SetObjproperty(mercenario, "script", mercenario.script);
-                SetObjProperty(mercenario, "AntigoTreinadorID", who.serial);
                 mercenario.script := ":ghaia:tamed";
                 RestartScript(mercenario);
-                PrintTextAbove(mercenario, "Estou as ordens " + who.name +"!");
+                PrintTextAbove(mercenario, "Boa escolha, *saca a arma* eu protegerei voce com a minha vida, " + who.name +"!");
                 SetObjProperty(who,"contratotipo", 3);
+                SetObjProperty(who, "TamedPets", mercenario.serial);
+                return;
             endif
-
-    elseif (contrato == 1)
-        EraseObjProperty(who,"contratotipo");
-        SetObjProperty(mercenario, "GuardKill", 1);
-		ApplyRawDamage(mercenario, CInt(AP_GetVitalMaximumValue(mercenario, "Hits")));
-        destroyitem(mercenario);
-        SendSysMEssageEx(who, "Voce encerrou o contrato e o mercenario se foi.", SSM_FAIL);
-	elseif (contrato == 2)
-        EraseObjProperty(who,"contratotipo");
-        SetObjProperty(mercenario, "GuardKill", 1);
-		ApplyRawDamage(mercenario, CInt(AP_GetVitalMaximumValue(mercenario, "Hits")));
-        destroyitem(mercenario);
-        SendSysMEssageEx(who, "Voce encerrou o contrato e o mercenario se foi.", SSM_FAIL);
-	elseif (contrato == 3)
-        EraseObjProperty(who,"contratotipo");
-        SetObjProperty(mercenario, "GuardKill", 1);
-		ApplyRawDamage(mercenario, CInt(AP_GetVitalMaximumValue(mercenario, "Hits")));
-        destroyitem(mercenario);
-        SendSysMEssageEx(who, "Voce encerrou o contrato e o mercenario se foi.", SSM_FAIL);
-	endif
+    endif        
+    var encerramento := yesno(who, "Tem certeza de que deseja encerrar o contrato? " );
+    if (encerramento)
+        if (contrato == 1)
+            EraseObjProperty(who,"contratotipo");
+            var TamedPets := GetObjProperty(who, "TamedPets");
+            var pet;
+            pet := SystemFindObjectBySerial(TamedPets);
+            PrintText(pet, "Nao acredito que sai vivo dessa... *Vira de costas e vai embora*");
+            sleep(3);
+            moveobjecttolocation(pet, 10, 10, 10, who.realm, MOVEOBJECT_FORCELOCATION);
+            ApplyRawDamage(pet, CInt(AP_GetVitalMaximumValue(pet, "Hits")));
+            destroyitem(pet);
+            SendSysMEssageEx(who, "Voce encerrou o contrato e o mercenario se foi.", SSM_FAIL);
+        elseif (contrato == 2)
+            EraseObjProperty(who,"contratotipo");
+            var TamedPets := GetObjProperty(who, "TamedPets");
+            var pet;
+            pet := SystemFindObjectBySerial(TamedPets);
+            PrintText(pet, "Foi um prazer fazer negocios... *Vira de costas e vai embora*");
+            sleep(3);
+            moveobjecttolocation(pet, 10, 10, 10, who.realm, MOVEOBJECT_FORCELOCATION);
+            ApplyRawDamage(pet, CInt(AP_GetVitalMaximumValue(pet, "Hits")));
+            destroyitem(pet);
+            SendSysMEssageEx(who, "Voce encerrou o contrato e o mercenario se foi.", SSM_FAIL);
+        elseif (contrato == 3)
+            EraseObjProperty(who,"contratotipo");
+            var TamedPets := GetObjProperty(who, "TamedPets");
+            var pet;
+            pet := SystemFindObjectBySerial(TamedPets);
+            PrintText(pet, "*Sorriso amarelo* Espero que consiga se cuidar sozinho. *Vira de costas e vai embora*");
+            sleep(3);
+            moveobjecttolocation(pet, 10, 10, 10, who.realm, MOVEOBJECT_FORCELOCATION);
+            ApplyRawDamage(pet, CInt(AP_GetVitalMaximumValue(pet, "Hits")));
+            destroyitem(pet);
+            SendSysMEssageEx(who, "Voce encerrou o contrato e o mercenario se foi.", SSM_FAIL);
+        endif
+    else
+        return;
+    endif    
 
 endprogram   
