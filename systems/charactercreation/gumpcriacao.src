@@ -1493,7 +1493,7 @@ program createchar(who)
 	var result2 := DestroyItem(myhair);
 	result := EquipItem(who, newhair);
 
-	MoveObjectToLocation( who, 3387, 1983, -1, who.realm, MOVEOBJECT_FORCELOCATION);
+	MoveObjectToLocation( who, 4295, 3650, 10, who.realm, MOVEOBJECT_FORCELOCATION);
 	SetObjProperty(who, "faccao", "semfaccao");
 
 	HealDamage(who, 200);
