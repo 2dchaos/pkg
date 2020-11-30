@@ -852,7 +852,19 @@ function ParryCheck(attacker, defender, byref rawdamage)
 		//defendeu, verifica as habilidades especiais
 		defendeu := 1;
 		if (GetCooldown(defender, "defesasgloriosas"))
-			TS_StartTimer(attacker, "paralysis", 5);
+			var basedamage := CalculateRawDamage(defender, defender.weapon);
+			var dmgList := dictionary;
+			dmgList := getNewDamageList(defender);
+			var total := CalculateTotalDamage(attacker, basedamage, defender, dmgList);
+			total:= total + 15;
+			ApplyRawDamage(attacker, total);
+			MostraDano(defender, attacker, total);
+			MakeBleed(attacker);
+			PlaySoundEffect(attacker, 0x51D);	
+			TS_StartTimer(attacker, "paralysis", 8);
+			PrintTextAbove(defender, "*Bate com o escudo em "+attacker.name+"*");
+			PrintTextAbove(attacker, "*Atordoado*");
+			SendSysMessageEx(attacker, "Voce foi acertado violentamente com um escudo!", SSM_FAIL);
 			SetCooldown(defender, "defesasgloriosas", 0);
 		endif
 

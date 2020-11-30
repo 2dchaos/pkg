@@ -9,7 +9,7 @@ include "include/client";
 
 program manobra(attacker)
 
-	SendSysMessageEx(attacker, "Sua proxima defesa sera gloriosa.", SSM_INFO);
+	SendSysMessageEx(attacker, "Seu proximo bloqueio surpreendera o inimigo.", SSM_INFO);
 
 	SetCooldown(attacker, "defesasgloriosas", cint(AP_GetSkill(attacker, TACTICS)));
 

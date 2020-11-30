@@ -436,10 +436,10 @@ function CalculateHitChance(attacker, defender)
 		hit_chance := hit_chance + 10;
 	endif
 	if (TemHabilidade(defender, "Postura Ofensiva"))
-		hit_chance := hit_chance + 10;
+		hit_chance := hit_chance + 5;
 	endif
 	if (TemHabilidade(attacker, "Postura Defensiva"))
-		hit_chance := hit_chance - 10;
+		hit_chance := hit_chance - 5;
 	endif
 	if (TemHabilidade(defender, "Postura Defensiva"))
 		hit_chance := hit_chance - 10;
