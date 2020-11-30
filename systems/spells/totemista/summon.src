@@ -48,6 +48,7 @@ program summontotem(params)
 		undead.resist_cold_mod  := 25;
 		undead.resist_poison_mod  := 25;
 		undead.resist_energy_mod  := 25;
+		undead.resist_fire_mod  := 25;
 		//SetObjProperty(undead, "#ReflexosMod");
 		//SetObjProperty(undead, "#VontadeMod",);
 	endif

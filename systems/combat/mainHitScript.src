@@ -251,7 +251,7 @@ program MainHitScript( params )
 			defender := hostiles[targ];
 		endif
 
-		if (TemHabilidade(defender, "Trapacear a Morte") && (AP_GetVital(defender, HITS) < total))
+		if (TemHabilidade(defender, "Furia Imortal") && (AP_GetVital(defender, HITS) < total))
 			start_script(":charactercreation:habilidades/trapacearmorte", array{defender, total});
 		else
 			//printtextabove(attacker, "causa dano");

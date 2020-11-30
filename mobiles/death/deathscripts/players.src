@@ -77,9 +77,9 @@ program death(params)
 		KataWakeUp(ghost, corpse);
 	endif
 
-	if (protecao) // Proteção Contra Morte
+	if (protecao) // Proteï¿½ï¿½o Contra Morte
 		EraseObjProperty(ghost, "protecaomorte");
-	elseif (!killer.acctname || ghost.cmdlevel) // Foi morto por NPC ou é GM
+	elseif (!killer.acctname || ghost.cmdlevel) // Foi morto por NPC ou ï¿½ GM
 		if (!protecao)
 			//if (getCoolDown(ghost, "deathtime") == 0 )
 			if (killer.npctemplate && killer.script  == ":ghaia:tamed")  //se for tamed nao tira dp
@@ -137,7 +137,7 @@ program death(params)
 			sleep(5);
 			break;
 		elseif ( GetObjProperty(corpse, "prolongardesmaio") )
-			SendSysMessage(ghost, "Seus batimentos cardiacos se reduzem, e você tem mais dificuldade em recobrar a consciencia.",3 , 0);
+			SendSysMessage(ghost, "Seus batimentos cardiacos se reduzem, e vocï¿½ tem mais dificuldade em recobrar a consciencia.",3 , 0);
 			EraseObjProperty(corpse, "prolongardesmaio");
 			SetObjProperty(corpse, "japrolongou", 1);
 			tempo := tempo * 2;
@@ -280,7 +280,7 @@ function PactoSepulturaCheck(ghost, corpse)
 		ApplyDamage(targ, dmg);
 		var targhp := AP_GetVital(targ, "hits");
 		if (targhp <= 0)
-			SendSysMessage(ghost, "Voce voltara a vida com o pacto de sepultura.", 3, 191);
+			SendSysMessage(ghost, "Seu alvo foi destruido e voce se levantara", 3, 191);
 			sleepms(1500);
 			KataWakeUp(ghost, corpse);
 			pacto := 1;
