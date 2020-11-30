@@ -1494,6 +1494,7 @@ program createchar(who)
 	result := EquipItem(who, newhair);
 
 	MoveObjectToLocation( who, 3387, 1983, -1, who.realm, MOVEOBJECT_FORCELOCATION);
+	SetObjProperty(who, "faccao", "semfaccao");
 
 	HealDamage(who, 200);
 	RecalcVitals(who);
