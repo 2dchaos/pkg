@@ -24,7 +24,7 @@ program SpellScript(params)
 	endif
 
 	if (GetObjProperty(who, "pactodesepultura"))
-		SendSysMessageEx(who, "Voce ja marcou outro alvo para a morte", SSM_FAIL);
+		SendSysMessageEx(who, "Voce ja jurou outro alvo de morte", SSM_FAIL);
 		return;
 	endif
 		

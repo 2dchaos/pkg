@@ -15,8 +15,6 @@ program doubleattack(params)
 	var rawdamage	:= params[6];
 	params := 0; // Not needed anymore.
 	var	hpfixo :=	AP_GetVital(attacker, "Hits");
-
-	SetObjProperty(attacker, "#bomcomeco", 1);
 	
 	while (AP_GetVital(attacker, "Stamina") > 15)
 		

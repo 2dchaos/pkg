@@ -69,8 +69,16 @@ program backstab(who)
 				MostraDano(who, targ, total);
 				MakeBleed(targ);
 				who.hidden := 0;
-
 			endif
+
+			if ( weaponBow)
+				if (!AmmoCheck(who, targ))
+					return 1;
+				endif
+			else
+				PerformAction(who, 0x000a );
+			endif
+
 			EraseObjProperty(who, "backstab");
 			SendSysMessage(who, "Voce acertou seu alvo!");
 		return;

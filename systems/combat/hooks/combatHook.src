@@ -135,16 +135,16 @@ exported function Attack(attacker, defender)
 	endif
 
 	if ( cint(GetObjProperty(attacker, "#bomcomeco")) == 1)
-		var attackers := GetObjProperty(defender, "#bomcomecoserials");
-		if (attackers == error)
-			attackers := array;
-		endif
-		if ( !(attacker.serial in attackers))
-			SendSysMessageEx(attacker, "Voce comecou bem.", SSM_INFO);
-			hit_chance := hit_chance + 50;
-			attackers.append(attacker.serial);
-			SetObjProperty(defender,  "#bomcomecoserials", attackers);
-		endif
+		//var attackers := GetObjProperty(defender, "#bomcomecoserials");
+		//if (attackers == error)
+		//	attackers := array;
+		//endif
+		//if ( !(attacker.serial in attackers))
+		SendSysMessageEx(attacker, "Voce acertou!", SSM_INFO);
+		hit_chance := hit_chance + 100;
+		//attackers.append(attacker.serial);
+		//SetObjProperty(defender,  "#bomcomecoserials", attackers);
+		//endif
 		EraseObjProperty(attacker, "#bomcomeco");
 	endif
 

@@ -21,16 +21,15 @@ program manobra(attacker)
 	foreach member in (festa.members)
 		if (member.serial != attacker.serial)
 			if (Distance(attacker, member) < 8)
-                var prop := GetObjProperty(member, "prop");
+				var list := TS_GetCooldownList(member);
                 var valor := cint(AP_GetVitalMaximumValue(member, STAMINA)) - AP_GetVital(member, "Stamina") + 10 ;
 				AP_SetVital(member, "Stamina", valor);
-				EraseObjProperty(member, "#Cooldown"+prop);
-                SendSysMessageEx(member, "Voce pode usar a habilidade " + prop + " novamente!", SSM_INFO);
+				foreach key in (list.keys())
+					SendSysMessage(member, " " + key + " resetado." );
+					TS_LowerDuration(member, key, 10000, 1);
+				endforeach
 				SendSysMessageEx(member, "Seu lider te inspira a poder lutar novamente!", SSM_INFO);
 			endif
 		endif
 	endforeach
-
-
-
 endprogram  
