@@ -114,7 +114,6 @@ function ProccessHab(who, hab)
 			SendSysMessageEx(who, "Nao foi encontrado o script da habilidade: " + hab, SSM_FAIL);
 			return;
 		endif
-		SetObjProperty(who, "#bomcomeco", 1);
 		SendSysMessageEx(who, "Se voce acertar o proximo ataque, vai executar o movimento: " + hab, SSM_INFO);
 		SetObjProperty(who, "movement",  script);
 		SetObjProperty(who, "#movtime", ReadGameClock());
