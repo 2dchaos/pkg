@@ -300,7 +300,7 @@ function GetResourceId(oreToSearch)
 		
 		"ferro": return 0x6300; //TN USED
 		
-		"lithtan": return 0x6301;
+		"litan": return 0x6301;
 		
 		"helce": return 0x6302;
 		
@@ -403,7 +403,7 @@ function DetermineMiningDifficulty(oretype)
 		0xee99: return 0;  //calcario
 	*/
 		0x6300: return 0;  //iron ore
-		0x6301: return 70; //lithtan
+		0x6301: return 70; //litan
 		0x6302: return 80; //helce
 		0x6303: return 80; //sinque
 		0x6304: return 80; //figin
