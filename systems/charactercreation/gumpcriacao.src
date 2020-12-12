@@ -1344,7 +1344,7 @@ program createchar(who)
 		endif
 	endif
 
-	if (chardata.classe == "Sabio")
+	if (chardata.classe == "Sabio" && chardata.povo == "Bariyano" || chardata.povo == "Balmute")
 		if (!ganheispell)
 			var gump2 := GFCreateGump();
 				GFDisposable(gump2, 0);
@@ -1352,11 +1352,11 @@ program createchar(who)
 				GFResizePic(gump2, 15, 40, 0x13BE, 140, 170);
 				GFTextLine(gump2, 45, 50, 1153, "Escolha sua magia");
 
-				GFTextLine(gump2, 40, 70, 1153, "Necromante");
+				//GFTextLine(gump2, 40, 70, 1153, "Necromante");
 				GFTextLine(gump2, 40, 90, 1153, "Feiticeiro");
 				GFTextLine(gump2, 40, 110, 1153, "Acolito");
 
-				GfAddButton(gump2, 20, 73, 2117, 2118, GF_CLOSE_BTN,  10);
+				//GfAddButton(gump2, 20, 73, 2117, 2118, GF_CLOSE_BTN,  10);
 				GfAddButton(gump2, 20, 94 , 2117, 2118, GF_CLOSE_BTN,  20);
 				GfAddButton(gump2, 20, 115 , 2117, 2118, GF_CLOSE_BTN,  30);
 

@@ -44,7 +44,7 @@ function EfeitosTerremoto(who,danobase,danoale,dif)
                         PlayMovingEffectXYZ( tempx, tempy,
                         who.z + 60, tempx, tempy, who.z, 0x1773, 0x9, 0xA1);
                         
-                        CreateItemAtLocation( tempx, tempy, who.z, 0xBD12 );
+                        CreateItemAtLocation( tempx, tempy, who.z, 0xBD11 );
                      endif
              endfor
          endif

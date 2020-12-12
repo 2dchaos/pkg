@@ -1,6 +1,7 @@
 /* $Id: walkOn.src 999 2005-11-14 20:13:45Z muaddiblsd $
  *
  */
+ 
 use uo;
 use vitals;
 
@@ -21,7 +22,7 @@ program acid_WalkOn(mobile, acid)
 
 	SendSysMessage(mobile, "*Voce pisou em acido!*");
 	if( !DealAcidDamage(acid, mobile, acid) )
-		DealAcidDamage(acid, mobile, acid, "5d2");
+		DealAcidDamage(acid, mobile, acid, "5d3");
 	endif
 	return 1;
 endprogram

@@ -42,6 +42,7 @@ program exploder(parms)
 			48916: FlameEffect(who, potion, 2);
 			48917:FlameEffect(who, potion, 3);
 			48918:HalluEffect(who, potion, 3);
+			0x6073:Acideffetct(who, potion);
 		endcase
 	endif
 
@@ -91,7 +92,8 @@ function HalluEffect(who, potion, lvl)
 			TS_StartTimer(critter, "hallucination", 120, lvl);
 		endif
 	endforeach
-
+
+
 endfunction
 
 function PoisonEffect(who, potion, lvl)
@@ -101,7 +103,8 @@ function PoisonEffect(who, potion, lvl)
 			TS_StartTimer(critter, "defaultPoison", 30, lvl);
 		endif
 	endforeach
-
+
+
 endfunction
 
 function GlueEffect(who, potion)
@@ -128,7 +131,41 @@ function GlueEffect(who, potion)
 			endif
 		endif
 	endforeach
-
+
+endfunction
+
+function Acideffetct(who, potion)
+
+	var coords := GetCoordsInSquare(potion.x, potion.y, 4);
+	foreach coord in coords;
+		if ( RandomInt(2) != 1 ) // Don't place a fire field
+			continue;
+		endif
+
+		/*var field2 := CreateItemAtLocation(coord.x, coord.y, potion.z, 0x3915, 1);
+		if (CheckLineOfSight(field2, potion))
+			field2.SetDuration(20);
+		endif*/
+		var field := CreateItemAtLocation(coord.x, coord.y, potion.z, 0xA370, 1);
+		if (CheckLineOfSight(field, potion))
+			field.SetDuration(20);
+		else
+			DestroyItem(field);
+		//	DestroyItem(field2);
+		endif
+		sleepms(5);
+	endforeach
+
+	foreach critter in (ListMobilesNearLocationEx( potion.x, potion.y, potion.z, 4, LISTEX_FLAG_NORMAL + LISTEX_FLAG_HIDDEN, potion.realm ));
+		if (CheckLineOfSight(potion, critter))
+			if ( critter.hidden && critter.acct )
+				critter.hidden := 0;
+				SendSysMessage(critter, "Voce foi revelado pelo acido");
+			endif
+		endif
+	endforeach
+
+
 endfunction
 
 function ExplosionEffect(who, potion, dmg)
@@ -149,7 +186,8 @@ function ExplosionEffect(who, potion, dmg)
 	endforeach
 
 	efeitocascata(potion, who);
-        
+
+        
 endfunction
 
 function EfeitoCascata(potion, who)

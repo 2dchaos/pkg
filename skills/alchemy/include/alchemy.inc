@@ -222,9 +222,13 @@ function do_poison(who, potion)
     0xbf03:
 		TS_StartTimer(who, "paralyzePoison", 120, 2);
 		SendSysMessage(who, "Voce foi envenenado", 3, 40);
+    
+    0x6072:
+    TS_StartTimer(who, "defaultPoison", 120, 3);
+		SendSysMessage(who, "Voce foi envenenado", 3, 40);
 
     0xbf04:
-		TS_StartTimer(who, "defaultPoison", 120, 3);
+		TS_StartTimer(who, "defaultPoison", 120, 4);
 		SendSysMessage(who, "Voce foi envenenado", 3, 40);
     0xbf06:
 		TS_StartTimer(who, "manaPoison", 120, 5);

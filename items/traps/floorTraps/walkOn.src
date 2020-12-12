@@ -18,6 +18,7 @@ include ":charactercreation:habilidades";
 include ":charactercreation:resists";
 include "include/sysEvent";
 include ":timedscripts:timedScripts";
+include "include/shapes";
 
 program TrapWalkOn(mobile, trap)
 	if ( mobile.dead )
@@ -55,6 +56,61 @@ program TrapWalkOn(mobile, trap)
 		endforeach
 
 		sleep(10);
+		return 1;
+	endif
+
+	if (cint(trap.objtype) == 0x10F5)//acidtrap
+		do
+			if (!GetObjProperty(trap, "trap_ativada"))
+				trap.invisible := 0;
+				//var tempo := 15;
+				//var dmg := CInt(RandomDiceRoll("1d10"))+20;
+				SendSysMessageEx(mobile, "Voce ativou uma armadilha!", SSM_FAIL);
+				if (CheckResist(mobile, REFLEXOS, 100))
+					if (temHabilidade(mobile, "Evasao"))
+						SendSysMessageEx(mobile, "Voce escapou completamente da armadilha.", SSM_INFO);
+						sleep(10);
+						continue;
+					else
+						SendSysMessageEx(mobile, "Voce evitou ativar a armadilha.", SSM_INFO);
+						return;
+					endif
+				else
+					if (temHabilidade(mobile, "Evasao Aprimorada"))
+						SendSysMessageEx(mobile, "Por instinto voce se livrou um pouco da armadilha.", SSM_INFO);
+						return;
+					endif
+				endif
+				PlaySoundEffect( mobile, 0x3BA );
+				SetObjProperty(trap, "trap_ativada", 1);
+				var coords := GetCoordsInSquare(trap.x, trap.y, 4);
+				foreach coord in coords;
+					if ( RandomInt(2) != 1 ) // Don't place a fire field
+						continue;
+					endif
+
+					var field := CreateItemAtLocation(coord.x, coord.y, trap.z, 0xA370, 1);
+					if (CheckLineOfSight(field, trap))
+						field.SetDuration(20);
+					else
+						DestroyItem(field);
+					endif
+					sleepms(5);
+				endforeach
+				sleep(2);
+
+				//if (mobile.graphic == 401)
+				//	PlaySoundEffect( mobile, 0x32F );
+				//elseif (mobile.graphic == 400)
+				//	PlaySoundEffect( mobile, 0x441 );
+				//endif
+
+				//sleep(tempo);
+
+				EraseObjProperty(trap, "trap_ativada");
+			endif
+			sleep(10);
+		dowhile (mobile.x == trap.x && mobile.y == trap.y && mobile.z == trap.z && !GetObjProperty(trap, "trap_inativa"));
 		return 1;
 	endif
 	
