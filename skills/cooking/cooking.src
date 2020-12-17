@@ -34,7 +34,7 @@ function cookon(who, item)
   endif
 
   if(!Accessible(who, trg))
-    SendSysMessage(who, "Voce nao alcança isto.");
+    SendSysMessage(who, "Voce nao alcanï¿½a isto.");
     return 0;
   endif
 
@@ -99,7 +99,7 @@ function cookit(who,item);
     endif
   endif
   if(skill_needed)
-    if(SkillCheck( who, WOMENSWORK, skill_needed, 0) > 0);
+    if(SkillCheck( who, DOMESTICWORK, skill_needed, 0) > 0);
       var amt := item.amount;
       if(DestroyItem(item))
         newitem := CreateItemInBackpack(who, product, amt);

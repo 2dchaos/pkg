@@ -1,8 +1,8 @@
-Z:\pkg\systems\accounts\auxsvc\newAccount.src
-Z:/scripts/modules/basic.em
-Z:/scripts/modules/basicio.em
-Z:/scripts/modules/uo.em
-Z:/scripts/modules/os.em
-Z:\pkg\systems\accounts\include\accounts.inc
-Z:\pkg\systems\accounts\include\settings.inc
-Z:/scripts/modules/cfgfile.em
+C:\LVM\LVM\pkg\systems\accounts\auxsvc\newAccount.src
+C:/LVM/LVM/scripts/modules/basic.em
+C:/LVM/LVM/scripts/modules/basicio.em
+C:/LVM/LVM/scripts/modules/uo.em
+C:/LVM/LVM/scripts/modules/os.em
+C:\LVM\LVM\pkg\systems\accounts\include\accounts.inc
+C:\LVM\LVM\pkg\systems\accounts\include\settings.inc
+C:/LVM/LVM/scripts/modules/cfgfile.em
