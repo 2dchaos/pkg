@@ -111,7 +111,7 @@ program SpellStarter(params)
 		EraseObjProperty(mobile, "#Casting");
 		return 0;
 	elseif ( !AP_ConsumeVital(mobile, MANA, spellinfo.mana) && !mobile.npctemplate )
-		if ( !TemHabilidade(mobile, "Determinacao Elemental")  )
+		if ( !TemHabilidade(mobile, "Determinacao")  )
 			SendSysMessageEx(mobile, "Voce nao possui energia arcana suficiente em seu corpo para invocar esta magia!", SSM_FAIL);
 			FailSpell(mobile);
 			EraseObjProperty(mobile, "#Casting");
@@ -126,7 +126,7 @@ program SpellStarter(params)
 		endif
 	elseif ( !TNCheckReagents(mobile, spellinfo, scroll) )
 		//if (!Elementalista(mobile, spellinfo)) //elementalista nao gastam reagentes
-		if ( !TemHabilidade(mobile, "Determinacao Elemental") && !isBloodied(mobile) )
+		if ( !TemHabilidade(mobile, "Determinacao") && !isBloodied(mobile) )
 
 			SendSysMessageEx(mobile, "Voce nao possui os componentes materiais necessarios para invocacao desta magia arcana.", SSM_FAIL);
 			if (TemHabilidade(mobile, "Mago Precavido"))
