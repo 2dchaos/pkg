@@ -113,10 +113,7 @@ function escolherCabelo(who, byref disfarce, raca := 0)
 	var sizey2 := 640;
 	var sizey3 := 600;
 	if (raca == "Cazar")
-		hair := config["Cazar"];
-		sizey1 := 200;
-		sizey2 := 170;
-		sizey3 := 130;
+		hair := config["head"];
 	else
 		hair := config["head"];
 	endif
@@ -339,7 +336,7 @@ function SkinGump(who, byref new_look, povo := 0, sempreretorna := 0)
 	if ( !skin_cfg )
 		SendSysMessage(who, "Error: Could not open :fls_core:config/skincolors.cfg -> "+skin_cfg.errortext);
 	endif
-	if  (povo == "Norde" || povo == "Balmute" || povo == "Picto")
+	if  (povo == "Norde" || povo == "Picto")
 		skin_cfg := skin_cfg["brancos"];
 	elseif (povo == "Cazar");
 		skin_cfg := skin_cfg["negros"];

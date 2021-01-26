@@ -1320,31 +1320,70 @@ program createchar(who)
 
 	if (chardata.classe == "Sabio")
 		if (chardata.povo == "Balmute") //Balmute eh sempre mesum
-				if (ganheispell == 0)
-					var grimorio := createiteminbackpack(who, "grimorionecro", 1);
+			if (!ganheispell)
+				var gump2 := GFCreateGump();
+				GFDisposable(gump2, 0);
+				GFResizePic(gump2, 0, 25, 3600, 170, 200);	
+				GFResizePic(gump2, 15, 40, 0x13BE, 140, 170);
+				GFTextLine(gump2, 45, 50, 1153, "Escolha sua magia");
+
+				//GFTextLine(gump2, 40, 70, 1153, "Necromante");
+				GFTextLine(gump2, 40, 90, 1153, "Feiticeiro");
+				GFTextLine(gump2, 40, 110, 1153, "Necromante");
+
+				//GfAddButton(gump2, 20, 73, 2117, 2118, GF_CLOSE_BTN,  10);
+				GfAddButton(gump2, 20, 94 , 2117, 2118, GF_CLOSE_BTN,  20);
+				GfAddButton(gump2, 20, 115 , 2117, 2118, GF_CLOSE_BTN,  30);
+
+				var input2 := GFSendGump(who, gump2);
+				input2 := input2[0];
+				
+				if (input2 == 30)
+					var grimorio:=createiteminbackpack(who, "grimorionecro", 1);
+					SetObjProperty(grimorio, "serialid", who.serial);
 					CreateItemInBackpack(who, "gravedust", 10);
 					CreateItemInBackpack(who, "BlackMoor", 10);
-					setobjproperty(grimorio, "serialid", who.serial);
 					setobjproperty(grimorio, "marked",who.name + " - " + who.acctname);
 					var spellinfo := struct;
 					var p1 := createiteminbackpack(who, "pergaminhomagico1");
 					spellinfo.+id := 1;
 					SetObjProperty(p1, "spellinfo", spellinfo);
-					 p1 := createiteminbackpack(who, "pergaminhomagico1");
+					p1 := createiteminbackpack(who, "pergaminhomagico1");
 					spellinfo.id := 3;
 					SetObjProperty(p1, "spellinfo", spellinfo);
-					p1:= createiteminbackpack(who, "pergaminhomagico1");
+					p1 := createiteminbackpack(who, "pergaminhomagico1");
 					spellinfo.id := 2;
 					SetObjProperty(p1, "spellinfo", spellinfo);
 					p1 := createiteminbackpack(who, "pergaminhomagico1");
 					spellinfo.id := 25;
 					SetObjProperty(p1, "spellinfo", spellinfo);
-					ganheispell := 1;
+				
+				elseif (input2 == 20)
+					var grimorio:=createiteminbackpack(who, "grimorio", 1);
+					SetObjProperty(grimorio, "serialid", who.serial);
+					CreateItemInBackpack(who, "gravedust", 10);
+					CreateItemInBackpack(who, "BlackMoor", 10);
+					setobjproperty(grimorio, "marked",who.name + " - " + who.acctname);
+					var spellinfo := struct;
+					var p1 := createiteminbackpack(who, "pergaminhomagico4");
+					spellinfo.+id := 33;
+					SetObjProperty(p1, "spellinfo", spellinfo);
+					p1 := createiteminbackpack(who, "pergaminhomagico4");
+					spellinfo.id := 34;
+					SetObjProperty(p1, "spellinfo", spellinfo);
+					p1 := createiteminbackpack(who, "pergaminhomagico4");
+					spellinfo.id := 35;
+					SetObjProperty(p1, "spellinfo", spellinfo);
+					p1 := createiteminbackpack(who, "pergaminhomagico4");
+					spellinfo.id := 47;
+					SetObjProperty(p1, "spellinfo", spellinfo);	
+					SetObjProperty(who, "EspadaArcana", 1);
 				endif
+			endif		
 		endif
 	endif
 
-	if (chardata.classe == "Sabio" && chardata.povo == "Bariyano" || chardata.povo == "Balmute")
+	if (chardata.classe == "Sabio" && chardata.povo == "Bariyano" || chardata.povo == "Ferune" )
 		if (!ganheispell)
 			var gump2 := GFCreateGump();
 				GFDisposable(gump2, 0);

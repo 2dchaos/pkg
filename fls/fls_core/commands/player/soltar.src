@@ -12,7 +12,7 @@ program soltar (me)
 	elseif (me.dead)
 		SendSysMessage(me, "Voce esta morto...");
 		return;
-	elseif (AP_GetVital(me, "Stamina") < 25)
+	elseif (AP_GetVital(me, "Stamina") < 5)
 		SendSysMessage(me, "Voce esta cansado demais para tentar algo...");
 		return;
 	endif
@@ -40,6 +40,6 @@ program soltar (me)
 		SendSysMessage (me, "Voce falhou...");
 	endif
 
-	ConsumeVital (me, "Stamina", 2500);
+	ConsumeVital (me, "Stamina", 1000);
 
 endprogram

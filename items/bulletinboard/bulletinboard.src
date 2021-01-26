@@ -60,7 +60,8 @@ program BulletinBoard(who, board)
 
 
 		if ( input[ADD_POST_BTN] )
-			subject := OldGFExtractData(subject.keyid, input);
+			subject := OldGFExtractData(subject.keyid, input);
+
 			//Take the 'lines' from the post and put them into 1 string.
 			var msg_string := "";
 			foreach line in msg_lines
