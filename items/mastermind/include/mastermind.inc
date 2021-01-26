@@ -22,9 +22,9 @@ while(who.connected)
 
 	GFGumpPic(gump, 30, 30, 103 );
 
-	GFTextLine(gump, 100, 50, 998, "A");
-	GFTextLine(gump, 85, 70, 998, "Puzzle");
-	GFTextLine(gump, 90, 90, 998, "Lock");
+	GFTextLine(gump, 100, 50, 998, "Uma");
+	GFTextLine(gump, 85, 70, 998, "Fechadura");
+	GFTextLine(gump, 90, 90, 998, "Complexa");
 
 	GFTextLine(gump, 200, 40, 194, "Escolha a sequencia correta dos cilindros");
 	GFTextLine(gump, 200, 60, 194, "necessaria para abrir a tranca. Cada cilindro");
@@ -56,7 +56,7 @@ while(who.connected)
 //--------------------------------------------------------------------
 
 	GFResizePic(gump,440,150,5100,30,30);
-	GFAddButton(gump, 420, 160, 5032, 5032, GF_CLOSE_BTN, 5 );	//button right
+	GFAddButton(gump, 420, 160, 5032, 5032, GF_CLOSE_BTN, 15 );	//button right
 	GFTilePic(gump, 435, 160, 6253 );		//purple
 
 	GFResizePic(gump,440,200,5100,30,30);
@@ -157,7 +157,7 @@ while(who.connected)
 	var Res := GFSendGump(who, gump);
 
 	if(Res[0] < 1)
-		if(YesNo(who, "Realy cancel ?"))
+		if(YesNo(who, "Realmente desistir?"))
 //    		SendSysMessage(who, "Canceled.",FONT_NORMAL,RED_COLOR);
 			return 0;
 		else
