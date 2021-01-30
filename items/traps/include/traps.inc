@@ -195,3 +195,16 @@ function TrapFound(object, founder)
 	SetName(object, object.desc+" [trapped]");
 	SetObjProperty(object, "trapSpoted", founder.serial);
 endfunction
+
+function ExistTrap(object)
+   var trap_list := GetObjProperty(object, "TrapList");
+	if ( Lower(TypeOf(trap_list)) != "array" )
+		trap_list := array{};
+	endif
+
+   if (trap_list.size() < 1 )
+      return 0;
+   endif
+
+   return 1;
+endfunction

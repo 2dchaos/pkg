@@ -775,4 +775,13 @@ function GFTextEntryLimited(byref gump, x, y, width, height, txt_color, ini_text
 	return (txt_id);   
 endfunction
 
+function GFSetID(byref gump, gumpid)
+    gump.gumpid := gumpid;
+    return 1;
+endfunction
 
+function GFTooltipText(byref gump, entrytext)
+   (gump.layout).Append("Tooltip 1114057 @{}@'".format(entrytext));
+
+   return 1;
+endfunction
