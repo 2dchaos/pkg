@@ -27,7 +27,7 @@ function examinarAlvo(who)
 			if (last_name)
 				name := name+" "+last_name;
 			endif
-			SendSysMessageEx(who, "Você descobriu que "+targ.name+" é, na verdade, "+name+".", SSM_INFO);
+			SendSysMessageEx(who, "Voce descobriu que "+targ.name+" e, na verdade, "+name+".", SSM_INFO);
 			SendSysMessageEx(who, "ATENCAO: Se voce nao conhece esse personagem, ignore o fato de saber o nome dele.", SSM_INFO);
 		endif
 	elseif ( GetObjProperty(targ, "TrapList") )
@@ -48,7 +48,7 @@ function examinarAlvo(who)
 		endcase
 			if ( SkillCheck(who, AWARENESS, diff) > 0 )
 				found :=1;
-				var revelar := YesNo(who, "Você descobriu uma armadilha, deseja revelá-la?", "Sim.", "Não, deixarei a armadilha escondida.");
+				var revelar := YesNo(who, "Vocï¿½ descobriu uma armadilha, deseja revelï¿½-la?", "Sim.", "Nï¿½o, deixarei a armadilha escondida.");
 				if (revelar)
 					PrintText(targ, "*armadilha revelada por "+who.name+"*");
 					TrapFound(targ, who);
@@ -107,7 +107,7 @@ function examinarArea(who)
 	var range := CInt( AP_GetSkill(who, AWARENESS) / 10 ) + 1;
 
 	var vantagem := (GetObjProperty(who, "chardata")).vantagemracial;
-	if ( vantagem == "Sentidos Aguçados" )
+	if ( vantagem == "Sentidos Aguï¿½ados" )
 		range := range + 5;
 	endif
 

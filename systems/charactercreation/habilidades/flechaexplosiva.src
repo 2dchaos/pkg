@@ -1,0 +1,118 @@
+use uo;
+use os;
+use cfgfile;
+
+include "include/client";
+include "include/sounds";
+include "include/say";
+include "include/damage";
+include ":timedscripts:timedScripts";
+include ":fls_core:fls_util";
+include ":attributes:attributeConstants";
+include ":attributes:attributes";
+include ":attributes:skillCheck";
+include ":attributes:stats";
+include ":fls_core:fls_combat";
+include ":blood:blood";
+include ":fls_core:fls_characters";
+include ":fls_core:packets";
+include ":tn:combat";
+include ":combat:combat";
+include "include/packets";
+
+
+program frascoexplosivo(who)
+	//var who := params[1];
+	//var hab := params[2];
+	//var targ := params[3];
+	//params := 0; // No longer needed
+
+    var weapon := who.weapon;
+	var weaponBow := 0;
+	if (lower(weapon.attribute) == "rangedcombat")
+		weaponBow := 1;
+	endif
+
+    if (!weaponBow := 1)
+      SendSysMessageEx(who, "Voce precisa estar usando um arco!");
+      return 0;
+    endif
+
+    var targ := target(who, TGTOPT_HARMFUL+TGTOPT_CHECK_LOS);
+
+    if (!(targ.objtype in array{ 56328, 48910, 48911, 48915, 48918}))
+      SendSysMessageEx(who, "Isso nao parece um explosivo");
+      return 0;
+    endif
+
+    
+    var has_ammo := 0;
+
+	var aljavas := array{0x791c, 0x2fb7};
+	var aljava := GetEquipmentByLayer(who, 0x14);
+	
+		if (aljava.objtype in aljavas)
+			aljava := GetEquipmentByLayer(who, 0x14);
+		else
+			aljava := GetEquipmentByLayer(who, 0xc);
+		endif
+	var ammo := GetObjProperty(who.weapon, "ammo");
+
+	if (!ammo)
+		SendSysMessage(who, "Voce nao definiu o tipo de flecha que vai usar. [clique 2x no arco e na flecha]");
+		return 0;
+	endif
+
+	//var elem := GetItemCFGInfo(who, who.weapon);
+	//PerformAction(who, 0x000a );
+
+    if ( weaponBow)
+		if (!AmmoCheck(who, targ))
+			return 1;
+		endif
+	else
+		PerformAction(who, 0x000a );
+        PrintText(who, "*dispara no explosivo*");
+	    PlaySoundEffect(who, 0x14A);
+	endif
+
+   sleepms(600);
+   start_script("potions/exploder", {targ, who});
+
+	return 1;
+endprogram
+
+function AmmoCheck(attacker, defender)
+	var wpn_a_elem := GetWpnCfgInfo(attacker, attacker.weapon);
+
+	if ( !wpn_a_elem.ProjectileType )
+		return 1;
+	endif
+
+	var has_ammo := 0;
+
+	var aljavas := array{0x791c, 0x2fb7};
+	var aljava := GetEquipmentByLayer(attacker, 0x14);
+	
+		if (aljava.objtype in aljavas)
+			aljava := GetEquipmentByLayer(attacker, 0x14);
+		else
+			aljava := GetEquipmentByLayer(attacker, 0xc);
+		endif
+	var ammo := GetObjProperty(attacker.weapon, "ammo");
+	if (!ammo)
+		SendSysMessage(attacker, "Voce nao definiu o tipo de flecha que vai usar. [clique 2x no arco e na flecha]");
+		return 0;
+	endif
+	if ( ConsumeSubstance( aljava, ammo, 1 ) )
+		var cfg:=ReadConfigFile(":woodworking:itemdesc");
+		var elem := FindConfigElem(cfg, ammo);
+		var ammo_color := elem.color;
+		PlayMovingEffectXYZHued(attacker, defender, wpn_a_elem.ProjectileAnim, 10, 10, 0, ammo_color);
+		return 1;
+	else
+		return 0;
+	endif
+	
+endfunction
+
