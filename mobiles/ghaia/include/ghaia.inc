@@ -27,8 +27,8 @@ enum STATES
  FLEEING := 6
 endenum
 
-//alinhamento pra determinar se o player é inimigo ou nao pra IA.
-//outros inimigos pra IA é definido com a tag enemy
+//alinhamento pra determinar se o player ï¿½ inimigo ou nao pra IA.
+//outros inimigos pra IA ï¿½ definido com a tag enemy
 const ALIGN_EVIL := "evil";
 const ALIGN_GOOD := "good";
 const ALIGN_NEUTRAL := "neutral";
@@ -73,8 +73,8 @@ function CanFight(me, mobile, align)
   
   if (!mobile.npctemplate) //se for player olha a tendencia do npc
     if (align == ALIGN_EVIL) //npcs malignos atacam todos os players
-	  if (GetObjProperty(me, "AtacarNoite") && (GetGlobalProperty( "dia") != "noite")) //checa se só é hostil de noite
-		if(Distance(me, mobile) > 3) //se for de dia e o alvo não estiver a 3 tiles de distancia, eles não atacam
+	  if (GetObjProperty(me, "AtacarNoite") && (GetGlobalProperty( "dia") != "noite")) //checa se sï¿½ ï¿½ hostil de noite
+		if(Distance(me, mobile) > 3) //se for de dia e o alvo nï¿½o estiver a 3 tiles de distancia, eles nï¿½o atacam
 			return 0;
 		endif
 	  endif
@@ -84,8 +84,8 @@ function CanFight(me, mobile, align)
         if ( (mytemplate == "giantbat") || (mytemplate == "giantrat") || (mytemplate == "gianttoad") 
         || (mytemplate == "giantserpent") || (mytemplate == "snake") || (mytemplate == "mongbat") || (mytemplate == "naja")
         || (mytemplate == "warg") || (mytemplate == "polarbear") || (mytemplate == "lynx") ||  (mytemplate == "cougar") 
-        ||  (mytemplate == "alligator")  || (mytemplate == "panther") || (mytemplate == "grizzlybear") || (mytemplate == "wolf") || (mytemplate == "sapop"))
-			if (isBoss(mobile)) //verifica se é boss
+        ||  (mytemplate == "alligator")  || (mytemplate == "panther") || (mytemplate == "bull") || (mytemplate == "grizzlybear") || (mytemplate == "wolf") || (mytemplate == "sapop"))
+			if (isBoss(mobile)) //verifica se ï¿½ boss
 				return 1;
 			else
 				return 0;
@@ -116,11 +116,11 @@ function CanFight(me, mobile, align)
     endif
   else //se for um npc verifica se eh inimigo
     if (align == ALIGN_EVIL)
-      if (mobile.master) //se for bicho tamado, é atacado!
+      if (mobile.master) //se for bicho tamado, ï¿½ atacado!
 	if ( (mytemplate == "giantbat") || (mytemplate == "giantrat") || (mytemplate == "gianttoad") 
         	|| (mytemplate == "giantserpent") || (mytemplate == "snake") || (mytemplate == "mongbat") || (mytemplate == "naja")
 	        || (mytemplate == "warg") || (mytemplate == "wolf") || (mytemplate == "polarbear") || (mytemplate == "lynx") ||  (mytemplate == "cougar") 
-	        ||  (mytemplate == "alligator")  || (mytemplate == "panther") || (mytemplate == "grizzlybear") || (mytemplate == "sapop"))
+	        ||  (mytemplate == "alligator")  || (mytemplate == "bull")  || (mytemplate == "panther") || (mytemplate == "grizzlybear") || (mytemplate == "sapop"))
 	            return 0;
         endif
         return 1;
