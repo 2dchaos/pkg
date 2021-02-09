@@ -16,7 +16,6 @@ include ":fls_core:fls_characters";
 include ":fls_core:packets";
 include ":tn:combat";
 include ":combat:combat";
-include ":combat:combat";
 include "include/packets";
 include ":timedscripts:timedScripts";
 

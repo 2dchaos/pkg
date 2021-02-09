@@ -71,7 +71,7 @@ program skillremoveTrap(who)
 			RemoveTrap(item, 1);
 			item.usescript := "";
 			var name := item.desc;
-			name[" [trapped]"] := "";
+			name[" [Armadilha]"] := "";
 			SetName(item, name);
 			return;
 		else

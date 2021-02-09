@@ -1383,7 +1383,7 @@ program createchar(who)
 		endif
 	endif
 
-	if (chardata.classe == "Sabio" && chardata.povo == "Bariyano" || chardata.povo == "Ferune" )
+	if (chardata.classe == "Sabio" && chardata.povo == "Bariyano" || chardata.classe == "Sabio" && chardata.povo == "Ferune" )
 		if (!ganheispell)
 			var gump2 := GFCreateGump();
 				GFDisposable(gump2, 0);

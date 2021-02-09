@@ -1,4 +1,4 @@
-C:\LVM\LVM\pkg\tn\commands\gm\dungeondoor.src
+c:\LVM\LVM\pkg\tn\commands\gm\dungeondoor.src
 C:/LVM/LVM/scripts/modules/basic.em
 C:/LVM/LVM/scripts/modules/basicio.em
 C:/LVM/LVM/scripts/modules/uo.em
@@ -13,3 +13,7 @@ C:\LVM\LVM\pkg\utils\gumps\include\requestgump.inc
 C:\LVM\LVM\pkg\items\traps\include\traps.inc
 C:/LVM/LVM/scripts/modules/util.em
 C:\LVM\LVM\pkg\tn\include\tngumps.inc
+C:\LVM\LVM\scripts\include\client.inc
+C:\LVM\LVM\scripts\include\utils.inc
+C:/LVM/LVM/scripts/modules/math.em
+C:\LVM\LVM\scripts\include\facings.inc
