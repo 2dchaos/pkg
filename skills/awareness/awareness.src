@@ -22,14 +22,15 @@ program skill_Alertness(who)
 
 	var menu := choose(who);
 	if (menu == 1)
-		if ( !examinarAlvo(who) )
-			SendSysMessageEx(who, "Voce nao encontrou nada de diferente.", SSM_INFO);
-		endif
+		return examinarAlvo(who);
 	elseif (menu == 2)
-		PrintText(who, "*procurando algo*");
-		if ( !examinarArea(who) )
-			SendSysMessageEx(who, "Voce nao encontrou nada de diferente.", SSM_INFO);
+		if(who.hidden)
+			SendSysMessageEx(who, "Procurando algo. [furtivamente]", SSM_INFO);
+		else
+			PrintTextAbove(who, "*Procurando algo*");
+			SendSysMessageEx(who, "Procurando algo.", SSM_INFO);
 		endif
+		return examinarArea(who);
 	else
 		var ignore := GetObjProperty(who, "IgnoreHidden");
 		if (ignore)
@@ -48,15 +49,15 @@ function Choose(mobile)
 	GFClosable(yn_gump, 0);
 	GFResizePic(yn_gump, 0, 0, GFCfgConst("Defaults", "BackGround"), 400, 180); //205);
 	GFResizePic(yn_gump, 15, 15, GFCfgConst("Defaults", "ForeGround"), 370, 150); //175);
-	
+
 	var y_pos := 20;
-	GFTextLine(yn_gump, 20, y_pos, 1153, "Escolha uma opção.");
+	GFTextLine(yn_gump, 20, y_pos, 1153, "Escolha uma opÃ§Ã£o.");
 	y_pos := y_pos+40;
 	GFAddButton(yn_gump, 20, (y_pos+3), 2117, 2118, GF_CLOSE_BTN, 1);
-	GFTextLine(yn_gump, 40, y_pos, 1153, "Examinar algo específico.");
+	GFTextLine(yn_gump, 40, y_pos, 1153, "Examinar algo especÃ­fico.");
 	y_pos := y_pos+40;
 	GFAddButton(yn_gump, 20, (y_pos+3), 2117, 2118, GF_CLOSE_BTN, 2);
-	GFTextLine(yn_gump, 40, y_pos, 1153, "Examinar a área que estou.");
+	GFTextLine(yn_gump, 40, y_pos, 1153, "Examinar a Ã¡rea que estou.");
 	y_pos := y_pos+40;
 	GFAddButton(yn_gump, 20, (y_pos+3), 2117, 2118, GF_CLOSE_BTN, 3);
 	var ignore := GetObjProperty(mobile, "IgnoreHidden");
@@ -64,10 +65,10 @@ function Choose(mobile)
 	if (ignore)
 		onoff := "Ligar";
 	endif
-		
+
 	GFTextLine(yn_gump, 40, y_pos, 1153, onoff+" Passividade");
-	
+
 	var input := GFSendGump(mobile, yn_gump);
 	input := input[0];
-	return input;	
+	return input;
 endfunction

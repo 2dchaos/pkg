@@ -23,24 +23,24 @@ program lever(item)
 	endif
 
 	while(item)
-		sleep(2);
+        sleep(2);
       var event := wait_for_event(600);
       var powerevent := GetObjProperty(item, "powerword");
       if (event && item.invisible)
          if (event.type == SYSEVENT_SPEECH && powerevent)
-            var word := lower(CChrz(event.uc_text));
+            var word := lower(event.text);
             if (word == lower(powerevent))
                item.invisible := 0;
-               //PrintText(item, "*Uma alavanca aparece*");
+               //PrintText(item, "Uma alavanca aparece");
                SetObjProperty(item, "reset_cd", polcore().systime+600);
             endif
          elseif (event.source.concealed)
-         elseif (event.type == SYSEVENT_ENTEREDAREA && event.source.connected && item.invisible && powerevent)
+         elseif (event.type == SYSEVENT_ENTEREDAREA && event.source.connected && item.invisible && !powerevent)
             item.invisible := 0;
-            //PrintText(item, "*!*");
+            //PrintText(item, "!");
             SetObjProperty(item, "reset_cd", polcore().systime+600);
          endif
       endif
-		reset(item); //reset testa se ta ativado, se tiver volta pro normal.
-	endwhile
+        reset(item); //reset testa se ta ativado, se tiver volta pro normal.
+    endwhile
 endprogram
