@@ -9,6 +9,10 @@ C:/LVM/LVM/scripts/modules/cfgfile.em
 C:\LVM\LVM\pkg\tn\include\tngumps.inc
 C:\LVM\LVM\pkg\utils\gumps\include\gumps.inc
 C:\LVM\LVM\pkg\utils\gumps\include\gumps_ex.inc
+C:\LVM\LVM\scripts\include\client.inc
+C:\LVM\LVM\scripts\include\utils.inc
+C:/LVM/LVM/scripts/modules/math.em
+C:\LVM\LVM\scripts\include\facings.inc
 C:\LVM\LVM\scripts\include\say.inc
 C:/LVM/LVM/scripts/modules/unicode.em
 C:\LVM\LVM\pkg\utils\gumps\include\yesno.inc

@@ -190,13 +190,13 @@ function MP_Mount(mobile, npc)
 
 
 	//check do Urso
-	if (npc.graphic == 0xD5 && chardata.povo != "Numajene")
+	if (npc.graphic == 0xD5 && chardata.povo != "Picto")
 		SendSysMessage(mobile, "Voce nao pode montar essa criatura.");
 		return 0;
 	endif
 
 	//check do Unicornio
-	if (npc.graphic == 0x7A && chardata.povo != "Numajene")
+	if (npc.graphic == 0x7A && chardata.povo != "Picto")
 		SendSysMessage(mobile, "Voce nao pode montar essa criatura.");
 		return 0;
 	endif

@@ -49,7 +49,7 @@ program TamingSkill(who)
 	GFTextLine(yn_gump, 40, 60, 1153, "Adestrar Animal.");
 
 	GFAddButton(yn_gump, 20, (83), 2117, 2118, GF_CLOSE_BTN, 2);
-	GFTextLine(yn_gump, 40, 80, 1153, "Informações sobre o animal.");
+	GFTextLine(yn_gump, 40, 80, 1153, "InformaÃ§oes sobre o animal.");
 
 	GFTextLine(yn_gump, 40, 100, 1153, "Libertar Animal:");
 
@@ -347,7 +347,7 @@ function BuildDetails(targ, byref gump, cmd_name, byref y_pos)
 	
 	GFPage(gump, det_page);
 	GFAddButton(gump, 213, 34, 2223, 2223, GF_PAGE_BTN, 1);
-	GFTextLine(gump, 24, 67, 0, "Descrição");
+	GFTextLine(gump, 24, 67, 0, "Descriï¿½ï¿½o");
 	GFTextLine(gump, 192, 67, 0, "Ensinar");
 
 	GFAddButton(gump, 211, y_pos+3, 1209, 1210, GF_CLOSE_BTN, btn_maxId);

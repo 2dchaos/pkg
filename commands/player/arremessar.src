@@ -40,7 +40,7 @@ program arremesso(params)
 		SendSysMessageEx(who, "Voce nao pode arremessar pessoas.", SSM_FAIL);
 		return 0;
 	elseif ( targ.npctemplate )
-		SendSysMessageEx(who, "Voce nao pode arremesar pessoas.", SSM_FAIL);
+		SendSysMessageEx(who, "Voce nao pode arremessar pessoas.", SSM_FAIL);
 		return 0;
 	elseif ( Distance(who, targ) > 1 )
 		SendSysMessageEx(who, "Muito longe.", SSM_FAIL);

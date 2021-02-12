@@ -47,6 +47,8 @@ C:\LVM\LVM\pkg\tn\include\boss.inc
 C:\LVM\LVM\pkg\utils\gumps\include\requestgump.inc
 C:\LVM\LVM\pkg\utils\gumps\include\yesno.inc
 C:\LVM\LVM\pkg\tn\include\tngumps.inc
+C:\LVM\LVM\scripts\include\utils.inc
+C:\LVM\LVM\scripts\include\facings.inc
 C:\LVM\LVM\pkg\systems\combat\include\hitscripts.inc
 C:\LVM\LVM\scripts\include\string.inc
 C:\LVM\LVM\scripts\include\damage.inc

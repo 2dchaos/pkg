@@ -11,7 +11,7 @@ include ":mounts:mounts";
 
 program pet(who)
 
-	var petserial := GetObjProperty(who, "companheiro");
+	var petserial := GetObjProperty(who, "TamedPets");
 	var pet;
 	if (petserial != error)
 		pet := SystemFindObjectBySerial(petserial);
@@ -20,7 +20,7 @@ program pet(who)
 	var petAprimorado := GetObjProperty(pet, "aprimorado");
 
 	if (petAprimorado != error)
-		var yes := YesNo(who, "Voce ja tem um companheiro animal aprimorado, deseja liberta-lo?");
+		var yes := YesNo(who, "Voce ja tem uma criatura invocada, deseja liberta-la?");
 		if (yes)
 			PlayMovingEffectXYZEx( pet.x, pet.y, pet.z, pet.x, pet.y, pet.z + 60, pet.realm, GFX_LARGE_FIREBALL, 1, 10, 2320);
 
@@ -30,12 +30,12 @@ program pet(who)
 
 			return 1;
 		else
-			SendSysMessageEx(who, "Voce continua com seu companheiro animal.", SSM_INFO);
+			SendSysMessageEx(who, "Voce continua com a criatura invocada.", SSM_INFO);
 			TS_LowerDuration(who, "Companheiro Animal Aprimorado", 10000, 1);
 			return 1;
 		endif
 	else
-		SendSysMessageEx(who, "Escolha um dos seus animais para virar seu companheiro animal aprimorado.", SSM_REQUEST);
+		SendSysMessageEx(who, "Escolha um dos seus animais para sacrificar e fazer o rito de invocação", SSM_REQUEST);
 		var targ := target(who);
 		if (!targ)
 			SendSysMessageEx(who, "Cancelado.", SSM_FAIL);
@@ -90,7 +90,7 @@ function selectpet(who)
         GFDisposable(gump, 0);
 	GFResizePic(gump, 0, 25, 3600, 220, 350);	
 	GFResizePic(gump, 15, 40, 0x13BE, 190, 320);
-	GFTextLine(gump, 60, 50, 1153, "Companheiro Animal");
+	GFTextLine(gump, 60, 50, 1153, "Criaturas Magicas");
 
 	GFTilePic(gump, 50, 90, 9678);
 	GFTilePic(gump, 50, 140, 8399);
