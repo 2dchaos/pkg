@@ -53,4 +53,14 @@ program makedungeondoor(who)
 
 	SendSysMessage(who, "Pronto.");
 
+	var duration;
+	duration := GetObjProperty(door, "time");
+
+	while (1)
+		if (!door.locked)
+			sleep(duration);
+			door.locked := 1;
+		endif
+	endwhile
+
 endprogram
