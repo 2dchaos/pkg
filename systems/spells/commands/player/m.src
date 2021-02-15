@@ -32,7 +32,7 @@ program magia(who, spellname)
 	var spellbook := 0;
 	var booktype;
 	foreach item in ( EnumerateItemsInContainer(who.backpack) )
-		if ( item.objtype == 24832)
+		if ( item.objtype == 24832 || item.objtype == 0x6101)
 			var serialid := GetObjProperty(item, "serialid");
 			var marked := GetObjProperty(item, "marked");
 			if ((serialid && (serialid == who.serial)) || (!serialid) )

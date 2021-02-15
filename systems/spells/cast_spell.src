@@ -345,6 +345,7 @@ program SpellStarter(params)
 
 	endif
 
+	SkillCheck(mobile, MAGICLORE, -1) > 0;
 	//MS_SpellDebug(mobile, "Spell starter completed.");
 	EraseObjProperty(mobile, "#magiasilenciosa");
 	EraseObjProperty(mobile, "#Casting");

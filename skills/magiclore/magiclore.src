@@ -39,7 +39,7 @@ program skill_armslore(who)
 		endif
 	endif
 
-	if (item.graphic == 3849)
+	/*if (item.graphic == 3849)
 		PrintText(who, "*analisando um frasco*");
 		if (SkillCheck(who, MAGICLORE, -1) > 0)
 			var cfg := ReadConfigFile(":*:itemdesc");
@@ -65,7 +65,8 @@ program skill_armslore(who)
 		else
 			SendSysMessageEx(who, "Voce nao esta certo..", SSM_FAIL);
 		endif
-	else
+	else*/
+
 		PrintText(who, "*analisando um item*");
 
 		if (SkillCheck(who, MAGICLORE, -1) > 0)
@@ -152,7 +153,7 @@ program skill_armslore(who)
 			SendSysMessageEx(who, "Voce nao descobriu nada.", SSM_FAIL);
 		endif
 
-	endif
+	//endif
 		
 
 	
