@@ -163,21 +163,21 @@ var gfdata := array{
 
 	if (chardata.raca == "Humano")
 		gfdata.append("Versatilidade");
-		gfdata.append("Homens são movidos pela curiosidade, o que faz com que explorem várias áreas de conhecimento. Começa com +2 pontos de skills.");
+		gfdata.append("Você é movido pela curiosidade, o que faz com que explore várias áreas de conhecimento. Ganha +2 pontos na compra de perícias.");
 		gfdata.append("Resistentes");
-		gfdata.append("Humanos se adaptam bem a condições adversas por piores que sejam. Ganha +10 em todos os testes de resistências.");
+		gfdata.append("Você se adapta bem a condições adversas por piores que sejam. Ganhe +10 em todos os  testes de resistências.");
 //		gfdata.append("Aprendiz Rápido");
 //		gfdata.append("É mais fácil para os homens, do que para as outras raças, aprenderem coisas novas. Regeneração mais rápida de cap.");
 //		gfdata.append("Vontade de Ferro");
 //		gfdata.append("Possuem uma grande força de vontade e autocontrole. Ganham +20 nos testes de Vontade.");
 		gfdata.append("Sabedoria");
-		gfdata.append("Suas terciárias vão até 50");
+		gfdata.append("Você aprendeu a dar mais valor ao conhecimento. Habilidades terciárias podem ir até 50%.");
 		if (chardata.povo == "Picto")
 			gflayout.append("text 180 490 2105 9");			
 			gflayout.append("Radio 150 487 9726 9729 0 4");
 			gflayout.append("HtmlGump 150 520 330 60 10 3000 0");
 			gfdata.append("Aliado da Natureza");
-			gfdata.append("O seu povo possui uma ligação maior com a natureza. Animais selvagens não o atacam.");
+			gfdata.append("Como Picto você possui uma ligação maior com a natureza. Animais selvagens não lhe atacam.");
 		endif
 
 /*		if (chardata.povo  == "Ferune")
@@ -1174,7 +1174,7 @@ program createchar(who)
 	AP_SetTrueStat(who, STRENGTH, chardata.str);
 	AP_SetTrueStat(who, DEXTERITY, chardata.dex);
 	AP_SetTrueStat(who, INTELLIGENCE, chardata.int);
-	who.title_race := chardata.raca;
+//	who.title_race := chardata.raca;
 	CreateItemInBackpack(who, 0xba63, 100); //dinheiro
 	who.race := RACE_HUMAN;
 	RecalcVitals(who);
