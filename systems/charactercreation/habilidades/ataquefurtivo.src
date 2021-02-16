@@ -150,6 +150,31 @@ program backstab(who)
 				MostraDano(who, targ, total);
 				MakeBleed(targ);
 				TS_StartTimer(targ, "bleed", 15);
+
+				var poisonInfo := GetObjProperty(weapon, "poisonInfo" );
+				if (poisonInfo == error)
+					return 0;
+				endif
+
+				poisonInfo.dosage := poisonInfo.dosage -1;
+
+				if (poisonInfo.dosage <= 0) //se nao tiver mais cargas de veneno, deleta
+					EraseObjProperty(weapon, "poisonInfo");
+					return 0;
+				else //se ainda tiver atualiza na arma
+					SetObjProperty(weapon, "poisonInfo", poisonInfo);
+				endif
+	
+				if (IsPoisonImune(targ, poisonInfo.name) )
+					return 0;
+				endif
+
+				if (poisonInfo.name == "paralyzePoison")
+					poisonInfo.time := 5;
+				endif
+
+			TS_StartTimer(targ, poisonInfo.name, poisonInfo.time, poisonInfo.level, who);
+
 			endif
 			EraseObjProperty(who, "backstab");
 			SendSysMessage(who, "Voce acertou seu alvo!");
@@ -191,8 +216,8 @@ function CanBackStab(who, weapon)
 	return 1;
 endfunction
 
-function AmmoCheck(attacker, defender)
-	var wpn_a_elem := GetWpnCfgInfo(attacker, attacker.weapon);
+function AmmoCheck(who, targ)
+	var wpn_a_elem := GetWpnCfgInfo(who, who.weapon);
 
 	if ( !wpn_a_elem.ProjectileType )
 		return 1;
@@ -201,23 +226,23 @@ function AmmoCheck(attacker, defender)
 	var has_ammo := 0;
 
 	var aljavas := array{0x791c, 0x2fb7};
-	var aljava := GetEquipmentByLayer(attacker, 0x14);
+	var aljava := GetEquipmentByLayer(who, 0x14);
 	
 		if (aljava.objtype in aljavas)
-			aljava := GetEquipmentByLayer(attacker, 0x14);
+			aljava := GetEquipmentByLayer(who, 0x14);
 		else
-			aljava := GetEquipmentByLayer(attacker, 0xc);
+			aljava := GetEquipmentByLayer(who, 0xc);
 		endif
-	var ammo := GetObjProperty(attacker.weapon, "ammo");
+	var ammo := GetObjProperty(who.weapon, "ammo");
 	if (!ammo)
-		SendSysMessage(attacker, "Voce nao definiu o tipo de flecha que vai usar. [clique 2x no arco e na flecha]");
+		SendSysMessage(who, "Voce nao definiu o tipo de flecha que vai usar. [clique 2x no arco e na flecha]");
 		return 0;
 	endif
 	if ( ConsumeSubstance( aljava, ammo, 1 ) )
 		var cfg:=ReadConfigFile(":woodworking:itemdesc");
 		var elem := FindConfigElem(cfg, ammo);
 		var ammo_color := elem.color;
-		PlayMovingEffectXYZHued(attacker, defender, wpn_a_elem.ProjectileAnim, 10, 10, 0, ammo_color);
+		PlayMovingEffectXYZHued(who, targ, wpn_a_elem.ProjectileAnim, 10, 10, 0, ammo_color);
 		return 1;
 	else
 		return 0;
