@@ -18,6 +18,7 @@ include ":tn:combat";
 include ":combat:combat";
 include "include/packets";
 include ":timedscripts:timedScripts";
+include "include/client";
 
 
 program backstab(who)
@@ -61,12 +62,49 @@ program backstab(who)
 				dmgList := getNewDamageList(who);
 				var basedamage := CalculateTotalDamageBonus(rawdamage, who, targ);
 				var total := CalculateTotalDamage(targ, basedamage, who, dmgList);
+
 				if (total < 1)
 					total := 1;
 				endif
+
 				ApplyRawDamage(targ, total);
 				MostraDano(who, targ, total);
 				MakeBleed(targ);
+
+				if (GetObjProperty(weapon, "ammo"))
+					var aljava := GetEquipmentByLayer(who, LAYER_CAPE);
+					var ammo := GetObjProperty(weapon, "ammo");
+					foreach arrow in (EnumerateItemsInContainer(aljava))
+						if (arrow.objtype == ammo)
+							weapon := arrow;
+						endif
+					endforeach
+				endif
+
+				var poisonInfo := GetObjProperty(weapon, "poisonInfo" );
+				if (poisonInfo == error)
+					return 0;
+				endif
+
+				poisonInfo.dosage := poisonInfo.dosage -1;
+
+				if (poisonInfo.dosage <= 0) //se nao tiver mais cargas de veneno, deleta
+					EraseObjProperty(weapon, "poisonInfo");
+					return 0;
+				else //se ainda tiver atualiza na arma
+					SetObjProperty(weapon, "poisonInfo", poisonInfo);
+				endif
+	
+				if (IsPoisonImune(targ, poisonInfo.name) )
+					return 0;
+				endif
+
+				if (poisonInfo.name == "paralyzePoison")
+					poisonInfo.time := 5;
+				endif
+
+			TS_StartTimer(targ, poisonInfo.name, poisonInfo.time, poisonInfo.level, who);
+
 				who.hidden := 0;
 			endif
 
