@@ -42,6 +42,11 @@ var descmod:={};
 
 	if (GetEquipmentByLayer(who, LAYER_MOUNT))
 
+		if (item.objtype == 0x26CC || item.objtype == 0xe139 || item.objtype == 0x2d2a )
+			SendSysMessageEx(who, "Voce consegue apenas usar arcos curtos montado", SSM_FAIL);
+			return 0;
+		endif
+
 		if (TemHabilidade(who, "Treinamento Cazar"))
 			if (!TemHabilidade(who, "Treinamento de Cavaleiro"))
 				if (item.attribute != RANGEDCOMBAT || item.objtype != 0xe137 && item.objtype != 0x13B2)
