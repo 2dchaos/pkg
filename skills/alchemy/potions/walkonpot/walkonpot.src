@@ -1,0 +1,38 @@
+use uo;
+use os;
+use cfgfile;
+use util;
+
+include "include/say";
+
+program potionWalkOn(mobile, potion)
+	if ( mobile.dead )
+		// Ghosts dont trigger potions.
+		return 0;
+	elseif ( mobile.concealed )
+		// Concealed GM's dont trigger potions.
+		return 0;
+	elseif ( mobile.npctemplate )
+		return 0;
+	endif
+	
+	var cfg := ReadConfigFile(":*:itemdesc");
+	cfg := cfg[potion.graphic];
+
+	
+    
+        PlaySoundEffect(potion, 0x03F);
+        PrintTextAbove(potion, "*Quebra*");
+        SendSysMessageEx(mobile, "Voce pisou em algo de vidro.", SSM_FAIL);
+
+        sleep(1);
+		
+        start_script("potions/exploder", {potion, mobile});
+
+		sleep(1);
+
+        DestroyItem(potion);
+		return 1;
+	
+
+endprogram
