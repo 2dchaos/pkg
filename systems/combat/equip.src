@@ -42,7 +42,7 @@ var descmod:={};
 
 	if (GetEquipmentByLayer(who, LAYER_MOUNT))
 
-		if (item.objtype == 0x26CC || item.objtype == 0xe139 || item.objtype == 0x2d2a )
+		if (item.objtype == 0x26CC || item.objtype == 0xe139 || item.objtype == 0x2d2a || item.objtype == 0x0f4f || item.objtype == 0x13fd || item.objtype == 0x26CD)
 			SendSysMessageEx(who, "Voce consegue apenas usar arcos curtos montado", SSM_FAIL);
 			return 0;
 		endif

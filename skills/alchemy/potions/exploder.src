@@ -43,6 +43,7 @@ program exploder(parms)
 			48917:FlameEffect(who, potion, 3);
 			48918:HalluEffect(who, potion, 3);
 			0x6073:Acideffetct(who, potion);
+			0xBD13:Sleepeffect(who, potion);
 		endcase
 	endif
 
@@ -77,6 +78,14 @@ function FlameEffect(who, potion, lvl)
 			PlaySoundEffect( critter, 0x208);
 			//ApplyDamageEX(critter, lvl*15, DMG_FIRE);
 			DamageFLS(critter, lvl*15, DMG_FIRE);
+
+			if (lvl == 1)	
+				TS_StartTimer(critter, "chamasperpetuas", 4);
+			elseif (lvl == 2)
+				TS_StartTimer(critter, "chamasperpetuas", 8);
+			elseif (lvl == 3)
+				TS_StartTimer(critter, "chamasperpetuas", 12);
+			endif
 		endif
 	endforeach
 
@@ -174,20 +183,46 @@ function ExplosionEffect(who, potion, dmg)
 	potion.graphic := 1;
 	foreach critter in (ListMobilesNearLocationEx( potion.x, potion.y, potion.z, 6, LISTEX_FLAG_NORMAL + LISTEX_FLAG_HIDDEN, potion.realm ));
 		if (checkLineOfSight(potion, critter))
+
 			if ( critter.hidden)
 				critter.hidden := 0;
 				SendSysMessage(critter, "Voce foi revelado na explosao!");
 			endif
+
 			PlayObjectCenteredEffect( critter, 0x36b0, 7, 0x10 );
 			PlaySoundEffect( critter, 0x208);
 			//ApplyDamageEX(critter, dmg, DMG_FIRE);
 			DamageFLS(critter, dmg, DMG_FIRE);
+
+			if (TemHabilidade(who, "Bomba de Fragmentacao"))
+				TS_StartTimer(critter, "bleed", 15);
+			endif
+
 		endif
 	endforeach
 
 	efeitocascata(potion, who);
 
-        
+endfunction
+
+function Sleepeffect(who, potion)
+
+	PlaySoundEffect(potion, 0x03F);
+	potion.graphic := 1;
+	foreach critter in (ListMobilesNearLocationEx( potion.x, potion.y, potion.z, 6, LISTEX_FLAG_NORMAL + LISTEX_FLAG_HIDDEN, potion.realm ));
+		if (checkLineOfSight(potion, critter))
+
+			if ( critter.hidden)
+				critter.hidden := 0;
+				SendSysMessage(critter, "Voce cai em sono profundo e foi revelado");
+			endif
+
+			TS_StartTimer(critter, "sleep", 12);
+			PlayObjectCenteredEffect( critter, 0x11A6, 7, 0x10 );
+			PlaySoundEffect( critter, 0x232);
+
+		endif
+	endforeach
 endfunction
 
 function EfeitoCascata(potion, who)
@@ -198,7 +233,7 @@ function EfeitoCascata(potion, who)
 	foreach item in (ListItemsNearLocation(potion.x, potion.y, potion.z, 8, potion.realm))
 		if (checklineofsight(potion, item))
 			if((item.objtype in potions) && (item != potion))
-				if (counter > 5)
+				if (counter > 10)
 					SetObjProperty(item, "nodmg", 1);
 				endif
 				SetObjProperty(item,"pause", 1);
