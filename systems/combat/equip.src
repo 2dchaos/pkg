@@ -97,6 +97,7 @@ var descmod:={};
 			set_critical(1);
 			SendSysMessageEx(who, "Voce nao consegue manter a magia na arma.", SSM_FAIL);
 			EraseObjProperty(item, "#elementalweapon");
+			EraseObjProperty(item, "HitScripts");
 			item.color := cint(GetObjProperty(item, "elementalWeaponOriginalColor"));
 			var p := GetProcess( cint(GetObjProperty(item, "pid") ) );
 			p.kill();
