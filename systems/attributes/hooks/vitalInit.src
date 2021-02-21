@@ -160,13 +160,17 @@ endfunction
 // Note: This vital is to kill all.
 // *****
 exported function GetDPRegenRate(mobile)
+
 	if (temHabilidade(mobile, "Espirito Forte"))
 		return 34;
-	elseif (GetObjProperty(mobile, "kit") == "Duro de Matar")
+	endif
+
+	if (mobile.kit == "Duro de Matar")
 		return 9;
 	else
 		return 17; // 1 DP por hora
 	endif
+
 endfunction
 
 exported function GetDPMaximumValue(mobile)

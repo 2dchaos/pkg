@@ -33,14 +33,14 @@ program default_poison(params)
 		ApplyRawDamage(who, dmg);
 		MakeBleed(who);
 
-		//Set_Critical(1);
+		Set_Critical(1);
 		//var curr := CInt(AP_GetVital(who, "Stamina"));
 		//if ( curr >= stam )
 		//	AP_SetVital(who, "Stamina", (curr-stam));
 		//else
 		//	AP_SetVital(who, "Stamina", 0);
 		//endif
-		//Set_Critical(0);
+		Set_Critical(0);
 		
 		sleep(time);
 	endwhile

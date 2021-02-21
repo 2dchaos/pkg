@@ -29,36 +29,40 @@ endfunction
 
 
 function empty_bottle(character, potion, potiontype := 0)
+
+  if(GetObjProperty(potion, "acabou") == 1)
+	var pot2 := SubtractAmount( potion, 1 );
+	var stacknow := GetAmount(0x0F0E);
+		if (stacknow > 0)
+			Addamount(0x0F0E, 1);
+		else
+			var pot := CreateItemInBackpack(character, 0x0F0E, 1);
+		endif
+	return 1;
+	endif
+    
   PlaySoundEffect(character, DRINK_SOUND);
   PrintText(character, "*usa uma pocao*");
   var goles;
-  if (!GetObjProperty(potion, "goles"))
-    goles := 3;
-    SetObjProperty(potion, "goles", goles);
-  else
-    goles := cint(GetObjProperty(potion, "goles"));
-  endif
-  
-  if(potiontype == 1)  //eh uma poçao de 1 so gole
-   goles := -1;
-  endif
-  
-  if (goles > 0)
-    goles := goles-1;
-    SetObjProperty(potion, "goles", goles-1);
-  else
 
-    var stacknow := FindObjtypeInContainer( character.backpack, 3854 );
-    if (stacknow)
-      Addamount(stacknow, 1);
-    else
-       var pot := CreateItemInBackpack(character, 0x0f0e, 1);
-      pot.name := "Frasco de Vidro";
-    endif
-
-    EraseObjProperty(potion, "goles");
-    SubtractAmount(potion, 1);
-  endif
+	if (!GetObjProperty(potion, "goles"))
+		goles := 3;
+		SetObjProperty(potion, "goles", goles);
+	else
+		goles := cint(GetObjProperty(potion, "goles"));
+	endif
+  
+	if(potiontype == 1)  //eh uma poção de 1 so gole
+		goles := 0;
+	endif
+  
+	if (goles > 1)
+		goles := goles - 1;
+		SetObjProperty(potion, "goles", goles);
+	else
+		SetObjProperty(potion, "acabou", 1);
+		SetObjProperty(potion, "goles", 0);
+	endif
   
 endfunction
 
@@ -95,9 +99,6 @@ function isotherreagent(what)
 		0xee28: return 1;
 		0xfc5:  return 1;
 		0x0dea: return 1;
-    0xee35: return 1;
-    0xee2f: return 1;
-    0xeff0: return 1;
 
 		0x1F91: return 1;
 	endcase
@@ -171,7 +172,7 @@ function GetReagName(objtype)
    return "po de liche";
 
   elseif (objtype == 0xF8F )
-   return "po de tumulo";
+   return "poeira de cripta";
   elseif (objtype == 0xee27 )
    return "cascas vermelhas";
   elseif (objtype == 0xee28 )
@@ -186,12 +187,6 @@ function GetReagName(objtype)
    return "cinzas";
   elseif (objtype == 0x1F91 )
    return "copo de agua";
-  elseif (objtype == 0xee35 )
-   return "tinta verde";
-  elseif (objtype == 0xee2f )
-   return "tinta vermelha";
-  elseif (objtype == 0xeff0 )
-   return "tinta azul";
 
   endif
 endfunction
@@ -222,13 +217,9 @@ function do_poison(who, potion)
     0xbf03:
 		TS_StartTimer(who, "paralyzePoison", 120, 2);
 		SendSysMessage(who, "Voce foi envenenado", 3, 40);
-    
-    0x6072:
-    TS_StartTimer(who, "defaultPoison", 120, 3);
-		SendSysMessage(who, "Voce foi envenenado", 3, 40);
 
     0xbf04:
-		TS_StartTimer(who, "defaultPoison", 120, 4);
+		TS_StartTimer(who, "defaultPoison", 120, 3);
 		SendSysMessage(who, "Voce foi envenenado", 3, 40);
     0xbf06:
 		TS_StartTimer(who, "manaPoison", 120, 5);

@@ -135,7 +135,7 @@ var characterx := who.x;
 var charactery := who.y;
 repeat
  if (SubtractAmount(useon, 1))
- PrintText(who, "*curtindo couro*");
+ //PrintText(who, "*curtindo couro*");
  Sleep(1);
  CreateItemInBackpack(who, 0xee45, 1);
  PlaySoundEffect (who, 0x49);
@@ -157,7 +157,7 @@ var characterx := who.x;
 var charactery := who.y;
 repeat
  if (SubtractAmount(useon, 1))
- PrintText(who, "*curtindo couro*");
+ //PrintText(who, "*curtindo couro*");
  Sleep(1);
  CreateItemInBackpack(who, 0xed29, 1);
  PlaySoundEffect (who, 0x49);
@@ -174,7 +174,7 @@ var characterx := who.x;
 var charactery := who.y;
 repeat
  if (SubtractAmount(useon, 1))
- PrintText(who, "*curtindo couro*");
+ //PrintText(who, "*curtindo couro*");
  Sleep(1);
  CreateItemInBackpack(who, 0xef20, 1);
  PlaySoundEffect (who, 0x49);
@@ -196,7 +196,7 @@ var characterx := who.x;
 var charactery := who.y;
 repeat
  if (SubtractAmount(useon, 1))
- PrintText(who, "*curtindo couro*");
+ //PrintText(who, "*curtindo couro*");
  Sleep(1);
  CreateItemInBackpack(who, 0xef21, 1);
  PlaySoundEffect (who, 0x49);
@@ -218,7 +218,7 @@ var characterx := who.x;
 var charactery := who.y;
 repeat
  if (SubtractAmount(useon, 1))
- PrintText(who, "*curtindo couro*");
+ //PrintText(who, "*curtindo couro*");
  Sleep(1);
  CreateItemInBackpack(who, 0xef22, 1);
  PlaySoundEffect (who, 0x49);
@@ -240,7 +240,7 @@ var characterx := who.x;
 var charactery := who.y;
 repeat
  if (SubtractAmount(useon, 1))
- PrintText(who, "*curtindo couro*");
+// PrintText(who, "*curtindo couro*");
  Sleep(1);
  CreateItemInBackpack(who, 0xef23, 1);
  PlaySoundEffect (who, 0x49);
@@ -262,7 +262,7 @@ var characterx := who.x;
 var charactery := who.y;
 repeat
  if (SubtractAmount(useon, 1))
- PrintText(who, "*curtindo couro*");
+ //PrintText(who, "*curtindo couro*");
  Sleep(1);
  CreateItemInBackpack(who, 0xef24, 1);
  PlaySoundEffect (who, 0x49);
@@ -284,7 +284,7 @@ var characterx := who.x;
 var charactery := who.y;
 repeat
  if (SubtractAmount(useon, 1))
- PrintText(who, "*curtindo couro*");
+ //PrintText(who, "*curtindo couro*");
  Sleep(1);
  CreateItemInBackpack(who, 0xef25, 1);
  PlaySoundEffect (who, 0x49);
@@ -306,7 +306,7 @@ var characterx := who.x;
 var charactery := who.y;
 repeat
  if (SubtractAmount(useon, 1))
- PrintText(who, "*curtindo couro*");
+ //PrintText(who, "*curtindo couro*");
  Sleep(1);
  CreateItemInBackpack(who, 0xef26, 1);
  PlaySoundEffect (who, 0x49);
@@ -328,7 +328,7 @@ var characterx := who.x;
 var charactery := who.y;
 repeat
  if (SubtractAmount(useon, 1))
- PrintText(who, "*curtindo couro*");
+ //PrintText(who, "*curtindo couro*");
  Sleep(1);
  CreateItemInBackpack(who, 0xef27, 1);
  PlaySoundEffect (who, 0x49);
@@ -350,7 +350,7 @@ var characterx := who.x;
 var charactery := who.y;
 repeat
  if (SubtractAmount(useon, 1))
- PrintText(who, "*curtindo couro*");
+ //PrintText(who, "*curtindo couro*");
  Sleep(1);
  CreateItemInBackpack(who, 0xef28, 1);
  PlaySoundEffect (who, 0x49);
@@ -372,7 +372,7 @@ var characterx := who.x;
 var charactery := who.y;
 repeat
  if (SubtractAmount(useon, 1))
- PrintText(who, "*curtindo couro*");
+// PrintText(who, "*curtindo couro*");
  Sleep(1);
  CreateItemInBackpack(who, 0xee47, 1);
  PlaySoundEffect (who, 0x49);
@@ -394,7 +394,7 @@ var characterx := who.x;
 var charactery := who.y;
 repeat
  if (SubtractAmount(useon, 1))
- PrintText(who, "*curtindo couro*");
+// PrintText(who, "*curtindo couro*");
  Sleep(1);
  CreateItemInBackpack(who, 0xee57, 1);
  PlaySoundEffect (who, 0x49);
@@ -416,7 +416,7 @@ var characterx := who.x;
 var charactery := who.y;
 repeat
  if (SubtractAmount(useon, 1))
- PrintText(who, "*curtindo couro*");
+ //PrintText(who, "*curtindo couro*");
  Sleep(1);
  CreateItemInBackpack(who, 0xee55, 1);
  PlaySoundEffect (who, 0x49);
@@ -438,7 +438,7 @@ var characterx := who.x;
 var charactery := who.y;
 repeat
  if (SubtractAmount(useon, 1))
- PrintText(who, "*curtindo couro*");
+// PrintText(who, "*curtindo couro*");
  Sleep(1);
  CreateItemInBackpack(who, 0xee56, 1);
  PlaySoundEffect (who, 0x49);
@@ -460,7 +460,7 @@ var characterx := who.x;
 var charactery := who.y;
 repeat
  if (SubtractAmount(useon, 1))
- PrintText(who, "*curtindo couro*");
+// PrintText(who, "*curtindo couro*");
  Sleep(1);
  CreateItemInBackpack(who, 0xee58, 1);
  PlaySoundEffect (who, 0x49);

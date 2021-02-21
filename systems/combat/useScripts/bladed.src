@@ -15,6 +15,7 @@ include ":attributes:attributes";
 include "include/client";
 include "include/say";
 include ":tn:cooldown";
+include ":blood:blood";
 
 program use_Bladed(who, tool)
 	if (who.weapon != tool)
@@ -112,6 +113,8 @@ function CarveItems(who, tool, item)
 		CutLime(who, item);
 	elseif ( (item.objtype == 0x1078) || (item.objtype == 0x1079) )
 		MakeBlankScrolls (who, item);
+	elseif (item.objtype == 0x1da0)
+		Headcut(who, item);
 
 	// Alterado por Edmond - Script para quebrar barril.
 	elseif ((item.objtype == 0xec24) || (item.objtype == 0xec25) || (item.objtype == 0xec26) || (item.objtype == 0xFF04)||(item.objtype == 0xec27) || (item.objtype == 0xec28)) 
@@ -203,6 +206,34 @@ function isfish(theobj)
   else
     return 0;
   endif
+endfunction
+
+function Headcut (who, head)
+
+	PrintText(who, "*arrancando a carne de um cranio*");
+
+	for i := 1 to 3
+		PlaySoundEffect (who, 0x5A);
+		PerformAction (who, ANIM_SALUTE);
+		MakeBleed(who);
+		sleep (1);
+	endfor
+
+	if (!ReserveItem (head))
+		SendSysMessage (who, "Nao pode lacerar esta cabeca");
+		return;
+	endif
+
+	if (!SubtractAmount (head, 1))
+			SendSysMessage(who, "Voce nao pode usar essa cabeca");
+			return;
+	endif
+
+	if (!CreateItemInContainer (who.backpack, 0x1AE4, 1))
+		PrintTextAbovePrivate (who, "*Sua mochila esta cheia!*", who);
+		return;
+	endif	
+	SendSysMessage (who, "Voce fez o trabalho de acougueiro");
 endfunction
 
 function MakeBlankScrolls (who, hides)
