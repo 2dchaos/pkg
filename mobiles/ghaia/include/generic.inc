@@ -118,13 +118,13 @@ function Fight(opponent, alerted := 0)
 //	printtextabove(me, "fui alertado, nao vou alertar");
   endif
 
-/   var speech := GetConfigStringArray( npccfgfile[mytemplate], "InitCombatSpeech" );
+   var speech := GetConfigStringArray( npccfgfile[mytemplate], "InitCombatSpeech" );
    if (speech.size() > 0)
 	if (RandomInt(100)  < 50) //sempre 50% de chance de falar
 		Say(speech[RandomInt(speech.size()+1)]);
 	endif
    endif
-/
+
 
   var dist;
   while( me )
@@ -430,4 +430,84 @@ function sleepmode()
     endcase
     until(!(ev := os::wait_for_event(30)));
   endwhile
+endfunction
+
+function CalcPathAndMove(me, opponent, byref sleepdelay)
+	sleepdelay += 5;
+	if (!CheckLosAt(me, opponent.x, opponent.y, opponent.z) || (opponent.z != me.z && ListStaticsNearLocation(me.x, me.y, me.z, 1))) //se nao consegue ver
+		var path := GetObjPRoperty(me, "path"); //procura se ja calculou o path
+		if (path == error) //se nao calculou
+			var flags := FP_IGNORE_MOBILES;
+			if ( cint(GetObjProperty(me, "ignoredoor")) || cint(GetObjProperty(me, "opendoor")) )
+				flags := flags| FP_IGNORE_DOORS;
+			endif
+			path := FindPath(  me.x, me.y, me.z, opponent.x, opponent.y, opponent.z, me.realm, flags, 12); //calcula o path
+			
+			if (!path[1] || !path || path == error)
+				Flee (opponent);
+				sleepms(sleepdelay);
+				sleepms(500);
+				ChooseAnotherOpponent(me);
+			else
+				SetObjProperty(me, "path", path);
+			endif
+			
+			sleepms(sleepdelay);
+		else //se calculou o path
+			var coord := path[1]; //pega a primeira coordenada
+			if (coord) 
+				SetObjProperty(me, "#coordtry", ReadGameClock()+5); 
+				RunTowardLocation( coord.x, coord.y ); //anda na direcao
+				sleepms(sleepdelay);
+				Opendoors(me); //tenta abrir possiveis portas
+				if (CoordinateDistance(me.x, me.y, coord.x, coord.y) <= 1) //se chegou onde devia 
+					path.erase(1); //deleta a coordenada e vai pra proxima
+					if (path[1])
+						SetObjProperty(me, "path", path);
+					else
+						EraseObjProperty(me, "path");
+					endif
+				else // se nao consegue chegar na coord 
+					if ( cint(GetObjProperty(me, "#coordtry")) > ReadGameClock()) //se ta tentando chegar la a mais de 5 segundos
+						EraseObjProperty(me, "path"); //deleta o path atual
+						ChooseAnotherOpponent(me);
+					endif
+				endif
+			else
+				RunToward( opponent );
+				sleepms(sleepdelay);
+			endif
+		endif
+	else
+		EraseObjProperty(me, "path");
+		RunToward( opponent );
+		sleepms(sleepdelay);
+	endif
+endfunction
+
+function ChooseAnotherOpponent(me)
+
+	var otherTarget := ListMobilesNearLocationEx( me.x, me.y, me.z, 8, LISTEX_FLAG_NORMAL, me.realm );
+	if  (otherTarget.size() > 0)
+		foreach mob in otherTarget
+			if(CanFight(me, mob, align)) //verifica se eh inimigo
+				Fight(mob);
+			endif
+		endforeach
+	endif
+endfunction
+
+function Opendoors(me)
+
+  foreach door in (ListItemsNearLocation(me.x, me.y, me.z, 1))
+    if  ((door.isa(POLCLASS_DOOR)) and (!door.locked)) //se nao ta trancada
+		if ( cint(GetObjProperty(me, "ignoredoor")) == 1)
+			PrintText(me, "*atravessa a porta*");
+			MoveObjectToLocation(me, door.x, door.y, door.z, door.realm, MOVEOBJECT_FORCELOCATION);
+		elseif (cint(GetObjProperty(me, "opendoor")) == 1)
+			PrintText(me, "*abre a porta*");
+			door.Open();
+		endif
+	endif
+  endforeach
 endfunction

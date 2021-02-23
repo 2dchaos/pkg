@@ -36,7 +36,7 @@ program magia(who, spellname)
 			var serialid := GetObjProperty(item, "serialid");
 			var marked := GetObjProperty(item, "marked");
 			if ((serialid && (serialid == who.serial)) || (!serialid) )
-				if ( (marked && (marked == who.name + " - " + who.acctname)) || (!marked) )
+				//if ( (marked && (marked == who.name + " - " + who.acctname)) || (!marked) )
 					var spells := GetObjProperty(item, "spells");
 					foreach s in spells
 						if ( s.id == id)
@@ -45,7 +45,7 @@ program magia(who, spellname)
 							break;
 						endif
 					endforeach
-				endif
+				//endif
 			endif
 		endif
 	endforeach
