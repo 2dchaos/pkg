@@ -1178,6 +1178,7 @@ program createchar(who)
 	CreateItemInBackpack(who, 0xba63, 100); //dinheiro
 	CreateItemInBackpack(who, 0x09f2, 3);
 	CreateItemInBackpack(who, 0x09d0, 2);
+	CreateItemInBackpack(who, 0x6161, 1);
 	who.race := RACE_HUMAN;
 	RecalcVitals(who);
 	
