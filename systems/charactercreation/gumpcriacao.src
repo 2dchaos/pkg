@@ -1176,6 +1176,8 @@ program createchar(who)
 	AP_SetTrueStat(who, INTELLIGENCE, chardata.int);
 //	who.title_race := chardata.raca;
 	CreateItemInBackpack(who, 0xba63, 100); //dinheiro
+	CreateItemInBackpack(who, 0x09f2, 3);
+	CreateItemInBackpack(who, 0x09d0, 2);
 	who.race := RACE_HUMAN;
 	RecalcVitals(who);
 	
