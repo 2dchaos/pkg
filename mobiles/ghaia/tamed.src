@@ -552,7 +552,7 @@ function UnTame()
 	me.SetMaster(0);
 
 	var orig_script := GetObjProperty(me, "script");
-
+/*
 	if ( !orig_script )
 
 		PrintTextAbove(me, "*doesnt have an original script to use now that taming is done?!*");
@@ -566,7 +566,7 @@ function UnTame()
 		orig_script := ":brainai:brain";
 
 	endif
-
+*/
 	me.script := orig_script;
 	SetName(me, GetObjProperty(me, "name"));
 	EraseObjProperty(me, "owner");

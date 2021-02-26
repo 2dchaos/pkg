@@ -446,7 +446,7 @@ function limiteportempo (who)
             lim := 40.0 + ((dias - 75) * 0.2);
          endif
       else
-         lim := 6.0 + ((dias - 5) * 0.5);
+         lim := 10.0 + ((dias - 5) * 0.5);
       endif
    endif
       

@@ -18,12 +18,17 @@ program SpellScript(params)
 	params := 0; // No longer needed
 
 	var skill := AP_GetSkill(who, "Magery");
-	var maxsummons := Cint(skill / 25);
+	var maxsummons := Cint(skill / 20);
 	var npctemplate := GetObjproperty(targ, "npctemplate");
 	var category := lower(getnpccategory( ParseTemplateName(npctemplate).template ));
 
     if (GetObjProperty(who, "NecroSummons") == maxsummons);
 		SendSysMessageEx(who, "Voce ja controla espiritos demais", SSM_FAIL);
+		return 0;
+	endif
+
+	if ( targ.IsA(POLCLASS_MOBILE) )
+		SendSysMessage(who, "Voce so pode usar esta magia em cranios.");
 		return 0;
 	endif
 
@@ -77,7 +82,7 @@ program SpellScript(params)
 		
 
 	SendSysMEssageEx(who, "Voce teve sucesso em reanimar o cranio", SSM_INFO);
-	Corromper(who, 16, "0");
+	Corromper(who, 4, "0");
 	
 	return 1;
 endprogram 
