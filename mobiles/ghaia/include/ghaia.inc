@@ -98,7 +98,7 @@ function CanFight(me, mobile, align)
 		  return 0;
 
       elseif ( GetObjProperty(mobile, "kit") == "Bandido")
-          if ( (mytemplate == "MercenarioRecruta") || (mytemplate == "MercenarioBesteiro") || (mytemplate == "Mercenario") || (mytemplate == "MercenarioLider") || (mytemplate == "MercenarioExperiente") )
+          if ( (mytemplate == "MercenarioRecruta") || (mytemplate == "MercenarioBesteiro") || (mytemplate == "Roguearcher") || (mytemplate == "Mercenario") || (mytemplate == "Rogue") || (mytemplate == "MercenarioLider") || (mytemplate == "MercenarioExperiente") )
             return 0;
           endif
 		  
