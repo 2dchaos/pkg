@@ -29,7 +29,7 @@ program OreMining(who, tool)
 	if ( CoordinateDistance(who.x, who.y, targ.x, targ.y) > 2 )
 		SendSysMessage(who, "Muito longe.");
 		return;
-	elseif ( !CanMine(targ, "Stone") )
+	//elseif ( !CanMine(targ, "Stone") )
 		var maps := GetMapsInBackpack(who);
 		//sendsysmessage(who, " " + maps);
 		if (maps.size() > 0)
