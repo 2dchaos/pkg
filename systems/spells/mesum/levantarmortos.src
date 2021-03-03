@@ -105,7 +105,8 @@ program SpellScript(params)
 		
 
 	SendSysMEssageEx(who, "Voce teve sucesso ao levantar o corpo", SSM_INFO);
-	Corromper(who, 16, "0");
+	Corromper(who, 8, "0");
+	AP_SetSkillMod(undead, WRESTLING, AP_GetTrueSkill(who, MAGICLORE)/2);
 	
 	return 1;
 endprogram 

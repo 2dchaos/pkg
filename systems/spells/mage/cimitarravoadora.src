@@ -102,7 +102,7 @@ program SpellScript(params)
 		RestartScript(globo);
 		TS_StartTimer(globo, "summon", GetSpellDuration(who)+180);
 		SetObjProperty(who, "cimitarravoadora", globo.serial);
-
+		AP_SetSkillMod(globo, WRESTLING, AP_GetTrueSkill(who, MAGICLORE)/3);
 
 	endif
 

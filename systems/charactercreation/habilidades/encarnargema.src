@@ -33,6 +33,7 @@ program manobra(who)
 
 	undead := summon(template, targ, who);
 	TS_Starttimer(undead, "summon", duracao);
+	AP_SetSkillMod(undead, WRESTLING, AP_GetTrueSkill(who, MAGICLORE)/3);
 	
 endprogram
 	

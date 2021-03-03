@@ -105,7 +105,8 @@ program SpellScript(params)
 
 
 	SendSysMEssageEx(who, "Voce teve sucesso ao invocar espirirtos.", SSM_INFO);
-	Corromper(who, 75, "0");
+	Corromper(who, 8, "0");
+	AP_SetSkillMod(undead, WRESTLING, AP_GetTrueSkill(who, MAGICLORE)/2);
 	
 	return 1;
 endprogram 

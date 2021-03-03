@@ -79,15 +79,15 @@ program runScript_CharProfileRequest( params )
 			SetObjProperty( who, "url", url);
 			SetObjProperty( who, "descricao", descricao);
 
-			SendHTMLGump(who, who.name, "<img src=\"" + GetObjProperty(who, "url") + "\" width:200 height:200 align:center> <br>" +  GetObjProperty(who, "descricao") );
+			SendHTMLGump(who, who.name, "<center><img src=\"" + GetObjProperty(who, "url") + "\" width:200 height:200 align=center></center>" + "<div align=\"left\">" + GetObjProperty(who, "descricao") + "</div>" );
 		endif
 	elseif (chr.serial != who.serial)
 		if (chr.name == "Desconhecido")
-			var incognito_url := "https://cdn.discordapp.com/attachments/777299682296070145/813538880124092456/incognito.png";
-			var incognito_descricao := "A fisiônomia desse indvíduo é difícil de discernir.";
-			SendHTMLGump(who, who.name, "<img src=\"" + incognito_url + "\" width:200 height:200 align:center> <br>" + incognito_descricao );
+			var incognito_url := "https://cdn.discordapp.com/attachments/777299682296070145/813706521334644776/incognito.png";
+			var incognito_descricao := "A fisionomia desse indvíduo é difícil de discernir.";
+			SendHTMLGump(who, "Desconhecido", "<center><img src=\"" + incognito_url + "\" width:200 height:200 align=center></center>" + "<div align=\"left\">" + incognito_descricao + "</div>" );
 		else
-			SendHTMLGump(who,  chr.name, "<img src=\"" + GetObjProperty(chr, "url") + "\" width:200 height:200 align:center> <br>"  +  GetObjProperty(chr, "descricao") );
+			SendHTMLGump(who, chr.name, "<center><img src=\"" + GetObjProperty(chr, "url") + "\" width:200 height:200 align=center></center>" + "<div align=\"left\">" + GetObjProperty(chr, "descricao") + "</div>" );
 		endif
 	endif
 

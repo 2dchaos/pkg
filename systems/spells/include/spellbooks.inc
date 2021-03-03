@@ -17,7 +17,7 @@ function CanInsertScroll(book, scroll)
 	var cfg := ReadConfigFile(":spells:itemdesc");
 	var scrolltype := cfg[scroll.objtype].SpellType;
 
-	printtextabove(book, " " + booktype + " " + scrolltype);
+	//printtextabove(book, " " + booktype + " " + scrolltype);
 
 	if ( lower(GetBookType(book)) == lower(scrolltype))
 		return 1;

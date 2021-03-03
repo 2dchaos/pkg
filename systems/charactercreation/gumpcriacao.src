@@ -1361,6 +1361,9 @@ program createchar(who)
 					p1 := createiteminbackpack(who, "pergaminhomagico1");
 					spellinfo.id := 25;
 					SetObjProperty(p1, "spellinfo", spellinfo);
+					p1 := createiteminbackpack(who, "pergaminhomagico1");
+					spellinfo.id := 91;
+					SetObjProperty(p1, "spellinfo", spellinfo);
 				
 				elseif (input2 == 20)
 					var grimorio:=createiteminbackpack(who, "grimorio", 1);

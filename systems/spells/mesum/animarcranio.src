@@ -18,14 +18,14 @@ program SpellScript(params)
 	params := 0; // No longer needed
 
 	var skill := AP_GetSkill(who, "Magery");
-	var maxsummons := Cint(skill / 20);
+	//var maxsummons := Cint(skill / 20);
 	var npctemplate := GetObjproperty(targ, "npctemplate");
 	var category := lower(getnpccategory( ParseTemplateName(npctemplate).template ));
 
-    if (GetObjProperty(who, "NecroSummons") == maxsummons);
-		SendSysMessageEx(who, "Voce ja controla espiritos demais", SSM_FAIL);
-		return 0;
-	endif
+    //if (GetObjProperty(who, "NecroSummons") == maxsummons);
+	//	SendSysMessageEx(who, "Voce ja controla espiritos demais", SSM_FAIL);
+    //	return 0;
+	//endif
 
 	if ( targ.IsA(POLCLASS_MOBILE) )
 		SendSysMessage(who, "Voce so pode usar esta magia em cranios.");
@@ -55,7 +55,7 @@ program SpellScript(params)
 
 	var undead;
 	
-	undead := createnpcfromtemplate(":brainai:floatingskull", who.x, who.y, who.z +5, 0 , who.realm);
+	undead := createnpcfromtemplate(":brainai:floatingskullinvoked", who.x, who.y, who.z +5, 0 , who.realm);
 
 	PlaySoundEffect(who, 383);
 
@@ -75,14 +75,15 @@ program SpellScript(params)
 	Run_Script_To_Completion(":death:npcdeath", {undead});
 				
 	SetObjProperty(undead, "Necro", 1);
-	var numbersummons := Cint(GetObjProperty(who, "NecroSummons"));
-	SetObjProperty(who, "NecroSummons", (numbersummons + 1));
+	//var numbersummons := Cint(GetObjProperty(who, "NecroSummons"));
+//	SetObjProperty(who, "NecroSummons", (numbersummons + 1));
 
 	TS_StartTimer(undead, "summon", GetSpellDuration(AP_GetSkill(who, MAGICLORE)) / 2);
 		
 
 	SendSysMEssageEx(who, "Voce teve sucesso em reanimar o cranio", SSM_INFO);
 	Corromper(who, 4, "0");
+	AP_SetSkillMod(undead, WRESTLING, AP_GetTrueSkill(who, MAGICLORE)/2);
 	
 	return 1;
 endprogram 
