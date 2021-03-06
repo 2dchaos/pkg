@@ -80,7 +80,7 @@ function removeDisguise(who)
 
 	eraseobjproperty(who, "disfarce");
 
-	return 1; 
+	return 1;
 
 endfunction
 
@@ -120,15 +120,17 @@ function escolherCabelo(who, byref disfarce, raca := 0)
 	var hairgumps := config["hairgump"];
 
 	var gump := GfCreateGump();
-	GFResizePic(gump, 0, 0, 3600, 300, sizey1);
-	GFResizePic(gump, 15, 15, 0x13be, 270, sizey2);
+	GFResizePic(gump, 0, 0, 3600, 600, sizey1);
+	GFResizePic(gump, 15, 15, 0x13be, 575, sizey2);
 	GFTextMid(gump, 15, 25, 270, 1153, "Escolha o cabelo");
-	GFResizePic(gump, 220, 55, 2620, 50, sizey3);
+	GFResizePic(gump, 240, 55, 2620, 50, sizey3);
+	GFResizePic(gump, 520, 55, 2620, 50, sizey3-100);
 
 
 	GFSetRadioGroup(gump, 1);
 	var y_pos := 65;
-
+	var x_pos := 20;
+	var numColumn := 0;
 	var hairnames := array;
 	foreach style in GetConfigStringArray(hair, "style")
 		style := splitwords(style);
@@ -136,27 +138,35 @@ function escolherCabelo(who, byref disfarce, raca := 0)
 		var hairgraphic := cint(style[2]);
 		while (hairname["_"])															hairname["_"] := " ";
 		endwhile
+		numColumn ++;
+		if (numColumn > 19)
+			x_pos := 300;
+			if(numColumn == 20)
+				y_pos := 65;
+			endif
+		endif
 		if (hairgraphic == disfarce.barba)
-			GFRadioButton(gump, 20, y_pos, 2151, 2154, 1, hairgraphic);
+			GFRadioButton(gump, x_pos, y_pos, 2151, 2154, 1, hairgraphic);
 		else
-			GFRadioButton(gump, 20, y_pos, 2151, 2154, 0, hairgraphic);
+			GFRadioButton(gump, x_pos, y_pos, 2151, 2154, 0, hairgraphic);
 		endif
 		hairnames.append(hairname);
-		GFTextline(gump, 55, y_pos+5, 1153, hairname);
+		GFTextline(gump, x_pos + 55, y_pos+5, 1153, hairname);
 		var gumppic := GetConfigString(hairgumps, style[1]);
-		GFGumpPic(gump, 155, y_pos-65, gumppic);
+		GFGumpPic(gump, x_pos+155, y_pos-45, gumppic);
 		y_pos := y_pos + 30;
+
 	endforeach
 
 	if (!disfarce.barba || disfarce.barba == -1)
-		GFRadioButton(gump, 20, y_pos, 2151, 2154, 1, 1);
+		GFRadioButton(gump, x_pos, y_pos, 2151, 2154, 1, 1);
 	else
-		GFRadioButton(gump, 20, y_pos, 2151, 2154, 0, 1);
+		GFRadioButton(gump, x_pos, y_pos, 2151, 2154, 0, 1);
 	endif
-	GFTextline(gump, 55, y_pos+5, 1153, "Bald");
+	GFTextline(gump, x_pos+55, y_pos+5, 1153, "Bald");
 
-	GfTextLine(gump, 45, y_pos+23, 1153, "Pronto");
-	GfAddButton(gump, 25, y_pos+25, 2117, 2118, 1, 10);
+	GfTextLine(gump, x_pos+45, y_pos+45, 1153, "Pronto");
+	GfAddButton(gump, x_pos+25, y_pos+47, 2117, 2118, 1, 10);
 	var input := GFSendGump(who, gump);
 	if (input[0] == 10)
 		SendSysMessageEx(who, "Voce escolheu o cabelo. ", SSM_INFO);
@@ -214,7 +224,7 @@ function BuildHairDyeGump(cur_color := 0, povo := 0)
 	GFAddButton(gump, 190, 509, 2128, 2129, GF_CLOSE_BTN, 1);
 	GFAddButton(gump, 265, 509, 2119, 2120, GF_CLOSE_BTN, 2);
 
-	
+
 	var color_cfg := ReadConfigFile(":hair:config/hairColors");
 	var index_elem;
 	if (povo == "Ferune" || povo == "Bariyano")
@@ -244,7 +254,7 @@ function BuildHairDyeGump(cur_color := 0, povo := 0)
 		var color_x := 150;
 		var color_y := 20;
 		var side := 1;
-    var colors := GetConfigStringArray(color_elem, "Color"); 
+    var colors := GetConfigStringArray(color_elem, "Color");
     gump.+colors := colors;
 		foreach color in colors
 			color := CInt(color);
@@ -264,17 +274,17 @@ function BuildHairDyeGump(cur_color := 0, povo := 0)
 		sleepms(2);
 	endforeach
 
-      
+
 	return gump;
 endfunction
 
 function escolherBarba(who, byref disfarce)
 
 	var gump := GfCreateGump();
-	GFResizePic(gump, 0, 0, 3600, 300, 420);
-	GFResizePic(gump, 15, 15, 0x13be, 270, 390);
+	GFResizePic(gump, 0, 0, 3600, 300, 550);
+	GFResizePic(gump, 15, 15, 0x13be, 270, 525);
 	GFTextMid(gump, 15, 25, 270, 1153, "Escolha a barba");
-	GFResizePic(gump, 220, 55, 2620, 50, 280);
+	GFResizePic(gump, 220, 55, 2620, 50, 350);
 
 	var config := ReadConfigFile(":fls_core:config/hairtypes");
 	var hair := config["facialhair"];
@@ -393,7 +403,7 @@ function SkinGump(who, byref new_look, povo := 0, sempreretorna := 0)
     if (!selected)
       if (sempreretorna)
           new_look.corpele :=  (cint(colors[1]));
-      endif    
+      endif
     endif
 	else
 		SendSysMessageEx(who, "Cancelado.", SSM_FAIL);
