@@ -24,13 +24,12 @@ program OreMining(who, tool)
 	endif
 	SendSysMessageEx(who, "Onde voce deseja minerar?", SSM_REQUEST);
 	var targ := TargetCoordinates(who);
-	var maps := GetMapsInBackpack(who);
 	
 	if ( CoordinateDistance(who.x, who.y, targ.x, targ.y) > 2 )
 		SendSysMessage(who, "Muito longe.");
 		return;
-		//elseif ( !CanMine(targ, "Stone") )
-	elseif ( (maps in EnumerateItemsInContainer(who.backpack)) )
+	elseif ( !CanMine(targ, "Stone") )
+		var maps := GetMapsInBackpack(who);
 		//sendsysmessage(who, " " + maps);
 		if (maps.size() > 0)
 			var map := maps[1];
@@ -43,11 +42,14 @@ program OreMining(who, tool)
 			endif
 			DigForMap(who, targ, map);
 			return;
+		else
+			SendSysMessageEx(who, "Voce nao pode minerar aqui.", SSM_FAIL);
+			return;
 		endif
-	else
-		SendSysMessageEx(who, "Voce nao pode minerar aqui.", SSM_FAIL);
-		return;
+	
 	endif
+		
+
 
 //	sendsysmessage(who, CanMine(targ, "Stone") + " " );
 
@@ -130,9 +132,9 @@ function MiningLoop(who, tool, my_x, my_y, targx, targy, my_facing)
 				var minerio := CreateItemInBackPack(who, ore_type, amt);
 				minerio.movable := 1;
 				SendSysMessage(who, "Voce pegou alguns minerios. " );
-				if (TemHabilidade(who, "Garimpeiro"))
+				//if (TemHabilidade(who, "Garimpeiro"))
 					Garimpeiro(who);
-				endif
+				//endif
 			else
 				SendSysMessage(who, "Voce falhou em pegar minerios.");
 			endif

@@ -381,7 +381,7 @@ function WearDownArmor(defender, armor, rawdamage, weapon)
 
 		var wearchance := armr_elem.WearChance;
 		if ( TemHabilidade(defender, "Conservar Equipamento"))
-			wearchance := wearchance/2;
+			wearchance := wearchance/5;
 			if (wearchance < 1)
 				wearchance := 1;
 			endif
@@ -419,7 +419,7 @@ function WearDownWeapon(attacker, weapon)
 			var wpn_elem := CS_GetSettingsCfgElem("Weapons");
 			var wearchance := CInt(wpn_elem.WearChance);
 			if (TemHabilidade(attacker, "Conservar Equipamento"))
-				wearchance := wearchance/2;
+				wearchance := wearchance/5;
 				if (wearchance < 1)
 					wearchance := 1;
 				endif
