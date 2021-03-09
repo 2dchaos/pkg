@@ -27,15 +27,16 @@ function GetMapsInBackpack(who)
 	var items := EnumerateItemsInContainer(who.backpack);
 	var maps := array;
     	foreach item in items
-		//sendsysmessage(who, " " + isTreasureMap(item) + " " + item.objtype);
-		if ( isTreasureMap(item) )
-			if ( !isSolved(item) )
-				maps.append(item);
+			//sendsysmessage(who, " " + isTreasureMap(item) + " " + item.objtype);
+			if ( isTreasureMap(item) )
+				if ( !isSolved(item) )
+					maps.append(item);
+				endif
 			endif
-		endif
-	endforeach
-	return maps;
+			
+		endforeach
 
+	return maps;
 
 endfunction
 

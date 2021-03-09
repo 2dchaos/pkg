@@ -242,6 +242,7 @@ program MainHitScript( params )
 
 		if ( GetCooldown(attacker, "aleijar") > 0)
 			AP_ConsumeVital(defender, STAMINA, total);
+			defender.paralyzed := 1;
 		endif
 
 		if (getObjProperty(defender, "#alvomovel") == 1)
@@ -518,14 +519,16 @@ function WeaponHitScripts(attacker, defender, weapon, armor, basedamage, rawdama
 	endif
 
 	if ( GetCooldown(weapon, "circulodevas") )
-		var elemental := GetObjProperty(weapon, "#elementalweapon");
-		if (elemental != error)
-			var dmg  := AP_GetSkill(attacker, MAGICLORE)/10;
-			if(dmg < 3)
-				dmg := 3;
-			endif
-			start_script(":combat:weaponHitScripts/areadmg", array{attacker, defender, weapon, armor, basedamage, dmg*2, elemental.type, 3});
-		endif	
+		//var elemental := GetObjProperty(weapon, "#elementalweapon");
+		//if (elemental != error)
+		var dmg  := AP_GetSkill(attacker, TACTICS)/10;
+		
+		if(dmg < 3)
+			dmg := 3;
+		endif
+
+		start_script(":combat:weaponHitScripts/areadmg", array{attacker, defender, weapon, armor, basedamage, dmg*2, DMG_PHYSICAL, 3});
+
 	endif
 
 	if (GetCooldown(weapon, "habelemental") )

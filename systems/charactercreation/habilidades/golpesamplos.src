@@ -29,11 +29,7 @@ program SpellScript(params)
 		SetCooldown(targ, "circulodevas", duration);
         PlaySoundEffect(targ, 0x236);
 		SendSysMessageEx(who, "Seus golpes causarao estragos a todos ao seu redor!", SSM_INFO);
-	
 		return 1;
-	endif
-
 	//SendSysMessageEx(who, "Alvo invalido.", SSM_INFO);
-
 endprogram    
  

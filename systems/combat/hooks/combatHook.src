@@ -553,12 +553,19 @@ function AmmoCheck(attacker, defender)
 	var has_ammo := 0;
 
 	var aljava := GetEquipmentByLayer(attacker, LAYER_CAPE);
+	var aljava2 := GetEquipmentByLayer(attacker, LAYER_WAIST);
 	var ammo := GetObjProperty(attacker.weapon, "ammo");
 	if (!ammo)
 		SendSysMessage(attacker, "Voce nao definiu o tipo de flecha que vai usar. [clique 2x no arco e na flecha]");
 		return 0;
 	endif
 	if ( ConsumeSubstance( aljava, ammo, 1 ) )
+		var cfg:=ReadConfigFile(":woodworking:itemdesc");
+		var elem := FindConfigElem(cfg, ammo);
+		var ammo_color := elem.color;
+		PlayMovingEffectXYZHued(attacker, defender, wpn_a_elem.ProjectileAnim, 10, 10, 0, ammo_color);
+		return 1;
+	elseif	( ConsumeSubstance( aljava2, ammo, 1 ) )
 		var cfg:=ReadConfigFile(":woodworking:itemdesc");
 		var elem := FindConfigElem(cfg, ammo);
 		var ammo_color := elem.color;

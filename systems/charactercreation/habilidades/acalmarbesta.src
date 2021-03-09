@@ -28,6 +28,7 @@ program amigobesta(who)
       return 0;
    endif
 
+   targ.paralyzed := 1;
    SetCooldown(targ, "peacemade", 60);
    ghaiaPeaceMade(who, targ);
    PrintTextAbovePrivate(targ, "A criatura foi acalmada.", who);
