@@ -311,7 +311,7 @@ function tocarsound(who,item,notas,notas2,tempo,letra,magica)
 	var c,cs,d,ds,e,f,fs,g,gs,a,ass,b,c2,cs2,d2,ds2,e2,f2,fs2,g2,gs2,a2,ass2,b2,c3,inst,L,dif,magicause;
 
 	if ( magica) 
-		if (!temhabilidade(who, "Partituras Magicas"))
+		if (!temhabilidade(who, "Talento Musical"))
 			SendSysMessageEx(who, "Voce nao entende essa partitura.", SSM_FAIL);
 			return 0;
 		endif
