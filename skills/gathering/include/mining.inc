@@ -206,19 +206,38 @@ function DigForMap(who, targ, map)
 			PrintTextAbove(who, "*O ataque continua e o lider se aproxima*");
 			createnpcfromtemplate(":brainai:mercenario", who.x, who.y, who.z +5, 0 , who.realm);
       	elseif (maplevel == 2)
-		 	PrintTextAbove(who, "*Algo espreita o local*");
-			sleep(5);
-            createnpcfromtemplate(":brainai:trasgo", who.x, who.y, who.z +5, 0 , who.realm);
+		 	PrintTextAbove(who, "*Gritos nos arredores* Atacar rapazes! A pior parte já fizeram!");
+			sleep(2);
+            createnpcfromtemplate(":brainai:mercenario", who.x, who.y, who.z +5, 0 , who.realm);
+            createnpcfromtemplate(":brainai:roguearcher", who.x, who.y, who.z +5, 0 , who.realm);
+			createnpcfromtemplate(":brainai:trapaceiro", who.x, who.y, who.z +5, 0 , who.realm);
+            createnpcfromtemplate(":brainai:roguearcher", who.x, who.y, who.z +5, 0 , who.realm);
+            createnpcfromtemplate(":brainai:mercenario", who.x, who.y, who.z +5, 0 , who.realm);
+			createnpcfromtemplate(":brainai:mercenario", who.x, who.y, who.z +5, 0 , who.realm);
         elseif (maplevel == 3)
-			PrintTextAbove(who, "*Risadas Femininas Maliciosas podem ser ouvidas de todos os lados*");
+			PrintTextAbove(who, "*Gritos e lamurias de almas atormendas* Juntem-se a nos...");
 			sleep(5);
-			CreateNpcFromTemplate(":brainai:sucubus", who.x, who.y, who.z, 0, who.realm);
-			CreateNpcFromTemplate(":brainai:sucubus", who.x, who.y, who.z, 0, who.realm);
-			CreateNpcFromTemplate(":brainai:sucubussuperior", who.x, who.y, who.z, 0, who.realm);
+			CreateNpcFromTemplate(":brainai:Ghost", who.x, who.y, who.z, 0, who.realm);
+			CreateNpcFromTemplate(":brainai:Ghost", who.x, who.y, who.z, 0, who.realm);
+			CreateNpcFromTemplate(":brainai:Ghost", who.x, who.y, who.z, 0, who.realm);
+			CreateNpcFromTemplate(":brainai:Spectre", who.x, who.y, who.z, 0, who.realm);
+			CreateNpcFromTemplate(":brainai:Spectre", who.x, who.y, who.z, 0, who.realm);
+			CreateNpcFromTemplate(":brainai:Spectre", who.x, who.y, who.z, 0, who.realm);
+			sleep(15);
+			PrintTextAbove(who, "*Vozes Fantasmagoricas* Deliciosa ganancia...");
+			CreateNpcFromTemplate(":brainai:espectroanciao", who.x, who.y, who.z, 0, who.realm);
+			CreateNpcFromTemplate(":brainai:espectroanciao", who.x, who.y, who.z, 0, who.realm);
+			CreateNpcFromTemplate(":brainai:espectroanciao", who.x, who.y, who.z, 0, who.realm);
 		elseif (maplevel == 4)
-			PrintTextAbove(who, "*Uma criatura gigantesca guarda o local*");
+			PrintTextAbove(who, "*Criaturas gigantescas guardam o local*");
 			sleep(5);
-			CreateNpcFromTemplate(":brainai:reddragon", who.x, who.y, who.z, 0, who.realm);
+			CreateNpcFromTemplate(":brainai:Wyvern", who.x, who.y, who.z, 0, who.realm);
+			CreateNpcFromTemplate(":brainai:Wyvern", who.x, who.y, who.z, 0, who.realm);
+			CreateNpcFromTemplate(":brainai:Wyvern", who.x, who.y, who.z, 0, who.realm);
+			sleep(15);
+			CreateNpcFromTemplate(":brainai:RedDragon", who.x, who.y, who.z, 0, who.realm);
+		elseif (maplevel == 5)
+			CreateNpcFromTemplate(":brainai:Dracolich", who.x, who.y, who.z, 0, who.realm);
         endif
 
 		chest.movable := 1;
