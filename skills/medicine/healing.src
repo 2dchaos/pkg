@@ -179,61 +179,8 @@ program UseBandage(mobile, bandage)
 	npctemplate := npctemplate[10, len(npctemplate)-9];
 	npcdesc := npcdesc[npctemplate];
 	if ( npcdesc.TameDifficulty || GetObjProperty(targ, "npctemplate") )
-		aux_skill := HANDLEANIMAL;
-	endif
-
-	aux_skill := AP_GetSkill(mobile, aux_skill);
-
-	if ( targ.IsA(POLCLASS_CORPSE) )
-		if (aux_skill < 40.0)
-			SendSysMessageEx(mobile, "Voce nao tem conhecimento suficiente para acordar Animais", SSM_FAIL);
-			return 0;
-		elseif (GetObjProperty(targ, "morto"))
-			SendSysMessageEx(mobile, "Alvo ja esta morto.", SSM_FAIL);
-			return 0;
-		elseif (GetObjProperty(targ, "curado") && aux_skill >= 30)
-			SendSysMessageEx(mobile, "Alvo ja foi curado.", SSM_INFO);
-			return 0;
-		elseif (bandage.amount < 5);
-			SendSysMessageEx(mobile, "Voce precisa de 5 bandagens.", SSM_FAIL);
-			return 0;
-		endif
-
-		var restauraDP := 0;
-		if (GetObjProperty(bandage , "cap") == 1)
-			restauraDP := 1;
-		endif
-
-		SubtractAmount(bandage, 5);
-		if ( !GetObjProperty(targ, "npctemplate"))
-
-			HealCorpse(mobile, targ, aux_skill, restauraDP);
-		else
-			if ( !GetObjProperty(targ, "owner") )
-				SendSysMessageEx(mobile, "O alvo esta morto.", SSM_FAIL);
-				return 0;
-			endif
-			if (GetCooldown(targ, "resurrect") > 0 )
-				if (!GetObjProperty(targ, "companheiro"))
-					SendSysMessageEx(mobile, "O alvo esta morto.", SSM_FAIL);
-					SetObjProperty(targ, "morto", 1);
-					return;
-				endif
-			endif
-			HealNpcCorpse(mobile, targ, aux_skill);
-		endif
-	else
-		if (targ.npctemplate && aux_skill < 10.0)
-			SendSysMessageEX(mobile, "Voce nao tem conhecimento suficiente para curar "+targ.name+".", SSM_FAIL);
-			return 0;
-		endif
-
-		if (isBloodied(targ) && heal_skill < MIN_SKILL_FOR_BLOODIED)
-			SendSysMessageEx(mobile, "Voce nao tem conhecimento suficiente para curar "+targ.name+".", SSM_FAIL);
-			return 0;
-		endif
-
-
+		//aux_skill := HANDLEANIMAL;
+		/*
 		var bonus := 0;
 		var poison := 0;
 		if (getObjProperty(bandage, "encantada") == 1)
@@ -247,24 +194,34 @@ program UseBandage(mobile, bandage)
 		elseif ( getObjProperty(bandage, "blood") == 1)
 			poison := 2;
 		endif
-		SubtractAmount(bandage, 1);
-		if ( !HealPatient(mobile, targ, heal_skill, aux_skill, bonus, poison) )
-			SendSysMessage(mobile, "Voce parou de usar ataduras.");
-		endif
+		*/
+		HealNpcCorpse(mobile, targ, aux_skill);
+		SubtractAmount(bandage, 5);
+		//if ( !HealPatient(mobile, targ, heal_skill, aux_skill, bonus, poison) )
+		//	SendSysMessage(mobile, "Voce parou de usar ataduras.");
+		//endif
+
 		EraseObjProperty(targ, "curando");
+
 		var chance := 3;
-		//deixa isso pode ser util
+
 		if ( temHabilidade(mobile, "Curandeiro Experiente") )
 			chance := 15;
 		endif
+
 		if (RandomInt(10) < chance)
 			CreateItemInBackpack(mobile, 0xE20, 1);
 		endif
+
+		CreateItemInBackpack(mobile, 0xE20, RandomInt(5)+1);
+		return 0;
 	endif
 
+	aux_skill := AP_GetSkill(mobile, aux_skill);
+
 	if ( targ.IsA(POLCLASS_CORPSE) )
-		if (heal_skill < 50.0)
-			SendSysMessageEx(mobile, "Voce nao tem conhecimento suficiente para acordar Pessoas", SSM_FAIL);
+		if (aux_skill < 50.0 || heal_skill < 50.0)
+			SendSysMessageEx(mobile, "Voce nao tem conhecimento suficiente para acordar "+targ.name+".", SSM_FAIL);
 			return 0;
 		elseif (GetObjProperty(targ, "morto"))
 			SendSysMessageEx(mobile, "Alvo ja esta morto.", SSM_FAIL);
@@ -469,15 +426,15 @@ function HealNpcCorpse(mobile, targ, aux_skill)
 		SendSysMessage(mobile, "Voce interrompeu a cura.");
 		return 0;
 	endif
-	var diff := CInt(100 - CInt(aux_skill/1.5));
-	if (diff < 20)
-		diff := 20;
-	elseif (diff > 80);
-		diff := 80;
+	var diff := CInt(50 - aux_skill);
+	if (diff < 15)
+		diff := 15;
+	 //elseif (diff > 75);
+		//diff := 75;
 	endif
 
 	if (  !GetObjProperty(targ,"morto") )
-		if ( SkillCheck(mobile, MEDICINE, diff) > 0 )
+		if ( SkillCheck(mobile, HANDLEANIMAL, diff) > 0 )
 			SendSysMessage(mobile, "Voce estabilizou "+name);
 			var npc := CreateNpcFromTemplate( GetObjProperty(targ, "npctemplate"), targ.x, targ.y, targ.z, 0, targ.realm);
 			npc.script := ":ghaia:tamed";
@@ -505,8 +462,6 @@ function HealNpcCorpse(mobile, targ, aux_skill)
 			SendSysMessage(mobile, "Voce nao conseguiu estabilizar "+name+".");
 		endif
 	endif
-
-	CreateItemInBackpack(mobile, 0xE20, RandomInt(5)+1);
 
 	return 1;
 endfunction
