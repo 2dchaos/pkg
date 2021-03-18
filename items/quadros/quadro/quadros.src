@@ -45,9 +45,9 @@ include ":charactercreation:habilidades";
 				CreateItemInBackpack(who, 0x2f66 , amount := 1 );
 				CreateItemInBackpack(who, 4606 , amount := 1 );
 
-				if (item.objtype == 1328)
-					item.graphic:=0x0F65;
-				elseif (item.objtype == 1329)
+				if (item.objtype == 0x530)
+					item.graphic:=0x0F69;
+				elseif (item.objtype == 0x531)
 					item.graphic:=0x0F67;
 				endif
 				return 0;
@@ -78,9 +78,9 @@ include ":charactercreation:habilidades";
 
 	DestroyItem(targtela);
 
-	if (item.objtype == 1328)
+	if (item.objtype == 0x530)
 		item.graphic:=0x0F66;
-	elseif (item.objtype == 1329)
+	elseif (item.objtype == 0x531)
 		item.graphic:=0x0F68;
 	endif
 
@@ -149,9 +149,9 @@ function pintaquadro(who,item)
 	EraseObjProperty(item,"tela_moldura");
 	GumpSetDesc( who,item,quadro);
 
-	if (item.objtype == 1328)
-		item.graphic:=0x0F65;
-	elseif (item.objtype == 1329)
+	if (item.objtype == 0x530)
+		item.graphic:=0x0F69;
+	elseif (item.objtype == 0x531)
 		item.graphic:=0x0F67;
 	endif
 
