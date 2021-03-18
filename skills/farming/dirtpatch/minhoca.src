@@ -24,8 +24,10 @@ program catarminhoca(who, dirt)
 	endif 
 
 	var currentskill := AP_GetSkill(who, DOMESTICWORK);
+	var currentskillsurv := AP_GetSkill(who, SURVIVAL);
 	var randomskill := RandomInt(cint(currentskill)) + 1;
 	var minhocachance := ((currentskill) + (randomskill / 2));
+	var minhocachancesurv := ((currentskillsurv) + (randomskill / 2));
 	var randomchance := RandomInt(100) + 1;
 	var minhoca := cint("0x9980");
 	var randomcritical := RandomInt(200);
@@ -47,6 +49,9 @@ program catarminhoca(who, dirt)
 	endif
 
 	if (randomchance < minhocachance)
+		SendSysMessage(who, "Voce pegou algumas minhocas",FONT_NORMAL,0);
+		CreateItemInBackpack(who, minhoca, 1);
+	elseif (randomchance < minhocachancesurv)
 		SendSysMessage(who, "Voce pegou algumas minhocas",FONT_NORMAL,0);
 		CreateItemInBackpack(who, minhoca, 1);
 	else

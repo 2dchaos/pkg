@@ -178,7 +178,7 @@ program UseBandage(mobile, bandage)
 	var npctemplate := targ.npctemplate;
 	npctemplate := npctemplate[10, len(npctemplate)-9];
 	npcdesc := npcdesc[npctemplate];
-	if ( npcdesc.TameDifficulty || GetObjProperty(targ, "npctemplate") )
+	if ( npcdesc.TameDifficulty &&  !targ.IsA(POLCLASS_MOBILE) || GetObjProperty(targ, "npctemplate") &&  !targ.IsA(POLCLASS_MOBILE) )
 		//aux_skill := HANDLEANIMAL;
 		/*
 		var bonus := 0;
