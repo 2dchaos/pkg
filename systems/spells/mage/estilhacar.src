@@ -21,13 +21,38 @@ program SpellScript(params)
 	endif
 
 	if (targ.isA(POLCLASS_WEAPON))
-		DestroyItem(targ);
+		SetObjProperty(targ, "broken", 1);
+		SetObjProperty(targ, "realdesc", targ.desc);
+		//releasegems(targ, wpn);
+		eraseobjproperty(targ, "gems");
+		SetName(targ, targ.desc+" [danificado]");
+		PrintText(targ, "*arma quebrou*");
 	else
+
+		if (CheckResist(targ, VONTADE, 80+cint(AP_GetSkill(who, MAGICLORE))))
+			SendSysMEssageEx(who, "Voce nota que o alvo nao foi afetado.", SSM_FAIL);
+			SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
+			who.frozen := 0;
+			return;
+		endif
+
 		var wpn := targ.weapon;
+
 		if (wpn.objtype != 0xF020)
-			MoveObjectToLocation(wpn, who.x, who.y, who.z, who.realm);
-			DestroyItem(wpn);
+
+			SendSysMessage(targ, wpn.desc+" quebrou.");
+			MoveObjectToLocation(wpn, 1, 1, 1, targ.realm, MOVEOBJECT_FORCELOCATION);
+			SetObjProperty(wpn, "broken", 1);
+			SetObjProperty(wpn, "realdesc", wpn.desc);
+			//releasegems(targ, wpn);
+			eraseobjproperty(wpn, "gems");
+			SetName(wpn, wpn.desc+" [danificado]");
+			MoveItemToContainer(wpn, targ.backpack);
+
+			//MoveObjectToLocation(wpn, who.x, who.y, who.z, who.realm);
+			//DestroyItem(wpn);
 			PrintText(targ, "*arma quebrou*");
+
 		endif
 	endif
 

@@ -17,6 +17,13 @@ program SpellScript(params)
 		return;
 	endif
 
+	if (CheckResist(targ, VONTADE, 50+cint(AP_GetSkill(who, MAGICLORE))))
+		SendSysMEssageEx(who, "Voce nota que o alvo nao foi afetado.", SSM_FAIL);
+		SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
+		who.frozen := 0;
+		return;
+	endif
+
 	var timer_list := TS_GetTimerList(targ);
 	var names := array;
 	PlaySoundEffect(targ, SFX_SPELL_STRENGTH);
@@ -50,6 +57,10 @@ program SpellScript(params)
 		elseif ( timer == "gloria")
 			TS_LowerDuration(targ, timer, -1);
 		elseif (timer == "desviarprojetil")
+			TS_LowerDuration(targ, timer, -1);
+		elseif (timer == "weaken")
+			TS_LowerDuration(targ, timer, -1);
+		elseif (timer == "gloria" )
 			TS_LowerDuration(targ, timer, -1);
 		endif
 		

@@ -27,6 +27,14 @@ program SpellScript(params)
 	who.frozen := 1;
 	targ.frozen := 1;
 	Corromper(who, 13, targ);
+
+	if (CheckResist(targ, VONTADE, 60+cint(AP_GetSkill(who, MAGICLORE))))
+		SendSysMEssageEx(who, "Voce nota que o alvo nao foi afetado.", SSM_FAIL);
+		SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
+		who.frozen := 0;
+		return;
+	endif
+
 	while  (time < 10)
 
 		if ( (who.x != oldx) || (who.y != oldy))

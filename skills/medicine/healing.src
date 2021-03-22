@@ -220,7 +220,7 @@ program UseBandage(mobile, bandage)
 	aux_skill := AP_GetSkill(mobile, aux_skill);
 
 	if ( targ.IsA(POLCLASS_CORPSE) )
-		if (aux_skill < 50.0 || heal_skill < 50.0)
+		if ( heal_skill < 50.0)
 			SendSysMessageEx(mobile, "Voce nao tem conhecimento suficiente para acordar "+targ.name+".", SSM_FAIL);
 			return 0;
 		elseif (GetObjProperty(targ, "morto"))
@@ -241,7 +241,6 @@ program UseBandage(mobile, bandage)
 
 		SubtractAmount(bandage, 5);
 		if ( !GetObjProperty(targ, "npctemplate"))
-
 			HealCorpse(mobile, targ, aux_skill, restauraDP);
 		else
 			if ( !GetObjProperty(targ, "owner") )

@@ -108,7 +108,7 @@ program backstab(who)
 					poisonInfo.time := 5;
 				endif
 
-			TS_StartTimer(targ, poisonInfo.name, poisonInfo.time, poisonInfo.level, who);
+				TS_StartTimer(targ, poisonInfo.name, poisonInfo.time, poisonInfo.level, who);
 
 				who.hidden := 0;
 			endif
@@ -123,6 +123,7 @@ program backstab(who)
 
 			EraseObjProperty(who, "backstab");
 			SendSysMessage(who, "Voce acertou seu alvo!");
+			who.hidden := 0;
 		return;
 	elseif ( Distance(who, targ) > 2 )
 		SendSysMessageEx(who, targ.name+" esta muito distante ou voce ainda não possui habilidade para fazer ataques furtivos com bestas e arcos a essa distancia.", SSM_FAIL);
@@ -216,7 +217,8 @@ program backstab(who)
 					poisonInfo.time := 5;
 				endif
 
-			TS_StartTimer(targ, poisonInfo.name, poisonInfo.time, poisonInfo.level, who);
+				TS_StartTimer(targ, poisonInfo.name, poisonInfo.time, poisonInfo.level, who);
+				who.hidden := 0;
 
 			endif
 			EraseObjProperty(who, "backstab");

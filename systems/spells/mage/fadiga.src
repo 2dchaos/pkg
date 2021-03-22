@@ -25,13 +25,22 @@ program SpellScript(params)
 
 	var dmg := ( Cint(AP_GetSkill(who, MAGICLORE)));
 
+	if (CheckResist(targ, VONTADE, 60+cint(AP_GetSkill(who, MAGICLORE))))
+		SendSysMEssageEx(who, "Voce nota que o alvo nao foi totalmente afetado.", SSM_FAIL);
+		SendSysMessageEx(targ, "Voce resistiu a parte da magia.", SSM_INFO);
+		who.frozen := 0;
+		dmg := dmg/2;
+	endif
+
+	
+
 //	if (SkillCheck(targ, RESISTING_SPELLS, AP_GetSkill(who, MAGICLORE) > 0))
 //		dmg := dmg - Cint(AP_GetSkill(targ, RESISTING_SPELLS))/2;
 //		SendSysMessageEx(targ, "Voce consegue resistir a magia.", SSM_INFO); 
 //	endif
 
 	ConsumeVital( targ, STAMINA, dmg*100);
-        PlaySoundEffect(targ, SFX_SPELL_CURSE);
+    PlaySoundEffect(targ, SFX_SPELL_CURSE);
 	SendSysMessageEx(targ, "Subitamente voce se sente muito cansado.", SSM_FAIL);
 	SendSysMessage(who, "Voce deixou o alvo cansado.");
 	

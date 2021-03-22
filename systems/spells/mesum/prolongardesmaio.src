@@ -13,12 +13,12 @@ program SpellScript(params)
 
 	var skill := AP_GetSkill(who, "Magery");
 
-
+/*
 	if (GetObjProperty(targ, "japrolongou"));
 		SendSysMessageEx(who, "Voce so pode usar essa magia uma vez em cada corpo", SSM_FAIL);
 		return 0;
 	endif
-
+*/
 	if ( !targ.isa(POLCLASS_CORPSE) )
 		SendSysMessageEx(who, "Voce so pode usar esta magia em corpos", SSM_FAIL);
 		return 0;

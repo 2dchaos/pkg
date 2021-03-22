@@ -25,14 +25,25 @@ program SpellScript(params)
 
 	if (CheckResist(targ, VONTADE, 80+cint(AP_GetSkill(who, MAGICLORE))))
 		dmg := dmg/2;
+		SendSysMEssageEx(who, "Voce nota que o alvo nao foi muito afetado.", SSM_FAIL);
+		SendSysMessageEx(targ, "Voce resistiu a parte da magia.", SSM_INFO);
 	endif
 
+	if (TemHabilidade(who, "Elo com a Morte"))	
+		var manamoment 	:= AP_GetVital(who, "HITS");
+		var manatotal	:= AP_GetVitalMaximumValue(who, "HITS");
+		if 	(manamoment >= manatotal / 2)
+			dmg := cint(dmg*0.3);
+		endif	
+	endif
+
+/*
 	if (temHabilidade(who, "Elo com a Morte"))
 		if (isBloodied(who))
 			dmg := cint(dmg*0.3);
 		endif
 	endif
-
+*/
 	DamageFLS(targ, dmg, DMG_FORCED, who);
 
 	PlaySoundEffect(who, 385);

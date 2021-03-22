@@ -24,6 +24,14 @@ program SpellScript(params)
 		SendSysMessageEx(who, "Voce ja esta em um pacto de sepultura", SSM_FAIL);
 		return;
 	endif
+
+	if (CheckResist(targ, VONTADE, 50+cint(AP_GetSkill(who, MAGICLORE))))
+		SendSysMEssageEx(who, "Voce nota que o alvo nao foi afetado.", SSM_FAIL);
+		SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
+		who.frozen := 0;
+		return;
+	endif
+
 	PlayMovingEffectEx( who, targ, 14202, 1, 0, 1001, 0, 0, 0, 0, 0, 0 );
 	PlayMovingEffectEx( targ, who, 14202, 1, 0, 1001, 0, 0, 0, 0, 0, 0 );
 
@@ -31,8 +39,9 @@ program SpellScript(params)
 	PlaySoundEffect( who, 384 );
 	
 	var necrovital := AP_GetVitalMaximumValue(who, "Hits");
+	var lvl := cdbl(AP_GetSkill(who, MAGICLORE)/100);
 
-	SetObjProperty(who, "pactodesepulturadmg", necrovital);
+	SetObjProperty(who, "pactodesepulturadmg", necrovital*lvl);
 	SetObjProperty(who, "pactodesepultura", targ.serial);
 
 	SendSysMEssageEx(who, "Voce e " + targ.name + " estao em um pacto de sepultura", SSM_INFO);

@@ -23,12 +23,21 @@ program SpellScript(params)
 
 	var lvl := cint(AP_GetSkill(who, MAGICLORE)/25);
 
+	if (TemHabilidade(who, "Elo com a Morte"))	
+		var manamoment 	:= AP_GetVital(who, "HITS");
+		var manatotal	:= AP_GetVitalMaximumValue(who, "HITS");
+		if 	(manamoment >= manatotal / 2)
+			lvl := lvl+1;
+		endif	
+	endif
+
+/*
 	if (temHabilidade(who, "Elo com a Morte"))
 		if (isBloodied(who))
 			lvl := lvl+1;
 		endif
 	endif
-
+*/
 
 	if (!CheckResist(targ, VONTADE, 60+cint(AP_GetSkill(who, MAGICLORE))))
 		TS_StartTimer(targ, "defaultPoison", 120, lvl, who);
