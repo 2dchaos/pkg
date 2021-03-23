@@ -111,6 +111,7 @@ program backstab(who)
 				TS_StartTimer(targ, poisonInfo.name, poisonInfo.time, poisonInfo.level, who);
 
 				who.hidden := 0;
+				PrintTextAbove(who, "*aparece*");
 			endif
 
 			if ( weaponBow)
@@ -124,6 +125,7 @@ program backstab(who)
 			EraseObjProperty(who, "backstab");
 			SendSysMessage(who, "Voce acertou seu alvo!");
 			who.hidden := 0;
+			PrintTextAbove(who, "*aparece*");
 		return;
 	elseif ( Distance(who, targ) > 2 )
 		SendSysMessageEx(who, targ.name+" esta muito distante ou voce ainda não possui habilidade para fazer ataques furtivos com bestas e arcos a essa distancia.", SSM_FAIL);
@@ -162,7 +164,9 @@ program backstab(who)
 					var total := CalculateTotalDamage(targ, basedamage, who, dmgList);
 						if (total < 1)
 							total := 1;
-						endif				
+						endif		
+					who.hidden := 0;
+					PrintTextAbove(who, "*aparece*");		
 					DamageFLS(targ, total, DMG_FORCED, who);
 					MostraDano(who, targ, total);
 					MakeBleed(targ);
@@ -170,7 +174,6 @@ program backstab(who)
 					EraseObjProperty(who, "backstab");
 					SendSysMessage(who, "Voce acertou seu alvo!");
 					EraseObjProperty(who, "ataquefurtivoaprimorado");
-					who.hidden := 0;
 					return;
 				endif	
 			endif
@@ -190,6 +193,8 @@ program backstab(who)
 				if (total < 1)
 					total := 1;
 				endif
+				who.hidden := 0;
+				PrintTextAbove(who, "*aparece*");
 				ApplyRawDamage(targ, total);
 				MostraDano(who, targ, total);
 				MakeBleed(targ);
@@ -218,12 +223,13 @@ program backstab(who)
 				endif
 
 				TS_StartTimer(targ, poisonInfo.name, poisonInfo.time, poisonInfo.level, who);
-				who.hidden := 0;
 
 			endif
+			who.hidden := 0;
+			PrintTextAbove(who, "*aparece*");
 			EraseObjProperty(who, "backstab");
 			SendSysMessage(who, "Voce acertou seu alvo!");
-			who.hidden := 0;
+			
 
 			/* if ( GetObjProperty(who, "ataquefurtivoaprimorado") == 1 )
 				EraseObjProperty(who, "ataquefurtivoaprimorado");
