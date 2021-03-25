@@ -13,6 +13,7 @@ include "include/say";
 include ":tn:recipes";
 include ":gumps:yesno";
 include ":gumps:requestgump";
+include "toolWear";
 
 const UOBJ_BOLT_START   := 0x0f95;
 const UOBJ_BOLT_END     := 0x0f9c;
@@ -41,23 +42,25 @@ var makermark := 1;
 // in the cprop, and is used to get it's "ResourceList" reference.
 function MaterialSelection(who, craft_skill, type, chk)
 
-	SendSysMessage(who, "Escolha o "+lower(type)+" que voce deseja trabalhar.");
+ 	SendSysMessage(who, "Escolha o "+lower(type)+" que voce deseja trabalhar.");
 	var material := Target(who);
 
 	if(!material)
 		SendSysMessage(who, "Cancelado.");
 		return 0;
 	endif
+	
 	if(material.container.serial != who.backpack.serial)
 		SendSysMessage(who, "O material nao esta na sua mochila.");
 		return 0;
 	endif
+	
 	if( (!Accessible(who, material)) || (Distance(who, material) > 2)
-	   || (material.movable == 0) || (!ReserveItem(material)))
+       || (material.movable == 0) || (!ReserveItem(material)))
 		SendSysMessage(who, "Voce nao pode usar isto.");
 		return 0;
 	endif
-
+	
 	var materialobjtype := 0;
 	if(chk)
 		if(GetObjProperty(material, chk))
@@ -68,12 +71,12 @@ function MaterialSelection(who, craft_skill, type, chk)
 	else
 		materialobjtype := material.objtype;
 	endif
-
+	
 	if(!canUseMaterial(who, materialobjtype, craft_skill))
 		SendSysMessage(who, "Voce nao possui conhecimento suficiente para fazer algo com isso.");
 		return 0;
 	endif
-
+	
 	var rtype := lower(resource_config[materialobjtype].Type);
 	var materialchk := 0;
 	if(rtype == type)
@@ -83,7 +86,7 @@ function MaterialSelection(who, craft_skill, type, chk)
 		SendSysMessage(who, "Esse nao e o material certo.");
 		return 0;
 	endif
-
+	
 	if((material.objtype >= UOBJ_BOLT_START) && (material.objtype <= UOBJ_BOLT_END))
 		var totalcloth := material.amount * 50;
 		var cloth;
@@ -120,7 +123,7 @@ function CraftItem(who, craft_skill, tool, objtype, amt, canFix, anvil, more := 
  	craft_loops := cint(craft_loops);
 
 	var theitemElem := FindconfigElem(craft_config, objtype);
-
+	
 	var materials := GetConfigStringDictionary(theitemElem, "materials");
 	var principalMaterial := GetconfigString(theitemElem, "principalMaterial");
 
@@ -140,78 +143,68 @@ function CraftItem(who, craft_skill, tool, objtype, amt, canFix, anvil, more := 
 	var targMaterials := dictionary;
 	var chosenPrincipalMaterial := 0;
 	var materialColor := 0;
+	foreach thing in (materials.keys())
+		if (thing == "metal" || thing == "wood" || thing == "glass" 
+			|| thing == "cloth" || thing == "leather" || thing == "stone"
+			|| thing == "arrowhead")
+
+			var ret := MaterialSelection(who, craft_skill, thing, 0);
+			if (!ret)
+				SendSysMessageEx(who, "Voce nao possui os materiais necessarios.", SSM_FAIL);
+				return OUT_OF_MATERIALS;
+			else
+				if (ret[1].amount < materials[thing] )
+					SendSysMessageEx(who, "Voce nao possui os materiais necessarios." , SSM_FAIL);
+					return OUT_OF_MATERIALS;			
+				else
+					if (thing == "arrowhead")
+						var arrowtype := GetconfigInt(theitemElem, "arrowtype");
+						if (cint(GetObjProperty(ret[1], "material")) != arrowtype)
+							SendSysMessageEx(who, "Voce nao pode fabricar estas flechas com a ponta escolhida." , SSM_FAIL);
+							return OUT_OF_MATERIALS;
+						endif
+					endif
+					targMaterials[ret[1].objtype] := materials[thing];
+					if (thing == principalMaterial)
+						materialColor := ret[1].color;
+						chosenPrincipalMaterial := ret[1].objtype;
+					endif
+				endif
+			endif
+		else
+			foreach item in (EnumerateItemsInContainer(who.backpack))
+					//sendsysmessage(who, " " + item.objtype + " " + cint(thing));
+				if (item.objtype == cint(thing))
+					if (targMaterials[thing])
+						targMaterials[thing] := targMaterials[thing] + item.amount;
+					else
+						targMaterials[thing] :=  item.amount;
+					endif
+				endif
+			endforeach
+			if ( targMaterials[thing] < (materials[thing] + more))
+				SendSysMessageEx(who, "Voce nao possui os materiais necessarios." , SSM_FAIL);
+				return OUT_OF_MATERIALS;
+			else
+				targMaterials[thing] := materials[thing];
+			endif
+		endif
+
+	endforeach
 
 	var counter := 0;
 	var theitems := array;
+
 	var initialX := who.x;
 	var initialY := who.y;
-	var item;
-	var arrowtype;
-	var check;
-	var ret := dictionary;
-	var hisskill;
-
-	while (counter < amt)	//executa o craft o numero de vezes solicitadas ou ate acabar algum dos materiais
+	while (counter < amt)
 		counter := counter + 1;
-		//SendSysMessage(who, "Tentativa numero " + Cstr(counter) + " de fazer o item.", 0, 133);
-		foreach thing in (materials.keys())	//Comeca a verificar se os materiais tem tipos variados (Exemplo: Barra de Ferro, Barra de Aço, etc.)
-			if (thing == "metal" || thing == "wood" || thing == "glass"
-				|| thing == "cloth" || thing == "leather" || thing == "stone"
-				|| thing == "arrowhead")	//os materiais que tem tipos variados
-				if(counter == 1)	//na primeira iteração pergunta quais materiais de tipos variados serao usados.
-					ret[thing] := MaterialSelection(who, craft_skill, thing, 0); //seleciona os tipos de cada material de tipo variado, apenas na primeira iteracao.
-				endif
-				if (!ret[thing])	//quando a selecao de material falhar, exibe mensagem de erro.
-					SendSysMessageEx(who, "Voce nao possui os materiais necessarios.", SSM_FAIL);
-					return OUT_OF_MATERIALS;
-				else	//se um material valido foi escolhido, verifica se ele tem quantidade suficiente
-					//SendSysMessageEx(who, "DEBUG: " + cstr(ret[thing][1].amount) + " < " + cstr(materials[thing]) + " - BETA", SSM_FAIL);	//quando a quantidade de um material for insuficiente, exibe mensagem de erro.
-					if (ret[thing][1].amount < materials[thing]) //caso em que ha menos material que o necessario para fabricar o item
-						SendSysMessageEx(who, "nao possui materiais suficientes." , SSM_FAIL);	//quando a quantidade de um material for insuficiente, exibe mensagem de erro.
-						return OUT_OF_MATERIALS;
-					else	//caso em que ha o material necessario para fabricar o item
-						if (thing == "arrowhead") //verificacao diferenciada para pontas de flechas
-							arrowtype := GetconfigInt(theitemElem, "arrowtype");
-							if (cint(GetObjProperty(ret[thing][1], "material")) != arrowtype)
-								SendSysMessageEx(who, "Voce nao pode fabricar estas flechas com a ponta escolhida." , SSM_FAIL);
-								return OUT_OF_MATERIALS;
-							endif
-						endif
-						targMaterials[ret[thing][2]] := materials[thing];  //Alteracao da quantidade de materiais de tipos variados a serem utilizados ocorre aqui
-						if (thing == principalMaterial)
-							materialColor := ret[thing][1].color;
-							chosenPrincipalMaterial := ret[thing][2];
-						endif
-					endif
-				endif
-			else	//os materiais que nao tem tipos variados
-				foreach item in (EnumerateItemsInContainer(who.backpack)) //Checa os itens na mochila para contabilizar o material
-						//sendsysmessage(who, " " + item.objtype + " " + cint(thing));
-					if (item.objtype == cint(thing))	//acha os itens do tipo do material pedido
-						if (targMaterials[thing])
-							targMaterials[thing] := targMaterials[thing] + item.amount;
-						else
-							targMaterials[thing] :=  item.amount;
-						endif
-					endif
-				endforeach
-				if ( targMaterials[thing] < (materials[thing] + more))
-					//SendSysMessageEx(who, "DEBUG: " + cstr(targMaterials[thing]) + " < " + cstr((materials[thing] + more)) + " - GAMA", SSM_FAIL);	//quando a quantidade de um material for insuficiente, exibe mensagem de erro.
-					SendSysMessageEx(who, "Voce nao possui os materiais necessarios." , SSM_FAIL);
-					return OUT_OF_MATERIALS;
-				else
-					targMaterials[thing] := materials[thing];
-				endif
-			endif
-		endforeach
-
-
 		if ( (who.x != initialX) || (who.y != initialY) )
 			SendSysMessageEx(who, "Voce parou de se concentrar no que estava fazendo.", SSM_FAIL);
 			return 1;
 		endif
 
-		item := 0;
+		var item := 0;
 		if (anvil)
 			item := CreateItemAtLocation(anvil.x, anvil.y, anvil.z, objtype, 1, anvil.realm);
 			item.movable := 0;
@@ -224,7 +217,7 @@ function CraftItem(who, craft_skill, tool, objtype, amt, canFix, anvil, more := 
 			DestroyItem(item);
 		endif
 
-		check := Skillcheck(who, craft_skill, diff, pts) ;
+		var check := Skillcheck(who, craft_skill, diff, pts) ;
 
 		if(check > 0)
 			if (!SubtractMaterial(who, targMaterials, 1+more))
@@ -245,10 +238,10 @@ function CraftItem(who, craft_skill, tool, objtype, amt, canFix, anvil, more := 
 			CraftLockable(who, theitem);
 
 			SendSysMessageEx(who, "Voce criou o item o colocou na mochila.", SSM_INFO);
+		
+			var hisskill := AP_GetSkill(who, craft_skill);
 
-			hisskill := AP_GetSkill(who, craft_skill);
-
-			if (theitem.isa(POLCLASS_WEAPON) || theitem.isa(POLCLASS_ARMOR))
+			if (theitem.isa(POLCLASS_WEAPON) || theitem.isa(POLCLASS_ARMOR))	
 				SetObjProperty(theitem,"reparos",(hisskill/2));
 			endif
 
@@ -265,7 +258,6 @@ function CraftItem(who, craft_skill, tool, objtype, amt, canFix, anvil, more := 
 			endif
 
 			theitems.append( theitem);
-
 		else
 			SubtractMaterial(who, targMaterials, 0.5); //consome metade do material
 			SendSysMessageEx(who, "Voce falhou ao fazer o item e perdeu material." , SSM_FAIL);
@@ -274,7 +266,7 @@ function CraftItem(who, craft_skill, tool, objtype, amt, canFix, anvil, more := 
 		sleepms(100);
 	endwhile
 
-	return theitems;
+	return theitems;	
 
 endfunction
 
@@ -284,11 +276,11 @@ function CreateItem(who, objtype, more:=0)
 	var elem := FindConfigElem(cfg, "stacks");
 	var stackingitens:=ListConfigElemProps( elem );
 	if(cstr(objtype) in stackingitens)
-		var stacknow := GetAmount(objtype);
+		var stacknow := FindObjtypeInContainer( who.backpack, objtype );
 		if (objtype == 7124 || objtype == 0x9087)
 			more := more + 4;
 		endif
-		if (stacknow > 0)
+		if ( stacknow )
 			AddAmount (stacknow, 1+more);
 			theitem := stacknow;
 		else
@@ -305,14 +297,14 @@ function AddMaterialMod(who, theitem, principalMaterial, materialColor)
 
 	if (!principalMaterial)
 		return;
-	endif
+	endif	
 
 	var elem  := FindConfigElem(resource_config, principalMaterial);
 	if((craft_config[theitem.objtype].retain == 1))
 		if(resource_config[principalMaterial].Color)
 			theitem.color := resource_config[principalMaterial].Color;
 		else
-
+		
 			theitem.color := materialColor;
 		endif
 	endif
@@ -337,9 +329,9 @@ function AddMaterialMod(who, theitem, principalMaterial, materialColor)
 		endif
 	elseif(theitem.isA(POLCLASS_ARMOR))
 		theitem.resist_physical_mod := Cint(ResistMods[1]);
-		theitem.resist_fire_mod := Cint(ResistMods[2]);
+		theitem.resist_fire_mod := Cint(ResistMods[2]);	
 		theitem.resist_cold_mod := Cint(ResistMods[3]);
-		theitem.resist_poison_mod := Cint(ResistMods[4]);
+		theitem.resist_poison_mod := Cint(ResistMods[4]);	
 		theitem.resist_energy_mod := Cint(ResistMods[5]);
 	//flechas e virotes de guerra
 	elseif (theitem.objtype == 0x9088 || theitem.objtype == 0x9098)
@@ -409,7 +401,7 @@ function SubtractMaterial(who, targMaterials, amountMod)
 			endif
 
 	endforeach
-
+  
 	return 1;
 endfunction
 
@@ -425,7 +417,7 @@ function CreateCraftedMap(who, craft_skill, use_on, objtype, amount, itemname, r
 	var theitem := CreateItemInBackpack(who, objtype, 1);
 	if(theitem)
 		if( !SubtractAmount(use_on, amount) )
-			SendSysMessage(who, "You don't have enough materials in your backpack!");
+			SendSysMessage(who, "Voce não possui materiais suficientes em sua mochila!");
 			DestroyItem(theitem);
 			return -1;
 		endif
@@ -436,13 +428,13 @@ function CreateCraftedMap(who, craft_skill, use_on, objtype, amount, itemname, r
 			reqd := 3;
 		endif
 		if(rint < reqd)
-			SendSysMessage(who, "You were barely able to make this item.  Its quality is below average.");
+			SendSysMessage(who, "Voce teve dificuldades para fazer este item. Sua qualidade e abaixo da media.");
 		else
-			SendSysMessage(who, "You create the item and put it in your backpack.");
+			SendSysMessage(who, "Você cria o item e o guarda em sua mochila.");
 		endif
 		SetName(theitem, itemname);
 	else
-		SendSysMessage(who, "You don't have enough room in your backpack!");
+		SendSysMessage(who, "Voce nao possui espaco suficiente em sua mochila!");
 		return 0;
 	endif
 	if (theitem.objtype != 0x9923)
