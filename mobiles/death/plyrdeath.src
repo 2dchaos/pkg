@@ -47,7 +47,7 @@ program core_chrDeath(params)
 	var corpse_name := corpse.desc;
 	corpse_name["A corpse of"] := "corpo de";
 	if ( GetObjProperty(corpse, "realname") )
-		corpse_name["Desconhecido"] := GetObjProperty(corpse, "realname");
+		//corpse_name["Desconhecido"] := GetObjProperty(corpse, "realname");
 		SetName(ghost, GetObjProperty(corpse, "realname"));
 		EraseObjProperty(corpse, "realname");
 	endif

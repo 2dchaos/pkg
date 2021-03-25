@@ -262,12 +262,19 @@ program UseBandage(mobile, bandage)
 			return 0;
 		endif
 
-		if (isBloodied(targ) && heal_skill < MIN_SKILL_FOR_BLOODIED)
+		var hpmoment := AP_GetVital(targ, "HITS");
+		var hptotal	:= AP_GetVitalMaximumValue(targ, "HITS");
+	
+		if (hpmoment >= hptotal / 4 && heal_skill < MIN_SKILL_FOR_BLOODIED)
 			SendSysMessageEx(mobile, "Voce nao tem conhecimento suficiente para curar "+targ.name+".", SSM_FAIL);
 			return 0;
 		endif
 
-
+	/*	if (isBloodied(targ) && heal_skill < MIN_SKILL_FOR_BLOODIED)
+			SendSysMessageEx(mobile, "Voce nao tem conhecimento suficiente para curar "+targ.name+".", SSM_FAIL);
+			return 0;
+		endif
+	*/
 		var bonus := 0;
 		var poison := 0;
 		if (getObjProperty(bandage, "encantada") == 1)

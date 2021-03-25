@@ -4,6 +4,7 @@ use cfgfile;
 
 include "include/say";
 include ":spells:spellbooks";
+include ":charactercreation:habilidades";
 
 program magia(who, spellname)
 
@@ -13,6 +14,12 @@ program magia(who, spellname)
 	var elem;
 	var id := 1;
 	var achou := 0;
+
+	if (TemHabilidade(who, "Sensibilidade Profana"))
+		SendSysMessageEx(who, "Voce e um malandro arcano, mas nao tao arcano, nem tao malandro, seu poder vem dos pergaminhos", SSM_FAIL);
+		return;
+	endif
+
 	foreach spell in ( GetConfigIntKeys(cfg) )
 		elem := FindConfigElem(cfg, id);
 		if ( GetConfigString(elem, "Name") == spellname)
