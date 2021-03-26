@@ -1,37 +1,36 @@
-D:\Arquivos Danilo\Pessoal\UO\LVMDev\pkg\skills\survival\fishing\fishnets.src
-D:/Arquivos Danilo/Pessoal/UO/LVMDev/scripts/modules/basic.em
-D:/Arquivos Danilo/Pessoal/UO/LVMDev/scripts/modules/basicio.em
-D:/Arquivos Danilo/Pessoal/UO/LVMDev/scripts/modules/uo.em
-D:/Arquivos Danilo/Pessoal/UO/LVMDev/scripts/modules/os.em
-D:/Arquivos Danilo/Pessoal/UO/LVMDev/scripts/modules/math.em
-D:/Arquivos Danilo/Pessoal/UO/LVMDev/scripts/modules/util.em
-D:/Arquivos Danilo/Pessoal/UO/LVMDev/scripts/modules/cfgfile.em
-D:\Arquivos Danilo\Pessoal\UO\LVMDev\scripts\include\client.inc
-D:\Arquivos Danilo\Pessoal\UO\LVMDev\pkg\utils\itemUtils\include\canAccess.inc
-D:\Arquivos Danilo\Pessoal\UO\LVMDev\pkg\skills\survival\include\fishingFunctions.inc
-D:\Arquivos Danilo\Pessoal\UO\LVMDev\pkg\systems\attributes\include\attributeConstants.inc
-D:\Arquivos Danilo\Pessoal\UO\LVMDev\pkg\systems\attributes\include\attributes.inc
-D:/Arquivos Danilo/Pessoal/UO/LVMDev/scripts/modules/vitals.em
-D:/Arquivos Danilo/Pessoal/UO/LVMDev/scripts/modules/attributes.em
-D:\Arquivos Danilo\Pessoal\UO\LVMDev\pkg\systems\attributes\include\regen.inc
-D:\Arquivos Danilo\Pessoal\UO\LVMDev\pkg\systems\attributes\include\settings.inc
-D:\Arquivos Danilo\Pessoal\UO\LVMDev\pkg\systems\attributes\include\skills.inc
-D:\Arquivos Danilo\Pessoal\UO\LVMDev\pkg\fls\fls_core\include\fls_characters.inc
-D:\Arquivos Danilo\Pessoal\UO\LVMDev\pkg\mobiles\brainAI\include\npcUtil.inc
-D:/Arquivos Danilo/Pessoal/UO/LVMDev/scripts/modules/polsys.em
-D:\Arquivos Danilo\Pessoal\UO\LVMDev\pkg\fls\fls_core\include\fls_chargumps_ex.inc
-D:\Arquivos Danilo\Pessoal\UO\LVMDev\pkg\utils\gumps\include\gumps.inc
-D:\Arquivos Danilo\Pessoal\UO\LVMDev\pkg\utils\gumps\include\gumps_ex.inc
-D:\Arquivos Danilo\Pessoal\UO\LVMDev\scripts\include\arrays.inc
-D:\Arquivos Danilo\Pessoal\UO\LVMDev\pkg\systems\charactercreation\include\habilidades.inc
-D:\Arquivos Danilo\Pessoal\UO\LVMDev\scripts\include\say.inc
-D:/Arquivos Danilo/Pessoal/UO/LVMDev/scripts/modules/unicode.em
-D:\Arquivos Danilo\Pessoal\UO\LVMDev\pkg\systems\attributes\include\stats.inc
-D:\Arquivos Danilo\Pessoal\UO\LVMDev\pkg\systems\attributes\include\vitals.inc
-D:\Arquivos Danilo\Pessoal\UO\LVMDev\pkg\systems\attributes\include\skillCheck.inc
-D:\Arquivos Danilo\Pessoal\UO\LVMDev\pkg\systems\attributes\include\advanceCheck.inc
-D:\Arquivos Danilo\Pessoal\UO\LVMDev\pkg\tn\include\characters.inc
-D:\Arquivos Danilo\Pessoal\UO\LVMDev\pkg\utils\datafile\include\datafile.inc
-D:/Arquivos Danilo/Pessoal/UO/LVMDev/scripts/modules/file.em
-D:/Arquivos Danilo/Pessoal/UO/LVMDev/scripts/modules/datafile.em
-D:\Arquivos Danilo\Pessoal\UO\LVMDev\pkg\utils\itemUtils\include\objtype.inc
+C:\LVM\LVM\pkg\skills\survival\fishing\fishnets.src
+C:/LVM/LVM/scripts/modules/basic.em
+C:/LVM/LVM/scripts/modules/basicio.em
+C:/LVM/LVM/scripts/modules/uo.em
+C:/LVM/LVM/scripts/modules/os.em
+C:/LVM/LVM/scripts/modules/math.em
+C:\LVM\LVM\pkg\utils\itemUtils\include\canAccess.inc
+C:\LVM\LVM\pkg\skills\survival\include\fishingFunctions.inc
+C:\LVM\LVM\pkg\systems\attributes\include\attributeConstants.inc
+C:\LVM\LVM\pkg\systems\attributes\include\attributes.inc
+C:/LVM/LVM/scripts/modules/cfgfile.em
+C:/LVM/LVM/scripts/modules/vitals.em
+C:/LVM/LVM/scripts/modules/attributes.em
+C:\LVM\LVM\pkg\systems\attributes\include\regen.inc
+C:\LVM\LVM\pkg\systems\attributes\include\settings.inc
+C:\LVM\LVM\pkg\systems\attributes\include\skills.inc
+C:\LVM\LVM\pkg\fls\fls_core\include\fls_characters.inc
+C:\LVM\LVM\pkg\mobiles\brainAI\include\npcUtil.inc
+C:/LVM/LVM/scripts/modules/polsys.em
+C:\LVM\LVM\pkg\fls\fls_core\include\fls_chargumps_ex.inc
+C:\LVM\LVM\pkg\utils\gumps\include\gumps.inc
+C:\LVM\LVM\pkg\utils\gumps\include\gumps_ex.inc
+C:\LVM\LVM\scripts\include\arrays.inc
+C:\LVM\LVM\pkg\systems\charactercreation\include\habilidades.inc
+C:\LVM\LVM\scripts\include\say.inc
+C:/LVM/LVM/scripts/modules/unicode.em
+C:\LVM\LVM\pkg\systems\attributes\include\stats.inc
+C:\LVM\LVM\pkg\systems\attributes\include\vitals.inc
+C:\LVM\LVM\pkg\systems\attributes\include\skillCheck.inc
+C:/LVM/LVM/scripts/modules/util.em
+C:\LVM\LVM\pkg\systems\attributes\include\advanceCheck.inc
+C:\LVM\LVM\pkg\tn\include\characters.inc
+C:\LVM\LVM\pkg\utils\datafile\include\datafile.inc
+C:/LVM/LVM/scripts/modules/file.em
+C:/LVM/LVM/scripts/modules/datafile.em
+C:\LVM\LVM\pkg\utils\itemUtils\include\objtype.inc
