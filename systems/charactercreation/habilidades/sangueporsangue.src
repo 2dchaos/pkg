@@ -9,9 +9,10 @@ include "include/say";
 
 program doubleattack(who)
 
-	SendSysMessageEx(who, "Voce esta em postura de ataque.", SSM_INFO);
-	SetObjProperty(who, "#attackbonus", 100);
-	setObjProperty(who, "#defensefail", 1);
+	SendSysMessageEx(who, "Sangue por Sangue!", SSM_INFO);
+	SetCooldown(who, "ataquetotal", 16);
+	//SetObjProperty(who, "#attackbonus", 100);
+	//setObjProperty(who, "#defensefail", 1);
 	
 endprogram
 

@@ -28,7 +28,7 @@ program SpellScript(params)
 	if (TemHabilidade(who, "Elo com a Morte"))	
 		var manamoment 	:= AP_GetVital(who, "HITS");
 		var manatotal	:= AP_GetVitalMaximumValue(who, "HITS");
-		if 	(manamoment >= manatotal / 2)
+		if 	(manamoment <= manatotal / 2)
 			amt := cint(amt*0.3);
 		endif	
 	endif

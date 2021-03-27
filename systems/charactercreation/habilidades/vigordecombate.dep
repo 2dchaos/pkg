@@ -1,8 +1,7 @@
-c:\LVM\LVM\pkg\skills\sneak\stealth.src
+C:\LVM\LVM\pkg\systems\charactercreation\habilidades\vigordecombate.src
 C:/LVM/LVM/scripts/modules/basic.em
 C:/LVM/LVM/scripts/modules/basicio.em
 C:/LVM/LVM/scripts/modules/uo.em
-C:\LVM\LVM\pkg\systems\attributes\include\attributeConstants.inc
 C:\LVM\LVM\pkg\systems\attributes\include\attributes.inc
 C:/LVM/LVM/scripts/modules/os.em
 C:/LVM/LVM/scripts/modules/cfgfile.em
@@ -24,6 +23,7 @@ C:\LVM\LVM\scripts\include\say.inc
 C:/LVM/LVM/scripts/modules/unicode.em
 C:\LVM\LVM\pkg\systems\attributes\include\stats.inc
 C:\LVM\LVM\pkg\systems\attributes\include\vitals.inc
+C:\LVM\LVM\pkg\systems\attributes\include\attributeConstants.inc
 C:\LVM\LVM\pkg\systems\attributes\include\skillCheck.inc
 C:/LVM/LVM/scripts/modules/util.em
 C:\LVM\LVM\pkg\systems\attributes\include\advanceCheck.inc
@@ -31,3 +31,5 @@ C:\LVM\LVM\pkg\tn\include\characters.inc
 C:\LVM\LVM\pkg\utils\datafile\include\datafile.inc
 C:/LVM/LVM/scripts/modules/file.em
 C:/LVM/LVM/scripts/modules/datafile.em
+C:\LVM\LVM\pkg\mobiles\timedScripts\include\timedScripts.inc
+C:\LVM\LVM\pkg\tn\include\cooldown.inc

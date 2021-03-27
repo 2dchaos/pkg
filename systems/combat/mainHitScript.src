@@ -218,7 +218,6 @@ program MainHitScript( params )
 			foreach inimigo in inimigos
 				DamageFLS(inimigo, cint(total/3), DMG_PHYSICAL, attacker);
 			endforeach
-
 		endif
 
 		if ( AP_GetVital(defender, HITS) < total )
@@ -250,6 +249,10 @@ program MainHitScript( params )
 		if ( GetCooldown(attacker, "aleijar") > 0)
 			AP_ConsumeVital(defender, STAMINA, total);
 			defender.paralyzed := 1;
+		endif
+
+		if ( GetCooldown(attacker, "vigordecombate") > 0)
+			AP_SetVital(attacker, STAMINA, total);
 		endif
 
 		if (getObjProperty(defender, "#alvomovel") == 1)
@@ -545,7 +548,7 @@ function WeaponHitScripts(attacker, defender, weapon, armor, basedamage, rawdama
 	if ( GetCooldown(weapon, "circulodevas") )
 		//var elemental := GetObjProperty(weapon, "#elementalweapon");
 		//if (elemental != error)
-		var dmg  := AP_GetSkill(attacker, skillUsedForCritical)/10;
+		var dmg  := AP_GetSkill(attacker, skillUsedForCritical)/4;
 
 		if(dmg < 3)
 			dmg := 3;

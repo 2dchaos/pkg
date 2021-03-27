@@ -265,9 +265,11 @@ program UseBandage(mobile, bandage)
 		var hpmoment := AP_GetVital(targ, "HITS");
 		var hptotal	:= AP_GetVitalMaximumValue(targ, "HITS");
 	
-		if (hpmoment >= hptotal / 4 && heal_skill < MIN_SKILL_FOR_BLOODIED)
-			SendSysMessageEx(mobile, "Voce nao tem conhecimento suficiente para curar "+targ.name+".", SSM_FAIL);
-			return 0;
+		if (hpmoment <= hptotal / 4) 
+			if (heal_skill < MIN_SKILL_FOR_BLOODIED)
+				SendSysMessageEx(mobile, "Voce nao tem conhecimento suficiente para curar "+targ.name+".", SSM_FAIL);
+				return 0;
+			endif
 		endif
 
 	/*	if (isBloodied(targ) && heal_skill < MIN_SKILL_FOR_BLOODIED)

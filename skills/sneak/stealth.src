@@ -66,6 +66,18 @@ program skill_Stealth( who )
 		endif
 		*/
 		SendSysMessageEx(who, "Voce esta se movendo silenciosamente.", SSM_INFO);
+
+		if (who.hidden == 1)
+			while (who.stealthsteps >= 1)
+				SendSysMessage(who, "Voce consegue dar aproximadamente "+who.stealthsteps+" passos escondido.");
+				sleep(3);
+				while (who.stealthsteps == 1)
+					SendSysMessage(who, "Seu proximo passo ira te revelar");
+					sleep(3);
+				endwhile
+			endwhile
+		endif
+
 		SetObjProperty(who, "#steathsteps", atualStep + 1);
 		return 1;
 	elseif (check >= -15)
