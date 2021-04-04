@@ -31,45 +31,37 @@ program book(who, book)
 		return 1;
 	endif
 
-	if (TemHabilidade(who, "Sensibilidade Profana"))
-		SendSysMessageEx(who, "Voce e um malandro arcano, mas nao tao arcano, nem tao malandro, seu poder vem dos pergaminhos", SSM_FAIL);
-		return;
+	var donoGrimorio := GetObjProperty(book, "serialDono");
+	if (donoGrimorio)
+		if (donoGrimorio != who.serial)
+			SendSysMessageEx(who, "Voce nao entende esse livro.", SSM_FAIL);
+			return 0;
+		endif
+	else
+		SetObjProperty(book, "serialDono", who.serial);
 	endif
 
 	var book_gump := CreateBookGump(book, who);
 	var result := GFSendGump(who, book_gump);
 
 	if (result[0] > 900)
-		
+
 
 		var spell := result[0] - 900;
-	
+
 		var spells := GetObjProperty(book, "spells");
 		//sendsysmessage(who, " " + bookopt);
-	 
+
 		if (spells[spell])
 			copyrecipe(who, spells[spell]);
 		endif
 	else
 
 		var spell := result[0] - 100;
-	
+
 		var spells := GetObjProperty(book, "spells");
 		//sendsysmessage(who, " " + bookopt);
-		var donoGrimorio := GetObjProperty(book, "marked");
-		if (donoGrimorio != error)
-			if ( donoGrimorio != (who.name + " - " + who.acctname))
-				SendSysMessageEx(who, "Voce nao entende esse livro.", SSM_FAIL);
-				return 1;
-			endif
-		endif
-		var serialid:= GetObjProperty(book, "serialid");
-		if (serialid != error)
-			if (serialid != who.serial);
-				SendSysMessageEx(who, "Voce nao entende esse livro.", SSM_FAIL);
-				return 1;
-			endif
-		endif
+
 		if (spells[spell])
 			//sendsysmessage(who, "chamando castspell");
 			Start_Script("cast_spell", {who, spells[spell], 0});
@@ -86,8 +78,8 @@ function copyrecipe(who, recipe)
 	//sendsysmessage(who, " " + spellinfo + " " + recipe + "  " + cint(recipe));
 	if (ConsumeSubstance(who.backpack, OBJ_BLANK_SCROLL, 1))
 		if ((SkillCheck(who, MAGERY, cint(recipe.Difficulty), 0) > 0))
-			if  (!AP_ConsumeVital(who, MANA, recipe.mana)) 
-				SendSysMEssageEx(who, "Voce esta sem mana.", SSM_FAIL);
+			if  (!AP_ConsumeVital(who, MANA, recipe.mana))
+				SendSysMessageEx(who, "Voce esta sem mana.", SSM_FAIL);
 				return 1;
 			endif
 			if (!TNCheckReagents(who, recipe, 0))
@@ -154,7 +146,7 @@ function CreateBookGump(book, who)
 // Begin Page 1 Setup
 	GFPage(book_gump, 1);
 	//GFAddButton(book_gump, 125, 15, 2472, 2473, GF_CLOSE_BTN, 50);
-	GFHTMLArea(book_gump, 135, 22, 100, 18, "Grimorio Antigo");
+	GFHTMLArea(book_gump, 135, 22, 100, 18, "Livro de Mesum");
 	GFAddButton(book_gump, 393, 14, 2206, 2206, GF_PAGE_BTN, 2);
 
 	if (rune_list[1])
@@ -241,7 +233,7 @@ function CreateBookGump(book, who)
 
 				//GFHTMLArea(book_gump, 160, 15, 100, 18, rune_entry.name);
 				GFTextCrop(book_gump, 160,  15, 100, 18, 995, rune_entry.name);
-				if ( TemHabilidade(who, "Escrever Pergaminhos") )  
+				if ( TemHabilidade(who, "Escrever Pergaminhos") )
 					GFTextCrop(book_gump, 180, 35, 100, 18, 995, "Copiar");
 					GFAddButton(book_gump, 160, 38, 2103, 2104,  GF_CLOSE_BTN, 900+rune_pos);
 				endif
@@ -273,10 +265,10 @@ function CreateBookGump(book, who)
 				GFPage(book_gump, 1);
 				GFTextCrop(book_gump, pOX,  pOY, 115, 17, 995, rune_entry.name);
 				GFPage(book_gump, i);
-				
+
 				//GFHTMLArea(book_gump, 300, 15, 100, 18, rune_entry.name);
 				GFTextCrop(book_gump, 300,  15, 115, 17, 995, rune_entry.name);
-				if ( TemHabilidade(who, "Escrever Pergaminhos")) 
+				if ( TemHabilidade(who, "Escrever Pergaminhos"))
 					GFTextCrop(book_gump, 320, 35, 150, 17, 995, "Copiar");
 					GFAddButton(book_gump, 300, 38,  2103, 2104,  GF_CLOSE_BTN, 900+rune_pos);
 				endif
