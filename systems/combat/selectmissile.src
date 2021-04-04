@@ -9,9 +9,9 @@ program select( who, item)
 //	endif
 
 	SendSysMessage(who, "Escolha o tipo de flecha.");
-	
+
 	var alvo := target(who);
-	
+
 	if ( (item.objtype == 0x13B2) || (item.objtype == 0xe137) || ( item.objtype == 0x26CC) || (item.objtype == 0xe139) || (item.objtype == 0x2D2A) || (item.objtype == 0x2D2B) || (item.objtype == 0x27A5) ) //bows
 		if ( (alvo.graphic == 11058) || (alvo.graphic == 3903) )
 			SetObjProperty(item, "ammo", alvo.objtype);
