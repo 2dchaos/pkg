@@ -4,18 +4,27 @@ use cfgfile;
 
 include "include/say";
 include ":spells:spellbooks";
+include ":charactercreation:habilidades";
 
 program magia(who, spellname)
+
 	if ( GetObjProperty(who, "#Casting") )
 		SendSysMessageEx(who, "Voce nao pode invocar um encanto agora.", SSM_FAIL);
 		return 0;
 	endif
+
+	if (TemHabilidade(who, "Sensibilidade Profana"))
+		SendSysMessageEx(who, "Voce e um malandro arcano, mas nao tao arcano, nem tao malandro, seu poder vem dos pergaminhos", SSM_FAIL);
+		return;
+	endif
+
 	SendSysMessage(who, "Iniciando magia");
 	var cfg := ReadConfigFile(":spells:allspells");
 
 	var elem;
 	var id := 1;
 	var achou := 0;
+
 	foreach spell in ( GetConfigIntKeys(cfg) )
 		elem := FindConfigElem(cfg, id);
 		if ( GetConfigString(elem, "Name") == spellname)
@@ -30,15 +39,16 @@ program magia(who, spellname)
 		return;
 	endif
 
-	SendSysMessage(who, " " + id);
+	//SendSysMessage(who, " " + id);
 
 	var spellbook := 0;
 	var booktype;
 	var donoGrimorio;
+
 	foreach item in ( EnumerateItemsInContainer(who.backpack) )
-		if ( item.objtype == 24832)
+		if ( item.objtype == 24832 || item.objtype == 0x6101 )
 			donoGrimorio := GetObjProperty(item, "serialDono");
-			if (donoGrimorio == who.serial)
+			if (donoGrimorio && (donoGrimorio == who.serial))
 				var spells := GetObjProperty(item, "spells");
 				foreach s in spells
 					if ( s.id == id)
