@@ -14,7 +14,9 @@ include ":itemutils:canAccess";
 
 program Make_Trap(who, trap)
 
-    if (!temHabilidade(who, "Instalar Armadilha"))
+    if ((temHabilidade(who, "Instalar Armadilha")) || (temHabilidade(who, "Armadilheiro")))
+    
+    else
         SendSysMessageEx(who, "Voce nao tem a menor ideia de como usar isso.", SSM_FAIL);
         return 0;
     endif 

@@ -22,10 +22,10 @@ program SpellScript(params)
 	var npctemplate := GetObjproperty(targ, "npctemplate");
 	var category := lower(getnpccategory( ParseTemplateName(npctemplate).template ));
 
-    if (GetObjProperty(who, "CranioSummons") == maxsummons);
-		SendSysMessageEx(who, "Voce ja controla espiritos demais", SSM_FAIL);
-    	return 0;
-	endif
+    //if (GetObjProperty(who, "CranioSummons") == maxsummons);
+	//	SendSysMessageEx(who, "Voce ja controla espiritos demais", SSM_FAIL);
+    //	return 0;
+	//endif
 
 	if ( targ.IsA(POLCLASS_MOBILE) )
 		SendSysMessage(who, "Voce so pode usar esta magia em cranios.");
@@ -76,8 +76,8 @@ program SpellScript(params)
 				
 	SetObjProperty(undead, "Necro", 1);
 	
-	var numbersummons := Cint(GetObjProperty(who, "CranioSummons"));
-	SetObjProperty(who, "CranioSummons", (numbersummons + 1));
+	//var numbersummons := Cint(GetObjProperty(who, "CranioSummons"));
+	//SetObjProperty(who, "CranioSummons", (numbersummons + 1));
 
 	TS_StartTimer(undead, "summon", GetSpellDuration(AP_GetSkill(who, MAGICLORE)) / 2);
 		

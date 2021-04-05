@@ -344,9 +344,9 @@ function MP_RestoreMountToAnimal(mobile, mount)
 		animal.facing := mobile.facing;
 		animal.color := mount.color;
 		animal.name := mount.desc;
-		if ( GetObjProperty(mobile, "kit") == "Bandido")
-			SetObjProperty(animal, "kit", "Bandido");
-		endif
+		//if ( GetObjProperty(mobile, "kit") == "Bandido")
+		//	SetObjProperty(animal, "kit", "Bandido");
+		//endif
 	endif
 	DestroyItem(mount);
 
