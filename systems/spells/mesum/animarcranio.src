@@ -32,10 +32,10 @@ program SpellScript(params)
 		return 0;
 	endif
 
-    if ( targ.objtype != 0x1AE4)
+        if ( targ.objtype != 0x1AE4)
         SendSysMessageEx(who, "Voce so pode usar esta magia em cranios", SSM_FAIL);
         return 0;
-    endif
+        endif
 
 	//Efeito da magia
 	//PlaySoundEffect(who, SFX_SPELL_HEAL);
