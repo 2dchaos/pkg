@@ -35,7 +35,7 @@ program TrapWalkOn(mobile, trap)
 	cfg := cfg[trap.objtype];
     var trapcheck := GetObjProperty(trap, "traptype");
 	
-	if (cint(trap.objtype) == 0xff98)//beartrap
+	if (trap.objtype == 0xff98)//beartrap
 		do
 			if (!GetObjProperty(trap, "trap_ativada"))
 				trap.invisible := 0;

@@ -66,10 +66,10 @@ program controleclima(who)
 
 		PerformAction(who, ANIM_CAST_AREA);
 
-		if( (origx != who.x) || (origy != who.y))
-			SendSysMEssage(who, "Voce parou de controlar o clima.", SSM_FAIL);
-			break;
-		endif
+		//if( (origx != who.x) || (origy != who.y))
+		//	SendSysMEssage(who, "Voce parou de controlar o clima.", SSM_FAIL);
+		//	break;
+		//endif
 		
 		if (som)
 			windsound(who);
