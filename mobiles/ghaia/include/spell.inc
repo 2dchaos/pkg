@@ -157,8 +157,10 @@ function SpellFight(opponent, spell_list ,alerted := 0)
     endif
   endif
 
-	  if (hasCombat(me))
-    DoCombatSpecial(me); ////////////// SPECIALL
+	  if (hasCombat(me))
+
+    DoCombatSpecial(me); ////////////// SPECIALL
+
   endif
 	
 	checkFlee(opponent);
@@ -194,6 +196,12 @@ function SpellFight(opponent, spell_list ,alerted := 0)
 							TurnToward(opponent);
 						endif
 			              endif
+		EVID_TAUNT:
+			if(ev.source)
+				opponent := ev.source;
+				SetOpponent(opponent);
+			    TurnToward(opponent);		
+			endif
 	  endcase
 	endif
   endwhile
