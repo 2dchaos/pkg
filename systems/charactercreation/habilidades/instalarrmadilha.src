@@ -71,9 +71,9 @@ program instalararmadilha(who)
 		PrintText(who, "*instalando armadilha*");
         DestroyITem(trap);
 		sleep(4);
-        armadilhanochao:= CreateItemAtLocation(targetted.x, targetted.y, targetted.z, 0xff98, 1, who.realm);
+        armadilhanochao:= CreateItemAtLocation(who.x, who.y, who.z -1, 0xff98, 1, who.realm);
         SendSysMessageEx(who, "Terminou de Instalar a Armadilha", SSM_FAIL);
-        sleep(4);
+        sleep(5);
         armadilhanochao.invisible := 1;
 		return 0;
 	endif
@@ -136,7 +136,7 @@ program instalararmadilha(who)
         PrintText(who, "*instalando armadilha*");
         DestroyITem(trap);
 		sleep(4);
-        armadilhanochao:= CreateItemAtLocation(targetted.x, targetted.y, targetted.z, 0x367a, 1, who.realm);
+        armadilhanochao:= CreateItemAtLocation(who.x, who.y, who.z -1 , 0x367a, 1, who.realm);
 		SetObjProperty(armadilhanochao, "traplevel", level);
         SetObjProperty(armadilhanochao, "traptype", traptype);
         SendSysMessageEx(who, "Terminou de Instalar a Armadilha", SSM_FAIL);
