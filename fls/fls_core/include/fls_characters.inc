@@ -120,7 +120,7 @@ endfunction
 
 function IsInDungeon(player)
 
-	if (player.x >= 3749 && player.y >= 0 && player.x <= 6141 && player.y <= 4000)
+	if (player.x >= 3875 && player.y >= 0 && player.x <= 6141 && player.y <= 4000)
 		return 1;
 	endif
 
