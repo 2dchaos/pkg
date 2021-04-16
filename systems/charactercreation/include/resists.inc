@@ -92,7 +92,7 @@ function GetResist(who, resist)
 endfunction
 
 function CheckResist(who, resist, dif, mod := 0)
-	var dado := RandomInt(100) + 1;
+	var dado := RandomInt(80) + 1;
 	var valor := GetResist(who, resist);
 
 	//printtextabove(who, "dado " + dado + " valor " + valor + " diff " + dif); 
