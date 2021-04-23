@@ -58,7 +58,9 @@ program skinning(parms)
 		
 
 	elseif((GetObjProperty(cadaver,"npctemplate")== error) && (GetObjProperty(cadaver, "morto")!=1))
-		if ((idadeChar( who) > 30)) 
+		SendSysMessage( who, "Fale com um GM se quiser de fato matar esse jogador" );
+		return 0;
+	/*	if ((idadeChar( who) > 30)) 
 			if (YesNo(who, "Voce deseja mesmo matar o alvo?", "Sim: o alvo morrera e voce perdera 1 DP permanentemente.", "Nao: nenhuma consequencia.")) //quer matar mesmo
 				DesmembreCorpse(cadaver);
 				//retira 1 dp
@@ -76,7 +78,7 @@ program skinning(parms)
 			endif
 		endif
 		//DesmembreCorpse(cadaver);
-	
+	*/
 	elseif (((c_type == 400) || (c_type == 401)) && (GetObjProperty(cadaver, "morto")!=1))
 				DesmembreCorpse(cadaver);
 				PrintTextAbove( who, "*Corta a cabeca*", font := _DEFAULT_TEXT_FONT, color := _DEFAULT_TEXT_COLOR, journal_print := JOURNAL_PRINT_NAME);	
