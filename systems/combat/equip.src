@@ -57,7 +57,7 @@ var descmod:={};
 
 		elseif (TemHabilidade(who, "Treinamento de Cavaleiro"))
 			if (!TemHabilidade(who, "Treinamento Cazar"))
-				if (item.attribute != MELEECOMBAT1H && item.attribute != MELEECOMBAT2H)
+				if (item.attribute == RANGEDCOMBAT)
 					SendSysMessageEx(who, "Voce nao consegue usar arcos enquanto estiver montado.", SSM_FAIL);
 					return 0;
 				endif

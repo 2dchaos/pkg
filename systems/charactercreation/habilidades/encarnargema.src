@@ -25,7 +25,7 @@ program manobra(who)
 		template := ":brainai:fireelemental";
 		"Cold":
 		SendSysMessageEx(who, "Voce conjura um elemental do gelo a partir da gema da sua arma.", SSM_INFO);
-		template := ":brainai:iceelemenetal";
+		template := ":brainai:IceElemental";
 		"Energy":
 		SendSysMessageEx(who, "Voce conjura um elemental do energia a partir da gema da sua arma.", SSM_INFO);
 		template := ":brainai:elementaldeenergia";
