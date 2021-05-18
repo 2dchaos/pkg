@@ -1729,17 +1729,16 @@ function musicaEfeitos(byref who, byref magica, byref tempo) //DOING
 		range := range + 5; //dobra a area de efeito das cancoes
 	endif
 
-	//Habilita eficacia extra nos buffs OU debuffs, nunca os dois
+	BuffModifier := modifier;  //buffs com poder base
+	DebuffModifier := modifier; //Debuffs com poder base
+
+	//Habilita eficacia extra nos buffs e debuffs
 	if (TemHabilidade(who, "Musica Contagiante"))
 		BuffModifier := modifier * 2;  //dobra o porder dos Buffs
-		DebuffModifier := modifier; //Debuffs com poder base
-	elseif (TemHabilidade(who, "Musica da Alma"))
-		BuffModifier := modifier;  //buffs com poder base
-		DebuffModifier := modifier * 1.5;  //aumenta o porder dos Buffs
+	endif
+	if (TemHabilidade(who, "Musica da Alma"))
+		DebuffModifier := modifier * 1.5;  //aumenta o porder dos Debuffs
 		resistencia_mod := resistencia_mod - 20; //torna os Debuffs mais dificies de resistir
-	else
-		BuffModifier := modifier;  //buffs com poder base
-		DebuffModifier := modifier; //Debuffs com poder base
 	endif
 
 	if (TemHabilidade(who, "Mestre do Improviso"))
