@@ -230,7 +230,7 @@ function GFCraftNewPage(who, byref gump, skill_config, MenuName, skill_name)
       			endif
       			itemdesc := lower(itemdesc);
 	
-			if (craft_config[objtype].difficulty <= (AP_GetSkill(who, craft_skill) + 15))
+			if (craft_config[objtype].difficulty <= (AP_GetTrueSkill(who, craft_skill) + 15))
 				if(ItemY >= 243)
         				ItemY := 63;
         				GFAddButton(gump, 370, 260, 4005, 4006, GF_PAGE_BTN, (PageNum+1));
