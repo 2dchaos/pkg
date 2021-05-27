@@ -410,9 +410,9 @@ function CalculateHitChance(attacker, defender)
 
 	if ( !defender.npctemplate )
 		skill_d := CDbl(AP_GetSkill(defender, wpn_d.attribute));
-		if ( GetEquipmentByLayer(defender, LAYER_MOUNT))
-			skill_d := skill_d / 2;
-		endif
+		//if ( GetEquipmentByLayer(defender, LAYER_MOUNT))
+		//	skill_d := skill_d / 2;
+		//endif
 		if (wpn_d.attribute == WRESTLING)
 			if (AP_GetSkill(defender, MELEECOMBAT1H) > AP_GetSkill(defender, MELEECOMBAT2H))
 				skill_d := AP_GetSkill(defender, MELEECOMBAT1H);

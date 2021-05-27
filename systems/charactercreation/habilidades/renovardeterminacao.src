@@ -22,7 +22,7 @@ program manobra(attacker)
 		if (member.serial != attacker.serial)
 			if (Distance(attacker, member) < 8)
 				var list := TS_GetCooldownList(member);
-                var valor := cint(AP_GetVitalMaximumValue(member, STAMINA)) - AP_GetVital(member, "Stamina") + 10 ;
+                var valor := cint(AP_GetVitalMaximumValue(member, STAMINA));// - AP_GetVital(member, "Stamina") + 10 ;
 				AP_SetVital(member, "Stamina", valor);
 				foreach key in (list.keys())
 					SendSysMessage(member, " " + key + " resetado." );

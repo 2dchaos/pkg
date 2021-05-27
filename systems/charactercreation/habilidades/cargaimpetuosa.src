@@ -35,21 +35,22 @@ program manobra(attacker)
 	endif
 
 	foreach member in (festa.members)
+		foreach mobile in ListMobilesInLineOfSight(attacker, 12)
+			var weapon := member.weapon;
+			var weaponBow := 0;
+			if (lower(weapon.attribute) == "rangedcombat")
+				weaponBow := 1;
+			endif
 
-		var weapon := member.weapon;
-		var weaponBow := 0;
-		if (lower(weapon.attribute) == "rangedcombat")
-			weaponBow := 1;
-		endif
-
-		if (member.serial != attacker.serial && !weaponBow)
-			MoveObjectToLocation(member, alvo.x, alvo.y, alvo.z, alvo.realm, MOVEOBJECT_FORCELOCATION);
-			member.attack_once(alvo);
-			TS_StartTimer(alvo, "paralysis", 8);
-			PrintTextAbove(alvo, "*Atordoado*");
-		else
-			member.attack_once(alvo);
-		endif
+			if (member.serial != attacker.serial && !weaponBow)
+				MoveObjectToLocation(member, alvo.x, alvo.y, alvo.z, alvo.realm, MOVEOBJECT_FORCELOCATION);
+				member.attack_once(alvo);
+				TS_StartTimer(alvo, "paralysis", 8);
+				PrintTextAbove(alvo, "*Atordoado*");
+			else
+				member.attack_once(alvo);
+			endif
+		endforeach
 	endforeach
 
 

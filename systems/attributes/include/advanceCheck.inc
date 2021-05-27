@@ -439,15 +439,15 @@ function limiteportempo (who)
 
    var lim := 10; // Valor inicial
    if (dias >= 5)
-      if (dias > 75)
-         if (dias > 125)
-            lim := 50.0 + ((dias - 125) * 0.1);
-         else
-            lim := 40.0 + ((dias - 75) * 0.2);
-         endif
-      else
+    //  if (dias > 75)
+    //     if (dias > 125)
+    //        lim := 50.0 + ((dias - 125) * 0.1);
+    //     else
+    //        lim := 40.0 + ((dias - 75) * 0.2);
+    //     endif
+    //  else
          lim := 10.0 + ((dias - 5) * 0.5);
-      endif
+    //  endif
    endif
       
 
