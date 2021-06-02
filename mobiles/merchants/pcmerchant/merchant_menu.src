@@ -283,7 +283,7 @@ function DoPurchase(npc, player, input)
 							faltaPagar -= moeda.amount*100;
 							DestroyItem(moeda);
 						else
-							print("Vai pagar com ouro");
+							//print("Vai pagar com ouro");
 							var troco := moeda.amount*100 - faltaPagar;
 							DestroyItem(moeda);
 							totalPago += faltaPagar;
@@ -593,7 +593,7 @@ function AddItem(npc, player, targ)
 
 	//Verifica se vai cobrar a taxa antes da venda/retirada ou só
 	if (GetObjProperty(npc, "oneplayersells") == player.name)
-		SendSysMessage(player, "Seu vendedor particular desconta taxas apenas depois de vender seus itens.");
+		SendSysMessage(player, "Seu vendedor particular nao cobra taxas.");
 	elseif (TemHabilidade(player, "Mercador Reconhecido"))
 		SendSysMessage(player, "Vendedores descontam taxas de Mercadores Reconhecidos apenas depois de vender seus itens.");
 	elseif (!GetObjProperty(npc, "taverneiro"))
@@ -682,7 +682,7 @@ function AddItem(npc, player, targ)
 							faltaPagar -= moeda.amount*100;
 							DestroyItem(moeda);
 						else
-							print("Vai pagar com ouro");
+							//print("Vai pagar com ouro");
 							var troco := moeda.amount*100 - faltaPagar;
 							DestroyItem(moeda);
 							totalPago += faltaPagar;
@@ -889,24 +889,6 @@ function DoWithdraw(npc, player)
 		sleepms(2);
 	endforeach
 
-	if(moedas > 0 && !GetObjProperty(npc, "taverneiro") )
-		var taxa := 0.0;
-		//Verifica se vai cobrar a taxa antes da venda/retirada ou só
-		if ((GetObjProperty(npc, "oneplayersells") == player.name) || TemHabilidade(player, "Mercador Reconhecido"))
-			//Cobra taxas previstas naquele vendedor para quem tem que pagar pra colocar a venda
-			if(GetObjProperty(npc, "taxap")) // 0.0 equivale a 0% e 1.0 equivale a 100%
-				var pesoTaxa := CDbl(getObjProperty(npc, "taxap"));
-				taxa := CInt(1.0 * moedas * pesoTaxa);
-			else
-				taxa := CInt(1.0 * moedas * 0.1);
-			endif
-			SendSysMessage(player, "Foram descontadas " + taxa + " moedas de taxa.");
-		else
-			SendSysMessage(player, "Voce ja pagou as taxas quando colocou os itens a venda.");
-		endif
-		//print("Calculando dinheiro retirado");
-		DarTroco(player, npc,  moedas);
-	endif
 	data_elem.EraseProp(Hex(player.serial));
 	Set_Critical(0);
 endfunction
