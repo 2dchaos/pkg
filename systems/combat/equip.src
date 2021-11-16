@@ -6,6 +6,11 @@ include ":tn:equipment";
 include ":tn:cooldown";
 include "include/say";
 include ":mounts:mounts";
+include ":spells:tnmagery";
+include "include/client";
+include "include/sounds";
+include "include/say";
+include ":timedScripts:timedScripts";
 
 program equipweapon(who, item)
 
@@ -103,6 +108,37 @@ var descmod:={};
 			p.kill();
 			set_critical(0);
 		endif
+	endif
+
+	if (item.isa(POLCLASS_ARMOR))
+
+		var timer_list := TS_GetTimerList(who);
+		var names := array;
+
+		foreach timer in ( timer_list.keys() )
+			timer := lower(timer);
+			if (timer == "agility" )
+				TS_LowerDuration(who, timer, -1);
+			elseif ( timer == "strength");
+				TS_LowerDuration(who, timer, -1);
+			elseif ( timer == "intelligence")
+				TS_LowerDuration(who, timer, -1);
+			elseif ( timer == "velocidade")
+				TS_LowerDuration(who, timer, -1);
+			elseif (timer == "dmgreturn" )
+				TS_LowerDuration(who, timer, -1);
+			endif
+		
+		endforeach
+
+			var penal := AP_GetStatMod(who, "Dexterity");
+			if (penal >= -1)
+				SendSysMessageEX(who, "Sua carga esta leve e voce nao tera problemas em se esquivar", SSM_INFO);
+			elseif (penal >= -10)
+				SendSysMessageEX(who, "Sua carga esta mediana e voce nao podera se esquivar com tanta frequencia", SSM_INFO);
+			elseif (penal >= -15)
+				SendSysMessageEX(who, "Sua carga esta pesada tornando a esquiva complicada", SSM_INFO);
+			endif
 	endif
 
 	if (GetObjProperty(item, "armaespiritual"))

@@ -80,7 +80,11 @@ function MiningLoop(who, scoop, my_x, my_y, my_facing, location_name)
 	var difficulty := 20;//CInt(100 - (resource_amount * 100 / MAX_RESOURCE_AMOUNT));
 	
 	if ( SkillCheck(who, GATHERING, difficulty) > 0 )
-		CreateItemInBackPack(who, SCOOP_OF_SAND, 1);
+		var amt := Cint(AP_GetSkill(who, GATHERING)/20);
+		if (amt <= 0)
+			amt := 1;
+		endif
+		CreateItemInBackPack(who, SCOOP_OF_SAND, amt);
 		SendSysMessageEx(who, "Voce pegou um pouco de areia.", SSM_INFO);
 		return 1;
 	else

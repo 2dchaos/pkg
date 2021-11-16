@@ -27,7 +27,7 @@ program pergrad(who, item)
 	nivel := nivel*2;
 	
 	if (habs[nivel] != 1)
-		SendSysMessageEx(who, "Voce nao pode comprar habilidade desse nivel " + nivel , SSM_FAIL);
+		SendSysMessageEx(who, "Voce nao pode comprar habilidade do nivel " + nivel , SSM_FAIL);
 		return;
 	endif
 

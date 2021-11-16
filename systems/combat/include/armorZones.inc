@@ -118,3 +118,25 @@ function CS_GetArmorZone(equip)
 	
 	return zones;
 endfunction
+
+function CS_SelectArmored(item_array, dmgs_type)
+	var itemdesc_cfg := ReadConfigFile(":combat:itemdesc");
+   
+   var r_dmg_list := dmgs_type.keys();
+   var found_item;
+
+	foreach item in ( item_array )
+      var armortypes := _ifOr(GetObjProperty(item, "ArmorResists"), struct{}).keys();
+      var elem := FindConfigElem(itemdesc_cfg, item.objtype);
+      foreach dmgtype in r_dmg_list
+         if (dmgtype in armortypes || GetConfigInt(elem, "{}Resist".format(dmgtype)))
+			   found_item := item;
+            break;
+         endif
+         sleepms(2);
+      endforeach
+		sleepms(1);
+	endforeach
+
+	return found_item;
+endfunction

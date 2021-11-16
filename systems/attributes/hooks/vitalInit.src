@@ -17,7 +17,7 @@ exported function GetHitsRegenRate(mobile)
 	var base_regen := CInt(AP_GetSettingsCfgElem("Regen").Hits) * 100;
 	var regen := base_regen + AP_GetVitalRegenRateMod(mobile, "hits");
 
-	if (isBloodied(mobile) && (!mobile.npctemplate)  ) // Nao regenera se tiver sangrando
+	if (isBloodied(mobile) && (!mobile.npctemplate) && (mobile.poisoned)) // Nao regenera se tiver sangrando
 		return 0;
 	endif
 
@@ -68,7 +68,7 @@ endfunction
 // Stamina Functions
 // *****
 exported function GetStaminaRegenRate(mobile)
-	var base_regen := CInt(AP_GetSettingsCfgElem("Regen").Stamina) * 100;
+	var base_regen := CInt(AP_GetSettingsCfgElem("Regen").Stamina) * 150;
 
 	if (TemHabilidade(mobile, "Condicionamento"))
 		base_regen := base_regen + base_regen/4;

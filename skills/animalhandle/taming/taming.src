@@ -100,15 +100,15 @@ function taming(who)
 	if ( !targ.IsA(POLCLASS_NPC) )
 		SendSysMessageEx(who, "Cancelado", SSM_FAIL);
 		return;
-//	elseif (Distance(who,targ) > 4)
-//		SendSysMessage(who, "Alvo esta muito distante.");
-//		return;
+	elseif (Distance(who,targ) > 4)
+		SendSysMessage(who, "Alvo esta muito distante.");
+		return;
 	elseif ( targ.script["tamed"] )
-		//if( targ.master.serial == who.serial )
-		//	TeachGump(who, targ);
-		//else
+		if( targ.master.serial == who.serial )
+			TeachGump(who, targ);
+		else
 			SendSysMessageEx(who, targ.name+" nao pode ser adestrado.", SSM_FAIL);
-		//endif
+		endif
 		return 0;
 	elseif ( (GetNumPets(who) + GetPetCost(targ)) > GetMaxPets(who) )
 		SendSysMessageEx(who, "Voce nao pode ter mais animais domados.", SSM_FAIL);

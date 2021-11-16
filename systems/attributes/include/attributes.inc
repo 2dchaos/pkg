@@ -275,3 +275,24 @@ function GetPH(who)
 
 	return ph;
 endfunction
+
+function CheckBlockDodge(who, return_block := 0, return_dodge := 0, no_message := 0)
+   if (return_dodge)
+      if (TS_GetCooldown(who, "dodge")) 
+         if (!no_message) 
+			   PlaySoundEffect(who, array{569, 570, 571}.randomentry());
+            PrintText(who, "*esquivou*", SSM_FAIL);
+         endif
+         return 1; 
+      endif
+   endif
+
+   if (return_block)
+      if (TS_GetCooldown(who, "block"))
+         if (!no_message)
+            PrintText(who, "*bloqueou*", SSM_FAIL);
+         endif
+         return 1; 
+      endif
+   endif
+endfunction

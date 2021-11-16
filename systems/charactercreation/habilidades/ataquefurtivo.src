@@ -14,7 +14,7 @@ include ":blood:blood";
 include "include/damage";
 include ":fls_core:fls_characters";
 include ":fls_core:packets";
-include ":tn:combat";
+//include ":tn:combat";
 include ":combat:combat";
 include "include/packets";
 include ":timedscripts:timedScripts";

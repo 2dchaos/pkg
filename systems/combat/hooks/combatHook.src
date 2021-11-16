@@ -388,9 +388,9 @@ function CalculateHitChance(attacker, defender)
 	if ( !attacker.npctemplate )
 		skill_a := CDbl(AP_GetSkill(attacker, wpn_a.attribute));
 
-		if ( GetEquipmentByLayer(attacker, LAYER_MOUNT))
-			skill_a := skill_a / 2;
-		endif
+		//if ( GetEquipmentByLayer(attacker, LAYER_MOUNT))
+		//	skill_a := skill_a / 2;
+		//endif
 
 		if (wpn_a.attribute == WRESTLING) // Ajustar se for soco pra melhor melee combat
 			if (AP_GetSkill(attacker, MELEECOMBAT1H) > AP_GetSkill(attacker, MELEECOMBAT2H))
@@ -428,14 +428,14 @@ function CalculateHitChance(attacker, defender)
 		skill_d := cint(GetObjProperty(defender, "skill_d"));
 	endif
 
-	var hit_chance := 50.0 + ((skill_a - skill_d) / 1.5);
+	var hit_chance := (100); // 50.0 + ((skill_a - skill_d) / 1.5);
 
 	hit_chance := hit_chance + CDbl( GetObjProperty(attacker, "hitbonus") ) + attacker.hitchance_mod - defender.evasionchance_mod;
 	hit_chance := hit_chance + cint( GetObjProperty(attacker, "#attackbonus" ));	
 
 
 	if (getcooldown(defender, "evasion_chance"))
-		hit_chance := hit_chance - 10;
+		hit_chance := hit_chance - 50;
 	endif
 
 	if (TemHabilidade(attacker, "Postura Ofensiva"))
@@ -521,7 +521,7 @@ function CalculateHitChance(attacker, defender)
 	endif
 
 	if (TemHabilidade(defender, "Luta Defensiva"))
-		hit_chance := hit_chance -10;	
+		hit_chance := hit_chance -20;	
 	endif
 
 	if (hit_chance < 5.0)

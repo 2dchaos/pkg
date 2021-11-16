@@ -14,7 +14,7 @@ include ":timedscripts:timedScripts";
 include "include/client";
 include "include/facings";
 include "include/damage";
-include ":tn:combat";
+//include ":tn:combat";
 include ":tn:cooldown";
 include ":fls_core:packets";
 include "include/say";
@@ -22,6 +22,7 @@ include ":charactercreation:habilidades";
 include "include/client";
 include "include/sounds";
 include ":spells:swordmage";
+//include ":combat:combat";
 
 var item_cfg := ReadConfigFile(":*:itemdesc");
 
@@ -141,7 +142,7 @@ program MainHitScript( params )
 		endif
 
 		if(getobjproperty(defender, "apodrecer"))
-			basedamage := Cint(basedamage * 1.2);
+			basedamage := Cint(basedamage * 1.8);
 		endif
 
 		var dmgList := dictionary;
@@ -571,7 +572,6 @@ endfunction
 
 function CriticalHitScripts(attacker, defender, weapon, armor, basedamage, byref rawdamage)
 		var skillUsedForCritical := TACTICS;
-
 	if(GetObjProperty(attacker, "kit") == "Mago de Combate")
 		skillUsedForCritical := MAGICLORE;
 	elseif (GetObjProperty(attacker, "kit") == "Ranger")
@@ -1067,6 +1067,28 @@ function Trespassar(attacker, defender)
 			EraseObjProperty(attacker, "#nextcritical");
 		endif
 		EraseObjProperty(attacker, "#trespassando");
+	endif
+
+endfunction
+
+function CalculateRawDamage(attacker, weapon)
+
+	if (attacker.npctemplate)
+		var npctemplate := NPC_ParseTemplateName(attacker.npctemplate);
+		var cfg := ReadConfigFile(":brainai:npcdesc");
+		var dmg := cfg[npctemplate.template].AttackDamage;
+		//printtextabove(attacker, "dmg dice " + dmg);
+		return ( RandomDiceRoll(dmg) );
+	else
+		var weaponcfg := ReadConfigFile(":*:itemdesc");
+		var weaponelem := FindConfigElem(weaponcfg, weapon.objtype);
+		var dmg;
+		if ( GetObjProperty(attacker, "metamorfose") != error)
+      dmg := RandomDiceRoll( GetObjProperty(attacker, "dicedmg"));
+		else
+    dmg :=  RandomDiceRoll(cstr(weaponelem.Damage));
+    endif
+		return (  dmg + weapon.dmg_mod );
 	endif
 
 endfunction
