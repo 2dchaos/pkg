@@ -1729,17 +1729,16 @@ function musicaEfeitos(byref who, byref magica, byref tempo) //DOING
 		range := range + 5; //dobra a area de efeito das cancoes
 	endif
 
-	//Habilita eficacia extra nos buffs OU debuffs, nunca os dois
+	BuffModifier := modifier;  //buffs com poder base
+	DebuffModifier := modifier; //Debuffs com poder base
+
+	//Habilita eficacia extra nos buffs e debuffs
 	if (TemHabilidade(who, "Musica Contagiante"))
-		BuffModifier := modifier * 2;  //dobra o porder dos Buffs
-		DebuffModifier := modifier; //Debuffs com poder base
-	elseif (TemHabilidade(who, "Musica da Alma"))
-		BuffModifier := modifier;  //buffs com poder base
-		DebuffModifier := modifier * 1.5;  //aumenta o porder dos Buffs
-		resistencia_mod := resistencia_mod - 20; //torna os Debuffs mais dificies de resistir
-	else
-		BuffModifier := modifier;  //buffs com poder base
-		DebuffModifier := modifier; //Debuffs com poder base
+		BuffModifier := modifier * 2;  //Aumenta o poder dos Buffs
+	endif
+	if (TemHabilidade(who, "Musica da Alma")) //Torna os Debuffs mais dificies de resistir e aumenta o poder dos Debuffs
+		DebuffModifier := modifier * 1.5;  
+		resistencia_mod := resistencia_mod - 20; 
 	endif
 
 	if (TemHabilidade(who, "Mestre do Improviso"))
@@ -1870,7 +1869,7 @@ function musicaEfeitos(byref who, byref magica, byref tempo) //DOING
 			PrintTextAbove(mobile, "*Tocando musica ispiradora*", BARD_FONT, BARD_FONT_COLOR); //Exibe sobre cabeca do bardo
 			TS_StartTimer(who, "bard_tocando", sound_duration, 5, who, 0);
 			TS_StartTimer(who, "bard_segurando_instrumento", sound_duration, 1, who, 0);
-			TS_StartTimer(mobile, "bard_inspirar_competencia", duration, modifier, who, 0);
+			TS_StartTimer(mobile, "bard_inspirar_competencia", duration, CInt(BuffModifier), who, 0);
 			PrintTextAbovePrivate(mobile, "*Focado no trabalho*", mobile, BARD_FONT, BARD_FONT_COLOR_NEUTRA);
 			break;
 		BARD_INSPIRAR_HEROISMO: //concede bônus de combate a UM aliado escolhido
@@ -1891,7 +1890,7 @@ function musicaEfeitos(byref who, byref magica, byref tempo) //DOING
 			PrintTextAbove(mobile, "*Tocando musica inspiradora*", BARD_FONT, BARD_FONT_COLOR); //Exibe sobre cabeca do bardo
 			TS_StartTimer(who, "bard_tocando", sound_duration, 5, who, 0);
 			TS_StartTimer(who, "bard_segurando_instrumento", sound_duration, 1, who, 0);
-			TS_StartTimer(mobile, "bard_inspirar_heroismo", duration, modifier, who, 0);
+			TS_StartTimer(mobile, "bard_inspirar_heroismo", duration, CInt(BuffModifier), who, 0);
 			PrintTextAbovePrivate(mobile, "*Focado no combate*", mobile, BARD_FONT, BARD_FONT_COLOR_NEUTRA);
 			break;
 		BARD_INSPIRAR_CORAGEM: //aumenta todas as resistências em um percentual. Preciso ver como fazer isso ainda
@@ -1912,7 +1911,7 @@ function musicaEfeitos(byref who, byref magica, byref tempo) //DOING
 			PrintTextAbove(mobile, "*Tocando musica inspiradora*", BARD_FONT, BARD_FONT_COLOR); //Exibe sobre cabeca do bardo
 			TS_StartTimer(who, "bard_tocando", sound_duration, 5, who, 0);
 			TS_StartTimer(who, "bard_segurando_instrumento", sound_duration, 1, who, 0);
-			TS_StartTimer(mobile, "bard_inspirar_coragem", duration, modifier, who, 0);
+			TS_StartTimer(mobile, "bard_inspirar_heroismo", duration, CInt(BuffModifier), who, 0);
 			PrintTextAbovePrivate(mobile, "*Cheio de si*", mobile, BARD_FONT, BARD_FONT_COLOR_NEUTRA);
 			break;
 		break;

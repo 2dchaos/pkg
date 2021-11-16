@@ -316,7 +316,7 @@ function GetResourceId(oreToSearch)
 	
 		"areia": return 0x6075;
 		
-		"argila": return 0x6074;
+		"argila": return 0x6077;
 		
 		"ferro": return 0x6300; //TN USED
 		
