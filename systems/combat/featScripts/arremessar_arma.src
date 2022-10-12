@@ -52,6 +52,23 @@ program arremessar_arma(params)
 		return;
 	endif
 
+   var dmgList := dictionary;
+   dmgList := getNewDamageList(who);
+   var dmg := CalculateRawDamage(who, who.weapon);
+	var altura := cint(who.z - targ.z);
+   var hit_chance := CalculateHitChancehab(who, targ);
+   var random := Randomint (100)+1;
+
+   var total := cint(CalculateTotalDamage(targ, dmg, who, dmgList));
+
+   if (altura < 0)
+		altura := 0;
+	endif
+
+   total := total + altura;
+
+   var poisonInfo := GetObjProperty(who.weapon, "poisonInfo" );
+
    TS_StartCooldown(who, "habilidade um", 20);
    who.hidden := 0;
 
@@ -75,25 +92,33 @@ program arremessar_arma(params)
       return;
    endif
 
-   var dmgList := dictionary;
-   var dmg := CalculateRawDamage(who, weapon);
-	var altura := cint(who.z - targ.z);
-   var hit_chance := CalculateHitChancehab(who, targ);
-   var random := Randomint (100)+1;
+   poisonInfo.dosage := poisonInfo.dosage -1;
 
-	if (altura < 0)
-		altura := 0;
-	endif
+   if (poisonInfo.dosage <= 0) //se nao tiver mais cargas de veneno, deleta
+      EraseObjProperty(who.weapon, "poisonInfo");
+   else //se ainda tiver atualiza na arma
+      SetObjProperty(who.weapon, "poisonInfo", poisonInfo);
+   endif
+        
+
+   if (poisonInfo.name == "paralyzePoison")
+      poisonInfo.time := 4;
+   endif
 
    if ( random < hit_chance )
       foreach mobile in CheckifIsAlly(who, ListMobilesNearLocationEx( targ.x, targ.y, targ.z, 0, LISTEX_FLAG_NORMAL|LISTEX_FLAG_HIDDEN))
-         var total := cint(CalculateTotalDamage(targ, dmg, who, dmgList));
          if (!ParryCheck(who, targ, total));
-            DamageFLS(mobile, total+cint(altura), DMG_FORCED, who);
-            if (RandomInt(100) <= 20)
-               PrintText(targ, "*Paralisado*", SSM_FAIL);
-               TS_StartTimer(targ, "paralysis", 4, who);
+            DamageFLS(mobile, total*2, DMG_PHYSICAL, who);
+
+            if (!IsPoisonImune(targ, poisonInfo.name) )
+               TS_StartTimer(targ, poisonInfo.name, poisonInfo.time, poisonInfo.level, who);
             endif
+
+            if (RandomInt(100) <= 40)
+               PrintText(targ, "*Paralisado*", SSM_FAIL);
+               TS_StartTimer(targ, "paralysis", 6, who);
+            endif
+
          else
             PlayHitSounds(who, targ);
          endif

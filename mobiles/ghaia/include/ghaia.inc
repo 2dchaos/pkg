@@ -35,7 +35,7 @@ const ALIGN_NEUTRAL := "neutral";
 
 //novos eventos
 
-const EVID_ALERT_ALLIES := 0x00000013;
+//const EVID_ALERT_ALLIES := 0x00000013;
 
 //essa funcao determina se o npc vai enfrentar o alvo ou nao
 function CanFight(me, mobile, align)
@@ -139,7 +139,29 @@ function CanFight(me, mobile, align)
 endfunction
 
 function AlertAllies(me, opponent)
-  
+/*
+  var my_spot := GetObjProperty(me, "spawnpoint");
+   var allies_near := GetAlliesNear(me);
+   var myallies := array{};
+   foreach mob in allies_near
+      if (CheckLineOfSight(me, mob))
+         myallies.append(mob);
+      endif
+      sleepms(2);
+   endforeach
+
+   if (myallies.size())
+      var enmies := GetEnemiesNear(me);
+      foreach mob in myallies
+         var ev := struct;
+         ev.type := EVID_ALERT_ALLIES;
+         ev.source := me;
+         ev.opponent := enmies.randomentry();
+         SendEvent(mob, ev);
+         sleepms(2);
+      endforeach
+   endif
+*/
   /*var ev := struct;
   ev.type := EVID_ALERT_ALLIES;
   ev.source := me;
@@ -159,6 +181,7 @@ function AlertAllies(me, opponent)
 	endif
     endif
   endforeach*/
+
 
   var spawnpointserial := GetObjProperty(me, "spawnpoint");
   var spawnpoint := SystemFindObjectBySerial(spawnpointserial);	
@@ -645,4 +668,41 @@ function herd(ev)
         PlayIdleSound();
   endif
   return;
+endfunction
+
+function ChooseHighestOpponent(me, byref opponent, new_opponent := 0, force_change := 0)
+   if (!opponent && new_opponent)
+      opponent := new_opponent;
+      SetOpponent(new_opponent);
+      TurnToward(new_opponent);
+      return 1;
+   elseif (opponent && !CheckLineOfSight(me, opponent))
+      me.setAggro(opponent.serial, -50);
+   endif
+
+   if (GetCooldown(me, "#blockaggro"))
+      return 0;
+   endif
+
+   var highest_aggro := getHighestAggro(me);
+   if (highest_aggro && (!opponent || highest_aggro != opponent.serial))
+      highest_aggro := SystemFindObjectBySerial(highest_aggro);
+      opponent := highest_aggro;
+      SetOpponent(highest_aggro);
+      TurnToward(highest_aggro);
+      return 1;
+   endif
+endfunction
+
+function getHighestAggro(creature)
+   var aggros := creature.aggroProp();
+   var highest := array{0, -9999999};
+   foreach serial in (aggros.keys())
+      if (aggros[serial] >= highest[2])
+         highest := array{serial, aggros[serial]};
+      endif
+      sleepms(2);
+   endforeach
+
+   return highest[1];
 endfunction

@@ -23,7 +23,7 @@ program startTalent(param)
 
    var combatskill := AP_GetSkill(who, MELEECOMBAT2H);
 
-   if ( combatskill < 20.0)
+   if ( combatskill < 40.0)
 		SendSysMessageEx(who, "Voce nao tem conhecimento suficiente para executar o golpe", SSM_FAIL);
 		return 0;
    endif
@@ -60,7 +60,7 @@ program startTalent(param)
          var total := cint(CalculateTotalDamage(mobile, dmg, who, dmgList));
          if (!ParryCheck(who, mobile, total));
             PlayMovingEffect( who, mobile, 0x22C6, 10);
-            DamageFLS(mobile, total*3, DMG_FORCED, who);
+            DamageFLS(mobile, total*3, DMG_PHYSICAL, who);
          else
             PlayHitSounds(who, mobile);
          endif

@@ -108,7 +108,7 @@ program vendoropt(who)
 			return 1;
 			endif
 		elseif ( r == "Taxa")
-			var taxa := cint(RequestGump(who, "Insira a taxa cobrada em porcentagem [somente numeros inteiros]"));
+			var taxa := cint(RequestGump(who, "Insira a taxa cobrada em porcentagem [0.1 = 10%]"));
 			SetObjProperty(targ, "taxap", taxa);
 		elseif ( r == "faccao")
 			var faccao := RequestGump(who, "Insira a faccao deste npc");

@@ -5,7 +5,7 @@ include ":timedScripts:timedScripts";
 include "include/sysEvent";
 include "include/client";
 include "include/say"; 
-include "include/sysEvent";
+//
 
 program taunt(who)
 

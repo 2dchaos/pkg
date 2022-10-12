@@ -69,6 +69,8 @@ endfunction
  * Config elem reference
  *
  */
+
+
 function NPC_GetNPCConfig(template)
 	if ( !template.package )
 		template := NPC_ParseTemplateName(template);
@@ -86,6 +88,7 @@ function NPC_GetNPCConfig(template)
 
 	return cfg_elem;
 endfunction
+
 
 /*
  * NPC_GetAllTemplateNames()

@@ -34,7 +34,7 @@ include "include/say";
 include "include/damage";
 include ":charactercreation:habilidades";
 include ":tn:cooldown";
-include ":tn:combat";
+//include ":tn:combat";
 include ":timedscripts:timedScripts";
 include ":fls_core:packets";
 
@@ -428,7 +428,15 @@ function CalculateHitChance(attacker, defender)
 		skill_d := cint(GetObjProperty(defender, "skill_d"));
 	endif
 
-	var hit_chance := (100); // 50.0 + ((skill_a - skill_d) / 1.5);
+	var hit_chance;
+
+	if( defender.IsA(POLCLASS_NPC) )
+		hit_chance := 50.0 + ((skill_a - skill_d) / 1.5);
+	elseif ( attacker.IsA(POLCLASS_NPC) )
+		hit_chance := 50.0 + ((skill_a - skill_d) / 1.5);
+    else
+		hit_chance := 100;
+	endif
 
 	hit_chance := hit_chance + CDbl( GetObjProperty(attacker, "hitbonus") ) + attacker.hitchance_mod - defender.evasionchance_mod;
 	hit_chance := hit_chance + cint( GetObjProperty(attacker, "#attackbonus" ));	

@@ -719,6 +719,33 @@ function PushBack(who, dist, delay)
 
 endfunction
 
+function PushBackEX(who, dist, delay, invert := 0)
+   var mod := GetModByFacing(who.facing);
+	var x := mod[1];
+	var y := mod[2];
+
+	if (!invert)
+		x := x * -1;
+		y := y * -1;
+	endif
+   
+   for i:= 1 to dist
+		var finalx := (who.x + x);
+		var finaly := (who.y + y);
+		if (!CheckLosAt(who, finalx, finaly, who.z))
+			return 0;
+		endif
+		var err := MoveObjectToLocation( who, finalx, finaly, who.z, who.realm, MOVEITEM_IGNOREMOVABLE );
+		sleepms(delay);
+		if (err == error)
+			PrintText(who, "*bate no obstaculo*");
+			return 0;
+		endif
+	endfor
+
+   return 1;
+endfunction
+
 function checkGender(object)
 	var gender := 0;
 	if (object.graphic)
@@ -761,4 +788,37 @@ function PlayHurtSound(defender)
 			PlaySoundEffect(defender, damaged_sound);
 		endif
 	endif
+endfunction
+
+function CheckifIsNotEnemy(who, mobiles)
+   var spotserial := GetObjProperty(me, "spawnspot");
+   var hostiles := ListHostiles(who);
+   var party := who.party.members;
+   var newarray := array{};
+   foreach mobile in mobiles
+      sleepms(2);
+      if (mobile in hostiles)
+         continue;
+      elseif (mobile.npctemplate)
+         if (mobile.master == who || mobile.master in party)
+            newarray.append(mobile);
+         elseif (GetObjProperty(mobile, "guildid") == who.guildid)
+            newarray.append(mobile);
+         elseif ((spotserial && GetObjProperty(mobile, "spawnspot") == spotserial))
+            newarray.append(mobile);
+         else
+            if (who.npctemplate)
+               if (mobile.alignment == who.alignment)
+                  newarray.append(mobile);
+               endif
+            elseif (mobile.alignment == 2)
+               newarray.append(mobile);
+            endif
+         endif
+      elseif (mobile in party || mobile == who)
+         newarray.append(mobile);
+      endif
+   endforeach
+
+   return newarray;
 endfunction

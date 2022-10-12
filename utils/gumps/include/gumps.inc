@@ -785,3 +785,9 @@ function GFTooltipText(byref gump, entrytext)
 
    return 1;
 endfunction
+
+function GFGumpPicTiled(byref gump, x, y, width, height, gump_id)
+	(gump.layout).Append("GumpPicTiled {} {} {} {} {} {} {}".format(cint(x), cint(y), cint(width), cint(height), cint(gump_id))); 
+
+	return 1;
+endfunction

@@ -21,7 +21,14 @@ include ":brainAI:npcCommands";
 include ":gumps:yesno";
 include "include/say";
 include ":charactercreation:habilidades";
+include ":tn:tngumps";
+include ":gumps:htmlgump";
+include ":faccao:faccao";
+include "include/arrays";
+include "include/ghaia";
+//include ":faccao:npc";
 
+set_script_option(SCRIPTOPT_CAN_ACCESS_OFFLINE_MOBILES, 1);
 
 //Constantes de ID de Botões de Gump
 const BOTAO_ITENS_COLOCAR_A_VENDA := 0x1;
@@ -30,6 +37,9 @@ const BOTAO_ITENS_MINHA_CONTA := 0x3;
 const BOTAO_ITENS_RETIRAR := 0x4;
 const BOTAO_ITENS_TODOS_A_VENDA := 0x5;
 const BOTAO_ITENS_CONFISCAR := 0x6;
+const BOTAO_HISTORICO := 0x7;
+const BOTAO_CONFISCADOS := 0x8;
+const BOTAO_CONFIGURACAO := 0x9;
 
 //const SHOW_ITEMS_BOUGHT_BTN := 0x7;
 
@@ -56,9 +66,9 @@ const MOEDAS_PRATA		:= 0xba64; //id das moedas de prata
 const MOEDAS_OURO		:= 0xba65; //id das moedas de ouro
 const GOLD_COIN			:= 0xeed;  //id das moedas de ouro (outro tipo válido)
 
-
 var item_cfg := ReadConfigFile(":*:itemdesc");
-
+var npccfgfile := ReadConfigFile( ":brainai:npcdesc" );
+var guild, guild_leader;
 
 program MerchantMenu(params)
 	var npc := params[1];
@@ -72,6 +82,9 @@ program MerchantMenu(params)
 		player.hidden := 0;
 		SendSysMessageEx (player, "Voce se revelou ao mercador.", SSM_FAIL);
 	endif
+
+	Setup(npc);
+	guild_leader  := _ifOr(guild.getProp("leader"), "null");
 
 	MAIN_LOOP: while ( 1 )
 		gump := MainLayout(player); //Gera o Layout padrão do gump do mercador
@@ -122,8 +135,15 @@ program MerchantMenu(params)
 			0: //Quando o gump é fechado
 				break MAIN_LOOP; //Encerra o loop para dar chance de outros acessarem o vendor também
 			BOTAO_ITENS_COLOCAR_A_VENDA:
-				AddMyItemForSale(npc, player); //Executa a função de adicionar itens à venda
+			if (!GetObjProperty(npc, "cofreid"))
 				cur_menu := MENU_INTRO;
+				return SendSysMessage(player, "O Vendedor ainda nao possui um cofre para coletar impostos");
+				
+			else AddMyItemForSale(npc, player); //Executa a função de adicionar itens à venda
+				cur_menu := MENU_INTRO;
+			endif
+				/*AddMyItemForSale(npc, player); //Executa a função de adicionar itens à venda
+				cur_menu := MENU_INTRO;*/
 			BOTAO_ITENS_TODOS_A_VENDA:
 				cur_menu := MENU_ITENS_A_VENDA;
 			BOTAO_ITENS_MEUS_A_VENDA:
@@ -133,6 +153,26 @@ program MerchantMenu(params)
 			BOTAO_ITENS_RETIRAR:
 				DoWithdraw(npc, player); //Executa a função de retirar item
 				cur_menu := MENU_INTRO;
+            BOTAO_HISTORICO:
+            if (!player.concealed) PrintText(npc, "Aqui esta o historico de vendas, Sr."); endif
+            var historico := GetMerchantLog(npc);
+            historico := "<br> - {}".format("<br> -".join(historico));
+            SendHTMLGump(player, "Historico de Vendas", historico);
+            cur_menu := MENU_INTRO;
+			BOTAO_CONFISCADOS:
+			if (!player.concealed) PrintText(npc, "Aqui esta o historico de itens confiscados, Sr."); endif
+            var confisc := GetMerchantConfiscadosLog(npc);
+            confisc := "<br> - {}".format("<br> -".join(confisc));
+            SendHTMLGump(player, "Historico de Conficações", confisc);
+            cur_menu := MENU_INTRO;
+			BOTAO_CONFIGURACAO:
+			if ( player.serial == guild_leader || player.cmdlevel >= 3);
+				vendoropt(npc, player);
+				cur_menu := MENU_INTRO;
+			else 
+				SendSysMessage(player, "Apenas o lider da Faccao pode alterar essas opcoes");
+				cur_menu := MENU_INTRO;
+			endif
 		endcase
 	endwhile
 
@@ -163,6 +203,15 @@ function MainLayout(player)
 
 	GFAddButton(gump, 20, 183, 2117, 2118, GF_CLOSE_BTN, BOTAO_ITENS_MINHA_CONTA);
 	GFTextLine(gump, 40, 180, GF_STDCOLOR, "Minha conta");
+
+    GFAddButton(gump, 20, 233, 2117, 2118, GF_CLOSE_BTN, BOTAO_HISTORICO);
+   	GFTextLine(gump, 40, 230, GF_STDCOLOR, "Historico de Vendas");
+
+	GFAddButton(gump, 20, 283, 2117, 2118, GF_CLOSE_BTN, BOTAO_CONFISCADOS);
+   	GFTextLine(gump, 40, 280, GF_STDCOLOR, "Confiscados");
+
+	GFAddButton(gump, 20, 333, 2117, 2118, GF_CLOSE_BTN, BOTAO_CONFIGURACAO);
+   	GFTextLine(gump, 40, 330, GF_STDCOLOR, "Opcoes de venda");
 //	endif
 
 	return gump;
@@ -184,7 +233,7 @@ function DoPurchase(npc, player, input)
 //		SendSysMessage(player, _i_iter+" -> "+i);
 //	endforeach
 
-	if ( player.cmdlevel >= 3 || (GetObjProperty(player, "faccao") == GetObjProperty(npc, "faccao")))
+	if ( player.cmdlevel >= 3 || (GetObjProperty(npc, "guild") == player.guildid))
 		if ( YesNo(player, "Deseja CONFISCAR este objeto?"))
 			confiscar := 1;
 		endif
@@ -203,12 +252,12 @@ function DoPurchase(npc, player, input)
 		elseif (cost_type == MOEDAS_OURO || cost_type == GOLD_COIN)
 			cost_amt := cost_amt*100;
 		endif
-
+/*
 		if (TemHabilidade(player,"Negociador Eximio"))
 			cost_amt := CInt(cost_amt*0.7);
 			SendSysMessage(player, "O custo final vai ser de " + cost_amt);
 		endif
-
+*/
 		var totalPago := 0;
 		var faltaPagar := cost_amt;
 		//print("Falta Pagar: "+ faltaPagar +" ");
@@ -364,12 +413,20 @@ function DoPurchase(npc, player, input)
 			ItensRevogados.Insert(cost.seller, confiscado_info);
 		endif
 		SetObjProperty(npc, "ItensRevogados", ItensRevogados);
-
 		AI_Speak(npc, "Aqui esta o objeto confiscado, avisarei o dono assim que ele aparecer por aqui.");
+
+		Set_Critical(1);
+		CreateItemInBackpackFromTemplate(player, selling);
+		SetMerchantConfiscadosLog(npc, player.name, selling.desc, cost_amt);
+		RemoveItemForSale(npc, input);
+		Set_Critical(0);
+
+		return;
 	endif
 
 	Set_Critical(1);
 	CreateItemInBackpackFromTemplate(player, selling);
+	SetMerchantLog(npc, player.name, selling.desc, GetPlayerNameBySerial(cost.seller), cost_amt);
 	RemoveItemForSale(npc, input);
 	Set_Critical(0);
 endfunction
@@ -443,9 +500,9 @@ function ShowForSaleItemsInfo(byref gump, npc, player, input, special := 0)
 
 	GFAddButton(gump, 200, 430, 2151, 2154, 1, input);
 	if(!special)
-		if ( (player.cmdlevel < 3) && (GetObjProperty(npc, "faccao") != GetObjProperty(player, "faccao")) )
+		if ( (player.cmdlevel < 3) && (GetObjProperty(npc, "guild") != player.guildid ))
 			GFTextLine(gump, 235, 433, GF_STDCOLOR, "Adquirir");
-		elseif (GetObjProperty(npc, "faccao") == GetObjProperty(player, "faccao"))
+		elseif (GetObjProperty(npc, "guild") == player.guildid)
 			GFTextLine(gump, 235, 433, GF_STDCOLOR, "Adquirir ou Confiscar");
 		else
 			GFTextLine(gump, 235, 433, GF_STDCOLOR, "Adquirir ou Confiscar (GM)");
@@ -561,7 +618,7 @@ function AddItem(npc, player, targ)
 	else //Se não é GM colocando à venda
 
 		var cost_limit := 100000;
-		var limit_reason := "(item empilhavel)";
+		var limit_reason := " (item empilhavel)";
 		cost_type := MOEDAS_COBRE;
 
 		cost_amt := CInt(RequestGump(player, "Quantas moedas de cobre deseja cobrar por "+targ.desc+"?", "1 - "+cost_limit+limit_reason, 1, 1));
@@ -802,8 +859,8 @@ function ShowForSaleItems(byref gump, npc, player, special := 0)
 
 	if (ItensRevogados.Exists(player.serial))
 		var confiscados := ItensRevogados[player.serial];
-		GumpPrompt(player, "Algumas de suas mercadorias foram confiscadas. procure saber os motivos com as autoridades comerciais locais." + CStr(confiscados));
-		SendSysMessage(player, confiscados);
+		GumpPrompt(player, "Algumas de suas mercadorias foram confiscadas. procure saber os motivos com as autoridades comerciais locais."/* + CStr(confiscados)*/);
+		//SendSysMessage(player, confiscados);
 		ItensRevogados.Erase(player.serial);
 		SetObjProperty(npc, "ItensRevogados", ItensRevogados);
 	endif
@@ -960,4 +1017,158 @@ function DarTroco(player, npc , ValorTroco)
 
 	AI_Speak(npc, "Aqui estao suas moedas.");
 	return 1;
+endfunction
+
+function vendoropt(npc, player)
+
+
+	/*
+	SendSysMessageEx(who, "Escolha o npc vendor", SSM_REQUEST);
+	var targ := Target(who);
+	
+	if (!targ)
+		SendSysMessageEx(who, "Cancelado.", SSM_FAIL);
+		return;
+	endif
+	
+	if (!targ.npctemplate)
+		SendSysMessageEx(who, "Cancelado.", SSM_FAIL);
+		return;
+	endif
+	*/
+
+	var opt := array;
+	if ( GetObjProperty(npc, "secret"))
+		opt.append(1);
+	else
+		opt.append(0);
+	endif
+	if ( GetObjProperty(npc, "onlyartifice"))
+		opt.append(1);
+	else
+		opt.append(0);
+	endif
+	if ( GetObjProperty(npc, "taverneiro"))
+		opt.append(1);
+	else
+		opt.append(0);
+	endif
+	if ( GetObjProperty(npc, "onlygmsells"))
+		opt.append(1);
+	else
+		opt.append(0);
+	endif
+	if ( GetObjProperty(npc, "onlyplayersells"))
+		opt.append(1);
+	else
+		opt.append(0);
+	endif
+	if ( GetObjProperty(npc, "startbuy") || GetObjProperty(npc, "endbuy"))
+		opt.append(1);
+	else
+		opt.append(0);
+	endif
+	if ( GetObjProperty(npc, "cofre") || GetObjProperty(npc, "cofre"))
+		opt.append(1);
+	else
+		opt.append(0);
+	endif
+	if ( GetObjProperty(npc, "Taxa") || GetObjProperty(npc, "taxap"))
+		opt.append(1);
+	else
+		opt.append(0);
+	endif
+	if ( GetObjProperty(npc, "faccao") )
+	opt.append(1);
+	else
+	opt.append(0);
+	endif
+
+	
+	var result := CheckBoxGump(player, 350, 300, "Opcoes do Vendor", {"Secreto", "Kit Artifice", "Sem Limite Minimo de 10 cobres", "Apenas Um Player Vende", "Alterar Mensagens de Compra", "Cofre", "Taxa"}, opt);
+
+	EraseObjProperty(npc, "secret");
+	EraseObjProperty(npc, "onlyartifice");
+	EraseObjProperty(npc, "taverneiro");
+//	EraseObjProperty(targ, "onlygmsells");
+	EraseObjProperty(npc, "oneplayersells");
+	EraseObjProperty(npc, "startbuy");
+	EraseObjProperty(npc, "endbuy");
+	
+	foreach r in result
+		if (r == "Secreto")
+			SetObjProperty(npc, "secret", 1);
+		elseif (r ==  "Kit Artifice")
+			SetObjProperty(npc, "onlyartifice", 1);
+		elseif (r == "Sem Limite Minimo de 10 cobres")
+			SetObjProperty(npc, "taverneiro", 1);
+		elseif ( r == "Apenas GM vende")
+			SetObjProperty(npc, "onlygmsells", 1);
+		elseif ( r == "Apenas Um Player Vende")
+			var oneplayer := cstr(RequestGump(player, "Qual o nome do player?"));
+			SetObjProperty(npc, "oneplayersells", oneplayer);
+		elseif ( r == "Alterar Mensagens de Compra")
+			var startbuy := cstr(RequestGump(player, "Qual a mensagem de boas-vindas? [Cancele para deixar padrao]"));
+			if (startbuy)
+				SetObjProperty(npc, "startbuy", startbuy);
+			endif
+			var endbuy := cstr(RequestGump(player, "Qual a mensage? [Cancele para deixar padrao]"));
+			if (endbuy)
+				SetObjProperty(npc, "endbuy", endbuy);
+			endif
+		elseif ( r == "Cofre")
+			SendSysMessageEx(player, "Escolha o cofre", SSM_REQUEST);
+			var cofre := Target(player);
+			if (cofre.objtype == 40512 || cofre.objtype == 0x9AB || cofre.objtype == 0xE7C || cofre.objtype == 0xE41 || cofre.objtype == 0xE40 || cofre.objtype == 0xE43 || cofre.objtype == 0xE42)
+			SetObjProperty(npc, "cofreid", cofre.serial);
+			SendSysMessageEx(player, "Os impostos do vendedor irao para este cofre, mantenha-o seguro", SSM_REQUEST);
+			else
+			SendSysMessageEx(player, "Escolha um bau grande o suficiente para recolher os impostos", SSM_REQUEST);
+			return 1;
+			endif
+		elseif ( r == "Taxa")
+			var taxa := cint(RequestGump(player, "Insira a taxa cobrada em porcentagem [0.1 = 10%]"));
+			SetObjProperty(npc, "taxap", taxa);
+		endif
+
+	endforeach
+	
+endfunction 
+
+function Setup(npc)
+   var npccfgfile := NPC_GetNPCConfig(npc);
+
+   if (!GetObjProperty(npc, "started"))
+     /* var rndint := RandomInt(3);
+      if (rndint == 2)
+         me.objtype := me.objtype+1;
+         me.graphic := me.graphic+1;
+         me.trueobjtype := me.objtype+1;
+         me.gender := 1;
+      endif */
+      SetupColor(npc);
+      SetupName(npc);
+      SetObjProperty(npc, "DaysOfService", polcore().systime);
+      SetObjProperty(npc, "started", 1);
+      //SetupSpecials(me);
+   endif
+
+   var guildid := GetObjProperty(npc, "guild");
+
+   if (guildid)
+      guild := FindGuild(guildid);
+      if (!guild)
+         ApplyRawDamage(npc, 600);
+      endif
+   else
+      sleep(5);
+      Setup(npc);
+   endif
+
+   if ( !npc.backpack )
+      var new_pack := CreateItemAtLocation(npc.x, npc.y, npc.z, "backpack", 1);
+      EquipItem(npc, new_pack);
+   endif
+
+   guild_leader  := guild.getProp("leader");
 endfunction

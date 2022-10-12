@@ -270,3 +270,51 @@ function RemoveMerchant(serial)
 		sleepms(2);
 	endforeach
 endfunction
+
+function GetMerchantLog(merchant)
+	var data_elem := GetPaymentsDataElem(Hex(merchant.serial));
+	var my_sellings := data_elem.GetProp("sell_log");
+   return my_sellings;
+endfunction
+
+function SetMerchantLog(merchant, buyer_name, item_name, seller_name, cost)
+	var data_elem := GetPaymentsDataElem(Hex(merchant.serial));
+	var my_sellings := data_elem.GetProp("sell_log");
+   if (!my_sellings) my_sellings := array{}; endif
+   my_sellings.Insert(1, "{} vendeu {} para {} por {} moedas".format(seller_name, item_name, buyer_name, cost));
+
+   if (my_sellings.size() > 20)
+      my_sellings.Erase(my_sellings.size());
+   endif
+
+   data_elem.SetProp("sell_log", my_sellings);
+endfunction
+
+function GetPlayerNameBySerial(serial)
+   var player := SystemFindObjectBySerial(serial, SYSFIND_SEARCH_OFFLINE_MOBILES);
+   if (!player) return 0; endif
+   var player_name := player.name;
+   if (GetObjProperty(player, "realname"))
+      player_name := GetObjProperty(player, "realname");
+   endif
+	return player_name;
+endfunction
+
+function GetMerchantConfiscadosLog(merchant)
+	var data_elem := GetPaymentsDataElem(Hex(merchant.serial));
+	var my_sellings := data_elem.GetProp("itemsconfisc");
+   return my_sellings;
+endfunction
+
+function SetMerchantConfiscadosLog(merchant, confiscador, item_name, cost)
+	var data_elem := GetPaymentsDataElem(Hex(merchant.serial));
+	var my_sellings := data_elem.GetProp("itemsconfisc");
+   if (!my_sellings) my_sellings := array{}; endif
+   my_sellings.Insert(1, "{} Confiscou {} no valor de {} moedas".format(confiscador, item_name, cost));
+
+   if (my_sellings.size() > 20)
+      my_sellings.Erase(my_sellings.size());
+   endif
+
+   data_elem.SetProp("itemsconfisc", my_sellings);
+endfunction

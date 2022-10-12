@@ -3,14 +3,16 @@ use os;
 use math;
 use vitals;
 
+include ":timedscripts:timedScripts";
 include "include/say";
 include ":mounts:mounts";
 include ":attributes:attributes";
-include "include/shapes";
+//include "include/shapes";
 include "include/client";
 include "include/sounds";
 include "include/facings";
 include "include/damage";
+include ":combat:combat";
 
 program arremesso(params)
 	var who := params[1];
@@ -77,6 +79,10 @@ program arremesso(params)
 	if (targ.isA(POLCLASS_WEAPON))
 
     	//SendSysMessageEx(who, "No que deseja arremessar?", SSM_REQUEST);
+
+		var dmgList := dictionary;
+   		dmgList := getNewDamageList(who);
+   		var dmg := CalculateRawDamage(who, who.weapon);
 		
 		if (alvo)
 			MoveObjectToLocation(targ, alvo.x, alvo.y, alvo.z, alvo.realm, MOVEOBJECT_FORCELOCATION);
@@ -89,10 +95,18 @@ program arremesso(params)
 			PrintTextAbove(who, "*Errou!*");
 	 		return 0;
 		else
-			ApplyDamageEX(alvo, RandomDiceRoll( "4d10" ), DMG_PHYSICAL);
-			PlaySoundEffect(alvo, 0x521);
-			PrintTextAbove(alvo, "*Foi acertado por " + targ.name +"*");
-			MakeBleed(alvo);
+
+			var total := cint(CalculateTotalDamage(alvo, dmg, who, dmgList));
+			if (!ParryCheck(who, alvo, total));
+           		PlayMovingEffect( who, alvo, 0x22C6, 10);
+            	DamageFLS(alvo, total, DMG_PHYSICAL, who);
+				PlaySoundEffect(alvo, 0x521);
+				PrintTextAbove(alvo, "*Foi acertado por " + targ.name +"*");
+				MakeBleed(alvo);
+         	else
+            	PlayHitSounds(who, alvo);
+         	endif
+
 		return 1;
 		endif
 	else

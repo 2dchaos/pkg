@@ -2,6 +2,8 @@ use uo;
 use os;
 use polsys;
 
+/*
+
 function CreateItemTemplate(item)
 	if ( !item.IsA(POLCLASS_ITEM) )
 		var temp := error;
@@ -163,3 +165,5 @@ function CreateItemAtLocationFromTemplate(x, y, z, realm, selling)
 
 	return purchase;
 endfunction
+
+*/

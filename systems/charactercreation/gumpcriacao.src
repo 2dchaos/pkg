@@ -1500,7 +1500,7 @@ program createchar(who)
 	ExibeGumpAparencia(who, chardata);
 
 	MoveObjectToLocation( who, 4295, 3650, 10, who.realm, MOVEOBJECT_FORCELOCATION);
-	SetObjProperty(who, "faccao", "semfaccao");
+	//SetObjProperty(who, "faccao", "semfaccao");
 
 	HealDamage(who, 200);
 	RecalcVitals(who);

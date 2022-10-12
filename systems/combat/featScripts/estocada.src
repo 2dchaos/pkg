@@ -50,6 +50,9 @@ program tirodesfocado(who)
 	
 	var esquiva:= GetObjProperty(targ, "evasao");
 
+	TS_StartCooldown(who, "habilidade um", 20);
+	who.hidden := 0;
+
    if (esquiva == 1)
         Performaction(who, elem.Anim);
         PlayMissSound(targ);
@@ -57,9 +60,6 @@ program tirodesfocado(who)
       	EraseObjProperty(targ, "evasao");
       return;
    endif
-	
-	TS_StartCooldown(who, "habilidade um", 20);
-	who.hidden := 0;
 
 	var distancia := GetCoordsInLine(who.x, who.y, targ.x, targ.y);
 	

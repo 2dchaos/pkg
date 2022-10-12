@@ -13,7 +13,7 @@ include ":tn:tngumps";
 include ":gumps:yesno";
 include "include/say";   
 
-CONST CLAY_BALL := 0x6077;
+//CONST CLAY_BALL := 0x6077;
 const MINING_ANIMATION := 0x0E;
 const MINING_SOUND := 0x043;
 

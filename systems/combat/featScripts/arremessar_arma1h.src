@@ -52,6 +52,12 @@ program arremessar_arma(params)
 		return;
 	endif
 
+   var dmgList := dictionary;
+   var dmg := CalculateRawDamage(who, weapon);
+	var altura := cint(who.z - targ.z);
+   var hit_chance := CalculateHitChancehab(who, targ);
+   var random := Randomint (100)+1;
+
    TS_StartCooldown(who, "habilidade um", 20);
    who.hidden := 0;
 
@@ -75,12 +81,6 @@ program arremessar_arma(params)
       return;
    endif
 
-   var dmgList := dictionary;
-   var dmg := CalculateRawDamage(who, weapon);
-	var altura := cint(who.z - targ.z);
-   var hit_chance := CalculateHitChancehab(who, targ);
-   var random := Randomint (100)+1;
-
 	if (altura < 0)
 		altura := 0;
 	endif
@@ -90,10 +90,6 @@ program arremessar_arma(params)
          var total := cint(CalculateTotalDamage(targ, dmg, who, dmgList));
          if (!ParryCheck(who, targ, total));
             DamageFLS(mobile, total+cint(altura), DMG_FORCED, who);
-            if (RandomInt(100) <= 20)
-               PrintText(targ, "*Paralisado*", SSM_FAIL);
-               TS_StartTimer(targ, "paralysis", 4, who);
-            endif
          else
             PlayHitSounds(who, targ);
          endif

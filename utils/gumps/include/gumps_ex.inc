@@ -443,3 +443,11 @@ function RadioGump(mobile, sizex, sizey, prompt:="", options)
 	endif	
   
 endfunction*/
+
+function GFHtmlShadowed(byref gump, x, y, width, height, color, text, size := 5);
+	GFHTMLArea(gump, x-1, y-1, width, height, "<BASEFONT SIZE={} COLOR=#111111>{}".format(size, text));
+   GFHTMLArea(gump, x+1, y+1, width, height, "<BASEFONT SIZE={} COLOR=#111111>{}".format(size, text));
+   GFHTMLArea(gump, x+1, y-1, width, height, "<BASEFONT SIZE={} COLOR=#111111>{}".format(size, text));
+   GFHTMLArea(gump, x-1, y+1, width, height, "<BASEFONT SIZE={} COLOR=#111111>{}".format(size, text));
+   GFHTMLArea(gump, x, y, width, height, "<BASEFONT SIZE={} COLOR={}>{}".format(size, color, text));
+endfunction

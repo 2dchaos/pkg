@@ -28,10 +28,11 @@ program guardacostas(who, moedas)
                         endif
 
                     if (targ.objtype == 47715)
-                            if ( targ.amount < custo )
-                                SendSysMessageEx(who, "Voce nao tem moedas suficientes.", SSM_INFO);
-                                return;
-                            endif
+                    
+                        if ( targ.amount < custo )
+                            SendSysMessageEx(who, "Voce nao tem moedas suficientes.", SSM_INFO);
+                            return;
+                        endif
 
                         if (!SubtractAmount(targ, custo))
                             SendSysMessageEx(who, "Voce nao tem moedas suficientes.", SSM_INFO);

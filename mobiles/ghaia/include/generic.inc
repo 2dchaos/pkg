@@ -5,6 +5,7 @@ use vitals;
 include "include/sysEvent";
 include ":attributes:attributes";
 include ":tn:boss";
+include ":ghaia:ghaia";
 
 
 function hasSpecial(me)
@@ -126,7 +127,10 @@ function Fight(opponent, alerted := 0)
    endif
 
 
-  var dist;
+  var dist := CoordinateDistance(me.x, me.y, opponent.x, opponent.y);
+  var range := 1;
+  var minrange := 0;
+
   while( me )
 
     if (me.dead)
@@ -215,7 +219,15 @@ function Fight(opponent, alerted := 0)
     if ( (npccfgfile[mytemplate].WebRange) && (dist > npccfgfile[mytemplate].WebRange) )
       SpitWeb(me, opponent,dist);
     endif
+
   
+   if (dist > range || !CheckLineOfSight(me, opponent))
+      CalcPathAndMove(me, opponent, 275 - me.run_speed);
+   elseif (dist < minrange)
+      checkFlee(opponent);
+   endif
+
+  /*
     if(!CloseDistance(opponent))
       loops := loops + 1;
       waittime := 0;
@@ -223,8 +235,9 @@ function Fight(opponent, alerted := 0)
       loops := 0;
       waittime := 1;
     endif
-	
-    checkFlee(opponent);
+	*/
+
+   // checkFlee(opponent);
 	
     ev := wait_for_event(waittime);
 //    printtextabove(self(), "event " + ev);
@@ -432,56 +445,121 @@ function sleepmode()
   endwhile
 endfunction
 
-function CalcPathAndMove(me, opponent, byref sleepdelay)
-	sleepdelay += 5;
-	if (!CheckLosAt(me, opponent.x, opponent.y, opponent.z) || (opponent.z != me.z && ListStaticsNearLocation(me.x, me.y, me.z, 1))) //se nao consegue ver
-		var path := GetObjPRoperty(me, "path"); //procura se ja calculou o path
-		if (path == error) //se nao calculou
-			var flags := FP_IGNORE_MOBILES;
-			if ( cint(GetObjProperty(me, "ignoredoor")) || cint(GetObjProperty(me, "opendoor")) )
-				flags := flags| FP_IGNORE_DOORS;
-			endif
-			path := FindPath(  me.x, me.y, me.z, opponent.x, opponent.y, opponent.z, me.realm, flags, 12); //calcula o path
-			
-			if (!path[1] || !path || path == error)
-				Flee (opponent);
-				sleepms(sleepdelay);
-				sleepms(500);
-				ChooseAnotherOpponent(me);
-			else
-				SetObjProperty(me, "path", path);
-			endif
-			
-			sleepms(sleepdelay);
-		else //se calculou o path
-			var coord := path[1]; //pega a primeira coordenada
-			if (coord) 
-				SetObjProperty(me, "#coordtry", ReadGameClock()+5); 
-				RunTowardLocation( coord.x, coord.y ); //anda na direcao
-				sleepms(sleepdelay);
-				Opendoors(me); //tenta abrir possiveis portas
-				if (CoordinateDistance(me.x, me.y, coord.x, coord.y) <= 1) //se chegou onde devia 
-					path.erase(1); //deleta a coordenada e vai pra proxima
-					if (path[1])
-						SetObjProperty(me, "path", path);
-					else
-						EraseObjProperty(me, "path");
-					endif
-				else // se nao consegue chegar na coord 
-					if ( cint(GetObjProperty(me, "#coordtry")) > ReadGameClock()) //se ta tentando chegar la a mais de 5 segundos
-						EraseObjProperty(me, "path"); //deleta o path atual
-						ChooseAnotherOpponent(me);
-					endif
-				endif
-			else
-				RunToward( opponent );
-				sleepms(sleepdelay);
-			endif
-		endif
+function CalcPathAndMove(me, byref opponent, sleepdelay)
+
+  if (!opponent)
+    return 0;
+  endif
+
+   var face_str := getFacingString(GetFacing(me.x, me.y, opponent.x, opponent.y));
+   var stam := AP_GetVital(me, STAMINA);
+   var move_type := 1;
+
+   if (stam < 5)
+      move_type := 0;
+   endif
+
+	var path := GetObjProperty(me, "path"); //procura se ja calculou o path
+	var last_loc := GetObjProperty(me, "#enemy_last_loc"); //procura se ja calculou o path
+   if (last_loc && path) 
+      if (CoordinateDistance(opponent.x, opponent.y, last_loc[1], last_loc[2]) > 3)
+         path := 0;
+         EraseObjProperty(me, "path");
+         EraseObjProperty(me, "#enemy_last_loc");
+         last_loc := 0;
+      else
+         last_loc := 1;
+      endif
+   endif
+
+   if (stam <= 1)
+      var last_msg := GetObjProperty(me, "#fatigue");
+      if (!last_msg || last_msg < ReadGameClock())
+         SetObjProperty(me, "#fatigue", ReadGameClock()+15);
+         PrintText(me, "*fatigado*");
+      endif
+      sleep(1);
+   elseif (CheckLosAt(me, opponent.x, opponent.y, opponent.z) && !path && CanMove(face_str))
+      EraseObjProperty(me, "path");
+      EraseObjProperty(me, "#enemy_last_loc");
+
+      if (move_type) 
+         RunToward( opponent );
+      else 
+         WalkToward( opponent );
+      endif
+
+      var reachtry := GetObjProperty(me, "#reachtry");
+      if (reachtry == error || (reachtry[1].x != opponent.x && reachtry[1].y != opponent.y))
+         reachtry := array{struct{ x := opponent.x, y := opponent.y, z := opponent.z }, ReadGameClock()+5 };
+         SetObjProperty(me, "#reachtry", reachtry);
+      endif
+
+      if (reachtry[2] > ReadGameClock())
+         path := FindPath(  me.x, me.y, me.z, opponent.x, opponent.y, opponent.z, me.realm, 0, 15);
+         if (!path)
+            Flee(opponent);;
+            sleepms(sleepdelay);
+         else
+            SetObjProperty(me, "path", path);
+            SetObjProperty(me, "#enemy_last_loc", array{opponent.x, opponent.y, opponent.z});
+         endif
+      endif
+
+      sleepms(sleepdelay);
 	else
-		EraseObjProperty(me, "path");
-		RunToward( opponent );
-		sleepms(sleepdelay);
+      if (path == error || last_loc ) //se não calculou
+         var flags := FP_IGNORE_MOBILES;
+         if ( cint(GetObjProperty(me, "ignoredoor")) || cint(GetObjProperty(me, "opendoor")) )
+            flags := flags| FP_IGNORE_DOORS;
+         endif
+         path := FindPath(  me.x, me.y, me.z, opponent.x, opponent.y, opponent.z, me.realm, flags, 15); //calcula o path
+         
+         if (!path[1] || !path || path == error)
+            Flee(opponent);
+            sleepms(sleepdelay);
+         else
+            if (move_type) RunTowardLocation( path[1].x, path[1].y );
+            else WalkTowardLocation(path[1].x, path[1].y); endif
+
+				path.erase(1); //deleta a coordenada e vai pra proxima
+            SetObjProperty(me, "path", path);
+            SetObjProperty(me, "#enemy_last_loc", array{opponent.x, opponent.y, opponent.z});
+         endif
+		endif
+
+      var coord := path[1]; //pega a primeira coordenada
+      if (coord); 
+         var coordtry := GetObjProperty(me, "#coordtry");
+         if (coordtry == error || coordtry[1] != coord)
+            coordtry := array{coord, ReadGameClock()+5 };
+            SetObjProperty(me, "#coordtry", coordtry); 
+         endif
+         if (move_type) RunTowardLocation( coord.x, coord.y );
+         else WalkTowardLocation(coord.x, coord.y); endif
+         sleepms(sleepdelay);
+         Opendoors(me); //tenta abrir possiveis portas
+         if (CoordinateDistance(me.x, me.y, coord.x, coord.y) <= 1) //se chegou onde devia 
+            path.erase(1); //deleta a coordenada e vai pra proxima
+            if (path[1])
+               SetObjProperty(me, "path", path);
+            else
+               EraseObjProperty(me, "path");
+            endif
+         else // se não consegue chegar na coord 
+            if ( coordtry[2] > ReadGameClock()) //se ta tentando chegar la a mais de 5 segundos
+               EraseObjProperty(me, "path"); //deleta o path atual
+               me.remAggro(opponent);
+               var old_opponent := opponent;
+               ChooseHighestOpponent(me, opponent);
+               if (old_opponent == opponent) Flee(opponent); endif
+            endif
+         endif
+      else
+         if (move_type) RunToward( opponent );
+         else WalkToward( opponent ); endif
+         sleepms(sleepdelay);
+      endif
 	endif
 endfunction
 
@@ -497,6 +575,8 @@ function ChooseAnotherOpponent(me)
 	endif
 endfunction
 
+/*
+
 function Opendoors(me)
 
   foreach door in (ListItemsNearLocation(me.x, me.y, me.z, 1))
@@ -511,3 +591,6 @@ function Opendoors(me)
 	endif
   endforeach
 endfunction
+
+*/
+
