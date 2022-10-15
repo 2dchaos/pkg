@@ -36,7 +36,7 @@ program skill_Hide(who)
 		endif
 		var check := SkillCheck(who, SNEAK, -1);
 		var diff;
-		case ( temHabilidade(who, "Misturar-se na Selva") )
+		/*case ( temHabilidade(who, "Misturar-se na Selva") )
 			1:	
 				var region := GetRegionName(who);
 				if(region != "aghaja" && region != "zharkia")
@@ -47,7 +47,7 @@ program skill_Hide(who)
 				endif
 			0:
 				diff := 0;
-		endcase
+		endcase */
 
 		if ( GetObjProperty(who, "forjoumorte") == 1 )
 			diff := diff - 50;

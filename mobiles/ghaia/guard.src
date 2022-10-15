@@ -34,6 +34,8 @@ var tools := array{0xec4, 0x13e3, 0xFB4, 0xFB5, 0x13f6, 0xe85, 0xf43, 0xec2, 0x1
 var npccfgfile := ReadConfigFile( ":brainai:npcdesc" );
 
 //Custom events
+const REVELADO_EVENT    := 0x78460;
+const PICKPOCKET_EVENT  := 0x78459;
 const LOCKPICK_EVENT    := 0x78455;
 const CERCA_EVENT       := 0x78456;
 const RESET_SETUP_EVENT := 0x78457;
@@ -142,6 +144,17 @@ function CheckPlayer(who)
 
    foreach law in guild_laws
       case (law.type)
+         "nosneak":
+            if (is_member && law.opt)
+               break;
+            endif
+
+            if( GetProcess(CInt(GetObjProperty(who, "#HidePid"))) )
+                  warning := who;
+                  warn_type := 6;
+            endif  
+
+            break;
          "userban":
             //printtextabove(me, "O userban ta batendo aqui " + law.opt + " vamo ver");
             if (who.name == law.opt)
@@ -314,12 +327,25 @@ program NPCMonitor()
             else
                FightADV(ev.targ);
             endif
+         PICKPOCKET_EVENT:
+            if (!CheckIfHavePlayerGuild(ListMobilesInLineOfSight( me, 8)))            
+               AddReport(guild, "{} percebeu {} tentando cometer um furto".format(me.name, ev.source.name));
+               PrintText(me, "Ei! O que pensa que esta fazendo?");
+               FightADV(ev.source);
+               disableWarn();
+            endif
+            wait_time := 0;
+         REVELADO_EVENT:
+            if (!CheckIfHavePlayerGuild(ListMobilesInLineOfSight( me, 8)))            
+               AddReport(guild, "{} encontrou {} tentando se esconder".format(me.name, ev.source.name));
+               PrintText(me, "Ei! O que pensa que esta fazendo?");
+               FightADV(ev.source);
+               disableWarn();
+            endif
+            wait_time := 0;
          LOCKPICK_EVENT:
-               
-            if (!CheckIfHavePlayerGuild(ListMobilesInLineOfSight( me, 8)))
-               
-               if (FindInArray(guild_laws, struct{"type" := "nolockpick" })) //&& InGuildRect(guild, ev.source))
-                  
+            if (!CheckIfHavePlayerGuild(ListMobilesInLineOfSight( me, 8))) 
+               if (FindInArray(guild_laws, struct{"type" := "nolockpick" })) //&& InGuildRect(guild, ev.source))            
                   AddReport(guild, "{} alertou {} sobre arrombar fechaduras".format(me.name, ev.source.name));
                   PrintText(me, "Ei! O que pensa que esta fazendo?");
                   FightADV(ev.source);
@@ -736,6 +762,30 @@ function WarnPlayer()
             endcase
          endif
          break;
+      6: //nosneak
+         if( !GetProcess(CInt(GetObjProperty(warning, "#HidePid"))) )
+            PrintText(me, "Muito bem.");
+            AddReport(guild, "{} flagrou {} tentando se esconder".format(me.name, warning.name));
+            disableWarn();
+            return;
+         endif
+
+         if (warn_tries == 0)
+            PrintText(me, "Nao e permitido esgueirar aqui");
+            PrintText(me, "Pare agora mesmo!");
+           /* if ( warning.isA(POLCLASS_NPC) )
+               return FightADV(warning);
+            endif */
+
+         else
+            var rand_msg := RandomInt(4);
+            case (rand_msg)
+               0:1: PrintText(me, "Vamos la, pare se ser ridiculo!"); break;
+               2: PrintText(me, "Nao me obrigue a tomar uma atitude"); break;
+               3: PrintText(me, "Estou falando serio, pare com isso!"); break;
+            endcase
+         endif
+         break;
    endcase
 
    if (warn_tries >= 3)
@@ -852,7 +902,7 @@ function FightADV(opponent := 0)
    if (fighting.concealed || fighting.hidden || fighting.dead || Distance(me, fighting) > 15)
       AddReport(guild, "{} entrou em combate com {}".format(me.name, fighting.name));
       if (fighting.dead)
-         AddReport(guild, "{} bateu em {} ate desmaiar".format(me.name, fighting.name.getName()));
+         AddReport(guild, "{} bateu em {} ate desmaiar".format(me.name, fighting.name));
       endif
       var hostiles := ListHostiles( me, 8, LH_FLAG_LOS);
       if (!hostiles[1])

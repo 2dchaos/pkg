@@ -318,3 +318,26 @@ function SetMerchantConfiscadosLog(merchant, confiscador, item_name, cost)
 
    data_elem.SetProp("itemsconfisc", my_sellings);
 endfunction
+
+function GetItemSoldInfo(merchant, item_num)
+	var data_elem := GetMerchantDataElem(Hex(merchant.serial)+"-ItemsSelling");
+	
+	return data_elem.GetProp(CStr(item_num));
+endfunction
+
+function GetItemsSoldList(merchant)
+	var data_elem := GetMerchantDataElem(Hex(merchant.serial)+"-ItemsSelling");
+	var prop_list :=  DFGetElemProps(data_elem);
+	//Reversed so that LastNum is more likely to be found first
+	//and makes newer items show up at the top, and older items further down.
+	prop_list.Reverse();
+	
+	foreach key in prop_list
+		if ( key == "LastNum" )
+			prop_list.Erase(_key_iter);
+			break;
+		endif
+		sleepms(4);
+	endforeach
+	return prop_list;
+endfunction

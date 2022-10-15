@@ -65,7 +65,8 @@ var law_list := struct{
   // "nooutsideron" := "Proibir Forasteiros em Area",
   // "nolawon" := "Não aplicar leis em",
    "userban" := "Banir usuario",
-   "nohood"   := "Proibir Cobrir Rosto"
+   "nohood"   := "Proibir Cobrir Rosto",
+   "nosneak"   := "Proibir Esconder-se"
 };
 
 var guild_obj, aboveguild;
@@ -193,6 +194,7 @@ program faccao(params)
         // "nolawon": law_desc := "{}".format(SystemFindObjectBySerial(law.opt, SYSFIND_SEARCH_OFFLINE_MOBILES).getName()); 
          "userban": law_desc := "{}".format(law.opt);             //(SystemFindObjectBySerial(law.opt, SYSFIND_SEARCH_OFFLINE_MOBILES).getName());
          "nohood" : law_desc := "{}".format(law.opt); 
+         "nosneak" : law_desc := "{}".format(law.opt); 
 
       endcase
       GFTextLine(gump, 246, y-2, 0, "{}".format(law_list[law.type]));
@@ -227,7 +229,7 @@ program faccao(params)
       y  += 18;
    endforeach
 
-   foreach item in ListItemsNearLocation(who.x, who.y, who.z, 3)
+   foreach item in ListItemsNearLocation(who.x, who.y, who.z, 2)
 
       if (is_gm_or_leader || privilegies.contractnpc)
          if (guild_obj.npcs.size() >= 0 && (item.objtype == 0x46AE || who.cmdlevel >= 2))
@@ -865,9 +867,9 @@ function npcHandler(who, input)
             return;
          endif
       endif
-      if (!InGuildRect(guild, who) && !who.cmdlevel)
+     /* if (!InGuildRect(guild, who) && !who.cmdlevel)
          return SendSysMessageEx(who, "Voce nao pode contratar agentes estando fora da sua area de influencia.", SSM_FAIL);
-      endif
+      endif */
       var g_money := cint(guild.getProp("money"));
       if (g_money < cint(agent.price))
          return SendSysMessageEx(who, "Moedas de cobre insuficientes", SSM_FAIL);
@@ -982,7 +984,7 @@ function lawHandler(who, input)
 // ALTEREI AQUI ///
          new_law.opt := targ.name;
         // new_law.opt := struct{ "serial" := targ.serial, "name" := targ.name};
-      elseif (new_law.type["nofight"] || new_law.type["noweapon"] || new_law.type["nohood"])
+      elseif (new_law.type["nofight"] || new_law.type["noweapon"] || new_law.type["nohood"] || new_law.type["nosneak"])
          var forceonguild := YesNo(who, "Esta lei sera aplicada a membros da faccao?");
          if (!forceonguild)
             new_law.opt := "Nao aplicada a membros";

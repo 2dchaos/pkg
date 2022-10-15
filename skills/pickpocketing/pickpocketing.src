@@ -156,7 +156,15 @@ function CriticalFailure(mobile, targ)
 	endif
 	SendSysMessageEx(mobile, "Voce chamou muita atencao!", SSM_FAIL);
 
+	var last_loc := struct{ "x" := mobile.x, "z" := mobile.z, "y" := mobile.y };
 	var range := 25 - CInt(AP_GetSkill(mobile, PICKPOCKETING)/5);
+
+	foreach monster in ListMobilesNearLocationEx(targ.x, targ.y, targ.z, range, LISTEX_FLAG_NORMAL|LISTEX_FLAG_HIDDEN|LISTEX_FLAG_NPC_ONLY)
+		if (GetObjProperty(monster, "guild"))
+			SendEvent(monster, struct{ "type" := 0x78459, source := mobile, "last_loc" := last_loc});
+		endif
+		sleepms(2);
+	endforeach
 
 	foreach player in ( ListMobilesInLineOfSight(targ, range) )
 		if ( player.npctemplate );

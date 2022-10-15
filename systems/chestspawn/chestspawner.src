@@ -4,7 +4,8 @@ use os;
 include ":loot:lootParser";
 include ":traps:traps";
 include ":chestspawn:treasurechest";
-
+
+
 program spawntesthet(item)
 	var rng := GetObjProperty(item,"range");
 	var amt := GetObjProperty(item,"amount");
@@ -16,7 +17,9 @@ program spawntesthet(item)
 	foreach thing in ListItemsNearLocation(cint(item.x), cint(item.y), LIST_IGNORE_Z, CInt(rng)*2,  item.realm)
 		if(GetObjProperty(thing,"level"))
 			if (thing.serial != item.serial) // se nao for o spawnpoint (pq ele tbm tem a prop level)
-				DestroyItem(thing);
+				if ( !thing.IsA(POLCLASS_CORPSE) )
+					DestroyItem(thing);
+				endif
 			endif
 		endif
 		sleepms(10);
@@ -46,7 +49,8 @@ program spawntesthet(item)
 		//current := len(chestarray);
 		newamt := CInt(amt - current);
 //		printtextabove(item, "current " + current + " amt " + amt + " new amt " + newamt); 
-		if(newamt > 0)			/*while( 1 )
+		if(newamt > 0)
+			/*while( 1 )
 				var playernear := hasplayernear(item.x, item.y, item.realm);
 		
 				if (!playernear)
@@ -70,7 +74,9 @@ program spawntesthet(item)
 		foreach thing in ListItemsNearLocation(cint(item.x), cint(item.y), LIST_IGNORE_Z, CInt(rng)*2,  item.realm)
 			if(thing.locked == 0)
 				if (thing.serial != item.serial) // se nao for o spawnpoint (pq ele tbm tem a prop level)
-					DestroyItem(thing);
+					if ( !thing.IsA(POLCLASS_CORPSE) )
+						DestroyItem(thing);
+					endif
 				endif
 			endif
 			sleepms(10);
@@ -85,7 +91,9 @@ function ClearChests(spawn)
 	var chests := GetObjProperty(item, "chests");
 	foreach chestserial in chests
 			var item := SystemFindObjectBySerial(chestserial);
-			DestroyItem(item);
+			if ( !item.IsA(POLCLASS_CORPSE) )
+				DestroyItem(item);
+			endif
 	endforeach
 
 	EraseObjProperty(spawn, "chests");
@@ -93,7 +101,7 @@ function ClearChests(spawn)
 endfunction
 
 function HasPlayerNear(x, y, realm)
-	var mobs := ListMobilesNearLocation( x, y, LIST_IGNORE_Z, 8, realm );
+	var mobs := ListMobilesNearLocation( x, y, LIST_IGNORE_Z, 12, realm );
 	foreach mob in mobs
 		if (mob.acctname ) //se for player e priv de player
 			return 1;

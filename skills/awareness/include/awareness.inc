@@ -181,6 +181,15 @@ function examinarArea(who)
 					PrintText(mobile, "*Revelado por "+who.name+"*");
 					SendSysMessageEx(who, "Voce encontrou "+mobile.name+".", SSM_INFO);
 					SendSysMessageEx(mobile, who.name+" te encontrou!", SSM_FAIL);
+
+					var last_loc := struct{ "x" := mobile.x, "z" := mobile.z, "y" := mobile.y };
+					foreach monster in ListMobilesNearLocationEx(mobile.x, mobile.y, mobile.z, 12, LISTEX_FLAG_NORMAL|LISTEX_FLAG_HIDDEN|LISTEX_FLAG_NPC_ONLY)
+						if (GetObjProperty(monster, "guild"))
+							SendEvent(monster, struct{ "type" := 0x78460, source := mobile, "last_loc" := last_loc});
+						endif
+						sleepms(2);
+					endforeach
+
 				endif
 			endif
 			sleepms(1);

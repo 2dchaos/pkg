@@ -40,6 +40,7 @@ const BOTAO_ITENS_CONFISCAR := 0x6;
 const BOTAO_HISTORICO := 0x7;
 const BOTAO_CONFISCADOS := 0x8;
 const BOTAO_CONFIGURACAO := 0x9;
+const BOTAO_MOVERNPC := 0x10;
 
 //const SHOW_ITEMS_BOUGHT_BTN := 0x7;
 
@@ -173,6 +174,13 @@ program MerchantMenu(params)
 				SendSysMessage(player, "Apenas o lider da Faccao pode alterar essas opcoes");
 				cur_menu := MENU_INTRO;
 			endif
+			BOTAO_MOVERNPC:
+			if ( player.serial == guild_leader || player.cmdlevel >= 3);
+				andarnpc(npc, player);
+			else 
+				SendSysMessage(player, "Apenas o lider da Faccao pode andar com o vendedor");
+				cur_menu := MENU_INTRO;
+			endif
 		endcase
 	endwhile
 
@@ -212,7 +220,12 @@ function MainLayout(player)
 
 	GFAddButton(gump, 20, 333, 2117, 2118, GF_CLOSE_BTN, BOTAO_CONFIGURACAO);
    	GFTextLine(gump, 40, 330, GF_STDCOLOR, "Opcoes de venda");
-//	endif
+
+	GFAddButton(gump, 20, 383, 2117, 2118, GF_CLOSE_BTN, BOTAO_MOVERNPC);
+   	GFTextLine(gump, 40, 380, GF_STDCOLOR, "Mover Vendedor");
+
+
+//	endif BOTAO_MOVERNPC
 
 	return gump;
 endfunction
@@ -655,16 +668,16 @@ function AddItem(npc, player, targ)
 		SendSysMessage(player, "Vendedores descontam taxas de Mercadores Reconhecidos apenas depois de vender seus itens.");
 	elseif (!GetObjProperty(npc, "taverneiro"))
 		//Cobra taxas previstas naquele vendedor para quem tem que pagar pra colocar a venda
-		var taxa := 0.0;
+		var taxa:= 0.1;
 		if (cost_type == MOEDAS_COBRE || cost_type == MOEDAS_PRATA || cost_type == MOEDAS_OURO || cost_type == GOLD_COIN)
 			if(GetObjProperty(npc, "taxap")) // 0.0 equivale a 0% e 1.0 equivale a 100%
-				var pesoTaxa := CDbl(getObjProperty(npc, "taxap"));
+					taxa := getObjProperty(npc, "taxap");
 				if (cost_type == MOEDAS_COBRE)
-					taxa := CInt(1.0 * cost_amt * pesoTaxa);
+					taxa := (taxa * cost_amt) / 100;
 				elseif (cost_type == MOEDAS_PRATA)
-					taxa := CInt(10.0 * cost_amt * pesoTaxa);
+					taxa := (taxa * cost_amt) / 100;
 				elseif (cost_type == MOEDAS_OURO || cost_type == GOLD_COIN)
-					taxa := CInt(100.0 * cost_amt * pesoTaxa);
+					taxa := (taxa * cost_amt) / 100;
 				endif
 			else
 				if (cost_type == MOEDAS_COBRE)
@@ -690,6 +703,7 @@ function AddItem(npc, player, targ)
 				var diferenca;
 				var moeda;
 				var item;
+				
 				if (faltaPagar > 0) //Tenta pagar com os cobres
 					dicionarioAtual := recursosDisponiveis[1];
 					foreach serial in dicionarioAtual //Verifica se da pra pagar só com moedas de cobre
@@ -707,6 +721,7 @@ function AddItem(npc, player, targ)
 						endif
 					endforeach
 				endif
+
 				if (faltaPagar > 0) //Tenta pagar com as pratas
 					dicionarioAtual := recursosDisponiveis[2];
 					foreach serial in dicionarioAtual //Verifica se da pra pagar só com moedas de prata
@@ -726,6 +741,7 @@ function AddItem(npc, player, targ)
 						endif
 					endforeach
 				endif
+
 				if (faltaPagar > 0) //Tenta pagar com os ouros
 					dicionarioAtual := recursosDisponiveis[3];
 					foreach serial in dicionarioAtual //Verifica se da pra pagar só com moedas de ouro
@@ -750,13 +766,15 @@ function AddItem(npc, player, targ)
 					endforeach
 				endif
 
+				
+
+				SendSysMessage(player, "Voce pagou " + taxa + " moedas de taxa. Restaram " + CStr(recursosDisponiveis[5] - taxa) + " moedas.");
+				SubtractAmount(moeda, faltaPagar);
 				if (GetObjProperty(npc, "cofreid"))
 					var cofser := getObjProperty(npc, "cofreid");
 					var cofrereal := SystemFindObjectBySerial(cofser);
-					CreateItemInContainer( cofrereal, "moedacobre", taxa);
+					CreateItemInContainer( cofrereal, 0xba63, taxa);
 				endif
-
-				SendSysMessage(player, "Voce pagou " + taxa + " moedas de taxa. Restaram " + CStr(recursosDisponiveis[5] - taxa) + " moedas.");
 
 			endif
 		endif
@@ -1058,7 +1076,7 @@ function vendoropt(npc, player)
 	else
 		opt.append(0);
 	endif
-	if ( GetObjProperty(npc, "onlyplayersells"))
+	if ( GetObjProperty(npc, "oneplayersells"))
 		opt.append(1);
 	else
 		opt.append(0);
@@ -1127,8 +1145,8 @@ function vendoropt(npc, player)
 			return 1;
 			endif
 		elseif ( r == "Taxa")
-			var taxa := cint(RequestGump(player, "Insira a taxa cobrada em porcentagem [0.1 = 10%]"));
-			SetObjProperty(npc, "taxap", taxa);
+			var imposto := cint(RequestGump(player, "Insira a taxa cobrada em porcentagem [10 = 10%]"));
+			SetObjProperty(npc, "taxap", imposto);
 		endif
 
 	endforeach
@@ -1171,4 +1189,21 @@ function Setup(npc)
    endif
 
    guild_leader  := guild.getProp("leader");
+endfunction
+
+function andarnpc(npc, player)
+
+		npc.SetMaster(player);		
+		SetObjProperty(npc, "owner", player.serial);
+		SetObjProperty(npc, "name", npc.name);
+		
+		if ( !GetObjProperty(npc, "script") )
+			SetObjproperty(npc, "script", npc.script);
+		endif
+			
+		npc.script := ":ghaia:tamed";
+		RestartScript(npc);
+		
+		Run_Script_To_Completion(":death:npcdeath", {npc});
+
 endfunction
