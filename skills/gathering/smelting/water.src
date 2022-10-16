@@ -128,7 +128,7 @@ function DeterminaLiga(metals, who)
 
         foreach item in metals
            case(Cint(item))
-         0x6450: metais.append("cobre");
+         0x6465: metais.append("cobre");
          25353: metais.append("ferro");
          27025: metais.append("estanho");
 	      25681: metais.append("argonil");
@@ -142,7 +142,7 @@ function DeterminaLiga(metals, who)
 
 	if ( (metais.size() == 2) && ("cobre"  in metais ) && ("estanho" in metais)  ) //bronze
 		return 0x6994;
-	if ( (metais.size() == 2) && ("ferro"  in metais ) && ("estanho" in metais)  ) //aco
+	elseif ( (metais.size() == 2) && ("ferro"  in metais ) && ("estanho" in metais)  ) //aco
 		return 0x6995;
 	elseif ( (metais.size() == 2) && ("galvorn" in metais) && ("helce" in metais)  )
 		return 0x6998;

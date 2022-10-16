@@ -155,17 +155,93 @@ program MerchantMenu(params)
 				DoWithdraw(npc, player); //Executa a função de retirar item
 				cur_menu := MENU_INTRO;
             BOTAO_HISTORICO:
-            if (!player.concealed) PrintText(npc, "Aqui esta o historico de vendas, Sr."); endif
-            var historico := GetMerchantLog(npc);
-            historico := "<br> - {}".format("<br> -".join(historico));
-            SendHTMLGump(player, "Historico de Vendas", historico);
-            cur_menu := MENU_INTRO;
+			if ( player.cmdlevel >= 3 || (GetObjProperty(npc, "guild") == player.guildid))
+				if (!player.concealed) PrintText(npc, "Aqui esta o historico de vendas, Sr."); endif
+				var historico := GetMerchantLog(npc);
+				historico := "<br> - {}".format("<br> -".join(historico));
+				SendHTMLGump(player, "Historico de Vendas", historico);
+				cur_menu := MENU_INTRO;
+			elseif (TemHabilidade(player, "Espionar"))
+					var prot := RadioGump(player, 200, 260, "Talvez possamos conversar", {"Pagar Mil Cobres", "Cancelar"});
+					if (prot == "Pagar Mil Cobres")
+						var custo := 1000;
+                		SendSysMessageEx(player, "Voce precisa pagar " + custo + " moedas para fazer o vendedor falar", SSM_REQUEST);
+						var targ := Target(player);
+                        if (!targ)
+                            SendSysMessage(player, "Cancelado.", SSM_FAIL);
+                            return;
+                        endif
+
+						if (targ.objtype == 47715)
+						
+							if ( targ.amount < custo )
+								SendSysMessageEx(player, "Voce nao tem moedas suficientes.", SSM_INFO);
+								return;
+							endif
+
+							if (!SubtractAmount(targ, custo))
+								SendSysMessageEx(player, "Voce nao tem moedas suficientes.", SSM_INFO);
+								return;
+							else
+								SendSysMessageEx(player, "Voce efetuou o pagamento.", SSM_INFO);
+							endif
+						else
+							SendSysMessageEx(player, "Isto nao sao moedas.", SSM_FAIL);
+							return;
+                    	endif
+						var historico := GetMerchantLog(npc);
+						historico := "<br> - {}".format("<br> -".join(historico));
+						SendHTMLGump(player, "Historico de Vendas", historico);
+						cur_menu := MENU_INTRO;
+					endif
+			else
+				PrintText(npc, "Apenas membros da facção tem acesso a essas informações, Sr.");
+				cur_menu := MENU_INTRO;
+			endif
 			BOTAO_CONFISCADOS:
-			if (!player.concealed) PrintText(npc, "Aqui esta o historico de itens confiscados, Sr."); endif
-            var confisc := GetMerchantConfiscadosLog(npc);
-            confisc := "<br> - {}".format("<br> -".join(confisc));
-            SendHTMLGump(player, "Historico de Conficações", confisc);
-            cur_menu := MENU_INTRO;
+			if ( player.cmdlevel >= 3 || (GetObjProperty(npc, "guild") == player.guildid))
+				if (!player.concealed) PrintText(npc, "Aqui esta o historico de itens confiscados, Sr."); endif
+				var confisc := GetMerchantConfiscadosLog(npc);
+				confisc := "<br> - {}".format("<br> -".join(confisc));
+				SendHTMLGump(player, "Historico de Conficações", confisc);
+				cur_menu := MENU_INTRO;
+			elseif (TemHabilidade(player, "Espionar"))
+					var prot := RadioGump(player, 200, 260, "Talvez possamos conversar", {"Pagar Mil Cobres", "Cancelar"});
+					if (prot == "Pagar Mil Cobres")
+						var custo := 1000;
+                		SendSysMessageEx(player, "Voce precisa pagar " + custo + " moedas para fazer o vendedor falar", SSM_REQUEST);
+						var targ := Target(player);
+                        if (!targ)
+                            SendSysMessage(player, "Cancelado.", SSM_FAIL);
+                            return;
+                        endif
+
+						if (targ.objtype == 47715)
+						
+							if ( targ.amount < custo )
+								SendSysMessageEx(player, "Voce nao tem moedas suficientes.", SSM_INFO);
+								return;
+							endif
+
+							if (!SubtractAmount(targ, custo))
+								SendSysMessageEx(player, "Voce nao tem moedas suficientes.", SSM_INFO);
+								return;
+							else
+								SendSysMessageEx(player, "Voce efetuou o pagamento.", SSM_INFO);
+							endif
+						else
+							SendSysMessageEx(player, "Isto nao sao moedas.", SSM_FAIL);
+							return;
+                    	endif
+						var historico := GetMerchantConfiscadosLog(npc);
+						historico := "<br> - {}".format("<br> -".join(historico));
+						SendHTMLGump(player, "Historico de Conficações", historico);
+						cur_menu := MENU_INTRO;
+					endif	
+			else
+				PrintText(npc, "Apenas membros da facção tem acesso a essas informações, Sr.");
+				cur_menu := MENU_INTRO;
+			endif
 			BOTAO_CONFIGURACAO:
 			if ( player.serial == guild_leader || player.cmdlevel >= 3);
 				vendoropt(npc, player);
