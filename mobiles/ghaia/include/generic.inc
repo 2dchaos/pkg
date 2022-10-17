@@ -353,14 +353,14 @@ function Flee(opponent)
     while( opponent || (Distance(me, opponent) < 20) && (runs < 50) && (CheckLineOfSight(me, opponent)))
       ev := wait_for_event(1);
       //chk := process_flee_event(opponent);
-    if (furtivo := 1)
+    if (furtivo == 1)
       WalkAwayFrom(opponent);
     else
 	    RunAwayFrom(opponent);
     endif
 	  runs := runs +1;
 
-    if (furtivo := 1)
+    if (furtivo == 1)
       if (!GetCooldown(me, "fleestealth"))
          PrintText(me, "*esconde*");
          sleep(1);
