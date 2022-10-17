@@ -82,7 +82,7 @@ program death(params)
 	elseif (!killer.acctname || ghost.cmdlevel) // Foi morto por NPC ou � GM
 		if (!protecao)
 			//if (getCoolDown(ghost, "deathtime") == 0 )
-			if (killer.npctemplate && killer.script  == ":ghaia:tamed")  //se for tamed nao tira dp
+			if (killer.npctemplate && killer.script  == ":ghaia:controlled")  //se for tamed nao tira dp
 			else
 				AP_ConsumeVital(ghost, "DP", 10);
 				SendSysMessage(ghost, "Voce perdeu 1 DP e agora tem " + AP_GetVital(ghost, "DP")/10);

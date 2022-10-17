@@ -445,7 +445,7 @@ function HealNpcCorpse(mobile, targ, aux_skill)
 		if ( SkillCheck(mobile, HANDLEANIMAL, diff) > 0 )
 			SendSysMessage(mobile, "Voce estabilizou "+name);
 			var npc := CreateNpcFromTemplate( GetObjProperty(targ, "npctemplate"), targ.x, targ.y, targ.z, 0, targ.realm);
-			npc.script := ":ghaia:tamed";
+			npc.script := ":ghaia:controlled";
 			RestartScript(npc);
 			CopyProps(targ, npc);
 			var ownerserial := GetObjProperty(targ, "owner");

@@ -30,6 +30,7 @@ function doSpecial(me)
     
     if (cond == "closedist")
       if  (distance(me, me.opponent)  >= 2)
+        me.concealed :=0;
         return;
       endif
     endif
@@ -223,9 +224,11 @@ function Fight(opponent, alerted := 0)
   
    if (dist > range || !CheckLineOfSight(me, opponent))
       CalcPathAndMove(me, opponent, 275 - me.run_speed);
-   elseif (dist < minrange)
-      checkFlee(opponent);
+   //elseif (dist < minrange)
+   //   checkFlee(opponent);
    endif
+
+    checkFlee(opponent);
 
   /*
     if(!CloseDistance(opponent))
@@ -292,6 +295,7 @@ function Fight(opponent, alerted := 0)
 			EVID_COMBAT_MOVE:
 				RunTowardLocation( ev.x, ev.y );
 				if (coordinateDistance(me.x, me.y, ev.x, ev.y) <= 1)
+          me.concealed :=0;
 					clear_event_queue();
 				endif
 		endcase
@@ -344,11 +348,32 @@ function Flee(opponent)
     var runs := 0;
     var chk := 0;
     var ev;
-    while((Distance(me, opponent) < 15) && (runs < 50) && (CheckLineOfSight(me, opponent)))
+    var furtivo := GetConfigStringArray( npccfgfile[mytemplate], "Furtivo" );
+
+    while( opponent || (Distance(me, opponent) < 20) && (runs < 50) && (CheckLineOfSight(me, opponent)))
       ev := wait_for_event(1);
       //chk := process_flee_event(opponent);
-	  RunAwayFrom(opponent);
+    if (furtivo := 1)
+      WalkAwayFrom(opponent);
+    else
+	    RunAwayFrom(opponent);
+    endif
 	  runs := runs +1;
+
+    if (furtivo := 1)
+      if (!GetCooldown(me, "fleestealth"))
+         PrintText(me, "*esconde*");
+         sleep(1);
+         me.hidden := 1;
+         me.stealthsteps := 60;
+         SetCooldown(me, "fleestealth", 30);
+      endif
+    endif
+
+      if (Distance(me, opponent) > 20)
+        opponent:=0;
+      endif
+
 	  case (ev.type)
         SYSEVENT_DAMAGED: if(((ev.source.npctemplate) and (CheckLineOfSight(me, ev.source))) ||(CoordinateDistance(me.x, me.y, ev.source.x, ev.source.y) < CoordinateDistance(me.x, me.y ,opponent.x, opponent.y)) || (!CheckLineOfSight(me, opponent)) || (!opponent) || (RandomInt(3)==1))
 					        opponent := ev.source;
@@ -463,6 +488,7 @@ function CalcPathAndMove(me, byref opponent, sleepdelay)
 	var last_loc := GetObjProperty(me, "#enemy_last_loc"); //procura se ja calculou o path
    if (last_loc && path) 
       if (CoordinateDistance(opponent.x, opponent.y, last_loc[1], last_loc[2]) > 3)
+        me.concealed :=0;
          path := 0;
          EraseObjProperty(me, "path");
          EraseObjProperty(me, "#enemy_last_loc");
@@ -540,6 +566,7 @@ function CalcPathAndMove(me, byref opponent, sleepdelay)
          sleepms(sleepdelay);
          Opendoors(me); //tenta abrir possiveis portas
          if (CoordinateDistance(me.x, me.y, coord.x, coord.y) <= 1) //se chegou onde devia 
+            me.concealed :=0;
             path.erase(1); //deleta a coordenada e vai pra proxima
             if (path[1])
                SetObjProperty(me, "path", path);

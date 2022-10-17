@@ -347,7 +347,7 @@ function BuildDetails(targ, byref gump, cmd_name, byref y_pos)
 	
 	GFPage(gump, det_page);
 	GFAddButton(gump, 213, 34, 2223, 2223, GF_PAGE_BTN, 1);
-	GFTextLine(gump, 24, 67, 0, "Descri��o");
+	GFTextLine(gump, 24, 67, 0, "Descricao");
 	GFTextLine(gump, 192, 67, 0, "Ensinar");
 
 	GFAddButton(gump, 211, y_pos+3, 1209, 1210, GF_CLOSE_BTN, btn_maxId);

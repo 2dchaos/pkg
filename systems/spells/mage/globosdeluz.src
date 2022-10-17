@@ -37,7 +37,7 @@ program SpellScript(params)
 	SetObjProperty(globo, "AntigoTreinadorID", who.serial);
 	SetObjProperty(globo, "summoned", 1);
 				
-	globo.script := ":ghaia:tamed";
+	globo.script := ":ghaia:controlled";
 	RestartScript(globo);
 	//var backpack := CreateItemAtLocation(globo.x, globo.y, globo.x, "backpack");
 	//equipitem(globo, backpack);

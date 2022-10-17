@@ -11,7 +11,7 @@ function summon(template, targ,  mage)
 	SetObjproperty(undead, "script", targ.script);
 	SetObjProperty(undead, "AntigoTreinadorID", mage.serial);
 		
-	undead.script := ":ghaia:tamed";
+	undead.script := ":ghaia:controlled";
 	undead.facing := mage.facing;
 	RestartScript(undead);
 				

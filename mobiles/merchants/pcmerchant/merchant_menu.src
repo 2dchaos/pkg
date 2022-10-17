@@ -1277,7 +1277,7 @@ function andarnpc(npc, player)
 			SetObjproperty(npc, "script", npc.script);
 		endif
 			
-		npc.script := ":ghaia:tamed";
+		npc.script := ":ghaia:controlled";
 		RestartScript(npc);
 		
 		Run_Script_To_Completion(":death:npcdeath", {npc});

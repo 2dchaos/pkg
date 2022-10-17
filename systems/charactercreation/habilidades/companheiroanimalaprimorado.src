@@ -65,7 +65,7 @@ program pet(who)
 				SetObjProperty(npc, "aprimorado", 1);
 				SetObjProperty(who, "companheiro", npc.serial);
 			
-				npc.script := ":ghaia:tamed";
+				npc.script := ":ghaia:controlled";
 				RestartScript(npc);
 
 				MoveObjectToLocation(targ, 10, 10, 10, targ.realm,  MOVEOBJECT_FORCELOCATION );

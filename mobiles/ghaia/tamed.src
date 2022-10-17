@@ -1108,33 +1108,11 @@ function Drag2(tobj)
 endfunction
 
 function RunForrestRun()
-
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
-	RunAwayFromLocation(opponent.x, opponent.y);
+	var end := ReadGameClock() + 10;
+	while (CoordinateDistance(me.x, me.y, opponent.x, opponent.y) < 20 + 5 && end > ReadGameClock())
+		RunAwayFromLocation(opponent.x, opponent.y);
+		sleepms(100);
+	endwhile
 
 	opponent := 0;
 	fighting := 0;

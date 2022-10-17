@@ -868,7 +868,7 @@ function FightADV(opponent := 0)
    if (opponent)
       me.frozen:=0;
       // PrintText(me, "I will engage".format(opponent.name));
-      if ( opponent == me || opponent == fighting || !opponent.IsA(POLCLASS_MOBILE) || guild_leader == opponent.serial || Distance(me, opponent) > 12 )
+      if ( opponent == me || opponent == fighting || !opponent.IsA(POLCLASS_MOBILE) || guild_leader == opponent.serial || Distance(me, opponent) > 18 )
          return;
       elseif (GetObjProperty(opponent, "guild") == guild.guildid) 
             if( opponent.IsA(POLCLASS_NPC))

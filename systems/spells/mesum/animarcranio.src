@@ -69,7 +69,7 @@ program SpellScript(params)
 	SetObjproperty(undead, "script", who.script);
 	SetObjProperty(undead, "AntigoTreinadorID", who.serial);
 		
-	undead.script := ":ghaia:tamed";
+	undead.script := ":ghaia:controlled";
 	RestartScript(undead);
 				
 	Run_Script_To_Completion(":death:npcdeath", {undead});

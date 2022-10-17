@@ -51,7 +51,7 @@ program guardacostas(who, moedas)
                 SetObjProperty(mercenario, "owner", who.serial);
                 SetObjProperty(mercenario, "name", mercenario.name);
                 SetObjproperty(mercenario, "script", mercenario.script);
-                mercenario.script := ":ghaia:tamed";
+                mercenario.script := ":ghaia:controlled";
                 RestartScript(mercenario);
                 PrintTextAbove(mercenario, "Nao acredito que aceitei esse contrato, tsk. Diga logo o que quer " + who.name +"!");
                 SetObjProperty(who,"contratotipo", 1);
@@ -93,7 +93,7 @@ program guardacostas(who, moedas)
                 SetObjProperty(mercenario, "owner", who.serial);
                 SetObjProperty(mercenario, "name", mercenario.name);
                 SetObjproperty(mercenario, "script", mercenario.script);
-                mercenario.script := ":ghaia:tamed";
+                mercenario.script := ":ghaia:controlled";
                 RestartScript(mercenario);
                 PrintTextAbove(mercenario, "Seguirei suas ordens enquanto forrar minha mao com seu ouro, " + who.name +"!");
                 SetObjProperty(who,"contratotipo", 2);
@@ -132,7 +132,7 @@ program guardacostas(who, moedas)
                 SetObjProperty(mercenario, "owner", who.serial);
                 SetObjProperty(mercenario, "name", mercenario.name);
                 SetObjproperty(mercenario, "script", mercenario.script);
-                mercenario.script := ":ghaia:tamed";
+                mercenario.script := ":ghaia:controlled";
                 RestartScript(mercenario);
                 PrintTextAbove(mercenario, "Boa escolha, *saca a arma* eu protegerei voce com a minha vida, " + who.name +"!");
                 SetObjProperty(who,"contratotipo", 3);

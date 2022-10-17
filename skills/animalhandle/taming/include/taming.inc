@@ -198,7 +198,7 @@ function LogonPets(who)
 
 endfunction
 
-//igual a untame que tem na IA :ghaia:tamed
+//igual a untame que tem na IA :ghaia:controlled
 function destama(serial)
 
 	var me := SystemFindObjectBySerial(serial);	
