@@ -36,6 +36,19 @@ program book(who, book)
 		return;
 	endif
 
+	if (GetObjProperty(who, "caminho") == "Acolito")
+		SendSysMEssageEx(who, "Os deuses o punem pela sua curiosidade", SSM_FAIL);
+		ApplyRawDamage(who, 6000);
+		return;
+	endif
+
+	var kit := GetObjPRoperty(who, "kit");
+	if (kit == "Totemista")
+		SendSysMEssageEx(who, "Os espiritos o punem pela sua curiosidade", SSM_FAIL);
+		ApplyRawDamage(who, 6000);
+		return;
+	endif
+
 	var donoGrimorio := GetObjProperty(book, "serialDono");
 	if (donoGrimorio)
 		if (donoGrimorio != who.serial)

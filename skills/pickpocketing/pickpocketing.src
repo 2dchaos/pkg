@@ -33,8 +33,14 @@ program skill_Stealing(mobile)
 
 	SendSysMessageEx(mobile, "Selecione que pessoa ou item voce deseja roubar.", SSM_REQUEST);
 	var targ := Target(mobile);
-	if (targ == mobile)
-		SendSysMessageEx(mobile, "Espertao voce hein..?", SSM_FAIL);
+
+	if ( GetObjProperty(mobile, "kit") == "Bandido")
+		if ( (targ.npctemplate == ":brainai:MercenarioRecruta") || (targ.npctemplate == ":brainai:MercenarioBesteiro") || (targ.npctemplate == ":brainai:Roguearcher") || (targ.npctemplate == ":brainai:Mercenario") || (targ.npctemplate == ":brainai:Rogue") || (targ.npctemplate == ":brainai:MercenarioLider") || (targ.npctemplate == ":brainai:MercenarioExperiente") )
+			SendSysMessageEx(mobile, "Seu acordo te proibe roubar esta pessoa", SSM_FAIL);
+			return 0;
+		endif
+	elseif (targ == mobile)
+		SendSysMessageEx(mobile, "Voce chega a conclusao de que consegue abrir e fechar sua bolsa de forma normal.", SSM_FAIL);
 		return 0;
 	elseif ( targ.connected == 0 )
 		SendSysMessageEx(mobile, "Voce nao pode roubar jogadores desconectados.", SSM_FAIL);

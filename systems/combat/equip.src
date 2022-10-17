@@ -34,7 +34,17 @@ var descmod:={};
 		SetName(who, " ");
 		SetName(who, ori_name);	
 	endif
-				
+	
+	if (GetObjProperty(who, "corruption"));
+		SendSysMEssageEx(who, "Os deuses o punem pela sua corrupcao.", SSM_FAIL);
+		ApplyRawDamage(who, 6000);
+		return;
+	elseif (GetObjProperty(who, "caminho") != "Acolito")
+		if (item.objtype == 0x2CE0 || item.objtype == 0x2CE2 || item.objtype == 0x2CE1 || item.objtype == 0x2CE3 || item.objtype == 0x2CE5 || item.objtype == 0x2CDF )
+			SendSysMEssageEx(who, "Voce sente um desconforto como se sua pele estivesse em chamas ao tentar vestir a armadura, apenas Acolitos e Paladinos tem permissao dos Deuses", SSM_FAIL);
+			return 0;
+		endif
+	endif
 	
 	if (who.npctemplate)
 		return 1;
@@ -43,6 +53,13 @@ var descmod:={};
 	if (GetObjProperty(who, "desarmar") == 1)
 		SendSysMessageEx(who, "Voce nao consegue se armar.", SSM_FAIL);
 		return 0;
+	endif
+
+	if (TemHabilidade(who, "Furia"))
+			if (item.objtype == 0x13ec || item.objtype == 0x13ed || item.objtype == 0x13ee || item.objtype == 0x13ef || item.objtype == 0x13f0 || item.objtype == 0x13f1 || item.objtype == 0x13f2 || item.objtype == 0x13BB || item.objtype == 0x13C0 || item.objtype == 0x13BE || item.objtype == 0x13C3 || item.objtype == 0x13BF || item.objtype == 0xFFE6 || item.objtype == 0x13C4 || item.objtype == 0x1415 || item.objtype == 0x1416 || item.objtype == 0x1410 || item.objtype == 0x1417 || item.objtype == 0x1411 || item.objtype == 0x141A || item.objtype == 0x1414 || item.objtype == 0x1418 || item.objtype == 0x1413) 
+				SendSysMessageEx(who, "Como Berserker voce se recusa a usar armaduras de metal", SSM_FAIL);
+				return 0;
+			endif
 	endif
 
 	if (GetEquipmentByLayer(who, LAYER_MOUNT))
@@ -117,13 +134,7 @@ var descmod:={};
 
 		foreach timer in ( timer_list.keys() )
 			timer := lower(timer);
-			if (timer == "agility" )
-				TS_LowerDuration(who, timer, -1);
-			elseif ( timer == "strength");
-				TS_LowerDuration(who, timer, -1);
-			elseif ( timer == "intelligence")
-				TS_LowerDuration(who, timer, -1);
-			elseif ( timer == "velocidade")
+			if ( timer == "velocidade")
 				TS_LowerDuration(who, timer, -1);
 			elseif (timer == "dmgreturn" )
 				TS_LowerDuration(who, timer, -1);
