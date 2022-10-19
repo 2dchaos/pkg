@@ -264,7 +264,8 @@ function CreateBossStructGump(who, byref boss)
 	else
 		magery := GFTextEntry( chargump, 380, 245, 100, 20, 1150, boss.magery+"");
 	endif
-
+
+
 	GFTextLine(chargump, 50, 240, 1153, "Loot: ");
 	GFAddButton( chargump, 50, 263, 2103, 2104, 1, 10);
 
@@ -979,4 +980,37 @@ function CombatEventsOptions(who, state)
 			SendSysMessage(who, "Nao implementado");
 		endif
 		return state;
+endfunction
+
+function CreateIteminBackpackFromTemplate(player, selling)
+
+	var purchase := CreateItemInBackPack(player, selling, selling.amount);
+	if ( purchase == error )
+		purchase := CreateItemAtLocation(player.x, player.y, player.z, selling, selling.amount);
+		if ( purchase == error )
+			SendSysMessage(player, "Error - Unable to create item! ->"+purchase.errortext);
+		endif
+	endif
+	if (selling.amount == 1)
+		SetName(purchase, selling.desc);
+	endif
+	foreach prop in selling
+		//sendsysmessage(player, " " + _prop_iter + " "+ selling[_prop_iter]);
+		purchase.set_member(_prop_iter, selling[_prop_iter]);
+	endforeach
+
+	if (purchase.isBook())
+		var bookinfo := GetObjProperty(purchase, "bookinfo");
+		purchase.setAuthor(bookinfo.Author );
+		purchase.setTitle(bookinfo.Title);
+		if (bookinfo.readonly == 1)
+			purchase.ReadOnly(1);
+		else
+			purchase.ReadOnly(0);
+		endif
+		var book_data_file := DFOpenDataFile(":sysbook:books", DF_CREATE);
+		var book_elem := DFFindElement(book_data_file, Hex(purchase.serial), DF_CREATE);
+		book_elem.SetProp("Contents", bookinfo.contents);
+	endif
+	purchase.movable := 1;
 endfunction
