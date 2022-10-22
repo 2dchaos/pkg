@@ -36,9 +36,11 @@ var descmod:={};
 	endif
 	
 	if (GetObjProperty(who, "corruption"));
-		SendSysMEssageEx(who, "Os deuses o punem pela sua corrupcao.", SSM_FAIL);
-		ApplyRawDamage(who, 6000);
-		return;
+		if (item.objtype == 0x2CE0 || item.objtype == 0x2CE2 || item.objtype == 0x2CE1 || item.objtype == 0x2CE3 || item.objtype == 0x2CE5 || item.objtype == 0x2CDF )
+			SendSysMEssageEx(who, "Os deuses o punem pela sua corrupcao.", SSM_FAIL);
+			ApplyRawDamage(who, 6000);
+			return 0;
+		endif
 	elseif (GetObjProperty(who, "caminho") != "Acolito")
 		if (item.objtype == 0x2CE0 || item.objtype == 0x2CE2 || item.objtype == 0x2CE1 || item.objtype == 0x2CE3 || item.objtype == 0x2CE5 || item.objtype == 0x2CDF )
 			SendSysMEssageEx(who, "Voce sente um desconforto como se sua pele estivesse em chamas ao tentar vestir a armadura, apenas Acolitos e Paladinos tem permissao dos Deuses", SSM_FAIL);

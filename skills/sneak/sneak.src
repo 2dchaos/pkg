@@ -35,7 +35,7 @@ program skill_Hide(who)
 			break;
 		endif
 		var check := SkillCheck(who, SNEAK, -1);
-		var diff;
+		var diff := 0;
 		/*case ( temHabilidade(who, "Misturar-se na Selva") )
 			1:	
 				var region := GetRegionName(who);
@@ -72,7 +72,7 @@ program skill_Hide(who)
 		elseif (check >= -25)
 			SendSysMessageEx(who, "Voce falhou ao tentar se esconder.", SSM_FAIL);
 			who.hidden := 0;
-		elseif (semfalha <= 80) // Falha Cr�tica
+		elseif (semfalha <= 79) // Falha Cr�tica
 			PrintText(who, "*tentando se esconder*");
 		endif
 	endwhile

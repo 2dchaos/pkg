@@ -349,6 +349,16 @@ function GumpSkills(who, byref chardata, byref skillspoints)
 	var terciarias   := GetConfigStringArray(elem, "T");
 	var quaternarias := GetConfigStringArray(elem, "Q");
 
+	if (chardata.kit != "Artifice" || chardata.kit != "Ranger" || chardata.classe != "Totemista")
+		var i := 1;
+		foreach skill in quaternarias //reduz as primarias
+			if ( skill == "HandleAnimal")
+				quaternarias.erase(i);
+			endif
+			i := i + 1;
+		endforeach
+	endif
+
 	if (chardata.kit == "Artifice")		
 
 		var novasquaternarias := array;
@@ -493,14 +503,6 @@ function GumpSkills(who, byref chardata, byref skillspoints)
 			if ( skill == "HandleAnimal")
 				quaternarias.erase(i);
 				terciarias.append("HandleAnimal");
-			endif
-			i := i + 1;
-		endforeach
-	elseif (chardata.classe := "Guerreiro" || chardata.classe := "Ladino" || chardata.classe := "Sabio")
-		var i := 1;
-		foreach skill in quaternarias //reduz as primarias
-			if ( skill == "HandleAnimal")
-				quaternarias.erase(i);
 			endif
 			i := i + 1;
 		endforeach
