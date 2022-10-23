@@ -9,7 +9,7 @@ program armasagrada(param)
 
 	var originalColor := arma.color;
 	SetObjProperty(arma, "armaSagradaOriginalColor", originalColor);
-	arma.color := 2570;
+	arma.color := 2068;
 
 	sleep(time);
 

@@ -19,6 +19,10 @@ program DeathScript(params)
 	var template := Lower(GetObjProperty(corpse, "npctemplate"));
 	
 	foreach item in (EnumerateItemsInContainer(corpse))
+		if (item.isa(POLCLASS_WEAPON))
+			DesTroyItem(item);
+		endif
+
         if (!item.isa(POLCLASS_ARMOR))
 		var e := MoveObjectToLocation(item, corpse.x, corpse.y, corpse.z, corpse.realm, MOVEOBJECT_FORCELOCATION | MOVEITEM_IGNOREMOVABLE);
         endif
