@@ -832,7 +832,7 @@ function npcHandler(who, input)
             return;
          endif
          var npc_list := guild.getProp("npcs");
-         if (opt_out["Configurações"])
+         if (opt_out["Configuracoes"])
             var questions := array{};
             questions.append(struct{ "title" := "Template do agente?", "marked" := npc_list[npc_choice].template} );
             questions.append(struct{ "title" := "Nome (representativo) do agente?", "marked" := npc_list[npc_choice].name} );
