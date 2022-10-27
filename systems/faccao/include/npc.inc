@@ -114,32 +114,60 @@ function ContractNPC(guild, npc_i, who, loc)
     var npc_list := listContractedNPC(guild);
     if(len(npc_list) < 15)
        var agent := CreateNPCFromTemplate(template.template, loc.x, loc.y, loc.z+2);
-       if (agent.npctemplaye["merchant"])
+      	if (agent.npctemplaye["merchant"])
           SetObjProperty(agent, "noequip", 1);
-       endif
-       SetObjProperty(agent, "guild", guild.guildid);
-       SetObjProperty(agent, "contract_by", who.serial);
-       SetObjProperty(agent, "conf_ref",npc_i);
+      	endif
+
+		if (agent.name != "Vendedor")
+
+			agent.script := ":ghaia:guard";
+			SetObjproperty(agent, "script", agent.script);
+			RestartScript(agent);
+
+			SetObjProperty(agent, "guild", guild.guildid);
+       		SetObjProperty(agent, "contract_by", who.serial);
+       		SetObjProperty(agent, "conf_ref",npc_i);
+
+			foreach item_ref in (template.equipment)
+				sleepms(2);
+				var item := CreateIteminBackpackFromTemplate(agent, item_ref);
+				var equipped := EquipItem(agent, item);
+       		endforeach
+
+			PrintText(agent, "As suas ordens");
+
+			npc_list.append(struct{
+				"serial" := agent.serial,
+				"price" := template.price,
+				"ref" := npc_i
+			});
+			guild.setProp("npcs_active", npc_list);
+	   		return 1;
+		endif
+
+			SetObjProperty(agent, "guild", guild.guildid);
+			SetObjProperty(agent, "contract_by", who.serial);
+			SetObjProperty(agent, "conf_ref",npc_i);
 
 
-       foreach item_ref in (template.equipment)
-          sleepms(2);
-          var item := CreateIteminBackpackFromTemplate(agent, item_ref);
-          var equipped := EquipItem(agent, item);
-       endforeach
+			foreach item_ref in (template.equipment)
+				sleepms(2);
+				var item := CreateIteminBackpackFromTemplate(agent, item_ref);
+				var equipped := EquipItem(agent, item);
+			endforeach
 /*
        if (template.bossStruct.keys().size() >= 1)
           SetBoss(agent, template.bossStruct);
        endif
 */
-       PrintText(agent, "As suas ordens");
+			PrintText(agent, "As suas ordens");
 
-       npc_list.append(struct{
-          "serial" := agent.serial,
-          "price" := template.price,
-          "ref" := npc_i
-       });
-       guild.setProp("npcs_active", npc_list);
+			npc_list.append(struct{
+				"serial" := agent.serial,
+				"price" := template.price,
+				"ref" := npc_i
+			});
+			guild.setProp("npcs_active", npc_list);
     else
         SendSysMessageEx(who, "Quantidade maxima de agentes atingida.");
     endif

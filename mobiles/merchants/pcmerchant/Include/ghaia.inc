@@ -15,7 +15,7 @@ include ":tn:npcutil";
 include ":tn:cooldown";
 include ":brainAI:npcUtil";
 include ":awareness:awareness";
-include ":tn:boss";
+//include ":tn:boss";
 
 // estados do npc, todos comecam no INIT, depois podem ir pro WANDER, apos algum tempo no wander se nao for interrompido eles vao pro SLEEP. do WANDER e do SLEEP podem ir pro FIGHT e desse pro VICTORY
 enum STATES
