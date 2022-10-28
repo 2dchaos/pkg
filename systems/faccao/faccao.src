@@ -50,7 +50,8 @@ var priv_list := struct{
    "fixitems"        := "Controle de Objetos",
    "unlockdoors"     := "Controle de Portas",
    "buyuniforms"     := "Controle de Uniformes",
-   "abovelaws"     := "Leis não se aplicam a este personagem"
+   "abovelaws"     := "Leis não se aplicam a este personagem",
+   "equipguard"   := "Controle de Equipamento de Guardas"
 };
 
 var law_list := struct{
