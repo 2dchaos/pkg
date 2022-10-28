@@ -1,8 +1,24 @@
-/* $Id: strip.src 128 2006-05-27 17:36:42Z austinheilman $
- *
- */
 use uo;
 use os;
+use npc;
+use util;
+use guilds;
+
+include ":attributes:attributes";
+include "include/sysEvent";
+include "include/say";
+include ":mounts:mounts";
+include ":taming:taming";
+include ":tn:cooldown";
+//include ":ghaia:generic";
+include ":ghaia:objective";
+include ":ghaia:ghaiaInit";
+// include ":ghaia:habs";
+include ":faccao:npc";
+include ":combat:combat";
+include ":ghaia:combatevents";
+include ":faccao:faccao";
+include "include/dungeons";
 
 //include "include/uo_extend";
 
@@ -25,7 +41,7 @@ program command_Strip(who)
 
 	var guardguild := GetObjProperty(targ, "guild");
 
-    if (who.guildid != targ.guardguild)
+    if (guildid != guardguild)
         SendSysMessage(who, "Voce nao faz parte dessa Faccao");
         return;
 	endif
