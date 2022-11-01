@@ -24,11 +24,13 @@ include "include/dungeons";
 
 program command_Strip(who)
 
-	var guild, guild_leader, guild_laws, fix_location, guild_prison, guild_prisonl;	
+	var guild := GetObjProperty(who, "guild");
+	var guild_leader, guild_laws, fix_location, guild_prison, guild_prisonl;	
 	var guildid := GetObjProperty(who, "guild");
 	var privs := guild.GetProp(cstr(who.serial));
    var is_member := guild.guildid == who.guildid;
    var user_subguilds := who.guild.getProp("subguilds");
+
    if (!user_subguilds) user_subguilds := array{}; endif
    var is_leader := (who.serial == guild_leader || guild.guildid in user_subguilds);
 
@@ -41,23 +43,24 @@ program command_Strip(who)
 
 	var guardguild := GetObjProperty(targ, "guild");
 
-    if (guildid != guardguild)
-        SendSysMessage(who, "Voce nao faz parte dessa Faccao");
-        return;
+    if (guild != guardguild)
+
+		if (privs.equipguard || is_leader)
+			SendSysMessage(who, "Voce nao tem permissao para fazer isso");
+			return 0;
+		endif
+
+		foreach item in ( EnumeratePhysicalItems(targ) )
+			MoveItemToContainer(item, who.backpack);
+			SleepMS(2);
+		endforeach
+
+	else 
+		SendSysMessage(who, "Voce nao faz parte dessa Faccao");
+		return;
 	endif
-
-
-	if (!privs.equipguard || !is_leader)
-		SendSysMessage(who, "Voce nao tem permissao para fazer isso");
-        return 0;
-    endif
-
-	foreach item in ( EnumeratePhysicalItems(targ) )
-		MoveItemToContainer(item, who.backpack);
-		SleepMS(2);
-	endforeach
 	
-	SendSysMessage(who, "Done.");
+	SendSysMessage(who, "Feito");
 		
 	return 1;
 endprogram

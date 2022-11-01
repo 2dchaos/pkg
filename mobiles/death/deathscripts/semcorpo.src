@@ -17,6 +17,15 @@ program DeathScript(params)
 	params := 0; // Not needed anymore
 
 	var template := Lower(GetObjProperty(corpse, "npctemplate"));
+
+	var cabelo := GetEquipmentByLayer(corpse, LAYER_HAIR);
+	var barba := GetEquipmentByLayer(corpse, LAYER_BEARD);
+
+
+	
+	DestroyItem(cabelo);
+	DestroyItem(barba);
+
 	
 	foreach item in (EnumerateItemsInContainer(corpse))
 		if (item.isa(POLCLASS_WEAPON))

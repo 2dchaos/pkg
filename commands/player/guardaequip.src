@@ -16,7 +16,10 @@ program textcmd_equip( speaker )
 		return 0;
 	endif
 
-    if (speaker.guildid != who.guildid)
+    var guild := GetObjProperty(speaker, "guild");
+    var guildid := GetObjProperty(who, "guild");
+
+    if (guild == guildid)
         SendSysMessage(speaker, "Voce nao faz parte dessa Faccao");
         return;
 	endif
