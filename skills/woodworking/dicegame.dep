@@ -1,4 +1,4 @@
-c:\LVM\LVM\pkg\items\games\dicegame.src
+c:\LVM\LVM\pkg\skills\woodworking\dicegame.src
 C:/LVM/LVM/scripts/modules/basic.em
 C:/LVM/LVM/scripts/modules/basicio.em
 C:/LVM/LVM/scripts/modules/uo.em
@@ -13,3 +13,7 @@ C:\LVM\LVM\pkg\utils\gumps\include\gumps_ex.inc
 C:/LVM/LVM/scripts/modules/cfgfile.em
 C:/LVM/LVM/scripts/modules/polsys.em
 C:\LVM\LVM\pkg\tn\include\tngumps.inc
+C:\LVM\LVM\scripts\include\client.inc
+C:\LVM\LVM\scripts\include\utils.inc
+C:/LVM/LVM/scripts/modules/math.em
+C:\LVM\LVM\scripts\include\facings.inc

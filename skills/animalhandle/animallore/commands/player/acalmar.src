@@ -65,3 +65,14 @@ program textcmd_acalmar(who)
 		PrintTextAbovePrivate(creature, "Voce falha em acalmar o animal.", who);
 	endif
 endprogram
+
+function isBoss(targ)
+	var spawnpoint := SystemFindObjectBySerial( GetObjPRoperty(targ, "spawnpoint") );
+	if (spawnpoint != error)
+		var unique := GetObjPRoperty(spawnpoint, "unique");
+		if (unique != error)
+			return 1;
+		endif
+	endif
+	return 0;
+endfunction

@@ -1,5 +1,4 @@
 
-     use uo;
 use os;
 
 include ":spells:tnmagery";
@@ -25,7 +24,8 @@ program SpellScript(params)
 		SendSysMessageEx(who, "Isto nao pode ser alvejado por essa magia.", SSM_FAIL);
 		return;
 	endif
-
+
+
 	PlaySoundEffect(targ, SFX_SPELL_STRENGTH);
 
 	

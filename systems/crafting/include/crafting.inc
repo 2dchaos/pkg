@@ -316,6 +316,9 @@ function AddMaterialMod(who, theitem, principalMaterial, materialColor)
 	ResistMods := SplitWords(ResistMods);
 	var hpmod := GetConfigInt(elem, "hpmod");
 
+    var totalhp;
+    totalhp:= hpmod;
+    theitem.maxhp_mod := totalhp;
 
 	if(theitem.isA(POLCLASS_WEAPON))
 		theitem.damage_physical_mod := Cint(DmgMods[1]);
@@ -338,6 +341,13 @@ function AddMaterialMod(who, theitem, principalMaterial, materialColor)
 		SetObjProperty(theitem, "dmgmods", DmgMods);
 	endif
 
+	var maximohp := theitem.maxhp;
+	var thehp := theitem.hp;
+	var maxhp;
+
+  	theitem.maxhp := maximohp + totalhp;
+	theitem.hp := theitem.maxhp;
+
 endfunction
 
 function CraftExceptional(who, theitem, craft_skill)
@@ -358,6 +368,13 @@ function CraftExceptional(who, theitem, craft_skill)
 			AddQualityResistMod(theitem, EXCEP);
 		endif
 		theitem.quality := 1.2;
+
+		var maxhp;
+		var thehp := theitem.hp;
+  		maxhp := theitem.maxhp;
+		theitem.maxhp := cint(maxhp * theitem.quality);
+		theitem.hp := theitem.maxhp;
+
 	endif
 endfunction
 

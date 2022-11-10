@@ -1,26 +1,35 @@
 
 function Hallucinate(who)
-// Removido temporariamente!
-  var graphicarray := {51, 42, 39, 31, 29, 28, 6, 5, 48, 7, 33, 30, 26, 24, 21, 17, 22, 18, 16, 15, 14, 13, 8, 47, 12, 10, 9, 5, 4, 3, 1, 2, 400, 401};
-  var graphic := graphicarray[RandomInt(len(graphicarray)) + 1];
-  var color := RandomInt(99) + 2;
-  DrawGamePlayer(who, graphic, color);
-  foreach mobile in ListMobilesNearLocation(who.x, who.y, who.z, 30)
-    graphic := graphicarray[RandomInt(len(graphicarray)) + 1];
-    color := RandomInt(99) + 2;
-    if (mobile.serial != who.serial)
-      DeleteObject(who, mobile);
-      DrawObject(who, mobile, graphic, color, 1);
-    endif
-  endforeach
-  foreach item in ListItemsNearLocation(who.x, who.y, who.z, 30)
-    color := RandomInt(99) + 2;
-    if ((item.amount == 1) and (!item.isa(POLCLASS_CORPSE)) and (!item.invisible))
-      DeleteObject(who, item);
-      DrawObject(who, item, item.graphic, color);
-    endif
-  endforeach
+	if(who.npctemplate)
+		return 0;
+	endif
+	var graphicarray;
+	//var chardata := GetObjProperty(who, "chardata");
+	//var povo := chardata.povo;
+	//case (povo)
 
+	graphicarray := {102,306,311,174,1,2,49,55,3,7,17,26,59,281,788,787,72,87,250,271,38,69,76,77,3,7,17,26}; //DEMONIO, IMPALADOR, CAVALEIRO SOMBRIO, SUCUBBUS.
+
+	//endcase
+
+	var graphic := graphicarray[RandomInt(len(graphicarray)) + 1];
+	var color := RandomInt(99) + 2;
+	DrawGamePlayer(who, graphic, color);
+	foreach mobile in ListMobilesNearLocation(who.x, who.y, who.z, 30)
+		graphic := graphicarray[RandomInt(len(graphicarray)) + 1];
+		color := RandomInt(99) + 2;
+		if (mobile.serial != who.serial)
+			DeleteObject(who, mobile);
+			DrawObject(who, mobile, graphic, color, 1);
+		endif
+	endforeach
+	foreach item in ListItemsNearLocation(who.x, who.y, who.z, 30)
+		color := RandomInt(99) + 2;
+		if ((item.amount == 1) && (!item.isa(POLCLASS_CORPSE)) && (!item.invisible))
+			DeleteObject(who, item);
+			DrawObject(who, item, item.graphic, color);
+		endif
+	endforeach
 endfunction
 
 // the following functions have been pasted from SendPacket.inc

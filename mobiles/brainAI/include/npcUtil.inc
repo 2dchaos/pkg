@@ -102,6 +102,8 @@ endfunction
  * Returns an array
  *
  */
+
+ /*
 function NPC_GetAllTemplateNames()
 	var elem_names := array{};
 	elem_names := elem_names + GetConfigStringKeys(ReadConfigFile("::npcdesc"));
@@ -118,7 +120,7 @@ function NPC_GetAllTemplateNames()
 
 	return elem_names;
 endfunction
-
+*/
 /* $Id: storageAreas.inc 128 2006-05-27 17:36:42Z austinheilman $
  *
  * Purpose

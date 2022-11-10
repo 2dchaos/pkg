@@ -23,8 +23,8 @@ program DeathScript(params)
 			DesTroyItem(item);
 		endif
 
-        if (!item.isa(POLCLASS_ARMOR))
-		var e := MoveObjectToLocation(item, corpse.x, corpse.y, corpse.z, corpse.realm, MOVEOBJECT_FORCELOCATION | MOVEITEM_IGNOREMOVABLE);
+        if (item.isa(POLCLASS_ARMOR))
+            DesTroyItem(item);
         endif
 		//printtextabove(corpse, " " + e);
 	endforeach

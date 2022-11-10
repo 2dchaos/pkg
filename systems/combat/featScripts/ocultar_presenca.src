@@ -14,7 +14,7 @@ program hiddepresence(params)
 	var targ := params[3];
 	params := 0; // No longer needed
    
-   SendSystemReport(targ, "*Você sente o frio véu da noite cobrir sua presença*", SSM_HELPFUL);
+   SendSysMessageEx(targ, "*Voce sente o frio veu da noite cobrir sua presenca*", SSM_REQUEST);
    TS_StartTimer(targ, "furtividade", 5, 3);
 
 	return 1;

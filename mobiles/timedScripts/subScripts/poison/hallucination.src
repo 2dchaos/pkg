@@ -4,9 +4,9 @@ use os;
 include ":attributes:attributes";
 include ":timedscripts:timedScripts";
 include "include/damage";
-//include ":tn:hallucination";
+include ":tn:hallucination";
 
-/*program default_poison(params)
+program default_poison(params)
 	var who := params[1];
 	var attacker := params[2];
 	var level := CInt(params[3]);
@@ -20,7 +20,7 @@ include "include/damage";
 	endif
 
 	var time := 15;
-//	Hallucinate(who);
+	Hallucinate(who);
 
 	var times := 0;
 
@@ -33,7 +33,7 @@ include "include/damage";
 			sleepms(2);
 		endforeach
 		
-//		Hallucinate(who);
+		Hallucinate(who);
 
 		if (who.dead)
 			var script := GetProcess(GetPid());
@@ -45,4 +45,4 @@ include "include/damage";
 	endwhile
 
 	return;
-endprogram*/
+endprogram

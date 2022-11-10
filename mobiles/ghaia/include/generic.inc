@@ -243,6 +243,7 @@ function Fight(opponent, alerted := 0)
    // checkFlee(opponent);
 	
     ev := wait_for_event(waittime);
+
 //    printtextabove(self(), "event " + ev);
 	if(ev.type != SYSEVENT_SPEECH)
 		case (ev.type)
@@ -415,7 +416,17 @@ function sleepmode()
   EnableEvents(SYSEVENT_DAMAGED);
   var ev;
   while (1)
+
+    if (CInt( AP_GetSkill(me, AWARENESS) ) > 0)
+        procura_em_volta(me);
+    endif
+
     ev := os::wait_for_event(30);
+
+    if (CInt( AP_GetSkill(me, AWARENESS) ) > 0)
+        procura_em_volta(me);
+    endif
+
     repeat
     //npcs criam ovos ou outras coisas
     if ( (GetCooldown(me, "dropitem" ) == 0) && (CInt(npccfgfile[mytemplate].DropDelay) > 0) )
@@ -621,3 +632,21 @@ endfunction
 
 */
 
+function procura_em_volta(me)
+    var range := CInt( AP_GetSkill(me, AWARENESS) / 10 ) + 1;
+    foreach mobile in ListMobilesNearLocationEX(me.x, me.y, me.z, range, LISTEX_FLAG_HIDDEN)
+        if ( mobile == me ); // Do Nothing
+        elseif ( CInt(GetObjProperty(me, "IgnoreHidden")) ); // Do Nothing
+        else
+            if ( CheckLineOfSight(me, mobile) )
+                var difficulty := CalculateDHDiff(me, mobile);
+                if ( SkillCheck(me, AWARENESS, difficulty) > 0 )
+                    mobile.hidden := 0;
+                    PrintText(mobile, "*aparece*");
+                    SendSysMessageEx(mobile, me.name+" te encontrou!", SSM_FAIL);
+                endif
+            endif
+        endif
+        sleepms(2);
+    endforeach
+endfunction

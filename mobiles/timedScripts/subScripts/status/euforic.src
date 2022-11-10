@@ -11,6 +11,7 @@ include ":timedscripts:timedScripts";
 include "include/say";
 include "include/utils";
 include ":attributes:attributes";
+include ":charactercreation:resists";
 
 function StartScript(mobile, attacker := 0, level := 0)
    while (mobile)
@@ -29,14 +30,14 @@ function StartScript(mobile, attacker := 0, level := 0)
       MoveObjectToLocation(mobile, point.x, point.y, point.z, mobile.realm, MOVEOBJECT_FORCELOCATION);
       mobile.frozen := 1;
       if (randomInt(2) == 1)
-         PrintText(mobile, "*eufórico*", SSM_FAIL);
+         PrintText(mobile, "*euforico*", SSM_FAIL);
       endif
       if (randomInt(2) == 1)
-         SendSysMessageEx(mobile, "Seu coração acelera", SSM_FAIL);
+         SendSysMessageEx(mobile, "Seu coracao acelera", SSM_FAIL);
          AP_ConsumeVital(mobile, STAMINA, 3);
       endif      
       sleep(2);
-      if (rollResistDice(mobile, CONSTITUTION) > cint(level))
+      if (CheckResist(mobile, FORTITUDE, 60+cint(level)))
          break;
       endif
    endwhile

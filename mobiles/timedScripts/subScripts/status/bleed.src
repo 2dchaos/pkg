@@ -11,6 +11,7 @@ include "include/client";
 include ":timedscripts:timedScripts";
 include "include/say";
 include ":blood:blood";
+include "include/damage";
 
 function StartScript(mobile, attacker := 0, level := 0)
 	var dmg_dice;
@@ -22,10 +23,10 @@ function StartScript(mobile, attacker := 0, level := 0)
       4: dmg_dice := "5d4+8";
    endcase
 
-   SendSystemReport(mobile, "Você está com uma grave hemorragia!", mobile);
+   SendSystemReport(mobile, "Voce esta com uma grave hemorragia!", mobile);
    foreach mobile in ( ListMobilesInLineOfSight(mobile, 8) )
       if( mobile.ip && mobile != mobile )
-         SendSystemReport(mobile, "* " + mobile.name + " está sangrando muito! *", mobile);
+         SendSystemReport(mobile, "* " + mobile.name + " estï¿½ sangrando muito! *", mobile);
       endif
       sleepms(2);
    endforeach

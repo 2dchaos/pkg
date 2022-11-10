@@ -388,6 +388,7 @@ endfunction
 //  body    Body graphic to change to
 //  colour  Colour for the clients body
 ////////////////////////////////////////////////////
+/*
 function DrawGamePlayer( who, body, colour )
     var packetString := "20";
     packetString := packetString + fixPacketLength(hex(who.serial),4);
@@ -402,7 +403,7 @@ function DrawGamePlayer( who, body, colour )
     packetString := packetString + fixPacketLength(hex(who.z),1);
     return SendPacket( who, packetString );
 endfunction
-
+*/
 ///////////////////////////////////////////////////////
 //Tells a client what their character really looks like
 //  who    Person to send to

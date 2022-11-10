@@ -21,20 +21,20 @@ function StartScript(mobile, attacker := 0, level := 0)
          0:
             TS_StartTimer(mobile, "paralysis", 2);
             PrintText(mobile, "*divagando olhando algo*", SSM_INFO);
-            PlayCustomSound(mobile, 11);
+            PlaySoundEffect(mobile, 11);
          1:
-            PlayCustomSound(mobile, 21);
+            PlaySoundEffect(mobile, 21);
          2:
-            PlayCustomSound(mobile, 18);
+            PlaySoundEffect(mobile, 18);
             sleep(2);         
-            PlayCustomSound(mobile, 18);
+            PlaySoundEffect(mobile, 18);
          3:
-            PlayCustomSound(mobile, 2);
+            PlaySoundEffect(mobile, 2);
          4:
-            PrintText(mobile, "*parece doidão*");
+            PrintText(mobile, "*parece doidao*");
          5:
             PrintText(mobile, "*se assusta*");
-            PlayCustomSound(mobile, 25);
+            PlaySoundEffect(mobile, 25);
       endcase
       sleep(RandomDiceRoll("1d3+3"));
    endwhile

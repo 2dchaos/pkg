@@ -5,6 +5,7 @@ use uo;
 use os;
 
 include ":attributes:attributes";
+include "include/damage";
 
 program PoisonScript(params)
 	var mobile := params[1];
@@ -17,7 +18,7 @@ program PoisonScript(params)
 	while (  duration > 0)
 		SetObjProperty(mobile, "DarkBorer", duration);
 
-		sleep(60);
+		sleep(1);
 		if ( duration == 89 )
 			SendSysMessage(mobile, "Seu estomago esta roncando.");
 		elseif ( duration == 60 )
@@ -42,8 +43,12 @@ program PoisonScript(params)
 	endwhile
 
 	PrintTextAbove(mobile, "*uma larva negra rasga a pele*", 3, 55);
-	var baby := CreateNPCFromTemplate(":brainai:darkborer", mobile.x, mobile.y, mobile.z, 0, mobile.realm);
-	ApplyRawDamage(mobile, cint(AP_GetVitalMaximumValue(mobile, HITS))+3);
+	var baby := CreateNPCFromTemplate(":brainai:vermenegro", mobile.x, mobile.y, mobile.z, 0, mobile.realm);
+	//ApplyRawDamage(mobile, cint(AP_GetVitalMaximumValue(mobile, HITS))+3);
+	var dano;
+	dano := cint(AP_GetVitalMaximumValue(mobile, HITS))+3;
+	dano:= dano - dano/2;
+	DamageFLS(mobile, dano, DMG_PHYSICAL, 0);
 
 	return 1;
 endprogram

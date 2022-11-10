@@ -21,7 +21,7 @@ program startTalent(param)
 	
 	if (IsBehind(who, targ.x, targ.y))
       FailFeat(who, spellinfo);
-		SendSysMessageEx(who, "Você está de costas para o alvo!", SSM_FAIL);
+		SendSysMessageEx(who, "Vocï¿½ estï¿½ de costas para o alvo!", SSM_FAIL);
 		return 0;
 	endif
 	
