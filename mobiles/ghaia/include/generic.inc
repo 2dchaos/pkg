@@ -203,6 +203,7 @@ function Fight(opponent, alerted := 0)
 
   if (hasCombat(me))
     DoCombatSpecial(me); ////////////// SPECIALL
+    sleepms(10);
   endif
 
     if ( (dist > throwinfo.range) && (throwinfo.canthrow == 1) )

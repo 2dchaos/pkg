@@ -1,6 +1,8 @@
 
 use uo;
+use os;
 
+include ":timedScripts:timedScripts";
 include ":loot:include/lootParser";
 include ":ghaia:ghaiaInit";
 include ":tn:recipes";

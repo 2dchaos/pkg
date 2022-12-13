@@ -124,7 +124,7 @@ function MakeBoardSerra(who, item, nova_tabua)
                 //SubtractAmount(item, item.amount);
 
 		//alterado - Ed.
-		CreateItemInContainer (who.backpack, nova_tabua, item.amount);
+		CreateItemInContainer (who.backpack, nova_tabua, item.amount*2);
                 SubtractAmount(item, item.amount);
 
 

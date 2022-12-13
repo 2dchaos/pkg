@@ -22,6 +22,11 @@ function CraftLockable(who, theitem)
 		endif
 
 		if (KP_IsLockable(theitem ))
+			var desgaste := AP_GetSkill(who, WOODWORKING*2);
+			desgaste := desgaste + 50;
+
+			SetObjProperty(theitem, "usos", desgaste);
+
 			var fechadura := YesNo(who, "Voce deseja por uma fechadura nesse item?");
 			if (fechadura)
 				SendSysMessageEx(who, "Escolha a fechadura para por neste item.", SSM_REQUEST);

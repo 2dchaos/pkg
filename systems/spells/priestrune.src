@@ -11,7 +11,7 @@ program usavarinha(who, wand)
 		return 0;
 	endif
 	var chardata := GetObjProperty(who, "chardata");
-	if (chardata.povo == "Bariyano" || chardata.povo == "Ferune") //verifica se o povo é Bariyano ou Ferune
+	if (chardata.povo == "Bariyano" || chardata.povo == "Ferune" || chardata.povo == "Balmute") //verifica se o povo é Bariyano ou Ferune
 		if (getobjproperty(wand, "spellinfo") == error)
 			var id := getobjproperty(wand, "runatype");
 			var spellinfo := struct;

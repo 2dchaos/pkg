@@ -59,8 +59,10 @@ program startTalent(param)
       if ( random < hit_chance )
          var total := cint(CalculateTotalDamage(mobile, dmg, who, dmgList));
          if (!ParryCheck(who, mobile, total));
-            PlayMovingEffect( who, mobile, 0x22C6, 10);
-            DamageFLS(mobile, total*3, DMG_PHYSICAL, who);
+            if ( mobile != who )
+               PlayMovingEffect( who, mobile, 0x22C6, 10);
+               DamageFLS(mobile, total*3, DMG_PHYSICAL, who);
+            endif
          else
             PlayHitSounds(who, mobile);
          endif

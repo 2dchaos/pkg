@@ -27,7 +27,8 @@ program FillBucket(who, hook)
 		SendSysMessage(who, "That bucket is already full.");
 		return;
 	endif
-	ReserveItem(bucket);
+	
+	//ReserveItem(bucket);
 	
 	MoveHookInWell(hook, bucket);
 	

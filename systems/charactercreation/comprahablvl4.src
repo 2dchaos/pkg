@@ -7,7 +7,7 @@ use cfgfile;
 
 program pergrad(who, item)
 
-	var nivel := 3;
+	var nivel := 2;
 	var classe := GetObjProperty(who, "classe");
 	var faccao := GetObjProperty(who, "faccao"); //facção
 

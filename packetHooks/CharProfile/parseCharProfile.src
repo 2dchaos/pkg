@@ -83,7 +83,7 @@ program runScript_CharProfileRequest( params )
 		endif
 	elseif (chr.serial != who.serial)
 		if (chr.name == "Desconhecido")
-			var incognito_url := "https://cdn.discordapp.com/attachments/777299682296070145/813706521334644776/incognito.png";
+			var incognito_url := "https://cdn.discordapp.com/attachments/123201376690896897/1051265848494530601/hooded_figure_by_dravek_d8e2ogu-pre.png";
 			var incognito_descricao := "A fisionomia desse indvíduo é difícil de discernir.";
 			SendHTMLGump(who, "Desconhecido", "<center><img src=\"" + incognito_url + "\" width:200 height:200 align=center></center>" + "<div align=\"left\">" + incognito_descricao + "</div>" );
 		else

@@ -714,7 +714,7 @@ function Flee(opponent)
          PrintText(me, "*esconde*");
          sleep(1);
          me.hidden := 1;
-         me.stealthsteps := 60;
+         me.stealthsteps := 180;
          SetCooldown(me, "fleestealth", 30);
       endif
     endif

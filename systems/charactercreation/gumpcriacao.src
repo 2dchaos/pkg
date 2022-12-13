@@ -349,15 +349,6 @@ function GumpSkills(who, byref chardata, byref skillspoints)
 	var terciarias   := GetConfigStringArray(elem, "T");
 	var quaternarias := GetConfigStringArray(elem, "Q");
 
-	if (chardata.kit != "Artifice" || chardata.kit != "Ranger" || chardata.classe != "Totemista")
-		var i := 1;
-		foreach skill in quaternarias //reduz as primarias
-			if ( skill == "HandleAnimal")
-				quaternarias.erase(i);
-			endif
-			i := i + 1;
-		endforeach
-	endif
 
 	if (chardata.kit == "Artifice")		
 
@@ -503,6 +494,16 @@ function GumpSkills(who, byref chardata, byref skillspoints)
 			if ( skill == "HandleAnimal")
 				quaternarias.erase(i);
 				terciarias.append("HandleAnimal");
+			endif
+			i := i + 1;
+		endforeach
+	endif
+
+	if (chardata.kit != "Artifice" || chardata.kit != "Ranger" || chardata.classe != "Totemista")
+		var i := 1;
+		foreach skill in quaternarias //reduz as primarias
+			if ( skill == "HandleAnimal")
+				quaternarias.erase(i);
 			endif
 			i := i + 1;
 		endforeach
@@ -1350,18 +1351,28 @@ program createchar(who)
 				GFResizePic(gump2, 15, 40, 0x13BE, 140, 170);
 				GFTextLine(gump2, 45, 50, 1153, "Escolha sua magia");
 
-				//GFTextLine(gump2, 40, 70, 1153, "Necromante");
+				GFTextLine(gump2, 40, 70, 1153, "Acolito Dyadista");
 				GFTextLine(gump2, 40, 90, 1153, "Feiticeiro");
 				GFTextLine(gump2, 40, 110, 1153, "Necromante");
 
-				//GfAddButton(gump2, 20, 73, 2117, 2118, GF_CLOSE_BTN,  10);
+				GfAddButton(gump2, 20, 73, 2117, 2118, GF_CLOSE_BTN,  10);
 				GfAddButton(gump2, 20, 94 , 2117, 2118, GF_CLOSE_BTN,  20);
 				GfAddButton(gump2, 20, 115 , 2117, 2118, GF_CLOSE_BTN,  30);
 
 				var input2 := GFSendGump(who, gump2);
 				input2 := input2[0];
+
+				if (input2 == 10)
+					var robe := CreateItemInBackpack(who, 0x1F03, 1); //Manto
+					SetObjProperty(robe, "description", "Robe com bordado com Ankh de Dyadis");
+					SetObjProperty(robe, "cannotdye", 1);
+					SetObjProperty(robe, "descmod", "Acólito");
+					createiteminbackpack(who, "runaarmasagrada");
+					createiteminbackpack(who, "runacuraleve");
+					createiteminbackpack(who, "runadescanso");
+					setObjproperty(who, "caminho", "Acolito");
 				
-				if (input2 == 30)
+				elseif (input2 == 30)
 					var grimorio:=createiteminbackpack(who, "grimorionecro", 1);
 					SetObjProperty(grimorio, "serialid", who.serial);
 					CreateItemInBackpack(who, "gravedust", 10);
@@ -1409,7 +1420,7 @@ program createchar(who)
 		endif
 	endif
 
-	if (chardata.classe == "Sabio" && chardata.povo == "Bariyano" || chardata.classe == "Sabio" && chardata.povo == "Ferune" )
+	if (chardata.classe == "Sabio" && chardata.povo == "Bariyano" || chardata.classe == "Sabio" && chardata.povo == "Ferune")
 		if (!ganheispell)
 			var gump2 := GFCreateGump();
 				GFDisposable(gump2, 0);

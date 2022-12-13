@@ -10,7 +10,7 @@ const MAX_RESOURCE_AMOUNT := 10;
 
 function Garimpeiro(who)
 
-	if (randomint(200) <= 1)	
+	if (randomint(1000) <= 1)	
 
 		var cfg := ReadConfigFile(":gems:itemdesc");
 		var keys := GetConfigStringKeys( cfg );
@@ -423,7 +423,7 @@ function DetermineMiningDifficulty(oretype)
 		0xee99: return 0;  //calcario
 	*/
 		0x6075: return 5;	//areia
-		0x6990: return 15;	//estanho 
+		0x6990: return 10;	//estanho 
 		0x6450: return 20;	//cobre
 		0x6300: return 30;	//iron ore
 		0x6992: return 40;	//prata 

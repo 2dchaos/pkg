@@ -35,6 +35,7 @@ C:\LVM\LVM\pkg\systems\faccao\include\faccao.inc
 C:/LVM/LVM/scripts/modules/guilds.em
 C:\LVM\LVM\scripts\include\arrays.inc
 C:\LVM\LVM\pkg\mobiles\merchants\pcmerchant\include\ghaia.inc
+C:\LVM\LVM\pkg\mobiles\timedScripts\include\timedScripts.inc
 C:\LVM\LVM\pkg\systems\loot\include\lootParser.inc
 C:\LVM\LVM\pkg\systems\loot\include\magicLoot.inc
 C:\LVM\LVM\scripts\include\damage.inc
@@ -60,7 +61,6 @@ C:\LVM\LVM\pkg\tn\include\equipment.inc
 C:\LVM\LVM\pkg\systems\charactercreation\include\chargumps.inc
 C:\LVM\LVM\pkg\systems\spells\include\tnmagery.inc
 C:\LVM\LVM\scripts\include\sounds.inc
-C:\LVM\LVM\pkg\mobiles\timedScripts\include\timedScripts.inc
 C:\LVM\LVM\pkg\systems\spells\include\spellSounds.inc
 C:\LVM\LVM\pkg\systems\charactercreation\include\resists.inc
 C:\LVM\LVM\pkg\mobiles\ghaia\include\ghaiaInit.inc

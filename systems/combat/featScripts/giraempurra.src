@@ -61,11 +61,13 @@ program startTalent(param)
         PushBack(mobile, 4, 35);
         if ( random < hit_chance )
          var total := cint(CalculateTotalDamage(mobile, dmg, who, dmgList));
-            if (!ParryCheck(who, mobile, total));
-                PlayMovingEffect( who, mobile, 0x22C6, 10);
-                DamageFLS(mobile, total*3, DMG_PHYSICAL, who);
-            else
-                PlayHitSounds(who, mobile);
+            if ( mobile != who )
+                if (!ParryCheck(who, mobile, total));
+                    PlayMovingEffect( who, mobile, 0x22C6, 10);
+                    DamageFLS(mobile, total*3, DMG_PHYSICAL, who);
+                else
+                    PlayHitSounds(who, mobile);
+                endif
             endif
         else 
             PlayMissSound(who);

@@ -23,7 +23,7 @@ program use_Runecraft(who, tool)
 	endif
 
 
-	if(!can_access(who, tool))
+	/*if(!can_access(who, tool))
 		return 0;
 	endif
 	if((!tool.movable) or !ReserveItem(tool))
@@ -36,7 +36,7 @@ program use_Runecraft(who, tool)
 			return 0;
 		endif
 	endif
-
+	*/
 	EraseObjProperty(who, "IsMeditating");
 	EraseObjProperty(who, "HealTimer");
 
