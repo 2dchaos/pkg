@@ -536,7 +536,7 @@ function CalcPathAndMove(me, byref opponent, sleepdelay)
       if (reachtry[2] > ReadGameClock())
          path := FindPath(  me.x, me.y, me.z, opponent.x, opponent.y, opponent.z, me.realm, 0, 15);
          if (!path)
-            Flee(opponent);;
+            //Flee(opponent);;
             sleepms(sleepdelay);
          else
             SetObjProperty(me, "path", path);
@@ -554,7 +554,7 @@ function CalcPathAndMove(me, byref opponent, sleepdelay)
          path := FindPath(  me.x, me.y, me.z, opponent.x, opponent.y, opponent.z, me.realm, flags, 15); //calcula o path
          
          if (!path[1] || !path || path == error)
-            Flee(opponent);
+            //Flee(opponent);
             sleepms(sleepdelay);
          else
             if (move_type) RunTowardLocation( path[1].x, path[1].y );
@@ -591,7 +591,7 @@ function CalcPathAndMove(me, byref opponent, sleepdelay)
                me.remAggro(opponent);
                var old_opponent := opponent;
                ChooseHighestOpponent(me, opponent);
-               if (old_opponent == opponent) Flee(opponent); endif
+               if (old_opponent == opponent) /*Flee(opponent);*/ endif
             endif
          endif
       else
