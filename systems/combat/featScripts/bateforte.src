@@ -70,7 +70,7 @@ program explosao(params)
     var random := Randomint (100)+1;
     var mod := GetModByFacing(who.facing);
 
-    PrintText(who, "*Levanta o Martelo*"); 
+    PrintText(who, "*Ergue a arma acima da cabeca*"); 
     who.frozen := 1;  
     sleepms(2000);
     PlayAttackAnimation(who);
@@ -101,7 +101,7 @@ program explosao(params)
 		        return 1;
             endif
             
-            DamageFLS(targ, total*6, DMG_FORCED, who);
+            DamageFLS(targ, total*6, DMG_PHYSICAL, who);
             PrintText(who, "*Bate Forte*"); 
 
             who.frozen := 0;

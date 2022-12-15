@@ -91,7 +91,7 @@ program explosao(params)
       var mod := GetModByFacing(who.facing);
       MoveObjectToLocation(targ, who.x+mod[1], who.y+mod[2], who.z, who.realm);
 
-      TS_StartTimer(targ, "lentidao", 5);
+      TS_StartTimer(targ, "lentidao", 6);
    else
       PlayHitSounds(who, targ);
       PlayAttackAnimation(who);

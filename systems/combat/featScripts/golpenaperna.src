@@ -23,7 +23,7 @@ program explosao(params)
     var combatskill := AP_GetSkill(who, MELEECOMBAT1H);
     var armainicial := who.weapon;
 
-    if ( combatskill < 20.0)
+    if ( combatskill < 40.0)
 		SendSysMessageEx(who, "Voce nao tem conhecimento suficiente para executar o golpe", SSM_FAIL);
 		return 0;
     endif
@@ -79,9 +79,9 @@ program explosao(params)
             PrintText(who, "*Golpeia a perna de {}*".format(targ.name));
             PlayHitSounds(who, targ);
         
-            TS_StartTimer(targ, "lentidao", 4, who);
+            TS_StartTimer(targ, "lentidao", 6, who);
     
-            DamageFLS(targ, total, DMG_FORCED, who);
+            DamageFLS(targ, total, DMG_PHYSICAL, who);
         else  
             PlayHitSounds(who, targ);
             Performaction(who, elem.Anim);

@@ -74,7 +74,7 @@ program explosao(params)
     if ( random < hit_chance )
         var total := cint(CalculateTotalDamage(targ, basedamage, who, dmgList));
         if (!ParryCheck(who, targ, total));
-            ParryCheck(who, targ, total);
+            //ParryCheck(who, targ, total);
             Performaction(who, elem.Anim);
             PrintText(who, "*Acerta o ponto fraco de {}*".format(targ.name));
             PlayHitSounds(who, targ);
@@ -82,7 +82,7 @@ program explosao(params)
             TS_StartTimer(targ, "dmgreduction", 10, 2);
             PrintText(targ, "*Sentindo dor*");
  
-		    DamageFLS(targ, total, DMG_FORCED, who);
+		    DamageFLS(targ, total, DMG_PHYSICAL, who);
         else
             PlayHitSounds(who, targ);
             Performaction(who, elem.Anim);

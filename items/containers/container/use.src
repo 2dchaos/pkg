@@ -41,11 +41,11 @@ program useContainer(mobile, container)
 
 	if (vaiquebrar <=0)
 		foreach item in (EnumerateItemsInContainer(container))
-			if (container in EnumerateItemsInContainer(mobile.backpack))
+			//if (container in EnumerateItemsInContainer(mobile.backpack))
 				var e := MoveObjectToLocation(item, mobile.x, mobile.y, mobile.z, mobile.realm, MOVEOBJECT_FORCELOCATION | MOVEITEM_IGNOREMOVABLE);
-			else
-				var e := MoveObjectToLocation(item, container.x, container.y, container.z, container.realm, MOVEOBJECT_FORCELOCATION | MOVEITEM_IGNOREMOVABLE);
-			endif
+			//else
+			//	var e := MoveObjectToLocation(item, container.x, container.y, container.z, container.realm, MOVEOBJECT_FORCELOCATION | MOVEITEM_IGNOREMOVABLE);
+			//endif
 		endforeach
 		Sleep(1);
 		PrintText(container, "*Quebrou!*");

@@ -2,6 +2,7 @@ const ONLY_ON := 0x11;
 
 include ":traps:traps";
 include "include/arrays";
+include ":tn:cooldown";
 
 function ChangeLeverStatus(la, only_on_levers := 0)
    if (typeof(la) != "Array")
@@ -121,6 +122,11 @@ function CheckAllLevers(lever, lever_list, opts)
 endfunction
 
 function normalusage(who, item)
+
+   if (GetObjProperty(item, "trap_inativa"))
+      return 1;
+   endif
+
    if (GetObjProperty(item, "#inuse"))
       return;
    endif
@@ -138,9 +144,9 @@ function normalusage(who, item)
    endif
 
    if (status == "off")
-      PrintTextAbove(who, "*Ativa*");
+      PrintTextAbovePrivate(who, "*Ativa*", who);
    else
-      PrintTextAbove(who, "*Desativa*");
+      PrintTextAbovePrivate(who, "*Desativa*", who);
    endif
 
    var lever_list := array{item.serial};
@@ -182,9 +188,10 @@ function normalusage(who, item)
    endif
    var msg := opts.ontext;
    if(!msg)
-      msg := "Voc� ouve algo se movendo...";
+      msg := "Voce ouve algo se movendo...";
    endif
-   SendSysMessageEx(who, msg, SSM_INFO);
+   //SendSysMessageEx(who, msg, SSM_INFO);
+   PrintText(who, msg);
 
    if (opts.lights)
       lightswitch(item, opts);
@@ -203,9 +210,10 @@ function normalusage(who, item)
       moveObjects(item, opts);
    endif
    if (opts.teleport_to)
-      teleporter(item, opts);
+      var monstro := opts.teleport_to;
+      var npc := CreateNPCFromTemplate(monstro, item.x, item.y, item.z, 0, item.realm);
+      SetObjProperty(item, "trap_inativa", 1);
    endif
-
 endfunction
 
 function changegraphiclever(item, opts)
@@ -360,6 +368,10 @@ function reset(item, force_reset := 0)
    endif
    if (opts.moveitems)
       moveObjects(item, opts);
+   endif
+
+   if (GetObjProperty(item, "trap_inativa"))
+      EraseObjProperty(item, "trap_inativa");
    endif
 
    SetRandomOrder(item);

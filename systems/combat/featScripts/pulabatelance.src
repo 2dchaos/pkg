@@ -12,7 +12,7 @@ include "include/client";
 
 program tirodesfocado(who)
 
-    if (TS_GetCooldown(who, "habilidade um"))
+    if (TS_GetCooldown(who, "habilidade dois"))
 		return SendSysMessageEX(who, "Habilidade em Cooldown!", SSM_FAIL);
 	endif
 
@@ -25,7 +25,7 @@ program tirodesfocado(who)
 
 	who.warmode := 1;
 
-    TS_StartCooldown(who, "habilidade um", 20);
+    TS_StartCooldown(who, "habilidade dois", 20);
     PrintText(who, "*avanca freneticamente*");
 	who.hidden := 0;
 	
@@ -85,7 +85,7 @@ program tirodesfocado(who)
 
             if ( random < hit_chance )
                 if (!ParryCheck(who, mobile, total));
-                    DamageFLS(mobile, total*2, DMG_FORCED, who);
+                    DamageFLS(mobile, total*6, DMG_FORCED, who);
                     already_hit.append(mobile);
                 else
                     PlayHitSounds(who, mobile);

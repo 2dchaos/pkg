@@ -82,7 +82,7 @@ program explosao(params)
     
             DamageFLS(targ, total*2, DMG_FORCED, who);
 
-            TS_StartTimer(targ, "lentidao", 5);
+            TS_StartTimer(targ, "lentidao", 6);
         else  
             PrintText(who, "*Estoca violentamente e puxa a arma*");
             PlayHitSounds(who, targ);

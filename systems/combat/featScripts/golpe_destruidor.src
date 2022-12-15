@@ -82,7 +82,7 @@ program defensor(params)
 
    if (!ParryCheck(who, targ, total));
       PlayHitSounds(who, targ);
-      DamageFLS(targ, total*2, DMG_FORCED, who);
+      DamageFLS(targ, total*2, DMG_PHYSICAL, who);
       if (targ.dead || !targ)
          HealFLS(who, 20);
          TS_LowerDuration(who, "habilidade um", 20, 1);

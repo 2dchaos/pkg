@@ -42,5 +42,5 @@ program lever(item)
          endif
       endif
         reset(item); //reset testa se ta ativado, se tiver volta pro normal.
-    endwhile
+      endwhile
 endprogram

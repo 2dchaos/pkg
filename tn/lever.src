@@ -37,7 +37,7 @@ function ConstructGump(item)
       GFTextLine(gump, 45, y, _ifElse(opts.moveitems, 520, 500), "Mover objetos");
       GFAddButton(gump, 25, y+2, 2117, 2118, GF_CLOSE_BTN, 101);
       y += 20;
-      GFTextLine(gump, 45, y, _ifElse(opts.teleport_to, 520, 500), "Teleportar usuario");
+      GFTextLine(gump, 45, y, _ifElse(opts.teleport_to, 520, 500), "Spawnar NPC");
       GFAddButton(gump, 25, y+2, 2117, 2118, GF_CLOSE_BTN, 5);
    endif
    
@@ -264,7 +264,7 @@ endfunction
 function setOpenDoor(who, item)
    var opts := item.GetLeverOpts();
    var newarray := array{};
-   SendSysMessageEx(who,"Escolha a porta que voc� deseja linkar com esta alavanca. Esc para cancelar");
+   SendSysMessageEx(who,"Escolha a porta que voce deseja linkar com esta alavanca. Esc para cancelar");
    var trg;
    while(1)
          trg := Target(who);
@@ -320,9 +320,22 @@ endfunction
 
 function linkteleport(who, item)
    var opts := item.GetLeverOpts();
-   
+
+   var input_list := array{};
+   input_list.append(struct{ "title" := "Qual NPC sera spawnado?", "marked" := opts.teleport_to });
+   var output := QuestionsGump(who, input_list);
+   if (!output)
+      return;
+   endif
+
+   if (!output[1])
+      opts.-"teleport_to";
+   else
+      opts.teleport_to := output[1];
+   endif
+
    item.setLeverOpts(opts);
-   SendSysMessageEx(who,"O teleporte foi adicionado a alavanca");
+   SendSysMessageEx(who,"O monstro sera invocado quando ativado");
 endfunction
 
 function doorstatus(who, item)
@@ -335,7 +348,7 @@ function doorstatus(who, item)
       if(!trg)
          break;
       elseif (!trg.isDoor())
-         SendSysMessageEx(who, "Isso nao � uma porta", SSM_FAIL);
+         SendSysMessageEx(who, "Isso nao e uma porta", SSM_FAIL);
          continue;
       endif
       newarray.append(trg.serial);
@@ -449,10 +462,15 @@ endfunction
 function togglewalkon(who, item)
    var opts := item.GetLeverOpts();
    if (opts.walkon)
+      item.invisible:=0;
+      item.graphic:= 0x108e;
       SendSysMessageEx(who, "O item nao sera mais ativado ao andar por cima", SSM_FAIL);
       opts.-"walkon";
    else
-      SendSysMessageEx(who, "O item sera mais ativado ao andar por cima", SSM_INFO);
+      item.graphic:= 4010;
+      SendSysMessageEx(who, "O item sera ativado ao andar por cima", SSM_INFO);
+      item.movable := 0;
+      item.invisible:=1;
       opts.walkon := 1;
    endif
    item.setLeverOpts(opts);
