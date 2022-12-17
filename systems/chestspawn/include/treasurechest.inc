@@ -23,11 +23,11 @@ function CreateTreasureChests(lvl, amt, rng, x, y, z, realm, lootname)
 			checker := 0;
 			newx := cint(x + RandomInt(rng) - RandomInt(rng));
 			newy := cint(y + RandomInt(rng) - RandomInt(rng));
-			newz := (GetMapInfo(x, y, realm)).z;
-			if (z > newz+10)
-				newz := z;
-			endif
-			if(len(ListItemsNearLocation(newx, newy, newz, 0, realm)) == 0)
+			//newz := (GetMapInfo(x, y, realm)).z;
+			//if (z > newz+10)
+			//	newz := z;
+			//endif
+			if(len(ListItemsNearLocation(newx, newy, z, 0, realm)) == 0)
 				type := RandomInt(4)+1;
 				case(type)
 					1: gfx := 3650;
@@ -36,7 +36,7 @@ function CreateTreasureChests(lvl, amt, rng, x, y, z, realm, lootname)
 					4: gfx := 3648;
 					5: gfx := 3708;
 				endcase
-				chest := CreateItemAtLocation(newx, newy, newz, gfx, 1, realm);
+				chest := CreateItemAtLocation(newx, newy, z, gfx, 1, realm);
 				if(chest)
 					checker := 1;
 					chest.movable := 0;

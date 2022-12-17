@@ -20,20 +20,23 @@ program SpellScript(params)
 	endif
 
 
-	var lvl := Cint(AP_GetSkill(who, MAGICLORE)/33);
+	var lvl := Cint(AP_GetSkill(who, MAGICLORE)/20);
 	if (lvl < 1)
 		lvl := 1;
 	endif
 
 	if (!CheckResist(targ, VONTADE, 60+cint(AP_GetSkill(who, MAGICLORE))))
+		var last_loc := struct{ "x" := who.x, "z" := who.z, "y" := who.y };
+
 		TS_StartTimer(targ, "dmgreduction", Cint(AP_GetSkill(who, MAGICLORE)), lvl, who, 1);
 		PlaySoundEffect(targ, SFX_SPELL_PROTECTION);
 		printText(targ, "*apavorado*");
 		TS_StartTimer(targ, "desmontar", cint(AP_GetSkill(who, MAGICLORE)/6));
+		SendEvent(targ, struct{ "type" := 0x3333, source := who, "last_loc" := last_loc});
 		//SendSysMEssageEx(who, "O alvo esta apavorado.", SSM_INFO);3
 		Corromper(who, 32, targ);
 	else
-		SendSysMessageEx(who, "O alvo  resistiu a magia.", SSM_FAIL);
+		SendSysMessageEx(who, "O alvo resistiu a magia.", SSM_FAIL);
 		SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
 	endif
 	

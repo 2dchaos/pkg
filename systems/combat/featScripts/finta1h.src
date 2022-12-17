@@ -24,7 +24,7 @@ program tirodesfocado(who)
 		return 0;
     endif
 
-	SendSysMessageEx(who, "Voce prepara uma finta", SSM_INFO);
+	SendSysMessageEx(who, "Voce tenta preparar uma finta", SSM_INFO);
 
 	var targ := Target(who);
 
@@ -53,9 +53,6 @@ program tirodesfocado(who)
 
 	TS_StartCooldown(who, "habilidade dois", 20);
 	who.hidden := 0;
-
-    SetObjProperty(who, "evasao", 1);
-    SendSysMessageEX(who, "Voce vai esquivar do proximo golpe", SSM_INFO);
 
    if (esquiva == 1)
         Performaction(who, elem.Anim);
@@ -86,9 +83,12 @@ program tirodesfocado(who)
 			DamageFLS(targ, total*3, DMG_PHYSICAL, who);
 			PlaySoundEffect(who, 0x521);
 			Performaction(who, elem.Anim);
+			SetObjProperty(who, "evasao", 1);
+    		SendSysMessageEX(who, "Voce acerta o golpe e prepara uma finta", SSM_INFO);
 		else
 			PlayHitSounds(who, targ);
         	Performaction(who, elem.Anim);
+			SendSysMessageEX(who, "Voce errou a finta", SSM_INFO);
 		endif	
 	else
 		PlayMissSound(who);

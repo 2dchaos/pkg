@@ -23,6 +23,7 @@ program SpellScript(params)
 		amt := Cint(AP_GetSkill(who, MAGICLORE)*0.5);
 	else
 		amt := Cint(AP_GetSkill(who, MAGICLORE)*0.25);
+		SendSysMessageEx(targ, "Voce resistiu parcialmente a magia.", SSM_INFO);
 	endif
 
 	if (TemHabilidade(who, "Elo com a Morte"))	
@@ -42,6 +43,8 @@ program SpellScript(params)
 */	
 
 	TS_StartTimer(targ, "feebleMind", cint(AP_GetSkill(who, MAGICLORE)), amt, who, 1); //20 min
+	AP_ConsumeVital(targ, MANA, amt);
+
 	PlaySoundEffect(targ, SFX_SPELL_WEAKEN);
 	SendSysMEssageEx(who, "Voce deixou o alvo mais burro.", SSM_INFO);
 	Corromper(who, 2, targ);

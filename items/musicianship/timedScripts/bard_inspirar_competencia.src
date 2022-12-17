@@ -7,7 +7,7 @@ include ":musicianship:bardmusic";
 program TimedScript_bard_inspirar_competencia(params)
 	var alvo := params[1];
 	var caster := params[2];
-	var modificador := CInt(params[3]/10);
+	var modificador := CInt(params[3]/5);
 	var teste := GetObjProperty(alvo, "#Bard_inspirar_competencia");
 	if(teste) //verifica se ja esta sob efeito similar
 		if(modificador > teste) //se o novo efeito é maior, aplica a diferença
@@ -23,7 +23,7 @@ program TimedScript_bard_inspirar_competencia(params)
 			AP_ModifySkillMod(alvo, SURVIVAL, modificador);
 			AP_ModifySkillMod(alvo, METALWORKING, modificador);
 			AP_ModifySkillMod(alvo, WOODWORKING, modificador);
-			AP_ModifySkillMod(alvo, DomesticWork, modificador); //UNICA CONSTANTE DECLARADA MINUSCULA
+			AP_ModifySkillMod(alvo, WOMENSWORK, modificador); //UNICA CONSTANTE DECLARADA MINUSCULA
 			AP_ModifySkillMod(alvo, GATHERING, modificador);
 			AP_ModifySkillMod(alvo, HANDLEANIMAL, modificador);
 			Set_Critical(0);
@@ -45,7 +45,7 @@ program TimedScript_bard_inspirar_competencia(params)
 		AP_ModifySkillMod(alvo, SURVIVAL, modificador);
 		AP_ModifySkillMod(alvo, METALWORKING, modificador);
 		AP_ModifySkillMod(alvo, WOODWORKING, modificador);
-		AP_ModifySkillMod(alvo, DomesticWork, modificador); //UNICA CONSTANTE DECLARADA MINUSCULA
+		AP_ModifySkillMod(alvo, WOMENSWORK, modificador); //UNICA CONSTANTE DECLARADA MINUSCULA
 		AP_ModifySkillMod(alvo, GATHERING, modificador);
 		AP_ModifySkillMod(alvo, HANDLEANIMAL, modificador);
 		Set_Critical(0);

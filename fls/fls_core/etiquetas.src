@@ -31,6 +31,9 @@ program usar_etiqueta(who, the_item)
 	if (use_on.graphic == 3849)
 		 SetName(use_on, itemdesc); //
 		 use_on.color := the_item.color;
+	elseif (use_on.isA(POLCLASS_CONTAINER))
+		SetName(use_on, itemdesc); //
+		 use_on.color := the_item.color;
 	else
 		SendSysMessage(who, "Este item nao pode ser rotulado.");
 	endif

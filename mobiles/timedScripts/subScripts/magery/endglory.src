@@ -10,6 +10,7 @@ program cureScript(params)
 //	SetObjProperty(who, "dmgbonus", cdbl(GetObjProperty(who, "dmgbonus")) - lvl );
 //	SetObjProperty(who, "hitbonus", cdbl(GetObjProperty(who, "hitbonus")) - (lvl*30) );
 	EraseObjProperty(who, "#glory");
+	EraseObjProperty(who, "hitbonus");
 	
 	return 1;
 endprogram
