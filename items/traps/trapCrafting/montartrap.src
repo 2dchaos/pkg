@@ -69,7 +69,7 @@ function niveldarmardilha (who, trap)
 				//DestroyItem(trap);
 				return;
 			else
-				if ( (pot.objtype == 0xbf00) || (pot.objtype == 0xdc04) || (pot.objtype == 0x6072) || (pot.objtype == 0xbf04) || (pot.objtype == 0xef60) || (pot.objtype == 0xdc08) || (pot.objtype == 0xef61) || (pot.objtype == 0xef62))
+				if ( (pot.objtype == 0xbf00) || (pot.objtype == 0xdc04) || (pot.objtype == 0x6072) || (pot.objtype == 0xbf04) || (pot.objtype == 0xef60) || (pot.objtype == 0xef61) || (pot.objtype == 0xef62))
                     //VENENOS
 					if (pot.objtype == 0xbf00)
 						level := 1;
@@ -101,15 +101,8 @@ function niveldarmardilha (who, trap)
                         return;
                     //BOMBAS
                     elseif (pot.objtype == 0xef60)
-						level := 2;
-						SetObjProperty(trap, "traplevel", level);
-                        SetObjProperty(trap, "traptype", "Explosion");
-                        DestroyItem(pot);
-                        SendSysMessageEx(who, "Voce armou a armadilha com sucesso", SSM_INFO);
-                        return;
-                    elseif ( pot.objtype == 0xdc08)
 						level := 3;
-                        SetObjProperty(trap, "traplevel", level);
+						SetObjProperty(trap, "traplevel", level);
                         SetObjProperty(trap, "traptype", "Explosion");
                         DestroyItem(pot);
                         SendSysMessageEx(who, "Voce armou a armadilha com sucesso", SSM_INFO);

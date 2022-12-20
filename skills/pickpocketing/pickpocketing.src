@@ -39,7 +39,9 @@ program skill_Stealing(mobile)
 			SendSysMessageEx(mobile, "Seu acordo te proibe roubar esta pessoa", SSM_FAIL);
 			return 0;
 		endif
-	elseif (targ == mobile)
+	endif
+
+	if (targ == mobile)
 		SendSysMessageEx(mobile, "Voce chega a conclusao de que consegue abrir e fechar sua bolsa de forma normal.", SSM_FAIL);
 		return 0;
 	elseif ( targ.connected == 0 )

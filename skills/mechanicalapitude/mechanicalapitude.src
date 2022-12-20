@@ -33,6 +33,53 @@ program skillremoveTrap(who)
 		return;
 	endif
 
+	if (item.objtype == 0xdc08)
+		if (GetObjProperty(item, "trap_inativa"))
+			SendSysMessageEx(who, "Voce ja desativou essa armadilha.", SSM_INFO);
+			return;
+		endif
+		if(who.hidden)
+			SendSysMessageEx(who, "Desarmando armadilha.", SSM_INFO);
+		else
+			PrintTextAbove(who, "*Desarmando armadilha*");
+			SendSysMessageEx(who, "Desarmando armadilha.", SSM_INFO);
+		endif
+		if (!Wait(who, 5))
+			SendSysMessageEx(who, "Voce interrompeu o processo.", SSM_FAIL);
+			return;
+		endif
+		var dif;
+		var lvl := Cint(GetObjProperty(item, "level"));
+		case (lvl)
+			1: dif := 15;
+			2: dif := 40;
+			3: dif := 60;
+			4: dif := 86;
+			5: dif := 90;
+			6: dif := 110;
+			default: dif := -1;
+		endcase
+		if (SkillCheck( who, MECHANICALAPITUDE, dif) > 0)
+			if(who.hidden)
+				SendSysMessageEx(who, "Voce desativou a armadilha com sucesso sem se revelar.", SSM_INFO);
+			else
+				SendSysMessageEx(who, "Voce desativou a armadilha com sucesso.", SSM_INFO);
+				PrintTextAbove(who, "*Desativou a armadilha*");
+			endif
+			SetObjProperty(item, "trap_inativa", 1);
+			return;
+		else
+			if(who.hidden)
+				SendSysMessageEx(who, "Voce falhou em desarmar a armadilha sem se revelar.", SSM_FAIL);
+				return;
+			else
+				PrintTextAbove(who, "*Falhou em desarmar a armadilha*");
+				SendSysMessageEx(who, "Voce falhou em desarmar a armadilha.", SSM_FAIL);
+				return;
+			endif
+		endif
+	endif
+
 	if( GetObjProperty(item, "TrapList") != error )
 
 		var spotedTrap := Cint(GetObjProperty(item, "trapSpoted"));

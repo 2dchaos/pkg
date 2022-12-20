@@ -1,12 +1,13 @@
-c:\LVM\LVM\pkg\skills\alchemy\potions\walkonpot\walkonpot.src
+C:\LVM\LVM\pkg\skills\alchemy\potions\minaterrestre.src
 C:/LVM/LVM/scripts/modules/basic.em
 C:/LVM/LVM/scripts/modules/basicio.em
 C:/LVM/LVM/scripts/modules/uo.em
 C:/LVM/LVM/scripts/modules/os.em
-C:/LVM/LVM/scripts/modules/cfgfile.em
 C:/LVM/LVM/scripts/modules/util.em
+C:/LVM/LVM/scripts/modules/cfgfile.em
 C:\LVM\LVM\scripts\include\say.inc
 C:/LVM/LVM/scripts/modules/unicode.em
+C:\LVM\LVM\pkg\mobiles\timedScripts\include\timedScripts.inc
 C:\LVM\LVM\scripts\include\damage.inc
 C:/LVM/LVM/scripts/modules/math.em
 C:\LVM\LVM\pkg\tn\include\cooldown.inc
@@ -36,3 +37,5 @@ C:\LVM\LVM\pkg\utils\datafile\include\datafile.inc
 C:/LVM/LVM/scripts/modules/datafile.em
 C:\LVM\LVM\pkg\items\blood\include\blood.inc
 C:\LVM\LVM\pkg\fls\fls_core\include\packets.inc
+C:\LVM\LVM\pkg\items\mounts\include\mounts.inc
+C:\LVM\LVM\scripts\include\client.inc

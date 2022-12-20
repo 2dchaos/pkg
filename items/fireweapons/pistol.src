@@ -32,7 +32,7 @@ program fireweapon(who, item)
 		endif
 		var valid := 0;
 		case (pot.objtype)
-			0xdc08: valid := 1; SetObjProperty(item, "tipo", 2); break;
+			//0xdc08: valid := 1; SetObjProperty(item, "tipo", 2); break;
 			0xef60: valid := 1; SetObjProperty(item, "tipo", 1); break;
 			0xef61: valid := 1; SetObjProperty(item, "tipo", 2); break;
 			0xef62: valid := 1; SetObjProperty(item, "tipo", 3); break;

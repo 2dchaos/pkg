@@ -126,19 +126,19 @@ function DeterminaLiga(metals, who)
 
 	var metais := array;
 
-        foreach item in metals
-           case(Cint(item))
+   foreach item in metals
+      case(Cint(item))
          0x6465: metais.append("cobre");
          25353: metais.append("ferro");
          27025: metais.append("estanho");
-	      25681: metais.append("argonil");
-	      25351: metais.append("galvorn");
-	      25352: metais.append("mithril");
-	      25346: metais.append("helce");
-	      25347: metais.append("sinque");
-	      25348: metais.append("figin");	
-           endcase
-        endforeach
+         25681: metais.append("argonil");
+         25351: metais.append("galvorn");
+         25352: metais.append("mithril");
+         25346: metais.append("helce");
+         25347: metais.append("sinque");
+         25348: metais.append("figin");	
+      endcase
+   endforeach
 
 	if ( (metais.size() == 2) && ("cobre"  in metais ) && ("estanho" in metais)  ) //bronze
 		return 0x6994;
@@ -154,7 +154,7 @@ function DeterminaLiga(metals, who)
 		return 0x699A;
 	elseif ( (metais.size() == 5) && ("mithril" in metais) && ("helce" in metais) && ("sinque" in metais) && ("figin" in metais) && ("argonil" in metais) ) 
 		return 0x699B;    
-        else
-           return "noIngot";
-        endif
+   else
+      return "noIngot";
+   endif
 endfunction 

@@ -70,7 +70,7 @@ program skill_Stealth( who )
 					endwhile
 				endif
 
-				SetObjProperty(who, "#steathsteps", atualStep + 1);
+				SetObjProperty(who, "#steathsteps", atualStep + 2);
 				return 1;
 			elseif (check >= -15)
 				SendSysMessageEx(who, "Voce falhou mas se manteve escondido.", SSM_FAIL);
@@ -119,7 +119,7 @@ program skill_Stealth( who )
 			endwhile
 		endif
 
-		SetObjProperty(who, "#steathsteps", atualStep + 1);
+		SetObjProperty(who, "#steathsteps", atualStep + 2);
 		return 1;
 	elseif (check >= -15)
 		SendSysMessageEx(who, "Voce falhou mas se manteve escondido.", SSM_FAIL);
@@ -145,20 +145,20 @@ endprogram
 
 function qtdSteps(who, skill)
 	if (skill >= 100)
-		return 18;
-	elseif (skill >= 90)
 		return 15;
-	elseif (skill >= 80)
-		return 13;
-	elseif (skill >= 70)
-		return 12;
-	elseif (skill >= 50)
+	elseif (skill >= 90)
 		return 10;
-	elseif (skill >= 40)
+	elseif (skill >= 80)
+		return 9;
+	elseif (skill >= 70)
 		return 8;
-	elseif (skill >= 30)
+	elseif (skill >= 50)
 		return 6;
-	else
+	elseif (skill >= 40)
 		return 5;
+	elseif (skill >= 30)
+		return 4;
+	else
+		return 3;
 	endif
 endfunction

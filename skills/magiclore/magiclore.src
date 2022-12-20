@@ -69,6 +69,15 @@ program skill_armslore(who)
 
 		PrintText(who, "*analisando um item*");
 
+		var identificado := GetObjProperty(item, "magicwho");
+
+		if (who.serial in identificado)
+			var cfg := ReadConfigFile(":*:itemdesc");
+			var entry := cfg[item.objtype];
+			SendSysMessageEx(who, "Voce ja identificou este objeto", SSM_INFO);
+			return 1;
+		endif
+
 		if (SkillCheck(who, MAGICLORE, -1) > 0)
 
 			var swordgem := cint(GetObjProperty(item, "gemtype"));
@@ -147,7 +156,15 @@ program skill_armslore(who)
 				SetName(item, item.desc);
 				AddAmount(item, backup-1);
 			else
+				var whos := GetObjProperty(item, "magicwho");
+				if (whos == error)
+					whos := array;
+				endif
 				SendSysMessageEx(who, "Este item nao possui propriedades magicas a serem ativadas.", SSM_INFO);
+				if ( !(who.serial in whos))
+					whos.append(who.serial) ;
+					SetObjProperty(item, "magicwho", whos);
+				endif
 			endif
 		else
 			SendSysMessageEx(who, "Voce nao descobriu nada.", SSM_FAIL);

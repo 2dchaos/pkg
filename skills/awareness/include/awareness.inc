@@ -198,7 +198,7 @@ function examinarArea(who)
 
 	foreach item in ListItemsNearLocation(who.x, who.y, who.z, range)
 		if ( item.invisible )
-			if ( item.isTrap())
+			if ( item.isTrap() || item.objtype == 0xdc08)
 				lvl := Cint(GetObjProperty(item, "level"));
 				case (lvl)
 					1: diff := 15;

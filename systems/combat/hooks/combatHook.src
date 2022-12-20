@@ -238,6 +238,12 @@ exported function Attack(attacker, defender)
 			SetObjProperty(attacker, "#SequenciaDevastadoraAcumulada", ataques);
 		endif
 
+		if (wpn_a_elem.objtype := 0x406B)
+			PlayMovingEffectXYZHued(attacker, defender, wpn_a_elem.ProjectileAnim, 10, 10, 0);
+			sleep(1);
+			PlayMovingEffectXYZHued(defender, attacker, wpn_a_elem.ProjectileAnim, 10, 10, 0);
+		endif
+
 		if (GetCooldown(defender, "FerocidadeEnsanguentada"))
 			if (isBloodied(defender))
 			if (GetObjProperty(defender, "#contraatacando") == error)
@@ -375,6 +381,11 @@ exported function Attack(attacker, defender)
 		endif
 		EraseObjProperty(attacker, "movement");
 		PlayMissSound(attacker);
+		if (wpn_a_elem.objtype := 0x406B)
+			PlayMovingEffectXYZHued(attacker, defender, wpn_a_elem.ProjectileAnim, 10, 10, 0);
+			sleep(1);
+			PlayMovingEffectXYZHued(defender, attacker, wpn_a_elem.ProjectileAnim, 10, 10, 0);
+		endif
 	endif
 
 	return 1;
