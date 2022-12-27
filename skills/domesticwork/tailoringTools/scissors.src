@@ -65,8 +65,8 @@ program use_scissors( who, scissors )
 				makecartoes(who, cloth);
 				return;
 			endif
-			material := Cint(cfg3[cloth.objtype].material);
-			leftover := 0x1067;
+			//material := Cint(cfg3[cloth.objtype].material);
+			//leftover := 0x1067;
 			
 			if(!material)
 				SendSysMessage (who, "Voce nao pode usar as tesouras nisso.");
@@ -128,4 +128,3 @@ function MakeCartoes (who, papel)
 
 	SendSysMessage (who, "Voce parou de fazer.");
 endfunction
-
