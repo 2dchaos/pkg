@@ -40,6 +40,11 @@ program skill_Stealth( who )
 	endif
 
 	var baseSteps := qtdSteps(who, skill);
+	
+	if (temHabilidade(who, "Comunhao com as Sombras"))
+		baseSteps:= baseSteps*2;
+	endif
+
 	var atualStep := CInt(GetObjProperty(who, "#steathsteps"));
 	var diff := 15 + atualStep * 10;
 	if (!temHabilidade(who, "Furtividade Aprimorada"))

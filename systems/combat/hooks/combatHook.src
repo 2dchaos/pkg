@@ -207,6 +207,7 @@ exported function Attack(attacker, defender)
       			PrintText(defender, "*esquiva-se*");
       			EraseObjProperty(defender, "evasao");
       			if (TemHabilidade(defender, "Esquiva Oportunista"))
+				  	SetObjProperty(defender, "#atacandooportunidade", 1);
         			oportunidade := 1;
       			endif
       			return 1;
@@ -238,7 +239,7 @@ exported function Attack(attacker, defender)
 			SetObjProperty(attacker, "#SequenciaDevastadoraAcumulada", ataques);
 		endif
 
-		if (wpn_a_elem.objtype := 0x406B)
+		if (wpn_a_elem.objtype == 0x406B)
 			PlayMovingEffectXYZHued(attacker, defender, wpn_a_elem.ProjectileAnim, 10, 10, 0);
 			sleep(1);
 			PlayMovingEffectXYZHued(defender, attacker, wpn_a_elem.ProjectileAnim, 10, 10, 0);
@@ -311,14 +312,15 @@ exported function Attack(attacker, defender)
 
 		if (GetObjPRoperty(defender, "maolivre") == 1)
 			EraseObjPRoperty(defender, "maolivre");
+			SetObjProperty(defender, "#atacandooportunidade", 1);
 			oportunidade := 1;
 		endif
 	
 	
-		if ( (GetCooldown(defender, "ataqueoportunidade") > 0) || oportunidade)
+		//if ( (GetCooldown(defender, "ataqueoportunidade") > 0) || oportunidade)
 			if (Distance(attacker,defender)<=1 && defender.weapon.attributte != "RangedCombat")
-				if (GetObjProperty(defender, "#atacandooportunidade") == error)
-					SetObjProperty(defender, "#atacandooportunidade", 1);
+				if (GetObjProperty(defender, "#atacandooportunidade"))
+					EraseObjProperty(defender, "#atacandooportunidade");
 					printtext(defender, "*ataque de oportunidade*");
 					//defender.attack_once(attacker);
 					var new_hit_chance := CalculateHitChance(defender, attacker);
@@ -356,7 +358,7 @@ exported function Attack(attacker, defender)
 					EraseObjProperty(defender, "#atacandooportunidade");
 				endif
 			endif
-		endif
+	//	endif
 
 		if (GetCooldown(defender, "RespostaDesesperada") > 0)
 			PlayHitSounds(attacker, defender);

@@ -46,10 +46,10 @@ function BuildShip(who, deed)
     return;
   endif
   set_critical(1);
-  if((where.x < who.x - 10) || (where.y < who.y - 10) || (where.x > who.x + 10) || (where.y > who.y + 10))
-    SendSysMessage(who, "You cannot place a boat that far away.");
-    return;
-  endif
+  //if((where.x < who.x - 10) || (where.y < who.y - 10) || (where.x > who.x + 10) || (where.y > who.y + 10))
+    //SendSysMessage(who, "You cannot place a boat that far away.");
+    //return;
+  //endif
   var created := CreateShipKeysAndBuiltDeed(who, shiptype, where.x, where.y, where.z, flags);
   if(created)
     var ship := created.ship;

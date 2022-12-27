@@ -861,13 +861,7 @@ function Corromper(who, spell, targ)
 			SendSysMessageEx(who, "A morte e atemporalidade agora fazem parte de voce.", SSM_INFO);
 			SetObjProperty(who, "corruptionalert", 4);
 			SetObjProperty(who, "BloodColor", 72);
-			SendSysMessageEx(who, "Seu sangue agora é verde!!", SSM_FAIL);
-			var str := "Veias visiveis sob a pele";
-			if (GetObjProperty(who, "description"))
-				str := GetObjProperty(who, "description") + " <br> " + str;
-				SetObjProperty(who, "description", str);
-				SendSysMessageEx(who, "As veias por baixo de sua pele parece estar mais escuras!!", SSM_FAIL);
-			endif
+			SendSysMessageEx(who, "Seu sangue agora é verde!", SSM_FAIL);
 		endif
 	endif 
 	//fim da checagem

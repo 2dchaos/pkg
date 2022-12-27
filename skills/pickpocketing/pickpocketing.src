@@ -67,9 +67,20 @@ program skill_Stealing(mobile)
 		return 0;
 	endif
 
-	var diff := 15 + CInt(AP_GetSkill(targ, AWARENESS));
+	var chance := AP_GetSkill(mobile, PICKPOCKETING);
 
+	if (temHabilidade(mobile, "Punga"))
+		chance:= chance + 50;
+	endif
+
+	if (RandomInt(100)+1 > chance) //Errou!
+		SendSysMessageEx(mobile, "Voce falhou em abrir a bolsa do alvo", SSM_FAIL);
+		return 0;
+	endif
+
+	var diff := 15 + CInt(AP_GetSkill(targ, AWARENESS));
 	var check := SkillCheck(mobile, PICKPOCKETING, diff);
+
 	if ( check > 0 )
 		SendSysMessageEx(mobile, "Voce conseguiu abrir a mochila de "+targ.name+".", SSM_INFO);
 		SendOpenSpecialContainer(mobile, targ.backpack);
@@ -111,19 +122,19 @@ program skill_Stealing(mobile)
 			if (steal.objtype IN {0xba63, 0xba64, 0xba65}) // moeda
 				diff := CInt(steal.amount / 5);
 				if (temHabilidade(mobile, "Punga"))
-					diff := 0;
+					diff := diff /2;
 				endif
 			elseif (steal.objtype IN {0x1085, 0x1086, 0x1087, 0x1088, 0x1089, 0x108a, 0x2b6e, 0x2b6f, 0x2b70}) // joias
 				diff := CInt(steal.weight*10);
 				if (temHabilidade(mobile, "Punga"))
-					diff := 0;
+					diff := diff /2;
 				endif
 			elseif (steal.objtype IN {0x1011, 0x100E, 0x100F, 0x1010, 0x1012, 0x1013}) // chaves
 				diff := 60;
 				if (temHabilidade(mobile, "Punga"))
-					diff := 0;
+					diff := diff /2;
 				endif
-			elseif (steal.objtype == 0x6100) // grim�rio
+			elseif (steal.objtype == 0x6100 || steal.objtype == 0x6149 || steal.objtype == 0xec29 ) // grim�rio
 				diff := 80;
 			else
 				diff := CInt(steal.weight*10);
@@ -135,11 +146,13 @@ program skill_Stealing(mobile)
 			endif
 
 			var check := SkillCheck(mobile, PICKPOCKETING, diff);
+
 			if ( check > 0 )
 				MoveObjectToLocation(steal, 0, 0, 0, mobile.realm);
 				MoveItemToContainer(steal, mobile.backpack);
 				SendSysMessageEx(mobile, "Voce roubou "+steal.desc+".", SSM_INFO);
 				SkillCheck(mobile, PICKPOCKETING, -1);
+				diff:= diff +5;
 			else
 				SendSysMessageEx(mobile, "Voce nao conseguiu roubar "+steal.desc+".", SSM_FAIL);
 				if ( check < -25 )
