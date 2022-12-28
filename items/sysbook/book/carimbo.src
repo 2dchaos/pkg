@@ -44,7 +44,7 @@ program use_Carimbo(who, tool)
 			return 1;
 		endif
 		
-		SendSysMessageEx(who, "Selecione o Anel de Familia para criar o selo", SSM_REQUEST);
+		SendSysMessageEx(who, "Selecione o Anel para criar o selo", SSM_REQUEST);
 		var anel := Target(who);
 		if (!anel)
 			SendSysMessageEx(who, "Cancelado.", SSM_FAIL);
@@ -52,16 +52,28 @@ program use_Carimbo(who, tool)
 		elseif (anel.objtype != 0x108a)
 			SendSysMessageEx(who, "Isto nao e um anel.", SSM_FAIL);
 			return;
-		elseif (!GetObjProperty(anel, "familia"))
-			SendSysMessageEx(who, "Este nao e um anel de familia nobre.", SSM_FAIL);
-			return;
+		//elseif (!GetObjProperty(anel, "familia") || !GetObjProperty(anel, "selo") )
+		//	SendSysMessageEx(who, "Este nao e um anel de familia nobre.", SSM_FAIL);
+		//	return;
 		endif
 		
 		var NomeDaFamilia := GetObjProperty(anel, "familia");
-		SetObjProperty(tool, "selo", "Selo da Familia " + NomeDaFamilia);
-		SetObjProperty(tool, "description", "Carimbo de " + NomeDaFamilia);
-		SendSysMessageEx(who, "Selo atribuido ao Carimbo.", SSM_FAIL);
-		SetName(tool, tool.desc);
+		var seloreal := GetObjProperty(anel, "selo");
+
+		if (NomeDaFamilia)
+			SetObjProperty(tool, "selo", "Selo da Familia " + NomeDaFamilia);
+			SetObjProperty(tool, "description", "Carimbo de " + NomeDaFamilia);
+			SendSysMessageEx(who, "Selo atribuido ao Carimbo.", SSM_FAIL);
+			SetName(tool, tool.desc);
+		elseif (seloreal)
+			SetObjProperty(tool, "selo", "Selo da " + seloreal);
+			SetObjProperty(tool, "description", "Carimbo de " + seloreal);
+			SendSysMessageEx(who, "Selo atribuido ao Carimbo.", SSM_FAIL);
+			SetName(tool, tool.desc);
+		else
+			SendSysMessageEx(who, "Este anel nao possui um selo", SSM_FAIL);
+			return;
+		endif
 		return 1;
 	endif
 

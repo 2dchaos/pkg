@@ -46,7 +46,9 @@ program manobra(who)
 		sleep(2);
 
 		foreach char in hostiles
-			SendEvent(char, struct{"type":=EVID_TAUNT, "source":=who.party.members});
+			if (char != who)
+				SendEvent(char, struct{"type":=EVID_TAUNT, "source":=who.party.members});
+			endif
 		endforeach
 		
 	endif
