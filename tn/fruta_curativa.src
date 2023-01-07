@@ -6,8 +6,16 @@ use vitals;
 use attributes;
 include ":alchemy:alchemy";
 include "include/say";
+include ":attributes:attributes";
 
 program drink_blue (who, potion)
+
+	var hungerlvl := AP_GetVital(who, "Hunger");
+	if(hungerlvl <= 10)
+		SendSysMessageEx(who, "Voce esta muito cheio para comer mais.", SSM_FAIL);
+		return;
+	endif
+
 	EraseObjProperty(who, "IsMeditating");
 	EraseObjProperty(who, "HealTimer");
 
@@ -34,8 +42,35 @@ program drink_blue (who, potion)
 	var skill := cint(GetObjProperty(potion, "crafterskill"));
 	healed := skill/5;
 	var delay := 500;
-       healed := healed + 55; 
+    healed := healed + 55; 
 
+	var themsg;
+	var foodvalue := 2;
+	hungerlvl := hungerlvl - foodvalue*60;
+
+	case(RandomInt(3) + 1)
+		1: PlaySoundEffect(who, 0x3b);
+		2: PlaySoundEffect(who, 0x3c);
+		3: PlaySoundEffect(who, 0x3d);
+	endcase
+	PerformAction(who, 0x22);
+
+	hungerlvl  := cint(hungerlvl /60);
+		if (hungerlvl <= 0)
+			hungerlvl := 0;
+		endif
+
+	case(hungerlvl)
+		0:  themsg := "voce esta muito cheio";
+		1:  themsg := "voce esta muito cheio";
+		2:  themsg := "voce esta satisfeito";
+		3:  themsg := "voce se sente um pouco mais cheio depois de consumir a comida";
+		4:  themsg := "voce ainda esta com fome";
+		5:  themsg := "voce ainda esta muito faminto";
+	endcase
+
+	AP_SetVital(who, "Hunger", hungerlvl*60);
+	SendSysMessageEx(who, themsg, SSM_INFO);
 
 	Detach();
 	var i := 0;

@@ -12,14 +12,14 @@ program textcmd_dupe( who )
     
     if (what.isA(POLCLASS_ITEM))
       copyitem := CreateItemCopyAtLocation(who.x, who.y, who.z, what);
-	  SetObjProperty(copyitem, "createdby", who.acctname + " " + who.name);
+	  SetObjProperty(copyitem, "dupped by", who.acctname + " " + who.name);
 	        
       if (what.isA(POLCLASS_CONTAINER))
         items := EnumerateItemsInContainer(what);
         foreach item in items
           newitem := CreateItemCopyAtLocation(who.x,who.y,who.z,item);
           MoveItemToContainer(newitem, copyitem, item.x, item.y);
-		  SetObjProperty(newitem, "createdby", who.acctname + " " + who.name);
+		  SetObjProperty(newitem, "dupped by", who.acctname + " " + who.name);
         endforeach
      
       endif

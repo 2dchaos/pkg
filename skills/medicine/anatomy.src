@@ -21,7 +21,7 @@ program skill_Anatomy(who)
 		return 0;
 	elseif(subject.graphic == 0x2006)
 		PrintText(who, "*examinando o corpo*");
-		if (valorInicial(who, MEDICINE) >= 40);
+		if (SkillCheck(who, MEDICINE, 40) > 0);
 			if (GetObjProperty(subject, "morto") == 1)
 				SendSysMessageEx(who, "Parece morto para voce.", SSM_INFO);
 				if( SkillCheck(who, MEDICINE, 50) > 0 )
@@ -57,7 +57,7 @@ program skill_Anatomy(who)
 		endif
 	elseif(subject.objtype == 0xEFFF)
 		PrintText(who, "*examinando os ossos*");
-		if (valorInicial(who, MEDICINE) >= 40)
+		if (SkillCheck(who, MEDICINE, 40) > 0);
 			SendSysMessageEx(who, "Parece inanimado para voce.", SSM_INFO);
 			if( SkillCheck(who, MEDICINE, 50) > 0 )
 				if (GetObjProperty(subject, "WeaponKill"))
