@@ -20,6 +20,7 @@ program skinning(parms)
 	var who := parms[1];
 	var cadaver := parms[2];
 	var blade := parms[3];
+	var conta := who.acctname;
 	
 	if (who.weapon != blade)
 		var cfg := ReadConfigFile(":combat:itemdesc");
@@ -58,8 +59,26 @@ program skinning(parms)
 		
 
 	elseif((GetObjProperty(cadaver,"npctemplate")== error) && (GetObjProperty(cadaver, "morto")!=1))
-		SendSysMessage( who, "Fale com um GM se quiser de fato matar esse jogador" );
-		return 0;
+		if ( !YesNo(who, "Deseja Mesmo Gastar Seus pontos rp para matar o jogador? (1000)") )
+			return;
+		endif
+
+		if	(CheckPoints(1000, conta, who))
+			decGrade(who, 1000);
+
+			MakeLog(conta, 1000, "Assassinar", "Assassinou " + cadaver);
+
+			DesmembreCorpse(cadaver);
+			PrintTextAbove( who, "*Corta a cabeca*", font := _DEFAULT_TEXT_FONT, color := _DEFAULT_TEXT_COLOR, journal_print := JOURNAL_PRINT_NAME);
+			SetObjProperty(cadaver, "description", "[Decaptado]");
+			SetObjProperty(cadaver, "WeaponKill", blade.desc);
+			SetObjProperty(cadaver, "charname", cadaver.name);
+			SetObjProperty(cadaver, "deathtime", polcore().systime);
+			SetName(cadaver, "Corpo Irreconhecivel");
+			SetObjProperty(cadaver, "morto",1);
+		endif
+		//SendSysMessage( who, "Fale com um GM se quiser de fato matar esse jogador" );
+		//return 0;
 	/*	if ((idadeChar( who) > 30)) 
 			if (YesNo(who, "Voce deseja mesmo matar o alvo?", "Sim: o alvo morrera e voce perdera 1 DP permanentemente.", "Nao: nenhuma consequencia.")) //quer matar mesmo
 				DesmembreCorpse(cadaver);
@@ -145,3 +164,51 @@ program skinning(parms)
 	endif
 endprogram
 
+function getGrade(acctname)
+
+	return cint(FindAccount(acctname).getprop("RPpoints"));
+
+endfunction
+
+function decGrade(who, incnota)
+
+	var nota := getGrade(who.acctname);
+	if (nota)
+		nota := nota - cint(incnota);
+	else
+		nota := 1;
+	endif
+
+	setGrade(who.acctname, nota);
+
+endfunction
+
+function CheckPoints(cpts, conta, who)
+		var pts := getGrade(conta);
+		if (pts >= cpts)
+			return 1;
+		endif
+		SendSysMessageEx(who, "Voce nao tem pontos suficientes para matar esse jogador",SSM_FAIL);
+		return 0;
+endfunction
+
+function MakeLog(accname, pts, type, complement)
+
+	var acc := FindAccount(accname);
+	var msg := "- Gastou "+pts+" com "+type+": "+complement;
+	if (acc)
+		var logs := acc.getprop("rpgasto");
+		if (logs == error)
+			logs := array;
+		endif
+		logs.append(msg);
+		acc.setprop("rpgasto", logs);
+	endif
+
+endfunction
+
+function setGrade(acctname, nota)
+
+	findAccount(acctname).setProp("RPpoints", nota);
+
+endfunction

@@ -26,7 +26,7 @@ function StartScript(mobile, attacker := 0, level := 0)
    SendSystemReport(mobile, "Voce esta com uma grave hemorragia!", mobile);
    foreach mobile in ( ListMobilesInLineOfSight(mobile, 8) )
       if( mobile.ip && mobile != mobile )
-         SendSystemReport(mobile, "* " + mobile.name + " est� sangrando muito! *", mobile);
+         SendSystemReport(mobile, "* " + mobile.name + " esta sangrando muito! *", mobile);
       endif
       sleepms(2);
    endforeach

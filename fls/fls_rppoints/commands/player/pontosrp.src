@@ -44,13 +44,22 @@ function SendCheckRP(who, conta)
 	GFResizePic(gump, 0, 25, 3600, 530, 400);
 
 	GFResizePic(gump, 15, 40, 0x13BE, 195, 145);
-	GFTextLine(gump, 20, 55, 1153, "Pontos RP Atuais:");
-	GFTextLine(gump, 165, 55, SSM_INFO, "" + getGrade(conta));
+	if (who.cmdlevel > 2)
+		GFTextLine(gump, 20, 55, 1153, "Pontos RP Atuais:");
+		GFTextLine(gump, 165, 55, SSM_INFO, "" + getGrade(conta));
+	
+		//	GFResizePic(gump, 15, 75, 0x13BE, 195, 30);
+			GFTextLine(gump, 20, 90, 1153, "Recorde de Pontos RP:");
+			GFTextLine(gump, 165, 90, SSM_INFO, "" + getMaxGrade(conta));
+	else
+		GFTextLine(gump, 20, 55, 1153, "Pontos RP Atuais:");
+		GFTextLine(gump, 165, 55, SSM_INFO, "" + "N/A");
+	
+		GFTextLine(gump, 20, 90, 1153, "Recorde de Pontos RP:");
+		GFTextLine(gump, 165, 90, SSM_INFO, "" + "N/A");
+	endif
 
-//	GFResizePic(gump, 15, 75, 0x13BE, 195, 30);
-	GFTextLine(gump, 20, 90, 1153, "Recorde de Pontos RP:");
-	GFTextLine(gump, 165, 90, SSM_INFO, "" + getMaxGrade(conta));
-
+	var dialog := getGradeText(conta, "rplog");
 	if (CInt(findAccount(conta).GetProp("nota")) == 4)
 		GFTextLine(gump, 75, 125, 66, "+20 SKILLS!!!");
 	endif
@@ -61,9 +70,9 @@ function SendCheckRP(who, conta)
 	GFResizePic(gump, 215, 40, 0x13BE, 300, 145);
 	GFResizePic(gump, 215, 40, GFCfgConst("Backgrounds", "GOLDTRIM"), 300, 145);
 
-
-	var dialog := getGradeText(conta, "rplog");
-	GFHTMLArea(gump, 226, 51, 282, 123, dialog, 0, 1);
+	if (who.cmdlevel > 2)
+		GFHTMLArea(gump, 226, 51, 282, 123, dialog, 0, 1);
+	endif
 
 	GFResizePic(gump, 15, 190, 0x13BE, 500, 220);
 //	GFGumpPic(gump, 240, 180, 0x756D);

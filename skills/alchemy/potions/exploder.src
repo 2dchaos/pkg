@@ -21,8 +21,8 @@ program exploder(parms)
 		sleepms(250);
 	endif
 	var thecenter := potion;
-	while(thecenter.container)
-		thecenter := thecenter.container;
+	while(thecenter.item)
+		thecenter := thecenter.item;
 	endwhile
 	SetScriptController(who);
 
@@ -91,6 +91,7 @@ function FlameEffect(who, potion, lvl)
 	endforeach
 
 	efeitocascata(potion, who);
+	destroycraft(potion, who);
         
 
 endfunction
@@ -203,6 +204,7 @@ function ExplosionEffect(who, potion, dmg)
 	endforeach
 
 	efeitocascata(potion, who);
+	destroycraft(potion, who);
 
 endfunction
 
@@ -229,7 +231,7 @@ endfunction
 function EfeitoCascata(potion, who)
 
 
-	var potions := {56328, 61280, 61281, 61282, 48915, 48916, 48917 };
+	var potions := {61280, 61281, 61282, 48915, 48916, 48917 };
 	var counter := 1;
 	foreach item in (ListItemsNearLocation(potion.x, potion.y, potion.z, 8, potion.realm))
 		if (checklineofsight(potion, item))
@@ -291,4 +293,21 @@ function Minaterrestre(who, potion)
 
 endfunction
 
-	
+function destroycraft(potion, who)
+
+
+	var potions := {61282, 48915, 48916, 48917 };
+	var counter := 1;
+	foreach item in (ListItemsNearLocation(potion.x, potion.y, potion.z, 8, potion.realm))
+		if (GetObjProperty(item, "crafteracc"))
+			var roll := RandomInt(100)+1;
+			if (roll > 75)
+				if (!GetObjProperty(item, "LockId"))
+					createitematlocation(item.x, item.y, item.z, 3119, 1, item.realm);
+					sleepms(10);
+					DestroyItem(item);
+				endif
+			endif
+		endif
+	endforeach
+endfunction
