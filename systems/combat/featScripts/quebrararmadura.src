@@ -53,7 +53,7 @@ program explosao(params)
 		return;
 	endif
 
-    TS_StartCooldown(who, "habilidade dois", 20);
+    TS_StartCooldown(who, "habilidade dois", 40);
     who.hidden := 0;
     
     var esquiva:= GetObjProperty(targ, "evasao");
@@ -79,9 +79,9 @@ program explosao(params)
             PrintText(who, "*Quebra as defesas de {}*".format(targ.name));
             PlayHitSounds(who, targ);
 
-            TS_StartTimer(targ, "apodrecer", 12);
+            TS_StartTimer(targ, "apodrecer", 5);
  
-		    DamageFLS(targ, total, DMG_FORCED, who);
+		    DamageFLS(targ, total, DMG_PHYSICAL, who);
         else
             PlayHitSounds(who, targ);
             Performaction(who, elem.Anim);

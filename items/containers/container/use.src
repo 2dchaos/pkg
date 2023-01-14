@@ -34,15 +34,11 @@ program useContainer(mobile, container)
 
 	var vaiquebrar := GetObjProperty(container, "usos");
 
-	if (vaiquebrar == 20)
-		SetName(container,container.desc + " [Quebradica] ");
-		PrintText(mobile, "Sua caixa vai quebrar em breve, procure um carpinteiro!", SSM_FAIL);
-	elseif (vaiquebrar == 10)
-		PrintText(mobile, "Sua caixa vai quebrar em breve, procure um carpinteiro!", SSM_FAIL);
-	elseif (vaiquebrar == 5)
-		PrintText(mobile, "Sua caixa vai quebrar em breve, procure um carpinteiro!", SSM_FAIL);
-	elseif (vaiquebrar == 1)
-		PrintText(mobile, "Sua esta prestes a quebrar!", SSM_FAIL);
+	//if (vaiquebrar == 20)
+		//SetName(container,container.desc + " [Quebradica] ");
+		//PrintText(mobile, "O recipiente vai quebrar em breve, procure um carpinteiro!", SSM_FAIL);
+	if (vaiquebrar <= 10)
+		PrintText(mobile, "O recipiente vai quebrar em breve, procure um carpinteiro!", SSM_FAIL);
 	endif
 
 	if (vaiquebrar <=0)

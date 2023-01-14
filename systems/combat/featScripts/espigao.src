@@ -80,7 +80,7 @@ program defensor(params)
       PlaySoundEffect(who, cint(0x145));
       PrintText(who, "*bate com o espigão*");
       var chance := GetAttribute(who, "Strength");
-      DamageFLS(targ, total*2, DMG_FORCED, who);
+      DamageFLS(targ, total*2, DMG_PHYSICAL, who);
       PlayHitSounds(who, targ);
       TS_StartTimer(targ, "Paralysis", 1, who);
       TS_StartTimer(who, "Paralysis", 1, targ);
