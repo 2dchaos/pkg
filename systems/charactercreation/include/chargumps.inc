@@ -67,7 +67,7 @@ function SelectSkills(who, nivel, value)
   endfor  
   
 	GFAddButton(chargump, 310, 400, 4502, 4502, 1, 100 );
-	GFTextLine(chargump, 270, 410, 1153, "Próximo");
+	GFTextLine(chargump, 270, 410, 1153, "Prï¿½ximo");
 
 	input := GFSendGump(who, chargump);
   var selected;
@@ -256,16 +256,16 @@ function KitGump(who)
 	GFTextMid(gump, 20, 50, 250, 1153, "Escolha seu kit");
   
   GFTextLine(gump, 50, 80, 1153, "Veterano" );
-  GFTextLine(gump, 50, 100, 1153, "Criado por Lobos" );
+  GFTextLine(gump, 50, 100, 1153, "Aliado da Natureza" );
   GFTextLine(gump, 50, 120, 1153, "Covarde" );
-  GFTextLine(gump, 50, 140, 1153, "Valentão" );
+  GFTextLine(gump, 50, 140, 1153, "Valentï¿½o" );
   GFTextLine(gump, 50, 160, 1153, "Ex-Prisioneiro" );
-  GFTextLine(gump, 50, 180, 1153, "Espírito Forte" );
-  GFTextLine(gump, 50, 200, 1153, "Filho de Burgês" );
-  GFTextLine(gump, 50, 220, 1153, "Treinado no Exército" );
-  GFTextLine(gump, 50, 240, 1153, "Traça de Livro" );
+  GFTextLine(gump, 50, 180, 1153, "Espï¿½rito Forte" );
+  GFTextLine(gump, 50, 200, 1153, "Filho de Burgï¿½s" );
+  GFTextLine(gump, 50, 220, 1153, "Treinado no Exï¿½rcito" );
+  GFTextLine(gump, 50, 240, 1153, "Traï¿½a de Livro" );
   GFTextLine(gump, 50, 260, 1153, "Pacto Sombrio" );
-  GFTextLine(gump, 50, 280, 1153, "Herança" );
+  GFTextLine(gump, 50, 280, 1153, "Heranï¿½a" );
   GFTextLine(gump, 50, 300, 1153, "Criado por Monges" );
   GFTextLine(gump, 50, 320, 1153, "Encantador de Cobras" );
   
@@ -275,9 +275,9 @@ function KitGump(who)
   GFTextLine(gump, 300, 140, 1153, "Pele Rija" );
   GFTextLine(gump, 300, 160, 1153, "Abascanto" );
   GFTextLine(gump, 300, 180, 1153, "Alquimista" );
-  GFTextLine(gump, 300, 200, 1153, "Camponês" );
+  GFTextLine(gump, 300, 200, 1153, "Camponï¿½s" );
 //  GFTextLine(gump, 300, 220, 1153, "Nobre" );
-  GFTextLine(gump, 300, 240, 1153, "Filho de Heróis" );
+  GFTextLine(gump, 300, 240, 1153, "Filho de Herï¿½is" );
   GFTextLine(gump, 300, 260, 1153, "Crescida Entre Garotos" );
   GFTextLine(gump, 300, 280, 1153, "Duro de Matar" );
   GFTextLine(gump, 300, 300, 1153, "Cria troll" );
@@ -316,132 +316,132 @@ function KitGump(who)
   GFSetRadioGroup(gump, 1);
 
   GFPage(gump, 2);
-  GFHTMLArea( gump, 50, 360, 500, 90, "Você já participou de muitas guerras e batalhas antes, sabe como manejar armas e um pouco de estratégia, mas os ferimentos que sofreu o tornaram menos resistente aos rigores da guerra.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "Vocï¿½ jï¿½ participou de muitas guerras e batalhas antes, sabe como manejar armas e um pouco de estratï¿½gia, mas os ferimentos que sofreu o tornaram menos resistente aos rigores da guerra.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 100);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
 
   GFPage(gump, 3);
-  GFHTMLArea( gump, 50, 360, 500, 90, "Você foi criado por uma alcatéia de lobos selvagens, a sobrevivência na natureza lhe deu um bom corpo mas uma dificuldade para as ferramentas e os livros.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "Vocï¿½ foi criado por uma alcatï¿½ia de lobos selvagens, a sobrevivï¿½ncia na natureza lhe deu um bom corpo mas uma dificuldade para as ferramentas e os livros.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 101);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
 
   GFPage(gump, 4);
-  GFHTMLArea( gump, 50, 360, 500, 90, "O medo e a covardia fizeram de você bem esguio e bom em se esconder e passar despercebido, você aprendeu a fazer dessas habilidades suas armas.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "O medo e a covardia fizeram de vocï¿½ bem esguio e bom em se esconder e passar despercebido, vocï¿½ aprendeu a fazer dessas habilidades suas armas.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 102);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
 
   GFPage(gump, 5);
-  GFHTMLArea( gump, 50, 360, 500, 90, "Voce é grande, forte e estúpido.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "Voce ï¿½ grande, forte e estï¿½pido.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 103);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
 
   GFPage(gump, 6);
-  GFHTMLArea( gump, 50, 360, 500, 90, "Por algum motivo, você passou anos em uma masmorra e sessões de tortura o fizeram bem resistente, mas seu corpo carrega as seqüelas.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "Por algum motivo, vocï¿½ passou anos em uma masmorra e sessï¿½es de tortura o fizeram bem resistente, mas seu corpo carrega as seqï¿½elas.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 104);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
 
   GFPage(gump, 7);
-  GFHTMLArea( gump, 50, 360, 500, 90, "Você carrega uma Alma naturalmente mais poderosa, entretanto seu corpo sofre em contê-la.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "Vocï¿½ carrega uma Alma naturalmente mais poderosa, entretanto seu corpo sofre em contï¿½-la.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 105);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
 
   GFPage(gump, 8);
-  GFHTMLArea( gump, 50, 360, 500, 90, "Seu pai criou um negócio e deu certo, e você foi criado nas artes do comércio, não se exercitando mas aprendendo a fazer negócios e conseguir o que quer.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "Seu pai criou um negï¿½cio e deu certo, e vocï¿½ foi criado nas artes do comï¿½rcio, nï¿½o se exercitando mas aprendendo a fazer negï¿½cios e conseguir o que quer.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 106);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
 
   GFPage(gump, 9);
-  GFHTMLArea( gump, 50, 360, 500, 90, "Você recebeu algum treinamento com armas no exército quando era jovem, mas acabou sendo dispensado por ter pé chato.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "Vocï¿½ recebeu algum treinamento com armas no exï¿½rcito quando era jovem, mas acabou sendo dispensado por ter pï¿½ chato.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 107);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
 
   GFPage(gump, 10);
-  GFHTMLArea( gump, 50, 360, 500, 90, "Você passou boa parte da vida lendo livros, mas por outro lado desenvolveu uma miopia de tanto ler no escuro, o que acaba atrapalhando-o em algumas tarefas.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "Vocï¿½ passou boa parte da vida lendo livros, mas por outro lado desenvolveu uma miopia de tanto ler no escuro, o que acaba atrapalhando-o em algumas tarefas.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 108);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
 
   GFPage(gump, 11);
-  GFHTMLArea( gump, 50, 360, 500, 90, "Você trocou sua alma por poder, mas sua vida será curta.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "Vocï¿½ trocou sua alma por poder, mas sua vida serï¿½ curta.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 109);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
 
   GFPage(gump, 12);
-  GFHTMLArea( gump, 50, 360, 500, 90, "Você recebeu alguma grande herança de alguem da sua família, a vida fácil resultou em poucos problemas pra você e isso fez com que levasse uma vida sem muitas preocupações ou aborrecimentos.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "Vocï¿½ recebeu alguma grande heranï¿½a de alguem da sua famï¿½lia, a vida fï¿½cil resultou em poucos problemas pra vocï¿½ e isso fez com que levasse uma vida sem muitas preocupaï¿½ï¿½es ou aborrecimentos.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 110);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
 
   GFPage(gump, 13);
-  GFHTMLArea( gump, 50, 360, 500, 90, "Você foi criado por monges e fez um voto de pobreza, nunca poderá acumular dinheiro, por outro lado você foi bem educado em várias áreas do conhecimento.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "Vocï¿½ foi criado por monges e fez um voto de pobreza, nunca poderï¿½ acumular dinheiro, por outro lado vocï¿½ foi bem educado em vï¿½rias ï¿½reas do conhecimento.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 111);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
   
   GFPage(gump, 14);
-  GFHTMLArea( gump, 50, 360, 500, 90, "Você foi criado por gente que lida com serpentes e ganhou imunidade parcial a alguns venenos mas por outro lado várias mordidas debilitaram um pouco a sua saúde.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "Vocï¿½ foi criado por gente que lida com serpentes e ganhou imunidade parcial a alguns venenos mas por outro lado vï¿½rias mordidas debilitaram um pouco a sua saï¿½de.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 112);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
 
   GFPage(gump, 15);
-  GFHTMLArea( gump, 50, 360, 500, 90, "Você passou a vida toda lutando em arenas, é bastante apto para o combate, essa vida lhe deixou cansado e debilitado mentalmente.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "Vocï¿½ passou a vida toda lutando em arenas, ï¿½ bastante apto para o combate, essa vida lhe deixou cansado e debilitado mentalmente.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 113);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
 
   GFPage(gump, 16);
-  GFHTMLArea( gump, 50, 360, 500, 90, "Você passou muito tempo andando com uma trupe de artistas de circo. Possui um corpo atlético mas pouco dinheiro e pouca educaçao.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "Vocï¿½ passou muito tempo andando com uma trupe de artistas de circo. Possui um corpo atlï¿½tico mas pouco dinheiro e pouca educaï¿½ao.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 114);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
   
   GFPage(gump, 17);
-  GFHTMLArea( gump, 50, 360, 500, 90, "Você foi marcado pela natureza e tem um corpo debilitado e fraco por muitas doenças e infecções, por outro lado voce se dedicou muito ao estudo e a leitura.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "Vocï¿½ foi marcado pela natureza e tem um corpo debilitado e fraco por muitas doenï¿½as e infecï¿½ï¿½es, por outro lado voce se dedicou muito ao estudo e a leitura.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 115);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
   
   GFPage(gump, 18);
-  GFHTMLArea( gump, 50, 360, 500, 90, "Sua pele é mais rija que o normal, garantindo alguma armadura natural, mas devido a isso voce é um pouco lento e sua aparência pode ser assustadora para outras pessoas.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "Sua pele ï¿½ mais rija que o normal, garantindo alguma armadura natural, mas devido a isso voce ï¿½ um pouco lento e sua aparï¿½ncia pode ser assustadora para outras pessoas.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 116);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
 
   GFPage(gump, 19);
-  GFHTMLArea( gump, 50, 360, 500, 90, "Magia não funciona direito em voce, seja para o bem ou para o mal.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "Magia nï¿½o funciona direito em voce, seja para o bem ou para o mal.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 117);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
 
   GFPage(gump, 20);
-  GFHTMLArea( gump, 50, 360, 500, 90, "Você passou sua vida mexendo com substâncias químicas, seus extratos e suas combinações. Sua aparência é doentia devido a exposição a substância tóxias, e sua compleição é doentia. Entretanto,você possui grande conhecimento.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "Vocï¿½ passou sua vida mexendo com substï¿½ncias quï¿½micas, seus extratos e suas combinaï¿½ï¿½es. Sua aparï¿½ncia ï¿½ doentia devido a exposiï¿½ï¿½o a substï¿½ncia tï¿½xias, e sua compleiï¿½ï¿½o ï¿½ doentia. Entretanto,vocï¿½ possui grande conhecimento.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 118);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
 
   GFPage(gump, 21);
-  GFHTMLArea( gump, 50, 360, 500, 90, "Sua família sempre foi pobre e trabalhou nos campos, você cresceu forte e saudável com o trabalho, mas pobre e sem educação.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "Sua famï¿½lia sempre foi pobre e trabalhou nos campos, vocï¿½ cresceu forte e saudï¿½vel com o trabalho, mas pobre e sem educaï¿½ï¿½o.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 119);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
   
   GFPage(gump, 22);
-  GFHTMLArea( gump, 50, 360, 500, 90, "Voce é rico e decadente, sua vida foi sempre voltada a nobreza, e você manteve pouco contato com o resto do mundo, graças a isso voce se tornou inpato a realizar as tarefas mais simples.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "Voce ï¿½ rico e decadente, sua vida foi sempre voltada a nobreza, e vocï¿½ manteve pouco contato com o resto do mundo, graï¿½as a isso voce se tornou inpato a realizar as tarefas mais simples.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 120);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
 
   GFPage(gump, 23);
-  GFHTMLArea( gump, 50, 360, 500, 90, "Seu pai ou mãe eram famosos heróis. Você começa com a espada que seu pai usou e a fama de ser um filho de um herói, mas você tem um dever a cumprir e caso falhe todos cobrarão de você.", 0, 1); 
+  GFHTMLArea( gump, 50, 360, 500, 90, "Seu pai ou mï¿½e eram famosos herï¿½is. Vocï¿½ comeï¿½a com a espada que seu pai usou e a fama de ser um filho de um herï¿½i, mas vocï¿½ tem um dever a cumprir e caso falhe todos cobrarï¿½o de vocï¿½.", 0, 1); 
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 121);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
 
   GFPage(gump, 24);
-  GFHTMLArea( gump, 50, 360, 500, 90, "Você sempre preferiu brincar com garotos ao invés de garotas. Você possui mais força, mas menos graciosidade.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "Vocï¿½ sempre preferiu brincar com garotos ao invï¿½s de garotas. Vocï¿½ possui mais forï¿½a, mas menos graciosidade.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 122);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
 
   GFPage(gump, 25);
-  GFHTMLArea( gump, 50, 360, 500, 90, "Você já resistiu de tudo na sua vida, mas seu sofrimento foi tanto que lhe afetou em todos os sentidos possíveis.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "Vocï¿½ jï¿½ resistiu de tudo na sua vida, mas seu sofrimento foi tanto que lhe afetou em todos os sentidos possï¿½veis.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 123);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
 
   GFPage(gump, 26);
-  GFHTMLArea( gump, 50, 360, 500, 90, "O destino foi cruel com você, dotado de uma deformação horrenda, foi abandonado por seus pais, e como todos pensam que voce é a cria de algum monstro você se tornou um hábil combatente para se proteger de valentões, mas nunca pode estudar ou acumular riquezas.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "O destino foi cruel com vocï¿½, dotado de uma deformaï¿½ï¿½o horrenda, foi abandonado por seus pais, e como todos pensam que voce ï¿½ a cria de algum monstro vocï¿½ se tornou um hï¿½bil combatente para se proteger de valentï¿½es, mas nunca pode estudar ou acumular riquezas.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 124);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
 
   GFPage(gump, 27);
-  GFHTMLArea( gump, 50, 360, 500, 90, "Você é um aventureiro-nato, vive em busca de novas descobertas e tesouros. Mas você sempre foi muito dependente de um grupo de pessoas para fazer o trabalho pesado.", 0, 1);
+  GFHTMLArea( gump, 50, 360, 500, 90, "Vocï¿½ ï¿½ um aventureiro-nato, vive em busca de novas descobertas e tesouros. Mas vocï¿½ sempre foi muito dependente de um grupo de pessoas para fazer o trabalho pesado.", 0, 1);
   GFRadioButton (  gump, 50, 450, 210, 211, 0, 125);
   GFTextLine (gump, 80, 450, 1153, "Aceito este kit." );
 
@@ -465,7 +465,7 @@ function KitGump(who)
 		AP_ModifySkillMod(who, POLE_ARMS, 5);
         AP_SetTrueStat(who, STRENGTH, AP_GetTrueStat(who, STRENGTH)-10);
       elseif ( key == 101)
-        SetObjProperty(who, "kit", "criado por lobos");
+        SetObjProperty(who, "kit", "Aliado da Natureza");
         AP_SetTrueStat(who, INTELLIGENCE, AP_GetTrueStat(who, INTELLIGENCE)-10);
       elseif ( key == 102 )
         SetObjProperty(who, "kit", "covarde");
@@ -508,7 +508,7 @@ function KitGump(who)
         AP_SetTrueStat(who, INTELLIGENCE, AP_GetTrueStat(who, INTELLIGENCE)+10);
 	SetObjProperty(who, "dpmod", -30);
       elseif ( key == 110 )
-        SetObjProperty(who, "kit", "herança");
+        SetObjProperty(who, "kit", "heranï¿½a");
         AP_SetTrueStat(who, INTELLIGENCE, AP_GetTrueStat(who, INTELLIGENCE)-10);
         var coin := CreateItemInBackpack(who, 0xba64, 200);
 	SetObjProperty(coin, "marked", who.name+" - "+who.acctname);

@@ -114,7 +114,7 @@ program arremessar_arma(params)
                TS_StartTimer(targ, poisonInfo.name, poisonInfo.time, poisonInfo.level, who);
             endif
 
-            if (RandomInt(100) <= 40)
+            if (RandomInt(100) <= 25)
                PrintText(targ, "*Paralisado*", SSM_FAIL);
                TS_StartTimer(targ, "paralysis", 6, who);
             endif

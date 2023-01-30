@@ -80,7 +80,7 @@ program explosao(params)
             PushBack(targ, 3, 20);
             PlayHitSounds(who, targ);
     
-            DamageFLS(targ, total*2, DMG_FORCED, who);
+            DamageFLS(targ, total*2, DMG_PHYSICAL, who);
 
             TS_StartTimer(targ, "lentidao", 6);
         else  

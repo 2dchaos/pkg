@@ -82,7 +82,7 @@ program defensor(params)
       TS_StartTimer(targ, "tombar", 10);
       TS_StartTimer(targ, "lentidao", 4, who);
       TS_StartTimer(targ, "Paralysis", 2, who);  
-      DamageFLS(targ, total, DMG_FORCED, who);
+      DamageFLS(targ, total, DMG_PHYSICAL, who);
       PlayHitSounds(who, targ);
    else
       PlayHitSounds(who, targ);

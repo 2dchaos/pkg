@@ -61,7 +61,7 @@ program startTalent(param)
          if (!ParryCheck(who, mobile, total));
             if ( mobile != who )
                PlayMovingEffect( who, mobile, 0x22C6, 10);
-               DamageFLS(mobile, total*3, DMG_PHYSICAL, who);
+               DamageFLS(mobile, total*2, DMG_PHYSICAL, who);
             endif
          else
             PlayHitSounds(who, mobile);

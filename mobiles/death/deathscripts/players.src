@@ -281,6 +281,11 @@ function PactoSepulturaCheck(ghost, corpse)
 		var targhp := AP_GetVital(targ, "hits");
 		if (targhp <= 0)
 			SendSysMessage(ghost, "Seu alvo foi destruido e voce se levantara", 3, 191);
+			//Retorna o DP
+			var dptarg := AP_GetVital(ghost, "DP");
+			AP_SetVital(ghost, "DP", dptarg);
+
+			dptarg := dptarg+10;
 			sleepms(1500);
 			KataWakeUp(ghost, corpse);
 			pacto := 1;

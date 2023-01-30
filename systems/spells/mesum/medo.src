@@ -54,6 +54,12 @@ program SpellScript(params)
             combat := combat/2;
 
             AP_SetSkillMod(npcenfurecido, WRESTLING, combat);
+
+			var hpatual 	:= AP_GetVital(targ, "HITS");
+			var manaatual 	:= AP_GetVital(targ, "MANA");
+			var vigoratual 	:= AP_GetVital(targ, "STAMINA");
+
+
 			var mypack := GetEquipmentByLayer(npcenfurecido, 0x15);
                             if (!mypack)
                                 mypack := CreateItemAtLocation(20, 20, 0, 0xe75, 1, npcenfurecido.realm);
@@ -119,11 +125,15 @@ program SpellScript(params)
 
 							SendEvent(npcenfurecido, struct{ "type" := 0x3333, source := who, "last_loc" := last_loc});
 
+							AP_SetVital( targ, HITS, hpatual);
+							AP_SetVital( targ, MANA, hpatual);
+							AP_SetVital( targ, STAMINA, hpatual);
+
 							while (npcenfurecido)
 
-								var hpatual 	:= AP_GetVital(npcenfurecido, "HITS");
-								var manaatual 	:= AP_GetVital(npcenfurecido, "MANA");
-								var vigoratual 	:= AP_GetVital(npcenfurecido, "STAMINA");
+								var hpatual2 	:= AP_GetVital(npcenfurecido, "HITS");
+								var manaatual2 	:= AP_GetVital(npcenfurecido, "MANA");
+								var vigoratual2 	:= AP_GetVital(npcenfurecido, "STAMINA");
 
 								MoveObjectToLocation(targ, npcenfurecido.x, npcenfurecido.y, npcenfurecido.z);
 
@@ -151,9 +161,9 @@ program SpellScript(params)
 
 								sleepms(10);
 
-								AP_SetVital( targ, HITS, hpatual);
-								AP_SetVital( targ, MANA, hpatual);
-								AP_SetVital( targ, STAMINA, hpatual);
+								AP_SetVital( targ, HITS, hpatual2);
+								AP_SetVital( targ, MANA, hpatual2);
+								AP_SetVital( targ, STAMINA, hpatual2);
 
 							endwhile
 							

@@ -11,14 +11,14 @@ include ":containers:containers";
 
 program book(who, book)
 
-	var donoGrimorio := GetObjProperty(book, "serialDono");
+	var donoGrimorio := GetObjProperty(book, "serialid");
 	if (donoGrimorio)
 		if (donoGrimorio != who.serial)
 			SendSysMessageEx(who, "Voce nao entende esse livro.", SSM_FAIL);
 			return 0;
 		endif
 	else
-		SetObjProperty(book, "serialDono", who.serial);
+		SetObjProperty(book, "serialid", who.serial);
 	endif
 
 	var book_gump := CreateRunebookGump(book, who);

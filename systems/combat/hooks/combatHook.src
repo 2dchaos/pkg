@@ -37,6 +37,7 @@ include ":tn:cooldown";
 //include ":tn:combat";
 include ":timedscripts:timedScripts";
 include ":fls_core:packets";
+include ":faccao:faccao";
 
 var item_cfg	:= ReadConfigFile(":*:itemdesc");
 var strat_cfg	:= ReadConfigFile("combatlevel");
@@ -472,10 +473,17 @@ function CalculateHitChance(attacker, defender)
 		hit_chance := hit_chance - 10;
 	endif
 
-
-
 	if (TemHabilidade(attacker, "Poder da Alianca"))
-		hit_chance := hit_chance + attacker.party.members.size() * 2;
+		var guild := FindGuild(attacker);
+		var members := guild.members;
+		var guildbonus := 0;
+
+		foreach mob in members
+			guildbonus := guildbonus +1 ;
+		endforeach
+
+		hit_chance := hit_chance + guildbonus;
+		//hit_chance := hit_chance + attacker.party.members.size() * 2;
 	endif
 
 	if ( GetObjProperty(attacker, "armapreferida") == attacker.weapon.objtype )

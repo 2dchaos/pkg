@@ -4,6 +4,7 @@ use cfgfile;
 
 include ":brainAI:npcUtil";
 include ":attributes:attributes";
+include ":faccao:faccao";
 
 function CalculateRawDamage(attacker, weapon)
 
@@ -206,10 +207,17 @@ function CalculateHitChancehab(attacker, targ)
 		hit_chance := hit_chance - 10;
 	endif
 
-
-
 	if (TemHabilidade(attacker, "Poder da Alianca"))
-		hit_chance := hit_chance + attacker.party.members.size() * 2;
+		var guild := FindGuild(attacker);
+		var members := guild.members;
+		var guildbonus := 0;
+
+		foreach mob in members
+			guildbonus := guildbonus +1 ;
+		endforeach
+
+		hit_chance := hit_chance + guildbonus;
+		//hit_chance := hit_chance + attacker.party.members.size() * 2;
 	endif
 
 	if ( GetObjProperty(attacker, "armapreferida") == attacker.weapon.objtype )

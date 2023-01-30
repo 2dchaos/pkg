@@ -86,7 +86,7 @@ program tirodesfocado(who)
        						if (!ParryCheck(who, targ, total));
 								alreadydamaged.Append(mobile.serial);
 								PlayObjectCenteredEffectEx( mobile, 0x22c6, 1, 9);
-								DamageFLS(mobile, total*2, DMG_FORCED, who);
+								DamageFLS(mobile, total*2, DMG_PHYSICAL, who);
 								PlayHitSounds(who, targ);
 								Performaction(who, elem.Anim);
 							else

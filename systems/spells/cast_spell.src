@@ -273,12 +273,25 @@ program SpellStarter(params)
 		// skill_check > 0 on success
 		if ( skill_check > 0 )
 			if (scroll.isA(POLCLASS_ITEM))
+				if (scroll.amount > 1)
+					SendSysMessageEx(mobile, "Voce so pode usar pergaminhos de 1 em 1", SSM_FAIL);
+					return 0;
+				endif
 				if(!TemHabilidade(mobile, "Reaproveitar Pergaminho"))
 					SubtractAmount(scroll, 1);
 				else
-					var chance := RandomInt(100)+1;
-					if (chance > attribute)
-						SubtractAmount(scroll, 1);
+					var cargas := GetObjProperty(scroll, "cargas");
+					if (!cargas)
+						SetObjProperty(scroll, "cargas", 5);
+					endif
+
+					if (cargas >= 2)
+						cargas := cargas -1;
+					elseif (cargas == 1)
+						var chance := RandomInt(100)+1;
+						if (chance > attribute)
+							SubtractAmount(scroll, 1);
+						endif
 					endif
 				endif
 			endif

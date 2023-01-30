@@ -1325,7 +1325,7 @@ function CloseDistanceArcher(opponent)
 
    var max_range := cint(npccfgfile.AttackMaxRange);
    var min_range := cint(npccfgfile.AttackMinRange);
-   if (!max_range) max_range := 6; endif;
+   if (!max_range) max_range := 18; endif;
    if (!min_range) min_range := 3; endif;
 
 	if (min_range != 1 && dist < cint(npccfgfile.AttackMinRange) )

@@ -86,7 +86,7 @@ program explosao(params)
    if (!ParryCheck(who, targ, total));
       PrintText(who, "*Da um puxao em {}*".format(targ.name));
       PlayHitSounds(who, targ);
-      DamageFLS(targ, total, DMG_FORCED, who);
+      DamageFLS(targ, total, DMG_PHYSICAL, who);
 
       var mod := GetModByFacing(who.facing);
       MoveObjectToLocation(targ, who.x+mod[1], who.y+mod[2], who.z, who.realm);

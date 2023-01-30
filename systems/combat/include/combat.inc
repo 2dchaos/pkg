@@ -2,6 +2,7 @@
 use uo;
 include ":brainai:npcUtil";
 include ":combat:weaponInfo";
+include ":faccao:faccao";
 
 function DistanceChecks(attacker, defender)
 	var cur_range := Distance(attacker, defender);
@@ -246,10 +247,17 @@ function CalculateHitChancehab(attacker, targ)
 		hit_chance := hit_chance - 10;
 	endif
 
-
-
 	if (TemHabilidade(attacker, "Poder da Alianca"))
-		hit_chance := hit_chance + attacker.party.members.size() * 2;
+		var guild := FindGuild(attacker);
+		var members := guild.members;
+		var guildbonus := 0;
+
+		foreach mob in members
+			guildbonus := guildbonus +1 ;
+		endforeach
+
+		hit_chance := hit_chance + guildbonus;
+		//hit_chance := hit_chance + attacker.party.members.size() * 2;
 	endif
 
 	if ( GetObjProperty(attacker, "armapreferida") == attacker.weapon.objtype )
@@ -356,7 +364,13 @@ function CalculateRawDamage(attacker, weapon)
 endfunction
 
 function CheckForAmmo(who, bow, qty := 1)
-	var aljava := GetEquipmentByLayer(who, 0x14);
+	var aljavas := array{0x791c, 0x2fb7};
+	var aljava;
+	if (aljava.objtype in aljavas)
+		aljava := GetEquipmentByLayer(who, 0x14);
+	else
+		aljava := GetEquipmentByLayer(who, 0xc);
+	endif
 	var ammo := GetObjProperty(bow, "ammo");
 	if (!ammo)
 		SendSysMessageEx(who, "Você não definiu o tipo de flecha que vai usar. [clique 2x no arco fora do modo agressivo e na flecha ]");

@@ -11,6 +11,7 @@ include ":tn:tngumps";
 include ":attributes:attributes";
 include ":disguise:disguise";
 include ":crafting:craftingUtil";
+include ":attributes:advanceCheck";
 
 program CheckRPPoints(who, params)
 	params := splitwords(params);
@@ -140,6 +141,12 @@ function SendCheckRP(who, conta)
 			endif
 			var true_skill := AP_GetTrueSkill(who, skill);
 			var temp := true_skill+0.4;
+
+			if ( (limiteportempo(who) + valorinicial(who, skill))  <= true_skill )
+				SkillDbgMsg(who, "Nao pode subir alem do seu cap maximo: " + limiteportempo(who) + " idade do char  " + idadeChar( who) + " valor inicial "  + valorinicial(who, skill));
+				return 0;
+  			endif
+
 			AP_SetTrueSkill(who, skill, temp);
 			decGrade(who, 15);
 			MakeLog(conta, 15, "Aumentar Pericia", "Aumentou a Pericia " + skill);
@@ -164,6 +171,12 @@ function SendCheckRP(who, conta)
 			endif
 			var true_skill := AP_GetTrueSkill(who, skill);
 			var temp := true_skill+0.4;
+
+			if ( (limiteportempo(who) + valorinicial(who, skill))  <= true_skill )
+				SkillDbgMsg(who, "Nao pode subir alem do seu cap maximo: " + limiteportempo(who) + " idade do char  " + idadeChar( who) + " valor inicial "  + valorinicial(who, skill));
+				return 0;
+  			endif
+
 			while ( CInt(temp*10.0) == CInt(GetAttributeBaseValue(who, skill)) )
 				// Kludge for an old core precision bug.
 				// Makes sure it always goes up atleast 0.1.
@@ -194,6 +207,13 @@ function SendCheckRP(who, conta)
 			endif
 			var true_skill := AP_GetTrueSkill(who, skill);
 			var temp := true_skill+0.4;
+
+			if ( (limiteportempo(who) + valorinicial(who, skill))  <= true_skill )
+				SkillDbgMsg(who, "Nao pode subir alem do seu cap maximo: " + limiteportempo(who) + " idade do char  " + idadeChar( who) + " valor inicial "  + valorinicial(who, skill));
+				return 0;
+  			endif
+
+
 			while ( CInt(temp*10.0) == CInt(GetAttributeBaseValue(who, skill)) )
 				// Kludge for an old core precision bug.
 				// Makes sure it always goes up atleast 0.1.

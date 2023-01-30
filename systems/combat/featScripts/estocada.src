@@ -83,7 +83,7 @@ program tirodesfocado(who)
 							var total := cint(CalculateTotalDamage(mobile, basedamage, who, dmgList));
        						if (!ParryCheck(who, targ, total));
 								alreadydamaged.Append(mobile.serial);
-								DamageFLS(mobile, total*2, DMG_PHYSICAL, who);
+								DamageFLS(mobile, total*3, DMG_FORCED, who);
 								PlaySoundEffect(who, 0x521);
 								Performaction(who, elem.Anim);
 							else

@@ -80,6 +80,11 @@ program advalchemy(who, item)
 			return;
         endif
 
+		if ( alvo.amount > 8 )
+			DestroyItem(alvo);
+			SendSysMessageEx(who, "voce tentou colocar mais reagentes do que o necessario por engano e acabou estragando as propriedades de todos deles", SSM_FAIL);
+		endif
+
 		if (reags[alvo.objtype]  >= 10 )
 			SendSysMessageEx(who, "Muitos componentes materiais desse tipo.", SSM_FAIL);
 			return;
