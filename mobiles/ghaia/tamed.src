@@ -17,6 +17,7 @@ include ":gumps:gumps";
 include ":timedScripts:timedScripts";
 include ":taming:taming";
 include ":tn:cooldown";
+include ":ghaia:ghaia";
 
 
 set_script_option(SCRIPTOPT_CAN_ACCESS_OFFLINE_MOBILES, 1);
@@ -77,10 +78,14 @@ const STOP_CMD		:= 0xA010;
 const DELIVER_CMD	:= 0xA011;
 const DROP_CMD		:= 0xA012;
 
+function EnableAreaEvent()
+   EnableEvents(SYSEVENT_ENTEREDAREA, 5);
+endfunction
 
 
 program TamedAI()
 
+	EnableAreaEvent();
 	EnableMainEvents();
 	Setup();
 
@@ -92,6 +97,10 @@ program TamedAI()
 		SpecialHab(me);
 
 		var ev := Wait_For_Event(wait_time);
+
+		if (CInt( AP_GetSkill(me, AWARENESS) ) > 0)
+        	procura_em_volta(me);
+    	endif
 
 		case ( ev.type )
 
@@ -167,7 +176,12 @@ program TamedAI()
 			NEW_MASTER_CMD:
 
 				Transfer(ev.targ);
-				
+			
+			SYSEVENT_ENTEREDAREA:
+
+			if (CInt( AP_GetSkill(me, AWARENESS) ) > 0)
+        		procura_em_volta(me);
+    		endif
 
 			SYSEVENT_DOUBLECLICKED:
 
@@ -175,6 +189,9 @@ program TamedAI()
 					if( (Distance(ev.source, me) > 1) )
 						if (ev.source == owner)
 							ProcessDoubleClick(ev);
+							if (CInt( AP_GetSkill(me, AWARENESS) ) > 0)
+        						procura_em_volta(me);
+    						endif
 						endif				
 
 					elseif ( me.graphic in pack_animals )
@@ -1442,4 +1459,23 @@ function Stop()
 	going_loc := 0;
 	dragging := 0;
 	running_from := 0;
+endfunction
+
+function procura_em_volta(me)
+    var range := CInt( AP_GetSkill(me, AWARENESS) / 10 ) + 1;
+    foreach mobile in ListMobilesNearLocationEX(me.x, me.y, me.z, range, LISTEX_FLAG_HIDDEN)
+        if ( mobile == me ); // Do Nothing
+        elseif ( CInt(GetObjProperty(me, "IgnoreHidden")) ); // Do Nothing
+        else
+            if ( CheckLineOfSight(me, mobile) )
+                var difficulty := CalculateDHDiff(me, mobile);
+                if ( SkillCheck(me, AWARENESS, difficulty) > 0 )
+                    mobile.hidden := 0;
+                    PrintText(mobile, "*aparece*");
+                    SendSysMessageEx(mobile, me.name+" te encontrou!", SSM_FAIL);
+                endif
+            endif
+        endif
+        sleepms(2);
+    endforeach
 endfunction

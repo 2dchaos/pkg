@@ -269,6 +269,9 @@ program NPCMonitor()
       Patrol();
 
       if (!following && !fighting && !warning)
+         if (CInt( AP_GetSkill(me, AWARENESS) ) > 0)
+			   procura_em_volta(me);
+		   endif
          var listmobiles := ListMobilesInLineOfSight( me, 8);
          if (!CheckIfHavePlayerGuild(listmobiles))
             foreach mob in listmobiles
@@ -307,6 +310,7 @@ program NPCMonitor()
       endif
 
       var ev := Wait_For_Event(wait_time);
+
       case(ev.type)
          SYSEVENT_ENGAGED:
             var inimigo := ev.source;
@@ -368,6 +372,11 @@ program NPCMonitor()
             wait_time := 0;
             break;
          SYSEVENT_ENTEREDAREA:
+
+            if (CInt( AP_GetSkill(me, AWARENESS) ) > 0)
+               procura_em_volta(me);
+            endif
+
             if (!CheckIfHavePlayerGuild(ListMobilesInLineOfSight( me, 8)))
                if (CheckLineOfSight(me, ev.source))
                   CheckPlayer(ev.source);
@@ -387,11 +396,15 @@ program NPCMonitor()
             if (ev.destiny)
                PetGoTo(ev.destiny, ev.move_type);
             endif
+
             wait_time := 0;
             break;
          SYSEVENT_SPEECH:
             ResolveSpeech(ev);
          SYSEVENT_DOUBLECLICKED:
+            if (CInt( AP_GetSkill(me, AWARENESS) ) > 0)
+               procura_em_volta(me);
+            endif
          //    if ( ev.source == me.master || ev.source.cmdlevel >= 3 )
          //       if( (Distance(ev.source, me) > 1) )
             ProcessDoubleClick(ev);
@@ -854,6 +867,10 @@ function SendToStartPosition()
       if (CoordinateDistance(patrolling.x, patrolling.y, me.x, me.y) > 20)
          if (HasPlayerNear(patrolling[1].x, patrolling[1].y, me.realm))
             return 0;
+         endif
+
+         if (CInt( AP_GetSkill(me, AWARENESS) ) > 0)
+            procura_em_volta(me);
          endif
 
          MoveObjectToLocation(me, patrolling[1].x, patrolling[1].y, patrolling[1].z, me.realm, MOVEOBJECT_FORCELOCATION);
@@ -1528,4 +1545,23 @@ function getFacingString(me_face)
       6: return "SW";
       7: return "SE";
    endcase
+endfunction
+
+function procura_em_volta(me)
+    var range := CInt( AP_GetSkill(me, AWARENESS) / 10 ) + 1;
+    foreach mobile in ListMobilesNearLocationEX(me.x, me.y, me.z, range, LISTEX_FLAG_HIDDEN)
+        if ( mobile == me ); // Do Nothing
+        elseif ( CInt(GetObjProperty(me, "IgnoreHidden")) ); // Do Nothing
+        else
+            if ( CheckLineOfSight(me, mobile) )
+                var difficulty := CalculateDHDiff(me, mobile);
+                if ( SkillCheck(me, AWARENESS, difficulty) > 0 )
+                    mobile.hidden := 0;
+                    PrintText(mobile, "*aparece*");
+                    SendSysMessageEx(mobile, me.name+" te encontrou!", SSM_FAIL);
+                endif
+            endif
+        endif
+        sleepms(2);
+    endforeach
 endfunction

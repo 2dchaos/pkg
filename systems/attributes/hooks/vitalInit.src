@@ -182,6 +182,10 @@ endfunction
 // Note: This vital fuck the macroers.
 // *****
 exported function GetSkillCapRegenRate(mobile)
+	if (GetObjProperty(mobile, "semcap"))
+		return 0;
+	endif
+
 	if (mobile.npctemplate)
 			return 100;
 	endif
