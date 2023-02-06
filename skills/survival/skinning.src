@@ -59,14 +59,64 @@ program skinning(parms)
 		
 
 	elseif((GetObjProperty(cadaver,"npctemplate")== error) && (GetObjProperty(cadaver, "morto")!=1))
-		if ( !YesNo(who, "Deseja Mesmo Gastar Seus pontos rp para matar o jogador? (1000)") )
-			return;
+
+		var chardata := GetObjProperty(who, "chardata");
+		var primSum := 0;
+		var primarias := 0;
+		foreach skill in (chardata.Skills.keys())
+			if (chardata.Skills[skill]  == 3)
+				primarias := primarias + 1;
+				primSum := primSum + AP_GetSkill(who, skill);
+			endif		
+		endforeach
+		primSum := primSum - primarias*40; //so conta os pontos que subiu a partir de 40
+		primarias := primarias*3;
+		primSum := cint(primSum/primarias);
+
+		var bodycount;
+		bodycount := GetObjProperty(who, "bodycount");
+		bodycount := bodycount*5;
+
+		if (!bodycount)
+			SetObjProperty(who, "bodycount", 0);
 		endif
 
-		if	(CheckPoints(1000, conta, who))
-			decGrade(who, 1000);
+		if (primSum >= 60)
+			SendSysMessage(who, "Voce ainda nao e experiente suficiente para matar!");
+			return;
 
-			MakeLog(conta, 1000, "Assassinar", "Assassinou " + cadaver);
+		else ( !YesNo(who, "Deseja mesmo matar esse jogador? Voce perdera 10 pontos mais " + bodycount + " em todas as suas skills.") );
+			var novovalor;
+			foreach skill in (chardata.Skills.keys())
+				novovalor := AP_GetSkill(who, skill);
+				novovalor := novovalor - 10;
+				novovalor := novovalor - bodycount;
+				AP_SetTrueSkill(who, skill, novovalor);
+				sleepms(10);
+			endforeach
+
+			var bodycountreferente;
+			bodycountreferente := GetObjProperty(who, "bodycount");
+			bodycountreferente := bodycountreferente + 1;
+
+			SetObjProperty(who, "bodycount", bodycountreferente);
+			
+
+			MakeLog(conta, 00, "Assassinar", "Assassinou " + cadaver);
+			DesmembreCorpse(cadaver);
+			PrintTextAbove( who, "*Corta a cabeca*", font := _DEFAULT_TEXT_FONT, color := _DEFAULT_TEXT_COLOR, journal_print := JOURNAL_PRINT_NAME);
+			SetObjProperty(cadaver, "description", "[Decaptado]");
+			SetObjProperty(cadaver, "WeaponKill", blade.desc);
+			SetObjProperty(cadaver, "charname", cadaver.name);
+			SetObjProperty(cadaver, "deathtime", polcore().systime);
+			SetName(cadaver, "Corpo Irreconhecivel");
+			SetObjProperty(cadaver, "morto",1);
+		endif
+/*
+		if	(CheckPoints(1000, conta, who))
+			//decGrade(who, 1000);
+
+			MakeLog(conta, 00, "Assassinar", "Assassinou " + cadaver);
 
 			DesmembreCorpse(cadaver);
 			PrintTextAbove( who, "*Corta a cabeca*", font := _DEFAULT_TEXT_FONT, color := _DEFAULT_TEXT_COLOR, journal_print := JOURNAL_PRINT_NAME);
@@ -77,6 +127,7 @@ program skinning(parms)
 			SetName(cadaver, "Corpo Irreconhecivel");
 			SetObjProperty(cadaver, "morto",1);
 		endif
+*/
 		//SendSysMessage( who, "Fale com um GM se quiser de fato matar esse jogador" );
 		//return 0;
 	/*	if ((idadeChar( who) > 30)) 
