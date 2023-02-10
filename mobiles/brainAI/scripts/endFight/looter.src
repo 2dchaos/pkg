@@ -82,7 +82,7 @@ function LootSomething(npc, corpse)
 		contents := 0;
 		
 		if ( item )
-			PrintTextAbove(npc, "*revirando o corpo*");
+			//PrintTextAbove(npc, "*revirando o corpo*");
 			MoveItemToContainer(item, npc.backpack);
 			
 			if ( item.layer )

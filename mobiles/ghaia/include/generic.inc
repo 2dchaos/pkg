@@ -744,7 +744,7 @@ function LootSomething(me)
 		contents := 0;
 		
 		if ( item )
-			PrintTextAbove(me, "*revirando o corpo*");
+			//PrintTextAbove(me, "*revirando o corpo*");
 			MoveItemToContainer(item, me.backpack);
 			
 			if ( item.layer )

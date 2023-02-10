@@ -82,6 +82,7 @@ function DealAcidDamage(npc, mobile, acid_pool, acid_damage:=0)
 				acid_burned.hp := acid_burned.hp - armor_damage;
 				PrintTextAbovePrivate( mobile, "*Acido danificou seu equipamento*", mobile, _DEFAULT_TEXT_FONT, 72);
 			else
+				MoveItemToContainer(acid_burned, mobile.backpack);
 				DestroyItem(acid_burned);
 				PrintTextAbovePrivate( mobile, "*Parte do seu equipamento foi completamente dissolvido!*", mobile, _DEFAULT_TEXT_FONT, 72);
 			endif

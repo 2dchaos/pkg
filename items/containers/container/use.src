@@ -27,7 +27,7 @@ program useContainer(mobile, container)
 	if (!container.IsA(POLCLASS_CORPSE))
 		SendViewContainer(mobile, container);
 		PrintText(mobile, "*{} abriu {}*".format(mobile.name, container.name));
-	else
+	elseif (!container.npctemplate)
 		SendViewContainer(mobile, container);
 		PrintText(mobile, "*{} revirando os pertences do {}*".format(mobile.name, container.name));
 	endif
