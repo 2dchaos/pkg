@@ -46,7 +46,7 @@ program TimerControl(mobile)
 		elseif( event.type == EVENT_PLAYER_DIED )
 			PlayerDeath(mobile, timer_list, num_poisons);
 		elseif ( event.type == EVENT_LOGOFF )
-			LogOff(mobile, timer_list, cooldowns);
+			LogOff(mobile/*, timer_list, cooldowns*/);
 			break;
 		endif
 
@@ -126,11 +126,20 @@ function StartUp(mobile, byref timer_list, byref cooldowns, byref num_poisons)
 	return 1;
 endfunction
 
-function LogOff(mobile, byref timer_list, byref cooldowns)
+function LogOff(mobile/*, byref timer_list, byref cooldowns*/)
 	//On Logout, save the status of timers. Then stop the scripts.
 
 	Set_Critical(1);
-	SaveState(mobile, timer_list, cooldowns);
+
+		var timer_list := TS_GetTimerList(mobile);
+		var names := array;
+
+		foreach timer in ( timer_list.keys() )
+			timer := lower(timer);
+			TS_LowerDuration(mobile, timer, -1);
+			sleepms(10);
+		endforeach
+ /*	SaveState(mobile, timer_list, cooldowns);
 
 	foreach timer in ( timer_list )
 		timer := timer; // So the compiler doesn't warn.
@@ -152,7 +161,7 @@ function LogOff(mobile, byref timer_list, byref cooldowns)
 				print("Error::LogOff() - ["+elem_info.LogOffScript+"] "+script.errortext);
 			endif
 		endif
-	endforeach
+	endforeach */
 	Set_Critical(0);
 
 	return 1;
@@ -471,12 +480,24 @@ function LowerDuration(mobile, byref event, byref timer_list, byref cooldowns, b
 	return 1;
 endfunction
 
-function NPCDeath(byref timer_list)
+function NPCDeath(mobile /*byref timer_list*/)
+
+	var timer_list := TS_GetTimerList(mobile);
+	var names := array;
+
+	foreach timer in ( timer_list.keys() )
+		timer := lower(timer);
+		TS_LowerDuration(mobile, timer, -1);
+		sleepms(10);
+	endforeach
+
+
+	/*
 	foreach timer in ( timer_list )
 		GetProcess(timer.pid).Kill();
 		SleepMS(2);
 	endforeach
-
+	*/
 	return 1;
 endfunction
 

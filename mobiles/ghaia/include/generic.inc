@@ -161,7 +161,7 @@ function Fight(opponent, alerted := 0)
 		var end := ReadGameClock() + 10;
 
 		while (CoordinateDistance(me.x, me.y, corpo.x, corpo.y) < areasize + 5 && end > ReadGameClock())
-      //arrastaporai(me, corpo);
+      arrastaporai(me, corpo);
 			RunAwayFromLocation(corpo.x, corpo.y);
 			sleepms(100);
 		endwhile
@@ -764,4 +764,34 @@ function LootSomething(me)
 			endif
 		endif
 	endif
+endfunction
+
+function arrastaporai(me, corpo)
+  if (!GetObjProperty(me, "canibal"))
+    return;
+  endif
+
+  if (GetObjProperty(corpo, "moving"))
+    return 0;
+  endif
+
+  SetObjProperty(corpo, "moving", 1);
+
+  if (corpo.isa(POLCLASS_CORPSE))
+      corpo.movable := 1;
+      var i := 1;
+	    while ( i < 5)
+        if (!(me.hidden || me.concealed))
+          PrintText(me, "*arrastando "+corpo.name+"*");
+        endif
+
+        MoveObjectToLocation(corpo, me.x, me.y, me.z);
+        var mob := SystemFindObjectBySerial(corpo.ownerserial);
+        sleep(2);
+		    i := i + 1;
+      endwhile
+      PrintText(me, "*Solta "+corpo.desc+"*");
+      EraseObjPRoperty(corpo, "moving");
+      corpo.movable := 0;
+  endif
 endfunction
