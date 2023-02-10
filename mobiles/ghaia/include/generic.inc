@@ -161,7 +161,7 @@ function Fight(opponent, alerted := 0)
 		var end := ReadGameClock() + 10;
 
 		while (CoordinateDistance(me.x, me.y, corpo.x, corpo.y) < areasize + 5 && end > ReadGameClock())
-      arrastaporai(me, corpo);
+      //arrastaporai(me, corpo);
 			RunAwayFromLocation(corpo.x, corpo.y);
 			sleepms(100);
 		endwhile
@@ -303,7 +303,7 @@ function Fight(opponent, alerted := 0)
 				return;
 			EVID_COMBAT_MOVE:
 				RunTowardLocation( ev.x, ev.y );
-        Quebraquebra(me);
+        //Quebraquebra(me);
 				if (coordinateDistance(me.x, me.y, ev.x, ev.y) <= 1)
           me.concealed :=0;
 					clear_event_queue();
@@ -582,7 +582,7 @@ function CalcPathAndMove(me, byref opponent, sleepdelay)
             sleepms(sleepdelay);
          else
             if (move_type) RunTowardLocation( path[1].x, path[1].y );
-            Quebraquebra(me);
+            //Quebraquebra(me);
             else WalkTowardLocation(path[1].x, path[1].y); endif
 
 				path.erase(1); //deleta a coordenada e vai pra proxima
@@ -599,7 +599,7 @@ function CalcPathAndMove(me, byref opponent, sleepdelay)
             SetObjProperty(me, "#coordtry", coordtry); 
          endif
          if (move_type) RunTowardLocation( coord.x, coord.y );
-         Quebraquebra(me);
+         //Quebraquebra(me);
          else WalkTowardLocation(coord.x, coord.y); endif
          sleepms(sleepdelay);
          Opendoors(me); //tenta abrir possiveis portas
@@ -764,41 +764,4 @@ function LootSomething(me)
 			endif
 		endif
 	endif
-endfunction
-
-function arrastaporai(me, corpo)
-  if (!GetObjProperty(me, "canibal"))
-    return;
-  endif
-
-  if (GetObjProperty(corpo, "moving"))
-    return 0;
-  endif
-
-  if (corpo.isa(POLCLASS_CORPSE))
-      var type;
-      type := "corpo";
-      corpo.movable := 1;
-      SetObjProperty(corpo, "moving", 1);
-      var i := 1;
-	    while ( i < 5)
-        if (!(me.hidden || me.concealed))
-          if (type == "corpo")
-            PrintText(me, "*arrastando "+corpo.desc+"*");
-          else
-            PrintText(me, "*arrastando "+corpo.name+"*");
-          endif
-        endif
-
-        MoveObjectToLocation(corpo, me.x, me.y, me.z);
-        var mob := SystemFindObjectBySerial(corpo.ownerserial);
-
-        sleep(1);
-		    i := i + 1;
-      endwhile
-      PrintText(me, "*Solta "+corpo.desc+"*");
-      EraseObjPRoperty(corpo, "moving");
-      corpo.movable := 0;
-
-  endif
 endfunction

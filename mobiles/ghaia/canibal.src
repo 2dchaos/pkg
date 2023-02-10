@@ -40,7 +40,7 @@ program KillPlayers()
 	wanders := 0;
 	EnableMainEvents();
 	Set_Event_Queue_Size(1000);
-	//feral(me);
+	feral(me);
 
     	while(me)
 	
@@ -68,6 +68,11 @@ program KillPlayers()
 					if (CheckLineOfSight(me, ev.source))
 						if(CanFight(me, ev.source, align)) //verifica se eh inimigo
 							wanders := 0;
+							Fight(ev.source);
+						endif
+						if ( (!GetObjProperty(ev.source, "canibal")) && (GetObjProperty(me, "canibal")) )
+							Fight(ev.source);
+						elseif ( (GetObjProperty(ev.source, "canibal")) && (!GetObjProperty(me, "canibal")) )
 							Fight(ev.source);
 						endif
 					endif
@@ -340,4 +345,41 @@ function getFacingString(me_face)
       6: return "SW";
       7: return "SE";
    endcase
+endfunction
+
+function arrastaporai(me, corpo)
+  if (!GetObjProperty(me, "canibal"))
+    return;
+  endif
+
+  if (GetObjProperty(corpo, "moving"))
+    return 0;
+  endif
+
+  if (corpo.isa(POLCLASS_CORPSE))
+      var type;
+      type := "corpo";
+      corpo.movable := 1;
+      SetObjProperty(corpo, "moving", 1);
+      var i := 1;
+	    while ( i < 5)
+        if (!(me.hidden || me.concealed))
+          if (type == "corpo")
+            PrintText(me, "*arrastando "+corpo.desc+"*");
+          else
+            PrintText(me, "*arrastando "+corpo.name+"*");
+          endif
+        endif
+
+        MoveObjectToLocation(corpo, me.x, me.y, me.z);
+        var mob := SystemFindObjectBySerial(corpo.ownerserial);
+
+        sleep(1);
+		    i := i + 1;
+      endwhile
+      PrintText(me, "*Solta "+corpo.desc+"*");
+      EraseObjPRoperty(corpo, "moving");
+      corpo.movable := 0;
+
+  endif
 endfunction
