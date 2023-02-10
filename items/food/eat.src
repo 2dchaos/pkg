@@ -30,6 +30,21 @@ program eat_food(who, food)
 	var themsg;
 	var foodvalue := Cint(foodcfg[food.objtype].foodvalue);
 
+	food.movable == 0;
+
+	var i := 1;
+	    while ( i < 4)
+			case(RandomInt(3) + 1)
+				1: PlaySoundEffect(who, 0x3b);
+				2: PlaySoundEffect(who, 0x3c);
+				3: PlaySoundEffect(who, 0x3d);
+			endcase
+			PrintText(who, "*comendo "+food.desc+"*");
+			PerformAction(who, 0x22);
+			sleep(2);
+			i := i + 1;
+		endwhile
+
 	var elem := foodcfg[food.objtype];
 	foreach line in getconfigstringarray(elem, "leftovers")
 		line := splitwords(line);
@@ -83,12 +98,6 @@ program eat_food(who, food)
 		endif
 
 		hungerlvl := hungerlvl - foodvalue*60;
-		case(RandomInt(3) + 1)
-			1: PlaySoundEffect(who, 0x3b);
-			2: PlaySoundEffect(who, 0x3c);
-			3: PlaySoundEffect(who, 0x3d);
-		endcase
-		PerformAction(who, 0x22);
                 
 		hungerlvl  := cint(hungerlvl /60);
 		if (hungerlvl <= 0)

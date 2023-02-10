@@ -86,6 +86,7 @@ function CloseIn(me, lx, ly, mode := 0 )
 	      	WalkTowardLocation(lx, ly);
 	     else
 		RunTowardLocation(lx, ly);
+    Quebraquebra(me);
 	     endif	
              return 0;
   endcase
@@ -143,6 +144,10 @@ function Fight(opponent, alerted := 0)
     endif
   
     if (opponent.dead)
+      var corpo := opponent.GetCorpse();
+        sleep(1);
+        LootSomething(me);
+        sleep(1);
 	var temnego := 0;
 	foreach npc in ListMobilesInLineOfSight(me, areasize + 2)
 		if( CanFight(me, npc, align) )
@@ -154,7 +159,9 @@ function Fight(opponent, alerted := 0)
 	if (!temnego)
 		var corpo := opponent.GetCorpse();
 		var end := ReadGameClock() + 10;
+
 		while (CoordinateDistance(me.x, me.y, corpo.x, corpo.y) < areasize + 5 && end > ReadGameClock())
+      arrastaporai(me, corpo);
 			RunAwayFromLocation(corpo.x, corpo.y);
 			sleepms(100);
 		endwhile
@@ -296,6 +303,7 @@ function Fight(opponent, alerted := 0)
 				return;
 			EVID_COMBAT_MOVE:
 				RunTowardLocation( ev.x, ev.y );
+        Quebraquebra(me);
 				if (coordinateDistance(me.x, me.y, ev.x, ev.y) <= 1)
           me.concealed :=0;
 					clear_event_queue();
@@ -482,6 +490,21 @@ function sleepmode()
   endwhile
 endfunction
 
+function Quebraquebra(me)
+  foreach item in (ListItemsNearLocation(me.x, me.y, me.z, 1, me.realm))
+		if (GetObjProperty(item, "crafteracc"))
+			var roll := RandomInt(100)+1;
+			if (roll > 99)
+				if (!GetObjProperty(item, "LockId"))
+					createitematlocation(item.x, item.y, item.z, 3119, 1, item.realm);
+					sleepms(10);
+					DestroyItem(item);
+				endif
+			endif
+		endif
+	endforeach
+endfunction
+
 function CalcPathAndMove(me, byref opponent, sleepdelay)
 
   if (!opponent)
@@ -523,6 +546,7 @@ function CalcPathAndMove(me, byref opponent, sleepdelay)
 
       if (move_type) 
          RunToward( opponent );
+         Quebraquebra(me);
       else 
          WalkToward( opponent );
       endif
@@ -558,6 +582,7 @@ function CalcPathAndMove(me, byref opponent, sleepdelay)
             sleepms(sleepdelay);
          else
             if (move_type) RunTowardLocation( path[1].x, path[1].y );
+            Quebraquebra(me);
             else WalkTowardLocation(path[1].x, path[1].y); endif
 
 				path.erase(1); //deleta a coordenada e vai pra proxima
@@ -574,6 +599,7 @@ function CalcPathAndMove(me, byref opponent, sleepdelay)
             SetObjProperty(me, "#coordtry", coordtry); 
          endif
          if (move_type) RunTowardLocation( coord.x, coord.y );
+         Quebraquebra(me);
          else WalkTowardLocation(coord.x, coord.y); endif
          sleepms(sleepdelay);
          Opendoors(me); //tenta abrir possiveis portas
@@ -596,6 +622,7 @@ function CalcPathAndMove(me, byref opponent, sleepdelay)
          endif
       else
          if (move_type) RunToward( opponent );
+         Quebraquebra(me);
          else WalkToward( opponent ); endif
          sleepms(sleepdelay);
       endif
@@ -650,4 +677,128 @@ function procura_em_volta(me)
         endif
         sleepms(2);
     endforeach
+endfunction
+
+function feral(me)
+
+  var mycategory := lower(getnpccategory( mytemplate ));
+  if ( (mytemplate == "canibalgigante") || (mytemplate == "canibalbeta") || (mytemplate == "canibalalfa") 
+    || (mytemplate == "canibalbetafemale") || (mytemplate == "canibalaberracao") || (mytemplate == "matriarcacanibal"))
+    //var batemtudo := ListMobilesNearLocationEx( me.x, me.y, me.z, 12, LISTEX_FLAG_NORMAL, me.realm );
+    SetObjProperty(me, "canibal", "sim");
+  endif
+    //var mob := lower(getnpccategory( ParseTemplateName(mob.npctemplate).template ));
+/*    foreach mob in batemtudo
+      if (GetObjProperty(mob, "canibal"))
+        return 0;
+      else
+        Fight(mob);
+      endif
+		endforeach
+  endif */
+endfunction
+
+	//	if ( (mob.npctemplate == "canibalgigante") || (mob.npctemplate == "canibalbeta") || (mob.npctemplate == "canibalalfa") 
+    //    || (mob.npctemplate == "canibalbetafemale") || (mob.npctemplate == "canibalaberracao") || (mob.npctemplate == "matriarcacanibal"))
+		//		return 0;
+    //  else
+    //endif
+
+function LootSomething(me)
+
+  if (!GetObjProperty(me, "canibal"))
+    return;
+  endif
+
+	if ( !me.backpack )
+		EquipItem(me, CreateItemAtLocation(me.x, me.y, me.z, "backpack", 1));
+	endif
+
+  var contents := array;
+
+  foreach corpo in ListItemsNearLocation(me.x, me.y, me.z, 2, me.realm);
+    if (corpo.IsA(POLCLASS_CORPSE))
+      foreach item in EnumerateItemsInContainer(corpo)
+        var inside := 0;
+        if ( item.IsA(POLCLASS_CONTAINER) )
+          inside := EnumerateItemsInContainer(item).size();
+        endif
+        
+        if ( inside > 0 );
+          //PrintTextAbove(corpse, item.desc+" is a container.. skipping it");
+          //Do nothing
+        elseif ( !item.movable );
+          //PrintTextAbove(corpse, item.desc+" cant be moved.. skipping it");
+          //Do nothing
+        else
+          //PrintTextAbove(corpse, item.desc+" is lootable.");
+          contents.append(item);
+        endif
+        sleepms(5);
+      endforeach
+    endif
+  endforeach
+
+	if ( contents.size() > 0 )
+		var item := contents[RandomInt(contents.size())+1];
+		contents := 0;
+		
+		if ( item )
+			PrintTextAbove(me, "*revirando o corpo*");
+			MoveItemToContainer(item, me.backpack);
+			
+			if ( item.layer )
+				var equip := GetEquipmentByLayer(me, item.layer);
+				if ( !equip.IsA(POLCLASS_WEAPON) )
+					if ( item.ar > equip.ar )
+						MoveItemToContainer(equip, me.backpack);
+						if ( !EquipItem(me, item) )
+							EquipItem(me, equip);
+						endif
+					endif
+				endif
+			elseif ( item.IsA(POLCLASS_EQUIPMENT) )
+				EquipItem(me, item);
+      elseif ( item.IsA(POLCLASS_ARMOR) )
+        EquipItem(me, item);
+			endif
+		endif
+	endif
+endfunction
+
+function arrastaporai(me, corpo)
+  if (!GetObjProperty(me, "canibal"))
+    return;
+  endif
+
+  if (GetObjProperty(corpo, "moving"))
+    return 0;
+  endif
+
+  if (corpo.isa(POLCLASS_CORPSE))
+      var type;
+      type := "corpo";
+      corpo.movable := 1;
+      SetObjProperty(corpo, "moving", 1);
+      var i := 1;
+	    while ( i < 5)
+        if (!(me.hidden || me.concealed))
+          if (type == "corpo")
+            PrintText(me, "*arrastando "+corpo.desc+"*");
+          else
+            PrintText(me, "*arrastando "+corpo.name+"*");
+          endif
+        endif
+
+        MoveObjectToLocation(corpo, me.x, me.y, me.z);
+        var mob := SystemFindObjectBySerial(corpo.ownerserial);
+
+        sleep(1);
+		    i := i + 1;
+      endwhile
+      PrintText(me, "*Solta "+corpo.desc+"*");
+      EraseObjPRoperty(corpo, "moving");
+      corpo.movable := 0;
+
+  endif
 endfunction

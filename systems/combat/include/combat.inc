@@ -184,10 +184,10 @@ function CalculateHitChancehab(attacker, targ)
 	if ( !attacker.npctemplate )
 		skill_a := CDbl(AP_GetSkill(attacker, wpn_a.attribute));
 
-		if ( GetEquipmentByLayer(attacker, LAYER_MOUNT))
+	/*	if ( GetEquipmentByLayer(attacker, LAYER_MOUNT))
 			skill_a := skill_a / 2;
 		endif
-
+	*/
 		if (wpn_a.attribute == WRESTLING) // Ajustar se for soco pra melhor melee combat
 			if (AP_GetSkill(attacker, MELEECOMBAT1H) > AP_GetSkill(attacker, MELEECOMBAT2H))
 				skill_a := AP_GetSkill(attacker, MELEECOMBAT1H);

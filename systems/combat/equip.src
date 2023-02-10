@@ -131,6 +131,15 @@ var descmod:={};
 
 	if (item.isa(POLCLASS_ARMOR))
 
+		case(RandomInt(3) + 1)
+			1: PlaySoundEffect(who, 0x49);
+			2: PlaySoundEffect(who, 0x58);
+			//3: PlaySoundEffect(who, 0x3d);
+		endcase
+		PrintText(who, "*vestindo "+item.desc+"*");
+		PerformAction( who, 0x0020 );
+		TS_StartTimer(who, "paralysis", 2);
+		
 		var timer_list := TS_GetTimerList(who);
 		var names := array;
 

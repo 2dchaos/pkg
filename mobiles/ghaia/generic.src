@@ -40,6 +40,7 @@ program KillPlayers()
 	wanders := 0;
 	EnableMainEvents();
 	Set_Event_Queue_Size(1000);
+	//feral(me);
 
     	while(me)
 	
@@ -69,14 +70,29 @@ program KillPlayers()
 							wanders := 0;
 							Fight(ev.source);
 						endif
+						if ( (!GetObjProperty(ev.source, "canibal")) && (GetObjProperty(me, "canibal")) )
+							Fight(ev.source);
+						elseif ( (GetObjProperty(ev.source, "canibal")) && (!GetObjProperty(me, "canibal")) )
+							Fight(ev.source);
+						endif
 					endif
 				SYSEVENT_ENGAGED:	wanders := 0; Fight(ev.source);
 				SYSEVENT_DAMAGED:	wanders := 0; Fight(ev.source);
 				EVID_ALERT_ALLIES:	wanders := 0; Fight(ev.opponent, 1);
+													if ( (!GetObjProperty(ev.source, "canibal")) && (GetObjProperty(me, "canibal")) )
+														Fight(ev.source);
+													elseif ( (GetObjProperty(ev.source, "canibal")) && (!GetObjProperty(me, "canibal")) )
+														Fight(ev.source);
+													endif
 				EVID_HERDING:		herd(ev);
 				EVID_TAUNT:
 							if(ev.source)
 								wanders := 0; Fight(ev.opponent, 1);
+											if ( (!GetObjProperty(ev.source, "canibal")) && (GetObjProperty(me, "canibal")) )
+												Fight(ev.source);
+											elseif ( (GetObjProperty(ev.source, "canibal")) && (!GetObjProperty(me, "canibal")) )
+												Fight(ev.source);
+											endif
 							endif
 				EVID_FLEE:
 							if (ev.source)
@@ -319,9 +335,10 @@ function Opendoors(me)
 endfunction
 
 function look_around()
+	LootSomething(me);
   foreach npc in ListMobilesInLineOfSight(me, areasize)
     if( CanFight(me, npc, align) )
-         Fight(npc);
+        Fight(npc);
     endif
     sleepms(2);
   endforeach

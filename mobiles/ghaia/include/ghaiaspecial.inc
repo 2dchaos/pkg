@@ -83,7 +83,7 @@ function CanFight(me, mobile, align)
 		endif
 	  endif
 	  
-	  	if (povo == "Numajene")
+	  	if (povo == "Picto")
 		        if ( (mytemplate == "spiritbear") || (mytemplate == "spiritpanther") || (mytemplate == "spiritserpent") || (mytemplate == "spiritwolf") || (mytemplate == "spiritualbear") || (mytemplate == "phasespider") || (mytemplate == "eruva") || (mytemplate == "criafuria")  || (mytemplate == "luine") || (mytemplate == "centaur"))   
 				return 0;
 				endif

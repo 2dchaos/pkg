@@ -79,14 +79,48 @@ function examinarAlvo(who)
 				default: diff := 40;
 			endcase
 			sleep(1);
-			if ( SkillCheck(who, AWARENESS, diff) > 0 )
+
+			var whos := GetObjProperty(targ, "identificador");
+			var identif := GetObjProperty(targ, "identificador");
+			var tentativas:= GetObjProperty(targ, "tentativas");
+
+				if (who.serial in identif)
+					var cfg := ReadConfigFile(":*:itemdesc");
+					var entry := cfg[targ.objtype];
+					SendSysMessageEx(who, "Voce ja tem certeza de que nao tem nada ai", SSM_INFO);
+					return 1;
+				endif
+
+			if (tentativas >= 10)
+				SendSysMessageEx(who, "Voce ja tem certeza de que nao tem nada ai", SSM_INFO);
+				return;
+
+			elseif ( SkillCheck(who, AWARENESS, diff) > 0 )
 				acharamArmadilha.Append(who.serial);
 				SetObjProperty(targ, "acharamArmadilha", acharamArmadilha);
 				SendSysMessageEx(who, "Armadilha encontrada em "+targ.name+".", SSM_INFO);
+
+				if (whos == error)
+					whos := array;
+				endif
+
+				if ( !(who.serial in whos))
+					whos.append(who.serial) ;
+					SetObjProperty(targ, "identificador", whos);
+				endif
+
 				return 1;
 			else
+
 				SendSysMessageEx(who, "Voce nao encontrou nada de diferente.", SSM_FAIL);
-				return 0;
+					tentativas:= GetObjProperty(targ, "tentativas");
+					if (!tentativas)
+						SetObjProperty(targ, "tentativas", 1);
+					else
+						tentativas:= tentativas + 1;
+						SetObjProperty(targ, "tentativas", tentativas);
+					endif
+				return 0;				
 			endif
 		endif
 	else

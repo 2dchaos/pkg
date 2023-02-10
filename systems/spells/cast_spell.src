@@ -3,7 +3,14 @@ use uo;
 use os;
 use cfgfile;
 use unicode;
+use math;
+use cfgfile;
 
+include ":brainAI:npcUtil";
+include ":attributes:attributeConstants";
+include "include/say";
+include ":blood:blood";
+include ":fls_core:packets";
 include ":attributes:attributes";
 include ":containers:containers";
 include ":itemutils:itemdesc";
@@ -75,6 +82,16 @@ program SpellStarter(params)
 	// Perform various checks to see if mobile can perform the spell
 	spellinfo.mana := spellinfo.mana + Cint(spellinfo.mana*GetObjProperty(mobile, "#manapenalty")/100);
 
+	var hptotal	:= AP_GetVitalMaximumValue(mobile, "HITS");
+	var hpmoment := AP_GetVital(mobile, "HITS");
+	
+	if ((hpmoment <= hptotal / 2) && TemHabilidade(mobile, "Determinacao"))
+		spellinfo.mana := 0;
+	else
+		spellinfo.mana := spellinfo.mana;
+	endif
+
+/*
 	if (spellinfo.spelltype == "Swordmage")
 		if (GetObjProperty(mobile, "raca") == "Humano")
 			var chardata := GetObjProperty(mobile, "chardata");
@@ -92,7 +109,7 @@ program SpellStarter(params)
 			endif
 		endif		
 	endif
-
+*/
 	if ( mobile.squelched && !mobile.npctemplate )
 		SendSysMessageEx(mobile, "Voce precisa falar devido os componentes verbais da magia.", SSM_FAIL);
 		FailSpell(mobile);
@@ -111,14 +128,15 @@ program SpellStarter(params)
 		EraseObjProperty(mobile, "#Casting");
 		return 0;
 	elseif ( !AP_ConsumeVital(mobile, MANA, spellinfo.mana) && !mobile.npctemplate )
+			mobile.frozen := 0;
 		if ( !TemHabilidade(mobile, "Determinacao")  )
 			SendSysMessageEx(mobile, "Voce nao possui energia arcana suficiente em seu corpo para invocar esta magia!", SSM_FAIL);
 			FailSpell(mobile);
 			EraseObjProperty(mobile, "#Casting");
 			return 0;
 		else
-			if (  !isBloodied(mobile) )
-				SendSysMessageEx(mobile, "Voce nao possui energia arcana suficiente em seu corpo para invocar esta magia!", SSM_FAIL);
+			if ((hpmoment >= hptotal / 2))
+				SendSysMessageEx(mobile, "Seu corpo nao foi flagelado suficiente para ignorar o uso de mana!", SSM_FAIL);
 				FailSpell(mobile);
 				EraseObjProperty(mobile, "#Casting");
 				return 0;
@@ -126,7 +144,7 @@ program SpellStarter(params)
 		endif
 	elseif ( !TNCheckReagents(mobile, spellinfo, scroll) )
 		//if (!Elementalista(mobile, spellinfo)) //elementalista nao gastam reagentes
-		if ( !TemHabilidade(mobile, "Determinacao") && !isBloodied(mobile) )
+		if ( !TemHabilidade(mobile, "Determinacao") && (hpmoment >= hptotal / 2) )
 
 			SendSysMessageEx(mobile, "Voce nao possui os componentes materiais necessarios para invocacao desta magia arcana.", SSM_FAIL);
 			if (TemHabilidade(mobile, "Mago Precavido"))
