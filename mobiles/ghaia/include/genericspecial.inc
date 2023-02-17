@@ -195,11 +195,12 @@ function Fight(opponent, alerted := 0)
 		endif
 	endforeach
   endif
-
+/*
   if (hasCombat(me))
     DoCombatSpecial(me); ////////////// SPECIALL
+    sleepms(10);
   endif
-
+*/
     if ( (dist > throwinfo.range) && (throwinfo.canthrow == 1) )
       throwItem(me, opponent, dist);
     endif

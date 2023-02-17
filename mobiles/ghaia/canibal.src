@@ -69,11 +69,9 @@ program KillPlayers()
 						if(CanFight(me, ev.source, align)) //verifica se eh inimigo
 							wanders := 0;
 							Fight(ev.source);
-						endif
-						if ( (!GetObjProperty(ev.source, "canibal")) && (GetObjProperty(me, "canibal")) )
-							Fight(ev.source);
-						elseif ( (GetObjProperty(ev.source, "canibal")) && (!GetObjProperty(me, "canibal")) )
-							Fight(ev.source);
+							if (!GetObjProperty(ev.source, "canibal"))
+								Fight(ev.source);
+							endif
 						endif
 					endif
 				SYSEVENT_ENGAGED:	wanders := 0; Fight(ev.source);
@@ -330,6 +328,9 @@ function look_around()
     if( CanFight(me, npc, align) )
         Fight(npc);
     endif
+	if (!GetObjProperty(npc, "canibal"))
+		Fight(npc);
+	endif
     sleepms(2);
   endforeach
 endfunction

@@ -50,7 +50,7 @@ function CopyToSpellbook(who)
 		return;
 	endif
     
-	if (targ.objtype != 0x6100)
+	if (targ.objtype != 0x6102)
 		SendSysMessage(who, "Isto nao e um grimorio.");
 		return;
 	endif
@@ -111,6 +111,11 @@ function spellcraft(who)
 	if (alvo == "Unico")
 		var range := RadioGump(who, 400, 205, "Escolha o alcance do encantamento.", {"Distancia", "Toque"});
 		spellinfo.+range := range;
+		spellinfo.+alvo := "Unico";
+	elseif (alvo == "Area")
+		var range := RadioGump(who, 400, 205, "Escolha o alcance do encantamento.", {"Distancia", "Toque"});
+		spellinfo.+range := range;
+		spellinfo.+alvo := "Area";
 	endif
 	var targtype := "Animados";
 	spellinfo.+targ := alvo;
@@ -246,7 +251,7 @@ function CastSpell(mobile, spellinfo)
 		//sendsysmessage(mobile, " " );
 		return;
 	else
-		SendSysMessage(mobile, " " + spellinfo);
+	//	SendSysMessage(mobile, " " + spellinfo);
 	endif  
 
 	var alvos := array;
@@ -374,7 +379,7 @@ function EncantoDestruir(mobile, alvos, spellinfo)
 		foreach mob in alvos
 			foreach att in (spellinfo.dmgtarg)
 				if (att == "Vida")
-					//ApplyDamageWra(mob, dmg, dmgtype);
+					ApplyDamageRaw(mob, dmg, dmgtype);
 				elseif (att == "Alma")
 					AP_ConsumeVital(mob, MANA, dmg);
 				elseif (att == "Fadiga")

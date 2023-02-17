@@ -58,8 +58,8 @@ function CopyToSpellbook(who)
 		return;
 	endif
     
-	if (targ.objtype != 0x6100)
-		SendSysMessage(who, "Isto nao e um grimorio.");
+	if (targ.objtype != 0x6102)
+		SendSysMessage(who, "Este nao e o grimorio apropriado.");
 		return;
 	endif
     
@@ -115,10 +115,15 @@ function spellcraft(who)
 	var type := RadioGump(who, 400, 380, "Escolha o tipo de encantamento.", {"Enfraquecer", "Fortalecer", "Destruir", "Curar"/*,  "Controlar", "Entender"*/});
 	spellinfo.+type := type;
 	
-	var alvo := RadioGump(who, 400, 205, "Escolha se o encantamento tera efeito sobre um unico alvo ou todos ao redor do feiticeiro.", {"Unico", "Area"});
+	var alvo := RadioGump(who, 400, 205, "Escolha se o encantamento tera efeito sobre um unico alvo ou uma area ao redor.", {"Unico", "Area"});
 	if (alvo == "Unico")
 		var range := RadioGump(who, 400, 205, "Escolha o alcance do encantamento.", {"Distancia", "Toque"});
 		spellinfo.+range := range;
+		spellinfo.+alvo := "Unico";
+	elseif (alvo == "Area")
+		var range := RadioGump(who, 400, 205, "Escolha o alcance do encantamento.", {"Distancia", "Toque"});
+		spellinfo.+range := range;
+		spellinfo.+alvo := "Area";
 	endif
 	var targtype := "Animados";
 	spellinfo.+targ := alvo;
@@ -369,11 +374,11 @@ function EncantoDestruir(mobile, alvos, spellinfo)
 	var dmgtype := dictionary;
   
 	if (spellinfo.dmgtype == "Fogo")
-		dmgtype[DMG_FIRE] := 1.0;
+		dmgtype := DMG_FIRE;
 	elseif (spellinfo.dmgtype == "Gelo")
-		dmgtype[DMG_COLD] := 1.0;
+		dmgtype := DMG_COLD;
 	elseif (spellinfo.dmgtype == "Relampago")
-		dmgtype[DMG_ENERGY] := 1.0;
+		dmgtype := DMG_ENERGY;
 	endif
 
 	var dmg := CalculateSpellDamage(mobile, cint(spellinfo.power));
@@ -382,7 +387,7 @@ function EncantoDestruir(mobile, alvos, spellinfo)
 		foreach mob in alvos
 			foreach att in (spellinfo.dmgtarg)
 				if (att == "Vida")
-					//ApplyDamageWra(mob, dmg, dmgtype);
+					DamageFLS(mob, dmg, dmgtype, mobile);
 				elseif (att == "Alma")
 					AP_ConsumeVital(mob, MANA, dmg);
 				elseif (att == "Fadiga")
@@ -505,10 +510,10 @@ endfunction
 
 function CalculateSpellDamage(mobile, power)
 
-	var magery := CINT(AP_GetSkill(mobile, MAGERY));
-	magery := magery/3;
+	var mdano := (AP_GetSkill(mobile, MAGICLORE));
+	mdano := mdano/3;
   
-	var dmg := magery;
+	var dmg := mdano;
   
 	if (power == 1)
 		dmg := dmg + RandomDiceRoll("1d6") + 10;

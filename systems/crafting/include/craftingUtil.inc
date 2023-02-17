@@ -39,6 +39,7 @@ function CraftLockable(who, theitem)
 								lvl := 1;
 							endif
 							SetObjProperty(theitem, "level", lvl);
+							SetObjProperty(theitem, "lockinstaller", who.acctname);
 						endif
 						var lockid := CInt(GetObjProperty(targ, "LockId"));
 						SetObjProperty(theitem, "LockId", lockid);

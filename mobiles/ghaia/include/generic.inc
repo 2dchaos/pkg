@@ -208,9 +208,12 @@ function Fight(opponent, alerted := 0)
 	endforeach
   endif
 
-  if (hasCombat(me))
-    DoCombatSpecial(me); ////////////// SPECIALL
-    sleepms(10);
+  if (!TS_GetCooldown(me, "npchab"))
+    if (hasCombat(me))
+      DoCombatSpecial(me); ////////////// SPECIALL
+      sleepms(10);
+      TS_StartCooldown(me, "npchab", 5);
+    endif
   endif
 
     if ( (dist > throwinfo.range) && (throwinfo.canthrow == 1) )

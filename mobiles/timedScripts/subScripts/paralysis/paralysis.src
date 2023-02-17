@@ -16,7 +16,7 @@ program TimedScript_Paralysis(params)
 			return;
 	endif
 	
-	PlaySoundEffect(mobile, 0x205);
+	//PlaySoundEffect(mobile, 0x205);
 	SendSysMessage(mobile, "Voce esta incapaz de se mover.");
 	mobile.frozen := 1;
 	

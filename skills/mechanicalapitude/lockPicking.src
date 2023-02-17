@@ -152,6 +152,11 @@ function PickTreasureChest(me, lockpick, chest)
   if (diff <= 0)
 	diff := 5;
   endif
+
+  	if (GetObjProperty(chest,"lockinstaller"))
+		diff := diff + 15;
+	endif
+
   var check := SkillCheck(me, MECHANICALAPITUDE, diff);
     if ( check > 0 )
 
@@ -159,13 +164,13 @@ function PickTreasureChest(me, lockpick, chest)
 			var skill := AP_GetSkill( me, MECHANICALAPITUDE );
 			if( skill >= 100 )
 			 CreateItemInBackpack(me, 0xba63, 25);
-			elseif( skill >= 80 )
+			elseif( skill >= 90 )
 			 CreateItemInBackpack(me, 0xba63, 10);
-			elseif( skill >= 60 )
+			elseif( skill >= 80 )
 		 	 CreateItemInBackpack(me, 0xba63, 6);
-			elseif( skill >= 40 )
+			elseif( skill >= 60 )
 			 CreateItemInBackpack(me, 0xba63, 4);
-			elseif( skill >= 20 )
+			elseif( skill >= 40 )
 			 CreateItemInBackpack(me, 0xba63, 2);
 			endif
 			SendSysMessageEx(me,"Voce embolsa rapidamente algumas moedas sem que ninguem perceba", SSM_INFO);

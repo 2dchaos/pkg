@@ -76,7 +76,9 @@ function Boss1Fight(opponent, alerted := 0)
 		endif
 
 		if (hasSpecial(me))
+			sleep(2);
 			DoSpecial(me);
+			sleep(2);
 		endif
 
 		if (!GetCooldown(me, "flamewave"))
@@ -91,14 +93,14 @@ function Boss1Fight(opponent, alerted := 0)
 				sleepms(100);
 			endfor
 
-			var y := 879.
+			var y := 879;
 			for (y := 879; 7 <= 888;  y := y+1)
 				var fire := CreateITemAtLocation(4866, y, 0, me.realm);
 				fire.SetDuration(10);
 				sleepms(100);
 			endfor
 
-			var y := 879.
+			var y := 879;
 			for (y := 879; 7 <= 888;  y := y+1)
 				var fire := CreateITemAtLocation(4857, y, 0, me.realm);
 				fire.SetDuration(10);

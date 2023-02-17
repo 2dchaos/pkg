@@ -398,7 +398,7 @@ endfunction
 /////////////////////////////////
 // Funcoes Especiais dos Npcs
 ////////////////////////////////
-
+/*
 function hasCombat(me)
   var str := GetConfigString(npccfgfile[mytemplate],  "SpecialCombat");
   str := splitwords(str);
@@ -421,7 +421,7 @@ function doCombatSpecial(me)
   endif
 
 endfunction
-
+*/
 
 function throwItem(npc, opponent, dist)
 	if ( dist < 3 || dist > 15 )

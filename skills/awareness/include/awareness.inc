@@ -81,10 +81,10 @@ function examinarAlvo(who)
 			sleep(1);
 
 			var whos := GetObjProperty(targ, "identificador");
-			var identif := GetObjProperty(targ, "identificador");
+			//var identif := GetObjProperty(targ, "identificador");
 			var tentativas:= GetObjProperty(targ, "tentativas");
 
-				if (who.serial in identif)
+				if (who.serial in whos)
 					var cfg := ReadConfigFile(":*:itemdesc");
 					var entry := cfg[targ.objtype];
 					SendSysMessageEx(who, "Voce ja tem certeza de que nao tem nada ai", SSM_INFO);
@@ -92,8 +92,10 @@ function examinarAlvo(who)
 				endif
 
 			if (tentativas >= 10)
-				SendSysMessageEx(who, "Voce ja tem certeza de que nao tem nada ai", SSM_INFO);
-				return;
+			
+				if ( !(who.serial in whos))
+					SetObjProperty(targ, "tentativas", 0);
+				endif
 
 			elseif ( SkillCheck(who, AWARENESS, diff) > 0 )
 				acharamArmadilha.Append(who.serial);

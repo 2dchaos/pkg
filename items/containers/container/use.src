@@ -27,9 +27,13 @@ program useContainer(mobile, container)
 	if (!container.IsA(POLCLASS_CORPSE))
 		SendViewContainer(mobile, container);
 		PrintText(mobile, "*{} abriu {}*".format(mobile.name, container.name));
-	elseif (!container.npctemplate)
+	else
+		var npc:= GetObjProperty(container, "npctemplate");
+		if(!npc)
+			SendViewContainer(mobile, container);
+			PrintText(mobile, "*{} revirando os pertences do {}*".format(mobile.name, container.name));
+		endif
 		SendViewContainer(mobile, container);
-		PrintText(mobile, "*{} revirando os pertences do {}*".format(mobile.name, container.name));
 	endif
 
 	if ( (item_cfg.OpenGraphic) && (item_cfg.CloseGraphic) )

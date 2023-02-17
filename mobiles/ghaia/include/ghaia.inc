@@ -405,6 +405,9 @@ endfunction
 function hasCombat(me)
   var str := GetConfigString(npccfgfile[mytemplate],  "SpecialCombat");
   str := splitwords(str);
+  if (TS_GetCooldown(me, str[1]))
+    return;
+  endif
   //printtextabove(me, " " + str);
   if (str.size() >= 1)
       return 1;
@@ -418,8 +421,10 @@ function doCombatSpecial(me)
   str := splitwords(str);
   //printtextabove(me, " " + TS_GetCooldown(me, str[1]))
   if (!TS_GetCooldown(me, str[1]))
-    //TS_StartCooldown(me, cstr(str[1]), cint(str[2]));
+    sleepms(10);
+    TS_StartCooldown(me, cstr(str[1]), cint(str[2]));
       var e := Start_Script(str[1], array{me, cint(str[2]), str[1]});
+    sleepms(10);
       //printtextabove(me, " " + e +  " " + str[1]);
   endif
 

@@ -2,7 +2,7 @@
 use uo;
 use vitals;
 use math;
-/*
+
 include ":timedScripts:timedScripts";
 include ":gumps:gumps";
 include ":gumps:yesno";
@@ -12,7 +12,7 @@ include ":tn:tnmagery";
 
 program menumagery(who)
 	var gump := GFCreateGump(220, 70);
-	//GFGumpPic(gump, 0, 0, 0x254E);
+	GFGumpPic(gump, 0, 0, 0x254E);
 	GFResizePic(gump, 0, 0, 0x254E, 100, 100);	
 	GFTextLine(gump, 30, 15, 2100, "Pesquisar");
 	GFTextLine(gump, 30, 35, 2100, "Aprender");
@@ -25,6 +25,4 @@ program menumagery(who)
 	elseif (input ==  20)
 		spelllearn(who);
 	endif
-
-
-endprogram*/
+endprogram
