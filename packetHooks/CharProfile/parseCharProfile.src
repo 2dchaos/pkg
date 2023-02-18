@@ -87,6 +87,9 @@ program runScript_CharProfileRequest( params )
 			var incognito_descricao := "A fisionomia desse indvíduo é difícil de discernir.";
 			SendHTMLGump(who, "Desconhecido", "<center><img src=\"" + incognito_url + "\" width:200 height:200 align=center></center>" + "<div align=\"left\">" + incognito_descricao + "</div>" );
 		else
+			if(who.hidden == 0 || who.concealed == 0)//Determina se está hidden e mostra a mensagem de estar sendo observado
+				PrintTextAbovePrivate(who, "*" + who.name + " esta observando voce*", chr, 3, 568);
+			endif
 			SendHTMLGump(who, chr.name, "<center><img src=\"" + GetObjProperty(chr, "url") + "\" width:200 height:200 align=center></center>" + "<div align=\"left\">" + GetObjProperty(chr, "descricao") + "</div>" );
 		endif
 	endif

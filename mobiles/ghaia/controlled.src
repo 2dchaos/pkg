@@ -104,7 +104,7 @@ program TamedAI()
 			SYSEVENT_DOUBLECLICKED:
 
 				if ( ev.source == owner )
-					if( (Distance(ev.source, me) > 1) )
+					if( (Distance(ev.source, me) > 0) )
 						if (ev.source == owner)
 							ProcessDoubleClick(ev);
 						endif				
@@ -113,7 +113,7 @@ program TamedAI()
 
 						OpenPack(ev);
 
-					elseif ( !GetEquipmentByLayer(ev.source, LAYER_MOUNT) )
+					elseif ( !GetEquipmentByLayer(ev.source, LAYER_MOUNT) && (Distance(ev.source, me) == 0))
 
 						if ( IsMountable(me.graphic) && MoveObjectToLocation(ev.source, me.x, me.y, me.z, ev.source.realm))
 
@@ -126,6 +126,8 @@ program TamedAI()
 							MP_Mount(ev.source, me);
 							me.hidden := 0;
 
+						else
+							ProcessDoubleClick(ev);
 						endif
 
 					endif
