@@ -234,3 +234,27 @@ function UnequipAll(who)
 	endforeach
 
 endfunction
+
+function UnequipArmor(who)
+	var equips := EnumeratePhysicalItems(who);
+
+	foreach equip in equips
+		if ((equip.isa(POLCLASS_ARMOR)) && equip.resist_physical > 0)
+			MoveItemToContainer(equip, who.backpack);
+		endif
+	endforeach
+
+endfunction
+
+function UnequipWeapons(who)
+	
+	var equips := EnumeratePhysicalItems(who);
+
+	foreach equip in equips
+		if ((equip.isa(POLCLASS_WEAPON)))
+			MoveItemToContainer(equip, who.backpack);
+		endif
+	endforeach
+
+
+endfunction
