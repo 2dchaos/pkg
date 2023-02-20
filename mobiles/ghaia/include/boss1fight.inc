@@ -75,11 +75,11 @@ function Boss1Fight(opponent, alerted := 0)
 			endif
 			break;
 		endif
-
+/*
 		if (hasSpecial(me))
 			DoSpecial(me);
 		endif
-
+*/
 		if (!GetCooldown(me, "flamewave"))
 			MoveObjectToLocation(me,  4862, 883, 0, me.realm);
 			me.facing:= 4;

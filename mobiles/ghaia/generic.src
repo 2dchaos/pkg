@@ -323,9 +323,6 @@ function look_around()
     if( CanFight(me, npc, align) )
         Fight(npc);
     endif
-	if (GetObjProperty(npc, "canibal"))
-		Fight(npc);
-	endif
     sleepms(2);
   endforeach
 endfunction
