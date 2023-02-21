@@ -113,16 +113,14 @@ function GetMaxPets(who)
 	var skill := cint(AP_GetSkill(who, HANDLEANIMAL));
 	var maxpets := 1;
 	
+	if(TemHabilidade(who, "Empatia Com Animais"))
+		maxpets := maxpets + 1;
+	endif
+
 	if (skill >= 45 && skill < 75)
 		maxpets := maxpets + 1;
-		if(TemHabilidade(who, "Empatia Com Animais"))
-			maxpets := maxpets + 1;
-		endif
 	elseif (skill >= 75)
 		maxpets := maxpets + 2;
-		if(TemHabilidade(who, "Empatia Com Animais"))
-			maxpets := maxpets + 1;
-		endif
 	endif
 
 	maxpets := maxpets + cint( GetObjProperty(who, "extrapets") );
