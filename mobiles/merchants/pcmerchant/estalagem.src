@@ -80,10 +80,10 @@ program MerchantMenu(params)
 		GFAddButton(gump, 20, 283, 2117, 2118, GF_CLOSE_BTN,  600);
 		GFTextLine(gump, 40, 280, GF_STDCOLOR, "Mural de Recados");
 		
-		if (!(npc.serial in getglobalproperty("InnKeeper")))
+	/*	if (!(npc.serial in getglobalproperty("InnKeeper")))
 			GFAddButton(gump, 20, 333, 2117, 2118, GF_CLOSE_BTN,  700);
 			GFTextLine(gump, 40, 330, GF_STDCOLOR, "Cobrar Automatico");
-		endif
+		endif*/
 	endif
 	
 	if (GetObjProperty(npc, "confiscados").Exists(""+player.serial))
