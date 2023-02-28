@@ -551,8 +551,8 @@ function guildHandler(who, input)
             DestroyItem(fechadura);
             SendSysMessageEx(who, "Voce instalou a fechadura com sucesso.", SSM_INFO);
          elseif (output["Tornar"])
-            SetObjProperty(targ, "Alugavel", 1);
-            //return SendSysMessageEx(who, "Sistema em andamento");
+            //SetObjProperty(targ, "Alugavel", 1);
+            return SendSysMessageEx(who, "Sistema em construao");
          elseif (output["Desfazer"])
             EraseObjProperty(targ, "Alugavel");
          endif
