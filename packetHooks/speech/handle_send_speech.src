@@ -26,7 +26,7 @@ exported function handleUCOutgoing( character, byref packet )
 	var message_txt := packet.GetUnicodeString(48, length_of_text);
 	message_txt := CChrZ(message_txt);
 
-	if ( (getObjProperty(source, "metamorfose") != error) || (getObjProperty(source, "mudo") != error) || (getObjProperty(source, "#sleep") != error))
+	if ((getObjProperty(source, "mudo") != error) || (getObjProperty(source, "#sleep") != error))
 		if  (type != 0x02)
 			return 1;
 		endif
@@ -108,7 +108,7 @@ exported function handleUCOrequest( character, byref packet )
 
 	if (getObjProperty(character, "metamorfose") != error)
 		if  ( type == 0x00)
-			return 1;
+			return 0;
 		else
 			return 0;
 		endif
