@@ -4,14 +4,15 @@ use uo;
 include ":OrionClient:settings";
 
 Program OrionClientLogon(who)
-
+	Start_Script(":OrionClient:clientcheck", who);
+	
 	var res;
 	var SettingsInfos := OC_GetSettingsCfgElem("Orion");
 	var ClientFeatures := SettingsInfos.ClientFeatures;
 	var AssistantFeatures := SettingsInfos.AssistantFeatures;
 	if(who.cmdlevel && who.cmdlevel >= CInt(SettingsInfos.DoNotRestrictStaffAtOrAbove))
-		ClientFeatures := "FC00090032000001FF";
-		AssistantFeatures := "FC0015A0010000000001FFF9FF00000003FFFFFFFF";
+		ClientFeatures := "BF000BFACE0032FFFFFFFF";
+		AssistantFeatures := "BF0017FACE8001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
 	endif
 	res := SendPacket(who, ClientFeatures);
 	if (!res)

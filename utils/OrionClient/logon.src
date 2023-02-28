@@ -4,7 +4,8 @@ use uo;
 include ":OrionClient:settings";
 
 Program OrionClientLogon(who)
-
+	Start_Script(":OrionClient:clientcheck", who);
+	
 	var res;
 	var SettingsInfos := OC_GetSettingsCfgElem("Orion");
 	var ClientFeatures := SettingsInfos.ClientFeatures;
