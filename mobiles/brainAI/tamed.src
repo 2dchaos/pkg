@@ -27,14 +27,13 @@ include "include/sysEvent";
 include ":mounts:mounts";
 include "include/client";
 include ":gumps:yesno";
-//include "include/npcUtil";
+include "include/npcUtil";
 include "include/commonFunctions";
 include "include/npcSettings";
 include "include/say";
 //include "include/dungeons";
 include ":gumps:gumps";
 include ":timedScripts:timedScripts";
-include ":ghaia:ghaia";
 
 
 set_script_option(SCRIPTOPT_CAN_ACCESS_OFFLINE_MOBILES, 1);
@@ -97,14 +96,9 @@ const STOP_CMD		:= 0xA010;
 const DELIVER_CMD	:= 0xA011;
 const DROP_CMD		:= 0xA012;
 
-function EnableAreaEvent()
-   EnableEvents(SYSEVENT_ENTEREDAREA, 5);
-endfunction
-
 
 program TamedAI()
 
-	EnableAreaEvent();
 	Detach();
 	EnableMainEvents();
 	Setup();
@@ -116,11 +110,6 @@ program TamedAI()
 		endif
 
 		var ev := Wait_For_Event(wait_time);
-
-		if (CInt( AP_GetSkill(me, AWARENESS) ) > 0)
-        	procura_em_volta(me);
-    	endif
-
 		case ( ev.type )
 			SYSEVENT_SPEECH:
 				ProcessSpeech(ev);
@@ -133,32 +122,37 @@ program TamedAI()
 					opponent := ev.source;
 				endif
 			SYSEVENT_DOUBLECLICKED:
-					if( (Distance(ev.source, me) > 1) )
+
+				if ( ev.source == owner )
+					if( (Distance(ev.source, me) > 0) )
 						if (ev.source == owner)
 							ProcessDoubleClick(ev);
-							if (CInt( AP_GetSkill(me, AWARENESS) ) > 0)
-								procura_em_volta(me);
-							endif
+						endif				
+
+					elseif ( me.graphic in pack_animals )
+
+						OpenPack(ev);
+
+					elseif ( !GetEquipmentByLayer(ev.source, LAYER_MOUNT) && (Distance(ev.source, me) == 0))
+
+						if ( IsMountable(me.graphic) && MoveObjectToLocation(ev.source, me.x, me.y, me.z, ev.source.realm))
+
+							// if (me.npctemplate == ":brainai:Unicorn")
+							// 	if (GetObjProperty(me, "aprimorado"))
+							// 		SetObjProperty(owner, "unicorn", 1);
+							// 	endif
+							// endif
+							ev.source.hidden := 0;
+							MP_Mount(ev.source, me);
+							me.hidden := 0;
+
+						else
+							ProcessDoubleClick(ev);
 						endif
-					else
-						if ( me.graphic in pack_animals )
-							OpenPack(ev);
-						elseif ( !GetEquipmentByLayer(ev.source, LAYER_MOUNT) )
-							if ( (mount == 1) )
-								//if( !InDungeon(ev.source) ) algumas montarias podem ser montadas em dungeons como besouros
-									ev.source.hidden := 0;
-									MP_Mount(ev.source, me);
-									me.hidden := 0;
-								//endif
-							endif
-						endif
+
 					endif
-			SYSEVENT_ENTEREDAREA:
 
-			if (CInt( AP_GetSkill(me, AWARENESS) ) > 0)
-        		procura_em_volta(me);
-    		endif
-
+				endif
 			SYSEVENT_ITEM_GIVEN:
 				if (ev.source == owner)
 					TakeItem(ev);
@@ -1218,23 +1212,4 @@ function debuggg()
 
 	a("");
 	a("----------------------------");
-endfunction
-
-function procura_em_volta(me)
-    var range := CInt( AP_GetSkill(me, AWARENESS) / 10 ) + 1;
-    foreach mobile in ListMobilesNearLocationEX(me.x, me.y, me.z, range, LISTEX_FLAG_HIDDEN)
-        if ( mobile == me ); // Do Nothing
-        elseif ( CInt(GetObjProperty(me, "IgnoreHidden")) ); // Do Nothing
-        else
-            if ( CheckLineOfSight(me, mobile) )
-                var difficulty := CalculateDHDiff(me, mobile);
-                if ( SkillCheck(me, AWARENESS, difficulty) > 0 )
-                    mobile.hidden := 0;
-                    PrintText(mobile, "*aparece*");
-                    SendSysMessageEx(mobile, me.name+" te encontrou!", SSM_FAIL);
-                endif
-            endif
-        endif
-        sleepms(2);
-    endforeach
 endfunction

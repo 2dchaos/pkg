@@ -104,31 +104,33 @@ program TamedAI()
 			SYSEVENT_DOUBLECLICKED:
 
 				if ( ev.source == owner )
-					if( (Distance(ev.source, me) > 1) )
+					// if( (Distance(ev.source, me) > 0) )
 						if (ev.source == owner)
 							ProcessDoubleClick(ev);
-						endif				
-
-					elseif ( me.graphic in pack_animals )
-
-						OpenPack(ev);
-
-					elseif ( !GetEquipmentByLayer(ev.source, LAYER_MOUNT) )
-
-						if ( IsMountable(me.graphic) && MoveObjectToLocation(ev.source, me.x, me.y, me.z, ev.source.realm))
-
-							if (me.npctemplate == ":brainai:Unicorn")
-								if (GetObjProperty(me, "aprimorado"))
-									SetObjProperty(owner, "unicorn", 1);
-								endif
-							endif
-							ev.source.hidden := 0;
-							MP_Mount(ev.source, me);
-							me.hidden := 0;
-
 						endif
 
-					endif
+					// elseif ( me.graphic in pack_animals )
+
+					// 	OpenPack(ev);
+
+					// elseif ( !GetEquipmentByLayer(ev.source, LAYER_MOUNT) && (Distance(ev.source, me) == 0))
+
+					// 	if ( IsMountable(me.graphic) && MoveObjectToLocation(ev.source, me.x, me.y, me.z, ev.source.realm))
+
+					// 		if (me.npctemplate == ":brainai:Unicorn")
+					// 			if (GetObjProperty(me, "aprimorado"))
+					// 				SetObjProperty(owner, "unicorn", 1);
+					// 			endif
+					// 		endif
+					// 		ev.source.hidden := 0;
+					// 		MP_Mount(ev.source, me);
+					// 		me.hidden := 0;
+
+					// 	else
+					// 		ProcessDoubleClick(ev);
+					// 	endif
+
+					// endif
 
 				endif
 
@@ -493,7 +495,7 @@ function goToLoc()
 		return;
 	endif
 
-	if( dist <= 1 )
+	if( dist < 1 )
 		wait_time := 1;
 		going_loc := 0;
 		return;
@@ -604,19 +606,38 @@ function ProcessDoubleClick(ev)
 
 	var targ := TargetCoordinates(owner);
 	if (targ)
-		if (targ.mobile == me)
-			if ( me.graphic in pack_animals )
-				if ((EnumerateItemsInContainer(me.backpack)).size() > 0)
-					SendSysMessage(ev.source, "Voce precisa esvaziar a mochila antes de remove-la.");
-					return;
-				endif
-				PrintText(ev.source, "*remove a mochila de "+me.name+"*");
-				me.graphic := GetObjProperty(me, "beforepack");
-				CreateItemInBackpack(ev.source, "backpack");
-				EraseObjProperty(me, "beforepack");
+		if (targ.mobile == me && (Distance(ev.source, me) < 2 ))
+			if ( me.graphic in pack_animals)
 
+				var gump := GFCreateGump(220, 70);
+				//GFGumpPic(gump, 0, 0, 0x254E);
+				GFResizePic(gump, 0, 0, 0x254E, 100, 100);	
+				GFTextLine(gump, 30, 15, 2100, "Abre");
+				GFTextLine(gump, 30, 35, 2100, "Retira ");
+				
+				GFAddButton(gump, 15, 17, 2117, 2118, 1, 10);
+				GFAddButton(gump, 15, 37, 2117, 2118, 1, 20);
+				var input := GFSendGump(owner, gump);
+				input  := input[0];
+				
+				if (input == 10)
+					OpenPack(ev);
+				elseif (input ==  20)
+					if ((EnumerateItemsInContainer(me.backpack)).size() > 0)
+						SendSysMessage(ev.source, "Voce precisa esvaziar a mochila antes de remove-la.");
+						return;
+					endif
+					PrintText(ev.source, "*remove a mochila de "+me.name+"*");
+					me.graphic := GetObjProperty(me, "beforepack");
+					CreateItemInBackpack(ev.source, "backpack");
+					EraseObjProperty(me, "beforepack");
+				endif
+			elseif (IsMountable(me.graphic) && MoveObjectToLocation(ev.source, me.x, me.y, me.z, ev.source.realm))
+				ev.source.hidden := 0;
+				MP_Mount(ev.source, me);
+				me.hidden := 0;
 			endif
-		elseif (targ.mobile)
+		elseif (targ.mobile && targ.mobile != me)
 			var gump := GFCreateGump(220, 70);
 			//GFGumpPic(gump, 0, 0, 0x254E);
 			GFResizePic(gump, 0, 0, 0x254E, 100, 100);	
@@ -643,6 +664,7 @@ function ProcessDoubleClick(ev)
 		elseif (!Cint(targ.mobile))//se nao for nem item nem mobile anda ate la
 			if (!Cint(targ.item))
 				following := 0;
+				opponent := 0;
 				going_loc := struct;
 				going_loc.+x := targ.x;
 				going_loc.+y := targ.y;
