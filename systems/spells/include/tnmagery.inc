@@ -112,7 +112,7 @@ function spellcraft(who)
 	WriteSpellDescription(who, spellinfo);
 	
 	//escolhe o tipo: enfraquecer,  fortalecer,  destruir, curar, invocar, controlar
-	var type := RadioGump(who, 400, 380, "Escolha o tipo de encantamento.", {"Enfraquecer", "Fortalecer", "Destruir", "Curar"/*,  "Controlar", "Entender"*/});
+	var type := RadioGump(who, 400, 380, "Escolha o tipo de encantamento.", {/*"Enfraquecer", "Fortalecer", */"Destruir"/*, "Curar"/*,  "Controlar", "Entender"*/});
 	spellinfo.+type := type;
 	
 	var alvo := RadioGump(who, 400, 205, "Escolha se o encantamento tera efeito sobre um unico alvo ou uma area ao redor.", {"Unico", "Area"});
@@ -148,7 +148,7 @@ function spellcraft(who)
 		endif
 	elseif ( spellinfo.type == "Destruir" )
 		if (targtype == "Animados")
-			spellinfo.+dmgtarg := CheckBoxGump(who, 400, 205, "Que caracteristica voce quer "+spellinfo.type+". Pode escolher mais de uma.", {"Vida", "Alma", "Fadiga"});
+			spellinfo.+dmgtarg := CheckBoxGump(who, 400, 205, "Que caracteristica voce quer "+spellinfo.type+". Pode escolher mais de uma.", {"Vida"/*, "Alma", "Fadiga"*/});
 		elseif (targtype == "Inanimados")
 			spellinfo.+dmgtarg := "Vida";
 		endif
@@ -259,18 +259,18 @@ function CastSpell(mobile, spellinfo, targ)
 		//sendsysmessage(mobile, " " );
 		return;
 	else
-		SendSysMessage(mobile, " " + spellinfo);
+		//SendSysMessage(mobile, " " + spellinfo);
 	endif  
 
 	var alvos := array;
   
 	if (spellinfo.targ == "Unico")
-		SendSysMessage(mobile, "Escolha o alvo.");
+		/*SendSysMessage(mobile, "Escolha o alvo.");
 		var targ := Target(mobile, TGTOPT_CHECK_LOS);
 		if (!targ )
 			SendSysMessage(mobile, "Cancelado.");
 			return;
-		endif
+		endif*/
 		if (spellinfo.range == "Toque")
 			if (Distance(mobile, targ) > 1)
 				SendSysMessage(mobile, "O alvo esta muito distante e este encantamento precisa que voce o toque.");
@@ -292,24 +292,24 @@ function CastSpell(mobile, spellinfo, targ)
 		endif
 		alvos.append(targ);
 	else
-		SendSysMessage(mobile, "Onde voce deseja invocar o encantamento?");
+		/*SendSysMessage(mobile, "Onde voce deseja invocar o encantamento?");
 		var targ := TargetCoordinates(mobile);
 		if (!CheckLosAt(mobile, targ.x, targ.y, targ.z))
 			SendSysMessage(mobile, "Voce nao enxerga o alvo.");
 			return;
-		endif
+		endif*/
 		if (spellinfo.targtype == "Animados")
 			foreach mob in ListMobilesNearLocation(targ.x, targ.y, targ.z, 8, mobile.realm)
-				if (mob.serial != mobile.serial)
+				//if (mob.serial != mobile.serial)
 					alvos.append(mob);
-				endif
+				//endif
 			endforeach
-		else
+	/*	else
 			foreach mob in ListItemsNearLocation(targ.x, targ.y, targ.z, 8, mobile.realm)
 				if (mob.serial != mobile.serial)
 					alvos.append(mob);
 				endif
-			endforeach        
+			endforeach    */    
 		endif
 	endif
     
@@ -395,8 +395,12 @@ function EncantoDestruir(mobile, alvos, spellinfo)
 				endif
 			endforeach
 			if (spellinfo.dmgtype == "Fogo")
-				PlayObjectCenteredEffect(mob, GFX_EXPLODE_1, 7, 16);
-				PlaySoundEffect(mob, SFX_EXPLOSION_11);
+				foreach mobs in alvos
+					PlayMovingEffectXYZEx( mobile.x, mobile.y, mobile.z+3, mobs.x, mobs.y, mobs.z, mobile.realm, GFX_LARGE_FIREBALL, 10 ,0, 0, 0, GetFacing(mobile.x, mobile.y, mobs.x, mobs.y) );
+					PlayObjectCenteredEffect(mob, GFX_EXPLODE_1, 7, 16);
+					PlaySoundEffect(mob, SFX_EXPLOSION_11);
+					sleepms(10);
+				endforeach
 			elseif ( spellinfo.dmgtype == "Gelo")
 				PlayObjectCenteredEffect(mob, GFX_BLUE_SPARKLE_GROUND, 7, 16);
 				PlaySoundEffect(mob, SFX_GLASS_BREAK_3);
