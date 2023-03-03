@@ -61,7 +61,7 @@ var law_list := struct{
    "noweapon"   := "Proibir Usar Armas",
    "noitem"     := "Proibir Item Especifico",
    "norace"     := "Proibir Raça",
-   "noguild"    := "Proibir Facção",
+   //"noguild"    := "Proibir Facção",
    "nocerca"    := "Proibir Pular Cerca",
    "nooutsider" := "Proibir Forasteiros",
   // "nooutsideron" := "Proibir Forasteiros em Area",
@@ -189,7 +189,7 @@ program faccao(params)
       case (law.type)
          "noitem": law_desc := "Item: {}".format(law.opt.name);
          "norace": law_desc := "Raça: {}".format(law.opt);
-         "noguild": law_desc := "Facção: {}".format(FindGuild(law.opt).getProp("name"));
+         //"noguild": law_desc := "Facção: {}".format(FindGuild(law.opt).getProp("name"));
          "nofight": law_desc := "{}".format(law.opt);
          "noweapon": law_desc := "{}".format(law.opt);
         // "nooutsideron": law_desc := "{}".format(law.opt.name); 
@@ -973,7 +973,7 @@ function lawHandler(who, input)
          if (racenemy["Cancelar"]) return SendSysMessageEx(who, "Cancelado");  endif
          new_law.opt := racenemy;
 
-      elseif (new_law.type["noguild"])
+   /*   elseif (new_law.type["noguild"])
          var guild_opts := struct{};
          var guilds := ListGuilds();
          foreach guild_ref in guilds
@@ -985,8 +985,8 @@ function lawHandler(who, input)
          guild_opts["Cancelar"] := 0;
          var guildenemy := RadioGump(who, 400, 0, "Escolha qual faccao sera considerada inimiga", guild_opts.keys(), 0, guild_opts.keys().size());
          if (guildenemy["Cancelar"]) return SendSysMessageEx(who, "Cancelado");  endif
-
-         new_law.opt := guild_opts[guildenemy];
+ 
+         new_law.opt := guild_opts[guildenemy]; */
       elseif (new_law.type["nolawon"] || new_law.type["userban"] )
          SendSysMessageEx(who, "Escolha o alvo para aplicar esta lei", SSM_FAIL);
          var targ := Target(who);

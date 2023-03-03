@@ -161,7 +161,7 @@ function Fight(opponent, alerted := 0)
 		var end := ReadGameClock() + 10;
 
 		while (CoordinateDistance(me.x, me.y, corpo.x, corpo.y) < areasize + 5 && end > ReadGameClock())
-      arrastaporai(me, corpo);
+      //arrastaporai(me, corpo);
 			RunAwayFromLocation(corpo.x, corpo.y);
 			sleepms(100);
 		endwhile
