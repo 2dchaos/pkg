@@ -198,14 +198,19 @@ function Fight(opponent, alerted := 0)
 
   
   //se eh boss e tem eventos
-  if ( GetBossStruct(me) != error )
-	var unique := GetBossStruct(me);
-	foreach ce in (unique.combatevent)
-//		printtextabove(me, " "  + ce);
-		if (TS_GetCooldown(me, ce.name) == error)
-			var e := Start_Script(":ghaia:special/genericspecial" , array{me, ce});
-		endif
-	endforeach
+  if (!TS_GetCooldown(me, "temspecial"))
+    if ( GetBossStruct(me) != error )
+    var unique := GetBossStruct(me);
+    foreach ce in (unique.combatevent)
+      sleepms(10);
+  //		printtextabove(me, " "  + ce);
+      if (!TS_GetCooldown(me, ce.name))
+        var e := Start_Script(":ghaia:special/genericspecial" , array{me, ce});
+      endif
+      TS_StartCooldown(me,  ce.name, 5);
+    endforeach
+      TS_StartCooldown(me, "temspecial", 5);
+    endif
   endif
 
   if (!TS_GetCooldown(me, "npchab"))

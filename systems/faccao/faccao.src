@@ -38,6 +38,7 @@ const BTN_NEW_FACCAO := 0x4;
 
 const BUTTON_CHECK_GUILD := 0x350;
 
+
 var guild;
 var privilegies;
 var is_gm_or_leader;
@@ -494,58 +495,69 @@ function guildHandler(who, input)
       //elseif (!InGuildRect(guild, targ))
       elseif ( GetObjProperty(targ, "time") /*|| GetObjProperty(targ, "level")*/);
          return SendSysMessageEx(who, "Voce nao pode adicionar trancas nessa porta");
-      elseif (GetObjProperty(targ, "guild")/* != who.guildid*/)
-         return SendSysMessageEx(who, "Este local ja pertence a outra faccao");
-      endif
-      var options := array{};
-      var ref_key := GetObjProperty(targ, "LockId");
-      if (ref_key)
-         options.append("Copiar chave");
-         options.append("Remover Fechadura");
-         options.append("Trocar Fechadura");
+      endif 
+      
+      if((GetObjProperty(targ, "guild") == who.guildid) || (GetObjProperty(targ, "guild") == error))
+         
+         var options := array{};
+         var ref_key := GetObjProperty(targ, "LockId");
+         if (ref_key)
+            options.append("Copiar chave");
+            options.append("Remover Fechadura");
+            options.append("Trocar Fechadura");
+            options.append("Tornar Alugavel");
+            options.append("Desfazer Alugavel");
+         else
+            options.append("Adicionar Fechadura");
+         endif
+         options.append("Cancelar");
+         var output := RadioGump(who, 300, 0, "Escolha uma opcao", options, 0, 1);
+
+         if (output["Copiar"])
+            SendSysMessageEx(who, "Escolha a chave que vai receber a copia", SSM_REQUEST);
+            var thekey := Target(who);
+            if (!thekey) return; endif
+
+            if ( thekey.GetLockId() )
+               SendSysMessageEx(who, "A chave destino nao pode ser copiada.", SSM_FAIL);
+               return 0;
+            endif
+            thekey.SetLockId(ref_key);
+            SendSysMessageEx(who, "Voce copiou a chave com sucesso.", SSM_INFO);
+         elseif (output["Remover"])
+            targ.locked := 0;
+            EraseObjProperty(targ, "level");
+            EraseObjProperty(targ, "LockId");
+            EraseObjProperty(targ, "guild");
+         elseif (output["Adicionar"] || output["Trocar"]) 
+            SendSysMessageEx(who, "Escolha a nova fechadura", SSM_REQUEST);
+            var fechadura := Target(who);
+            if (!fechadura) return; endif
+
+            if (fechadura.objtype != 0xfa1)
+               return SendSysMessageEx(who, "Isso nao e uma fechadura."); 
+            endif
+
+            var lvl := Cint(GetObjProperty(fechadura, "level"));
+            if (!lvl) lvl := 1; endif
+
+            var lockid := CInt(GetObjProperty(fechadura, "LockId"));
+            if (!lockid) lockid := AllocLockId(); endif
+
+            SetObjProperty(targ, "LockId", lockid);
+            SetObjProperty(targ, "level", lvl);
+            SetObjProperty(targ, "guild", who.guildid);
+            SetObjProperty(targ, "lockinstaller", who.acctname);
+            DestroyItem(fechadura);
+            SendSysMessageEx(who, "Voce instalou a fechadura com sucesso.", SSM_INFO);
+         elseif (output["Tornar"])
+            //SetObjProperty(targ, "Alugavel", 1);
+            return SendSysMessageEx(who, "Sistema em construao");
+         elseif (output["Desfazer"])
+            EraseObjProperty(targ, "Alugavel");
+         endif
       else
-         options.append("Adicionar Fechadura");
-      endif
-      options.append("Cancelar");
-      var output := RadioGump(who, 300, 0, "Escolha uma opcao", options, 0, 1);
-
-      if (output["Copiar"])
-         SendSysMessageEx(who, "Escolha a chave que vai receber a copia", SSM_REQUEST);
-         var thekey := Target(who);
-         if (!thekey) return; endif
-
-         if ( thekey.GetLockId() )
-            SendSysMessageEx(who, "A chave destino nao pode ser copiada.", SSM_FAIL);
-            return 0;
-         endif
-         thekey.SetLockId(ref_key);
-         SendSysMessageEx(who, "Voce copiou a chave com sucesso.", SSM_INFO);
-      elseif (output["Remover"])
-         targ.locked := 0;
-         EraseObjProperty(targ, "level");
-         EraseObjProperty(targ, "LockId");
-         EraseObjProperty(targ, "guild");
-      elseif (output["Adicionar"] || output["Trocar"]) 
-         SendSysMessageEx(who, "Escolha a nova fechadura", SSM_REQUEST);
-         var fechadura := Target(who);
-         if (!fechadura) return; endif
-
-         if (fechadura.objtype != 0xfa1)
-            return SendSysMessageEx(who, "Isso nao e uma fechadura."); 
-         endif
-
-         var lvl := Cint(GetObjProperty(fechadura, "level"));
-         if (!lvl) lvl := 1; endif
-
-         var lockid := CInt(GetObjProperty(fechadura, "LockId"));
-         if (!lockid) lockid := AllocLockId(); endif
-
-         SetObjProperty(targ, "LockId", lockid);
-         SetObjProperty(targ, "level", lvl);
-         SetObjProperty(targ, "guild", who.guildid);
-         SetObjProperty(targ, "lockinstaller", who.acctname);
-         DestroyItem(fechadura);
-         SendSysMessageEx(who, "Voce instalou a fechadura com sucesso.", SSM_INFO);
+         return SendSysMessageEx(who, "Este local ja pertence a outra faccao");
       endif
    endif
 /*   elseif (input == BUTTON_BUY_UNIFORM)
