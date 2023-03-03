@@ -46,10 +46,27 @@ function ProccessHabum(who)
 	var cfg:=ReadConfigFile(":combat:itemdesc");
 	var elem := FindConfigElem(cfg, who.weapon.objtype);
 
+	var hab := GetObjProperty(who, "habilidadeum");
+	var delay := GetObjProperty(who, "cooldownum");
+	var stam := GetObjProperty(who, "custoum");
+
 
 	if (!elem)
-		SendSysMessageEx(who, "Habilidade nao encontrada.", SSM_FAIL);
-		return;
+		//Check druida
+		if(GetObjProperty(who, "metamorfose") != error )
+
+			Start_Script(hab, who);
+			TS_StartCooldown(who, "habilidadeum", delay);
+	
+			if (!AP_ConsumeVital(who, STAMINA, stam))
+				SendSysMessageEx(who, "Voce esta muito cansado para usar esta habilidade.", SSM_FAIL);
+				return 1;
+			endif
+			
+		else
+			SendSysMessageEx(who, "Habilidade nao encontrada.", SSM_FAIL);
+			return;
+		endif
 	endif
 
 
