@@ -145,9 +145,6 @@ function Fight(opponent, alerted := 0)
   
     if (opponent.dead)
       var corpo := opponent.GetCorpse();
-        sleep(1);
-        LootSomething(me);
-        sleep(1);
 	var temnego := 0;
 	foreach npc in ListMobilesInLineOfSight(me, areasize + 2)
 		if( CanFight(me, npc, align) )
@@ -713,10 +710,6 @@ endfunction
     //endif
 
 function LootSomething(me)
-
-  if (!GetObjProperty(me, "canibal"))
-    return;
-  endif
 
 	if ( !me.backpack )
 		EquipItem(me, CreateItemAtLocation(me.x, me.y, me.z, "backpack", 1));
