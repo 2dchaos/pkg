@@ -112,18 +112,22 @@ function spellcraft(who)
 	WriteSpellDescription(who, spellinfo);
 	
 	//escolhe o tipo: enfraquecer,  fortalecer,  destruir, curar, invocar, controlar
-	var type := RadioGump(who, 400, 380, "Escolha o tipo de encantamento.", {/*"Enfraquecer", "Fortalecer", "Curar", "Controlar", "Entender",*/"Destruir"});
-	spellinfo.+spelltype := type;
+	var type := RadioGump(who, 400, 380, "Escolha o tipo de encantamento.", {/*"Enfraquecer", "Fortalecer", */"Destruir"/*, "Curar"/*,  "Controlar", "Entender"*/});
+	spellinfo.+type := type;
 	
-	var alvo := RadioGump(who, 400, 205, "Escolha se o encantamento tera efeito sobre um unico alvo ou uma area ao redor.", {"Unico", "Area"});
+	var alvo := RadioGump(who, 400, 205, "Escolha se o encantamento tera efeito sobre um unico alvo ou uma area ao redor.", {"Unico", "Distancia", "Toque"});
 	if (alvo == "Unico")
 		var range := RadioGump(who, 400, 205, "Escolha o alcance do encantamento.", {"Distancia", "Toque"});
 		spellinfo.+range := range;
 		spellinfo.+alvo := "Unico";
 	elseif (alvo == "Area")
-		var range := RadioGump(who, 400, 205, "Escolha o alcance do encantamento.", {"Distancia", "Toque"});
-		spellinfo.+range := range;
+		var range; //:= RadioGump(who, 400, 205, "Escolha o alcance do encantamento.", {"Distancia", "Toque"});
+		spellinfo.+range := "Distancia";
 		spellinfo.+alvo := "Area";
+	elseif (alvo == "Toque")
+		var range; //:= RadioGump(who, 400, 205, "Escolha o alcance do encantamento.", {"Distancia", "Toque"});
+		spellinfo.+range := "Toque";
+		spellinfo.+alvo := "Unico";
 	endif
 	var targtype := "Animados";
 	spellinfo.+targ := alvo;
@@ -277,39 +281,46 @@ function CastSpell(mobile, spellinfo, targ)
 				return;
 			endif
 		else
-			if (Distance(mobile, targ) > 8 )
+			if (Distance(mobile, targ) > 12 )
 				SendSysMessage(mobile, "O alvo esta fora do alcance do encantamento.");
 				return;
 			endif
 		endif
-
+/*
 		if ( (spellinfo.targtype == "Animados") && (!targ.isa(POLCLASS_MOBILE)) )
 			SendSysMessage(mobile, "Este encanto so afeta seres animados.");
 			return;
 		elseif ( (spellinfo.targtype == "Inanimados") && (targ.isa(POLCLASS_MOBILE)) )
 			SendSysMessage(mobile, "Este encanto so afeta seres inanimados.");
 			return;
+		endif*/
+		//alvos.append(targ);
+
+	elseif (spellinfo.targ == "Area")
+		if (spellinfo.range == "Toque")
+			if (Distance(mobile, targ) > 1)
+				SendSysMessage(mobile, "O alvo esta muito distante e este encantamento precisa que voce o toque.");
+				return;
+			endif
 		endif
-		alvos.append(targ);
-	else
 		/*SendSysMessage(mobile, "Onde voce deseja invocar o encantamento?");
 		var targ := TargetCoordinates(mobile);
 		if (!CheckLosAt(mobile, targ.x, targ.y, targ.z))
 			SendSysMessage(mobile, "Voce nao enxerga o alvo.");
 			return;
 		endif*/
-		if (spellinfo.targtype == "Animados")
+		if (spellinfo.targ == "Area")
 			foreach mob in ListMobilesNearLocation(targ.x, targ.y, targ.z, 8, mobile.realm)
 				//if (mob.serial != mobile.serial)
 					alvos.append(mob);
 				//endif
 			endforeach
-	/*	else
+		else
 			foreach mob in ListItemsNearLocation(targ.x, targ.y, targ.z, 8, mobile.realm)
 				if (mob.serial != mobile.serial)
 					alvos.append(mob);
 				endif
-			endforeach    */    
+			endforeach        
 		endif
 	endif
     
@@ -388,6 +399,7 @@ function EncantoDestruir(mobile, alvos, spellinfo)
 			foreach att in (spellinfo.dmgtarg)
 				if (att == "Vida")
 					DamageFLS(mob, dmg, dmgtype, mobile);
+					SetObjProperty(mob, "atingido", 1);
 				elseif (att == "Alma")
 					AP_ConsumeVital(mob, MANA, dmg);
 				elseif (att == "Fadiga")
@@ -399,17 +411,65 @@ function EncantoDestruir(mobile, alvos, spellinfo)
 					PlayMovingEffectXYZEx( mobile.x, mobile.y, mobile.z+3, mobs.x, mobs.y, mobs.z, mobile.realm, GFX_LARGE_FIREBALL, 10 ,0, 0, 0, GetFacing(mobile.x, mobile.y, mobs.x, mobs.y) );
 					PlayObjectCenteredEffect(mob, GFX_EXPLODE_1, 7, 16);
 					PlaySoundEffect(mob, SFX_EXPLOSION_11);
+					TS_StartTimer(mob, "chamasperpetuas", 12);
 					sleepms(10);
 				endforeach
 			elseif ( spellinfo.dmgtype == "Gelo")
 				PlayObjectCenteredEffect(mob, GFX_BLUE_SPARKLE_GROUND, 7, 16);
 				PlaySoundEffect(mob, SFX_GLASS_BREAK_3);
+				TS_StartTimer(mob, "lentidao", 12);
 			elseif ( spellinfo.dmgtype == "Relampago")
-				PlayMovingEffectXYZ(mob.x, mob.y, mob.z+15, mob.x-1, mob.y, mob.z+15, GFX_ENERGY, 5, 25);
-				PlayMovingEffectXYZ(mob.x, mob.y, mob.z+15, mob.x+1, mob.y, mob.z+15, GFX_ENERGY, 5, 25);
-				PlayMovingEffectXYZ(mob.x, mob.y, mob.z+15, mob.x, mob.y+1, mob.z+15, GFX_ENERGY, 5, 25);
-				PlayMovingEffectXYZ(mob.x, mob.y, mob.z+15, mob.x, mob.y-1, mob.z+15, GFX_ENERGY, 5, 25);
-				PlaySoundEffect(mob, SFX_LIGHTNING);
+				foreach mobs in ListMobilesNearLocation(mob.x, mob.y, mob.z, 3, mob.realm)
+					sleepms(10);
+					if (mobs.serial == mobile.serial)
+						if (GetObjPRoperty(mobs, "atingido") != 1)
+							alvos.append(mobs);
+						endif
+					else
+						if (GetObjPRoperty(mobs, "atingido") != 1)
+							alvos.append(mobs);
+						endif
+					endif
+						sleepms(10);
+						dmg := dmg/2;
+						PlayMovingEffectXYZEx( mobile.x, mobile.y, mobile.z+3, mobs.x, mobs.y, mobs.z, mobile.realm, GFX_ENERGY, 10 ,0, 0, 0, GetFacing(mobile.x, mobile.y, mobs.x, mobs.y) );
+						DamageFLS(mobs, dmg, dmgtype, mobile);
+						PlaySoundEffect(mob, SFX_LIGHTNING);
+						sleepms(20);
+						SetObjProperty(mob, "atingido", 1);
+						if (mobs.serial == mobile.serial)
+							if (GetObjPRoperty(mobs, "atingido") != 1)
+								alvos.append(mobs);
+							endif
+						else
+							if (GetObjPRoperty(mobs, "atingido") != 1)
+								alvos.append(mobs);
+							endif
+						endif
+						sleepms(10);
+						dmg := dmg/2;
+						PlayMovingEffectXYZEx( mobile.x, mobile.y, mobile.z+3, mobs.x, mobs.y, mobs.z, mobile.realm, GFX_ENERGY, 10 ,0, 0, 0, GetFacing(mobile.x, mobile.y, mobs.x, mobs.y) );
+						DamageFLS(mobs, dmg, dmgtype, mobile);
+						PlaySoundEffect(mob, SFX_LIGHTNING);
+						sleepms(20);
+						SetObjProperty(mob, "atingido", 1);
+						if (mobs.serial == mobile.serial)
+							if (GetObjPRoperty(mobs, "atingido") != 1)
+								alvos.append(mobs);
+							endif
+						else
+							if (GetObjPRoperty(mobs, "atingido") != 1)
+								alvos.append(mobs);
+							endif
+						endif
+						sleepms(10);
+						dmg := dmg/2;
+						PlayMovingEffectXYZEx( mobile.x, mobile.y, mobile.z+3, mobs.x, mobs.y, mobs.z, mobile.realm, GFX_ENERGY, 10 ,0, 0, 0, GetFacing(mobile.x, mobile.y, mobs.x, mobs.y) );
+						DamageFLS(mobs, dmg, dmgtype, mobile);
+						PlaySoundEffect(mob, SFX_LIGHTNING);
+						sleepms(20);
+						return;
+				endforeach
 			endif
 		endforeach
 	endif
