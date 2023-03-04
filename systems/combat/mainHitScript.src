@@ -408,6 +408,10 @@ function WearDownArmor(defender, armor, rawdamage, weapon)
 			endif
 		endif
 
+		if (GetObjPRoperty(defender, "metamorfose") != error)
+			wearchance := 0;
+		endif
+
 		if ( CDbl(rawdamage) > dmg_to_wear )
 			if ( RandomDiceRoll("1d100") <= wearchance )
 				SendSysMessage(defender, armor.desc+" foi danificada.");

@@ -112,8 +112,8 @@ function spellcraft(who)
 	WriteSpellDescription(who, spellinfo);
 	
 	//escolhe o tipo: enfraquecer,  fortalecer,  destruir, curar, invocar, controlar
-	var type := RadioGump(who, 400, 380, "Escolha o tipo de encantamento.", {/*"Enfraquecer", "Fortalecer", */"Destruir"/*, "Curar"/*,  "Controlar", "Entender"*/});
-	spellinfo.+type := type;
+	var type := RadioGump(who, 400, 380, "Escolha o tipo de encantamento.", {/*"Enfraquecer", "Fortalecer", "Curar", "Controlar", "Entender",*/"Destruir"});
+	spellinfo.+spelltype := type;
 	
 	var alvo := RadioGump(who, 400, 205, "Escolha se o encantamento tera efeito sobre um unico alvo ou uma area ao redor.", {"Unico", "Area"});
 	if (alvo == "Unico")
