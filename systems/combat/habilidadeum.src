@@ -57,10 +57,12 @@ function ProccessHabum(who)
 
 			Start_Script(hab, who);
 			TS_StartCooldown(who, "habilidadeum", delay);
-	
-			if (!AP_ConsumeVital(who, STAMINA, stam))
-				SendSysMessageEx(who, "Voce esta muito cansado para usar esta habilidade.", SSM_FAIL);
-				return 1;
+
+			if(!TS_GetCooldown(who, "habilidadeum"))
+				if (!AP_ConsumeVital(who, STAMINA, stam))
+					SendSysMessageEx(who, "Voce esta muito cansado para usar esta habilidade.", SSM_FAIL);
+					return 1;
+				endif
 			endif
 			
 		else

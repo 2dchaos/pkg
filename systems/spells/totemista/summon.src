@@ -66,7 +66,7 @@ program summontotem(params)
 	endif
 
 	TS_StartTimer(undead, "summon", duracao );
-	AP_SetSkillMod(undead, WRESTLING, AP_GetTrueSkill(who, MAGICLORE)/3);
+	AP_SetTrueSkill(undead, WRESTLING, AP_GetTrueSkill(undead, WRESTLING) + AP_GetTrueSkill(who, MAGICLORE)/3);
 
 	return 1;
 
