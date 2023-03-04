@@ -10,11 +10,21 @@ include ":spells:summon";
 
 program manobra(who)
 
-	var targ := Target(who);
+	var targ := TargetCoordinates(who);
 	var undead;
 	var template;
 
-	var element ;
+	if (!targ)
+		SendSysMessageEx(who, "Cancelado.");
+		return 1;
+	endif
+
+	if (!CheckLosAt(who, targ.x, targ.y, targ.z))
+		SendSysMessageEx(who, "Voce nao enxerga o alvo.");
+		return 1;
+	endif
+
+	var element;
 	element := 	GetObjProperty(who.weapon, "#elementalweapon");
 	element := element.type;
 	var duracao := AP_GetSkill(who, MAGICLORE);

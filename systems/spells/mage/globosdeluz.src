@@ -1,4 +1,4 @@
-  use uo;
+use uo;
 use os;
 
 include ":spells:tnmagery";
@@ -15,7 +15,6 @@ program SpellScript(params)
 	SendSysMessageEx(who, "Onde deseja criar o globo de luz?", SSM_REQUEST);
 	var targ := TargetCoordinates(who);
 
-	
 	if (!targ)
 		SendSysMessageEx(who, "Cancelado.");
 		return 1;
@@ -45,5 +44,12 @@ program SpellScript(params)
 	TS_StartTimer(globo, "summon", GetSpellDuration(who)+180);
 	//printtextabove(globo, " " + lantern);
 	EquipITem(globo, lantern);
+	AP_SetTrueSkill(globo, AWARENESS, AP_GetSkill(who, MAGICLORE)/2);
+	var list := ListMobilesNearLocation(globo.x, globo.y, globo.z, 3, globo.realm);
+
+	foreach mob in list
+		mob.setlightlevel(0, AP_GetSkill(who, MAGICLORE));
+	endforeach
 	return 1;
+
 endprogram   
