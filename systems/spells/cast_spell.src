@@ -327,6 +327,12 @@ program SpellStarter(params)
 						noto := TGTOPT_HELPFUL;
 					endif
 					targ := Target(mobile, noto );
+					
+					if (Distance(mobile, targ) > 1)
+						SendSysMessage(mobile, "O alvo esta muito distante e este encantamento precisa que voce o toque.");
+						return;
+					endif
+
 					if (GetCooldown(targ, "repeal") > 0)
 						SendSysMessageEx(mobile, "O alvo esta invulnetavel a magias.", SSM_FAIL);
 						return 1;
