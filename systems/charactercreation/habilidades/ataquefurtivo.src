@@ -49,7 +49,7 @@ program backstab(who)
 	elseif (TemHabilidade(who, "Ataque Furtivo a Distancia") && weaponBow)
 		SetObjProperty(who, "backstab", 1);
 			var rawdamage := CalculateRawDamage(who, weapon);
-			rawdamage := rawdamage*4;
+			rawdamage := rawdamage*3;
 			if (rawdamage < 1)
 				rawdamage := 1;
 			endif
@@ -152,7 +152,7 @@ program backstab(who)
 			if (GetObjProperty(who, "ataquefurtivoaprimorado") == 1 )
 				SetObjProperty(who, "backstab", 1);
 				var rawdamage := CalculateRawDamage(who, weapon);
-				rawdamage := rawdamage*5;
+				rawdamage := rawdamage*4;
 				if (rawdamage < 1)
 					rawdamage := 1;
 				endif
@@ -180,7 +180,7 @@ program backstab(who)
 	
 			SetObjProperty(who, "backstab", 1);
 			var rawdamage := CalculateRawDamage(who, weapon);
-			rawdamage := rawdamage*3;
+			rawdamage := rawdamage*2;
 			if (rawdamage < 1)
 				rawdamage := 1;
 			endif
