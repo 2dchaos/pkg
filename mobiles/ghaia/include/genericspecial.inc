@@ -162,7 +162,7 @@ function Fight(opponent, alerted := 0)
     endif
 
     if (opponent.hidden)
-	break;
+	    break;
     endif
 
     dist := CoordinateDistance(me.x, me.y, opponent.x, opponent.y);
@@ -186,20 +186,24 @@ function Fight(opponent, alerted := 0)
 
   
   //se eh boss e tem eventos
-  if (!TS_GetCooldown(me, "temspecial"))
-    if ( GetBossStruct(me) != error )
-    var unique := GetBossStruct(me);
-    foreach ce in (unique.combatevent)
-      sleepms(10);
-  //		printtextabove(me, " "  + ce);
-      if (!TS_GetCooldown(me, ce.name))
-        var e := Start_Script(":ghaia:special/genericspecial" , array{me, ce});
-      endif
-      TS_StartCooldown(me,  ce.name, 30);
-    endforeach
-      TS_StartCooldown(me, "temspecial", 30);
-    endif
-  endif
+
+
+
+  // if (!TS_GetCooldown(me, "temspecial"))
+  //   if ( GetBossStruct(me) != error )
+  //   var unique := GetBossStruct(me);
+  //   foreach ce in (unique.combatevent)
+  //     sleepms(10);
+  //     printtextabove(me, " "  + ce);
+  //     if (!TS_GetCooldown(me, ce.name))
+  //       var e := Start_Script(":ghaia:special/genericspecial" , array{me, ce});
+  //     endif
+  //     TS_StartCooldown(me,  ce.name, 30);
+  //   endforeach
+  //      TS_StartCooldown(me, "temspecial", 30);
+
+  //   endif
+  // endif
 /*
   if (hasCombat(me))
     DoCombatSpecial(me); ////////////// SPECIALL
