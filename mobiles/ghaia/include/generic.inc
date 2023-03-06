@@ -203,7 +203,7 @@ function Fight(opponent, alerted := 0)
       if (!TS_GetCooldown(me, ce.name))
         var e := Start_Script(":ghaia:special/genericspecial" , array{me, ce});
       endif
-      TS_StartCooldown(me,  ce.name, 5);
+      TS_StartCooldown(me, ce.name, ce.cd);
     endforeach
 
   endif
