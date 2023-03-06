@@ -195,8 +195,7 @@ function Fight(opponent, alerted := 0)
 
   
   //se eh boss e tem eventos
-  if (!TS_GetCooldown(me, "temspecial"))
-    if ( GetBossStruct(me) != error )
+  if ( GetBossStruct(me) != error )
     var unique := GetBossStruct(me);
     foreach ce in (unique.combatevent)
       sleepms(10);
@@ -206,17 +205,14 @@ function Fight(opponent, alerted := 0)
       endif
       TS_StartCooldown(me,  ce.name, 5);
     endforeach
-      TS_StartCooldown(me, "temspecial", 5);
-    endif
+
   endif
 
-  if (!TS_GetCooldown(me, "npchab"))
     if (hasCombat(me))
       DoCombatSpecial(me); ////////////// SPECIALL
       sleepms(10);
-      TS_StartCooldown(me, "npchab", 5);
     endif
-  endif
+
 
     if ( (dist > throwinfo.range) && (throwinfo.canthrow == 1) )
       throwItem(me, opponent, dist);
