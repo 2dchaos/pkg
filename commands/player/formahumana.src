@@ -14,7 +14,7 @@ program formaHumana(params)
 	var who := params[1];
 
     if(GetObjProperty(who, "metamorfose") != error)
-        sendsysmessage(who, "Opa, voltamos!");
+        sendsysmessage(who, "Você volta a sua forma humana.");
         TS_LowerDuration(who, "metamorfosedruida", 10000);
         SendBuff(who, 0, 0);
         // var metamorfose := GetObjProperty(who, "metamorfose");
