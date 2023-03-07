@@ -44,6 +44,7 @@ const FOLLOW_CMD        := 0xA001;
 const ATTACK_CMD        := 0xA002;
 const NEW_MASTER_CMD    := 0xA003;
 const GO_LOC_CMD        := 0xA008;
+const EVID_DISARM       := 0x00000013;
 
 function EnableGuardMainEvents()
    EnableEvents(SYSEVENT_SPEECH, 10);
@@ -371,6 +372,11 @@ program NPCMonitor()
             endif
             wait_time := 0;
             break;
+         EVID_DISARM:
+            AddReport(guild, "{} Tentou ser desarmado por {}".format(me.name, ev.source.name));
+            PrintText(me, "Ei! O que pensa que esta fazendo?");
+            FightADV(ev.source);
+            disableWarn();
          SYSEVENT_ENTEREDAREA:
 
             if (CInt( AP_GetSkill(me, AWARENESS) ) > 0)
