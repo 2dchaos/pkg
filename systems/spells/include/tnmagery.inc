@@ -115,19 +115,15 @@ function spellcraft(who)
 	var type := RadioGump(who, 400, 380, "Escolha o tipo de encantamento.", {/*"Enfraquecer", "Fortalecer", "Curar",  "Controlar", "Entender"*/"Destruir"});
 	spellinfo.+type := type;
 	
-	var alvo := RadioGump(who, 400, 205, "Escolha se o encantamento tera efeito sobre um unico alvo ou uma area ao redor.", {"Unico", "Distancia", "Toque"});
+	var alvo := RadioGump(who, 400, 205, "Escolha se o encantamento tera efeito sobre um unico alvo ou uma area ao redor.", {"Unico", "Area"});
 	if (alvo == "Unico")
 		var range := RadioGump(who, 400, 205, "Escolha o alcance do encantamento.", {"Distancia", "Toque"});
 		spellinfo.+range := range;
 		spellinfo.+alvo := "Unico";
 	elseif (alvo == "Area")
-		var range; //:= RadioGump(who, 400, 205, "Escolha o alcance do encantamento.", {"Distancia", "Toque"});
-		spellinfo.+range := "Distancia";
+		var range := RadioGump(who, 400, 205, "Escolha o alcance do encantamento.", {"Distancia", "Toque"});
+		spellinfo.+range := range;
 		spellinfo.+alvo := "Area";
-	elseif (alvo == "Toque")
-		var range; //:= RadioGump(who, 400, 205, "Escolha o alcance do encantamento.", {"Distancia", "Toque"});
-		spellinfo.+range := "Toque";
-		spellinfo.+alvo := "Unico";
 	endif
 	var targtype := "Animados";
 	spellinfo.+targ := alvo;
@@ -281,46 +277,39 @@ function CastSpell(mobile, spellinfo, targ)
 				return;
 			endif
 		else
-			if (Distance(mobile, targ) > 12 )
+			if (Distance(mobile, targ) > 8 )
 				SendSysMessage(mobile, "O alvo esta fora do alcance do encantamento.");
 				return;
 			endif
 		endif
-/*
+
 		if ( (spellinfo.targtype == "Animados") && (!targ.isa(POLCLASS_MOBILE)) )
 			SendSysMessage(mobile, "Este encanto so afeta seres animados.");
 			return;
 		elseif ( (spellinfo.targtype == "Inanimados") && (targ.isa(POLCLASS_MOBILE)) )
 			SendSysMessage(mobile, "Este encanto so afeta seres inanimados.");
 			return;
-		endif*/
-		//alvos.append(targ);
-
-	elseif (spellinfo.targ == "Area")
-		if (spellinfo.range == "Toque")
-			if (Distance(mobile, targ) > 1)
-				SendSysMessage(mobile, "O alvo esta muito distante e este encantamento precisa que voce o toque.");
-				return;
-			endif
 		endif
+		alvos.append(targ);
+	else
 		/*SendSysMessage(mobile, "Onde voce deseja invocar o encantamento?");
 		var targ := TargetCoordinates(mobile);
 		if (!CheckLosAt(mobile, targ.x, targ.y, targ.z))
 			SendSysMessage(mobile, "Voce nao enxerga o alvo.");
 			return;
 		endif*/
-		if (spellinfo.targ == "Area")
+		if (spellinfo.targtype == "Animados")
 			foreach mob in ListMobilesNearLocation(targ.x, targ.y, targ.z, 8, mobile.realm)
 				//if (mob.serial != mobile.serial)
 					alvos.append(mob);
 				//endif
 			endforeach
-		else
+	/*	else
 			foreach mob in ListItemsNearLocation(targ.x, targ.y, targ.z, 8, mobile.realm)
 				if (mob.serial != mobile.serial)
 					alvos.append(mob);
 				endif
-			endforeach        
+			endforeach    */    
 		endif
 	endif
     

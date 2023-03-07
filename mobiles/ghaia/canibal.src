@@ -324,7 +324,7 @@ function Opendoors(me)
 endfunction
 
 function look_around()
-	LootSomething(me)
+	LootSomething(me);
   foreach npc in ListMobilesInLineOfSight(me, areasize)
     if( CanFight(me, npc, align) )
         Fight(npc);
