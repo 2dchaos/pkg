@@ -43,14 +43,23 @@ program summontotem(params)
 	var resistmod := getConfigInt(elem, "resistmod");
 	var template := getConfigString(elem, "template");
 	var snd := getConfigInt(elem, "snd");	
-	var namepoly:=GetConfigString(elem, "namepoly");
+	var namepoly:= GetConfigString(elem, "namepoly");
+	var habilidadeum := GetConfigString(elem, "habilidadeum");
+	var cooldownum := GetConfigString(elem, "cooldownum");
+	var custoum := GetConfigString(elem, "custoum");
+	var habilidadedois := GetConfigString(elem, "habilidadedois");
+	var cooldowndois := GetConfigString(elem, "cooldowndois");
+	var custodois := GetConfigString(elem, "custodois");
 
 	//seta os mods
 	SetObjProperty(who, "skill_a", skill_a);
 	SetObjProperty(who, "skill_d", skill_d);
 	SetObjProperty(who, "dicedmg", dicedmg);
 	SetObjProperty(who, "polymorphhitsmod", hitsmod);
-	
+
+	SetObjProperty(who, "habilidadeum", habilidadeum);
+	SetObjProperty(who, "cooldownum", cooldownum);
+	SetObjProperty(who, "custoum", custoum);
 	
 	SetObjProperty(who, "resitmod", resistmod);
 	who.resist_physical_mod := who.resist_physical_mod + resistmod;
