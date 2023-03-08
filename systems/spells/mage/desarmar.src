@@ -32,33 +32,30 @@ program SpellScript(params)
 		return;
 	endif
 
-	if ( (targ.npctemplate == ":brainai:guardafaccaoforte " )  ||  (targ.npctemplate == ":brainai:guardafaccaoforte1 " )
-		||  (targ.npctemplate == ":brainai:guardafaccaomedio " )   ||  (targ.npctemplate == ":brainai:guardafaccaomedio1 " )
-		||  (targ.npctemplate == ":brainai:guardafaccaofraco " )   ||  (targ.npctemplate == ":brainai:guardafaccaofraco1 " ))
-		var event := struct{
-         	"type" := EVID_TAUNT,
-         	"source" := who
-      		};
-		foreach item in EnumerateItemsInContainer(who)
-			if (( item.graphic == 0x6100 ) || ( item.graphic == 0x6100 ))
-				MoveObjectToLocation(item, who.x, who.y, who.z, who.realm, MOVEOBJECT_FORCELOCATION);
-				PrintTextAbove(who, "*Seu grimorio cai no chao alertando os guardas sobre o uso da magia*");
-			endif
-			foreach monster in ListMobilesNearLocationEx(targ.x, targ.y, targ.z, 20, LISTEX_FLAG_NORMAL|LISTEX_FLAG_HIDDEN|LISTEX_FLAG_NPC_ONLY)
+
+
+		foreach monster in ListMobilesNearLocationEx(targ.x, targ.y, targ.z, 20, LISTEX_FLAG_NORMAL|LISTEX_FLAG_HIDDEN|LISTEX_FLAG_NPC_ONLY)
+				var event := struct{"type":=0x00000008, "source":=who};
 				if (GetObjProperty(monster, "guild"))
+					var donoGrimorio;
 					if (CheckLineOfSight(monster, who))
-					SendEvent(monster, struct{ "type" := 0x78455, source := who});
+						SendEvent(monster, struct{ "type" := 0x00000013, source := who});
+						foreach item in ( EnumerateItemsInContainer(who.backpack) )
+							if ( item.objtype == 24832 || item.objtype == 0x6101 )
+								donoGrimorio := GetObjProperty(item, "serialDono");
+								if (donoGrimorio && (donoGrimorio == who.serial))
+									MoveObjectToLocation(item, who.x, who.y, who.z, who.realm, MOVEOBJECT_FORCELOCATION);
+									PrintTextAbove(who, "*Deixa o grimorio cair no chao ao tentar usar uma magia*");
+								endif
+							endif
+						endforeach
 					endif
-				elseif (!monster.master)
-					SendEvent(monster, event);
+				else
+					SendEvent(targ, event);
 				endif
 				sleepms(2);
-      		endforeach
-		endforeach
-	endif
-
-
-
+      	endforeach
+		
 	//if (TemHabilidade(targ, "Nexus"))
 	//	if (GetObjProperty(targ.weapon, "swordmage") ==  targ.serial)//seta com a arma
 	//		SendSysMessageEx(who, "O alvo tem uma ligacao magica com a arma.", SSM_FAIL);
