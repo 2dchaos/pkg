@@ -71,7 +71,7 @@ program book(who, book)
 		//sendsysmessage(who, " " + bookopt);
 
 		if (spells[spell])
-			copyrecipe(who, spells[spell]);
+			copyrecipe(who, spells[spell], book);
 		endif
 	else
 
@@ -90,8 +90,10 @@ endprogram
 
 Const OBJ_BLANK_SCROLL := 0xE34;
 Const OBJ_RECIPE_SLIP := 0x6116;
+Const OBJ_RECIPE_SWORDM := 0x0E35;
 
-function copyrecipe(who, recipe)
+
+function copyrecipe(who, recipe, book)
 	writeSpellInfo(who, recipe);
 	//sendsysmessage(who, " " + spellinfo + " " + recipe + "  " + cint(recipe));
 	if (ConsumeSubstance(who.backpack, OBJ_BLANK_SCROLL, 1))
@@ -104,7 +106,16 @@ function copyrecipe(who, recipe)
 				SendSysMessageEx(who, "Voce nao tem os reagentes.", SSM_FAIL);
 				return 1;
 			endif
-			var item := createiteminbackpack(who, OBJ_RECIPE_SLIP, 1);
+
+			var recipeToCreate := 0;
+
+			if ((GetObjProperty(book, "booktype") == "necro"))
+				recipeToCreate := 0x6116;
+			else
+				recipeToCreate := 0x612F;
+			endif
+			
+			var item := createiteminbackpack(who, recipeToCreate, 1);
 			if (item == error)
 				sendsysmessage(who, "  " + item);
 			endif
