@@ -61,14 +61,22 @@ endfunction
 
 function MobileTracking(who)
 	var diff := 1;
+	var skillUsed := SURVIVAL;
+
 	if (TemHabilidade(who, "Rastrear Aprimorado"))
 		diff := -30;
 	endif
+
+	if (GetObjPRoperty(who, "metamorfose") != error)
+		skillUsed := MAGICLORE;
+	endif
+
 	SendSysMessage(who, "dif: "+diff);
-	if(SkillCheck(who, SURVIVAL, -1, 0, ADV_DISABLE) > diff)
+
+	if(SkillCheck(who, skillUsed, -1, 0, ADV_DISABLE) > diff)
 		var tracker := ReadGameClock();
 		SetObjProperty(who, "TrackingCounter", tracker);
-		var range := CInt((AP_GetSkill(who, SURVIVAL)/1.5));
+		var range := CInt((AP_GetSkill(who, skillUsed)/1.5));
 		if (range< 25)
 			range:= 25;
 		endif
@@ -102,10 +110,17 @@ endfunction
 
 function ItemTracking(who)
 
-	if(SkillCheck(who, SURVIVAL, -1, 0, ADV_DISABLE) >0)
+	var skillUsed := SURVIVAL;
+
+	if (GetObjPRoperty(who, "metamorfose") != error)
+		skillUsed := MAGICLORE;
+	endif
+
+
+	if(SkillCheck(who, skillUsed, -1, 0, ADV_DISABLE) >0)
 		var tracker := ReadGameClock();
 		SetObjProperty(who, "TrackingCounter", tracker);
-		var range := CInt((AP_GetSkill(who, SURVIVAL)/3));
+		var range := CInt((AP_GetSkill(who, skillUsed)/3));
 		if (range < 25)
 			range := 25;
 		endif

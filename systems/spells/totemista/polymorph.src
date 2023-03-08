@@ -60,6 +60,10 @@ program summontotem(params)
 	SetObjProperty(who, "habilidadeum", habilidadeum);
 	SetObjProperty(who, "cooldownum", cooldownum);
 	SetObjProperty(who, "custoum", custoum);
+
+	SetObjProperty(who, "habilidadedois", habilidadedois);
+	SetObjProperty(who, "cooldowndois", cooldowndois);
+	SetObjProperty(who, "custodois", custodois);
 	
 	SetObjProperty(who, "resitmod", resistmod);
 	who.resist_physical_mod := who.resist_physical_mod + resistmod;
@@ -74,6 +78,10 @@ program summontotem(params)
 			return;
 	endif
 	var metamorfosetime := 1 + AP_GetSkill(who, MAGICLORE) *10;
+
+	if(temHabilidade(who,"Fera Natural"))
+		metamorfosetime := metamorfosetime * 2;
+	endif
 	
 	Transforma(who, template, snd, graphic,namepoly);
 	TS_StartTimer(who, "metamorfosedruida", metamorfosetime);
