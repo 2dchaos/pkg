@@ -326,11 +326,14 @@ program SpellStarter(params)
 					elseif (spellinfo.align == "HELPFUL")
 						noto := TGTOPT_HELPFUL;
 					endif
-					targ := Target(mobile, noto );
+
+					targ := Target(mobile, noto);
 					
-					if (Distance(mobile, targ) > 1)
-						SendSysMessage(mobile, "O alvo esta muito distante e este encantamento precisa que voce o toque.");
-						return;
+					if (spellinfo.range == "Toque")
+						if (Distance(mobile, targ) > 1)
+							SendSysMessage(mobile, "O alvo esta muito distante e este encantamento precisa que voce o toque.");
+							return;
+						endif
 					endif
 
 					if (GetCooldown(targ, "repeal") > 0)

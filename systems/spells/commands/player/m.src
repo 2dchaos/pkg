@@ -14,10 +14,10 @@ program magia(who, spellname)
 		return 0;
 	endif
 
-	if (TemHabilidade(who, "Sensibilidade Profana"))
-		SendSysMessageEx(who, "Voce e um malandro arcano, mas nao tao arcano, nem tao malandro, seu poder vem dos pergaminhos", SSM_FAIL);
-		return;
-	endif
+	// if (TemHabilidade(who, "Sensibilidade Profana"))
+	// 	SendSysMessageEx(who, "Voce e um malandro arcano, mas nao tao arcano, nem tao malandro, seu poder vem dos pergaminhos", SSM_FAIL);
+	// 	return;
+	// endif
 
 	SendSysMessage(who, "Iniciando magia");
 	var cfg := ReadConfigFile(":spells:allspells");
@@ -47,7 +47,7 @@ program magia(who, spellname)
 	var donoGrimorio;
 
 	foreach item in ( EnumerateItemsInContainer(who.backpack) )
-		if ( item.objtype == 24832 || item.objtype == 0x6101 )
+		if ( item.objtype == 24832 || item.objtype == 0x6101) //Grimorio, grimorio necro
 			donoGrimorio := GetObjProperty(item, "serialDono");
 			if (donoGrimorio && (donoGrimorio == who.serial))
 				var spells := GetObjProperty(item, "spells");
@@ -59,8 +59,60 @@ program magia(who, spellname)
 					endif
 				endforeach
 			endif
+		elseif( item.objtype == 24905)//totem
+			var spells := GetObjProperty(item, "spells");
+			for i := 1 to spells
+				if ( spells[i] == id)
+					spellbook := 1;
+					booktype := GetBookType(item);
+					SendSysMessage(who, "Achou a magia");
+					break;
+				endif
+			endfor
+		elseif(TemHabilidade(who, "Sensibilidade Profana"))
+			if( item.objtype == 24879 || item.objtype == 24854)
+				var spells := GetObjProperty(item, "spellinfo");
+					if ( spells.id == id)
+						spellbook := 1;
+						booktype := item;
+						break;
+					endif
+			endif
+		else//Clerigo
+			var runaId := GetObjProperty(item, "runatype");
+			if (runaId == id)
+				// spellbook := 1;
+				// booktype := GetBookType(item);
+				SendSysMessage(who,"Achou a runa");
+				var script := start_script( ":spells:priestrune_m", {who, item});
+				if ( script.errortext )
+					SendSysMessage(who, "Error - Could not start spell starter ->"+script.errortext);
+					return 0;
+				endif
+				return;
+			endif
+		// elseif 
+
+			
 		endif
 	endforeach
+
+	var totem := GetEquipmentByLayer(who, 10);//Colar
+
+	if( totem.objtype == 24905)
+		var spells := GetObjProperty(totem, "spells");
+		for i := 1 to spells
+			if ( spells[i] == id)
+				spellbook := 1;
+				booktype := GetBookType(totem);
+				SendSysMessage(who, "Achou a magia");
+				break;
+			endif
+		endfor
+	endif
+
+
+	
 
 	if ( !spellbook)
 		SendSysMessageEx(who, "Voce nao possui a magia " + spellname + " nos seu grimorio.", SSM_FAIL);
@@ -70,10 +122,10 @@ program magia(who, spellname)
 
 	var spellinfo := struct;
 	spellinfo.+id := id;
-        var script := Start_Script(":spells:cast_spell", {who, spellinfo, booktype});
-        if ( script.errortext )
-                         SendSysMessage(who, "Error - Could not start spell starter ->"+script.errortext);
-	                 return 0;
+    var script := Start_Script(":spells:cast_spell", {who, spellinfo, booktype});
+    if ( script.errortext )
+		SendSysMessage(who, "Error - Could not start spell starter ->"+script.errortext);
+		return 0;
 	endif
 
 
