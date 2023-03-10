@@ -121,12 +121,12 @@ program use_spawnpoint(who, spawnpoint)
 		range := 1;
 	endif
 
-	if((mindelay < 0) || (mindelay > 1440))
-		SendSysMessage(who, "MinDelay must be between 0 and 1440.  Setting to 1.");
+	if((mindelay < 0) || (mindelay > 14400))
+		SendSysMessage(who, "MinDelay must be between 0 and 14400.  Setting to 1.");
 		mindelay := 1;
 	  endif
-	  if((maxdelay < 0) || (maxdelay > 1440))
-		SendSysMessage(who, "MaxDelay must be between 0 and 1440.  Setting to 1.");
+	  if((maxdelay < 0) || (maxdelay > 14400))
+		SendSysMessage(who, "MaxDelay must be between 0 and 14400.  Setting to 1.");
 		maxdelay := 1;
 	  endif
 	  if(maxdelay < mindelay)
