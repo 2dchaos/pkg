@@ -399,6 +399,13 @@ function ProcessDoubleClick(ev)
 				endif
 				PrintText(ev.source, "*remove a mochila de "+me.name+"*");
 				me.graphic := GetObjProperty(me, "beforepack");
+				if(!GetObjProperty(me, "beforepack"))
+					if (me.graphic == 292)
+						me.graphic := 220;
+					elseif (me.graphic == 291)
+						me.graphic := 200;
+					endif
+				endif
 				CreateItemInBackpack(ev.source, "backpack");
 				EraseObjProperty(me, "beforepack");
 

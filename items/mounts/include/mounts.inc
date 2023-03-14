@@ -187,7 +187,10 @@ function MP_Mount(mobile, npc)
 		return 0;
 	endif
 
-
+	if (npc.graphic == 277 && chardata.vantagemracial != "Aliado da Natureza")
+		SendSysMessage(mobile, "Voce nao pode montar essa criatura.");
+		return 0;
+	endif
 
 	//check do Urso
 	if (npc.graphic == 0xD5 && chardata.povo != "Picto")
@@ -200,6 +203,8 @@ function MP_Mount(mobile, npc)
 		SendSysMessage(mobile, "Voce nao pode montar essa criatura.");
 		return 0;
 	endif
+
+	
 
 	//Lock dos tigres
 	if (npc.graphic == 0x4e6 || npc.graphic == 0x4e7)
