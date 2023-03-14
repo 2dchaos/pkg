@@ -7,6 +7,7 @@ include ":death:death";
 include ":mounts:mounts";
 include ":death:settings";
 include ":attributes:vitals";
+include ":timedScripts:timedScripts";
 
 program cureScript(params)
 	var who := params[1];
