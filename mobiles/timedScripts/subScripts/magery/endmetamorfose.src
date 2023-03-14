@@ -36,4 +36,6 @@ program cureScript(params)
 	EraseObjProperty(who, "polymorphhitsmod");
 	EraseObjProperty(who,"namechar");
 
+	UpdateHotbar(who);
+
 endprogram

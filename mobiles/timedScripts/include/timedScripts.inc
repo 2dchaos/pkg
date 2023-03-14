@@ -393,6 +393,9 @@ function TS_StartTimer(mobile, timer_name, duration, level:=0, attacker:=0, mant
 endfunction
 
 function TS_StartCooldown(mobile, timer_name, duration, attacker := 0)
+
+	UpdateHotbar(mobile);
+
 	duration := CInt(duration);
 	if ( duration < 1 )
 		return error{"errortext":="Error::TS_StartTimer() - Duration must be greater than 0."};
@@ -499,4 +502,16 @@ function TS_Death(mobile)
 
 	var process := TS_GetControllerProcess(mobile);
 	return process.SendEvent(event);
+endfunction
+
+function UpdateHotbar(mobile)
+
+	if(GetObjProperty(mobile, "useHotbar") == 1)
+		GFCloseGump(mobile, GetObjProperty(mobile, "pid_hotbar"), 0);
+		var script := Start_Script(":tn:hotbar/hotbar", array{mobile});
+		if ( script.errortext )
+			SendSysMessage(mobile, "Error - Could not start spell starter ->"+script.errortext);
+		endif
+	endif
+
 endfunction

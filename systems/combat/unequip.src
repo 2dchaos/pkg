@@ -4,6 +4,7 @@ use cfgfile;
 
 include ":attributes:attributes";
 include ":tn:equipment";
+include ":timedscripts:timedscripts";
 
 
 program unequipweapon(who, item)
@@ -57,4 +58,6 @@ program unequipweapon(who, item)
 	RemoveEquipmentMods(who, item);
 
 	set_critical(0);
+	
+	UpdateHotbar(who);
 endprogram

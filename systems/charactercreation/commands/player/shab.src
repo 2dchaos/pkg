@@ -45,7 +45,7 @@ program habilidade(who, text)
 	endif
 
 	if (!text)
-		//CreateGumpHabilidade(who);
+		CreateGumpHabilidade(who);
 		return;
 	endif
 
@@ -95,7 +95,7 @@ function ProccessHab(who, hab)
 		endif
 	endif
 
-        var script := GetConfigString(habelem, "script");
+    var script := GetConfigString(habelem, "script");
 	var duracao := GetConfigString(habelem, "duracao");
 
 	var delay := Cint(GetConfigInt(habelem, "delay"));
@@ -141,39 +141,68 @@ function CreateGumpHabilidade(who)
 
 	var gump := GFCreateGump();
 
-        GFDisposable(gump, 0);
+    GFDisposable(gump, 0);
 	GFResizePic(gump, 0, 25, 3600, 380, 650);	
 	GFResizePic(gump, 15, 40, 0x13BE, 350, 620);
 	GFTextMid(gump, 80, 50, 250, 1153, "Habilidades de Classe");
 
-	var habilidades := GetObjPRoperty(who, "habilidades");
+	var habilidades := GetObjPRoperty(who, "myhabs");
 	if (!habilidades)
 		habilidades := dictionary;
 	endif
 	
+	var habsAtivas := GetObjPRoperty(who, "habsAtivas");
+	if (!habsAtivas)
+		habsAtivas := array;
+	endif
+	
 	var habcfg := ReadConfigFile(":charactercreation:config/habilidades");
+
+	// var habElems := habilidades.keys();
+
 	
 	var x := 40;
 	var y := 80;
+	var i := 0;
+
+	foreach hab in habilidades
+			
+			var habelem := FindConfigElem(habcfg, hab);
+			var desc := getConfigString(habelem, "desc");
+			var uso := GetConfigString(habelem, "uso");
+			var nome := GetConfigString(habelem, "nome");
+			var script := GetConfigString(habelem, "script");
+
+ 			// var hit_scripts := GetObjProperty(npc, "HitScripts");
+			// 	if ( !hit_scripts )
+			// 		hit_scripts := array{};
+			// 	endif
+			// 	hit_scripts.Append(":combat:weaponHitScripts/generic");
+			// 	SetObjProperty(npc, "HitScripts", hit_scripts);
 	
-	foreach hab in (habilidades.keys())
-		var habelem := FindConfigElem(habcfg, hab);
-		var desc := GetConfigString(habelem, "desc");
-		var uso := GetConfigString(habelem, "uso");
-		var nome := GetConfigString(habelem, "nome");
-		var nivel := GetConfigInt(habelem, nivel);
-		//var gumpid :=  Hex(GetConfigInt(habelem, "gump"));
-		
-		//GFGumpPic(gump, x, y+20, gumpid) ;
-		GFTextLine(gump, x, y, 1153, nome + " [" + uso + "]" );
-		GFHTMLArea( gump, x, y+20, 300, 90, desc, 1150, 0);
-		
-		y := y + 110;
+			if (uso != "Passiva")
+				i := i + 1;
+				habsAtivas.append(nome);
+				SetObjProperty(who, "HabsAtivas", habsAtivas);
+				GFAddButton(gump, 20, y+5, 2103, 2104, 1, i);	
+				GFTextLine(gump, x, y, 1153, nome + " [" + uso + "]" );
+				GFHTMLArea( gump, x, y+20, 300, 60, desc, 1150, 1);
+				y := y + 80;
+			endif
+
 	endforeach
 	
 	var input := GFSendGump(who, gump);
 	input := input[0];
 
-
+	if (input > 0)
+		for(i := 1; i <= 20 ; i := i + 1)
+			if (input == i)
+				var myArray := GetObjProperty(who, "HabsAtivas");
+				ProccessHab(who, myArray[i]);
+			endif
+		endfor
+	endif
+	
 
 endfunction 

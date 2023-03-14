@@ -10,7 +10,7 @@ use cfgfile;
 
 include ":timedscripts:timedScripts";
 include ":fls_core:packets";
-include "include/say";
+include "include/say"; 
 include ":spells:tnmagery";
 
 program TimerControl(mobile)
@@ -421,6 +421,8 @@ endfunction
 
 function LowerDuration(mobile, byref event, byref timer_list, byref cooldowns, byref num_poisons)
 
+	UpdateHotbar(mobile);
+
 	if (event.timerType == EVENT_TYPE_COOLDOWN)
 		var timer_info := cooldowns[event.name];
 
@@ -476,6 +478,8 @@ function LowerDuration(mobile, byref event, byref timer_list, byref cooldowns, b
 			MantainSpell(timer_info);
 		endif
 	endif
+
+
 
 	return 1;
 endfunction

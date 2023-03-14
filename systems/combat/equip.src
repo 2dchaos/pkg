@@ -189,5 +189,7 @@ var descmod:={};
 	endif
 	set_critical(0);
 
+	UpdateHotbar(who);
+
 	return ret;
 endprogram
