@@ -48,7 +48,7 @@ program SpellScript(params)
 	var list := ListMobilesNearLocation(globo.x, globo.y, globo.z, 3, globo.realm);
 
 	foreach mob in list
-		mob.setlightlevel(0, AP_GetSkill(who, MAGICLORE));
+		mob.setlightlevel(0, 450);
 	endforeach
 	return 1;
 

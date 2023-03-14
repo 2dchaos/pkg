@@ -141,4 +141,6 @@ function Transforma(who, animal, snd, graphic,namepoly)
 	// print("name: " + namepoly);
 	SetName(who,who.name + " - " + namepoly); 
 
+	UpdateHotbar(who);
+
 endfunction

@@ -26,19 +26,19 @@ program manobra(who)
 		SetObjProperty(who, "evasao", 1);
       AP_ConsumeVital(who, STAMINA, 20);
       SendSysMessageEX(who, "Voce vai esquivar do proximo golpe", SSM_INFO);
-      TS_StartCooldown(who, "esquiva", 3);
+      TS_StartCooldown(who, "esquiva", 5);
       return 0;
 	elseif (penal >= -10)
       SetObjProperty(who, "evasao", 1);
       AP_ConsumeVital(who, STAMINA, 25);
       SendSysMessageEX(who, "Voce vai esquivar do proximo golpe", SSM_INFO);
-      TS_StartCooldown(who, "esquiva", 3);
+      TS_StartCooldown(who, "esquiva", 5);
       return 0;
    elseif (penal >= -15)
       SetObjProperty(who, "evasao", 1);
       AP_ConsumeVital(who, STAMINA, 30);
       SendSysMessageEX(who, "Voce vai esquivar do proximo golpe", SSM_INFO);
-      TS_StartCooldown(who, "esquiva", 3);
+      TS_StartCooldown(who, "esquiva", 5);
       return 0;
    endif
       

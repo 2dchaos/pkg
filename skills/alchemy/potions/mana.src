@@ -45,7 +45,7 @@ program drink_blue (who, potion)
 	endcase
 
   	empty_bottle(who, potion, 1);
-	TS_StartCooldown(who, "manapot", cint(healed)+1);
+	TS_StartCooldown(who, "manapot", cint(healed)*3);
 	SetObjProperty(who, "#manapotion", 1);
 	Detach();
 	var i := 0;
@@ -61,4 +61,5 @@ program drink_blue (who, potion)
 	EraseObjProperty(who, "#manapotion");
 	SendSysMessageEx(who, "Terminou o efeito da pocao.", SSM_INFO);	
 endprogram
-  
+ 
+ 
