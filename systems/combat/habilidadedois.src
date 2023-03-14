@@ -54,9 +54,9 @@ function ProccessHabdois(who)
 		//Check druida
 		if(GetObjProperty(who, "metamorfose") != error )
 			Start_Script(hab, who);
-			TS_StartCooldown(who, "habilidadedois", delay);
+			TS_StartCooldown(who, "habilidade dois", delay);
 
-			if(!TS_GetCooldown(who, "habilidadedois"))
+			if(!TS_GetCooldown(who, "habilidade dois"))
 				if (!AP_ConsumeVital(who, STAMINA, stam))
 					SendSysMessageEx(who, "Voce esta muito cansado para usar esta habilidade.", SSM_FAIL);
 					return 1;
