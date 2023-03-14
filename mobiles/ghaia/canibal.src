@@ -40,7 +40,6 @@ program KillPlayers()
 	wanders := 0;
 	EnableMainEvents();
 	Set_Event_Queue_Size(1000);
-	feral(me);
 
     	while(me)
 	
@@ -58,6 +57,7 @@ program KillPlayers()
 			wanders := 0;
 			look_around();
 			ev := sleepmode();
+			LootSomething(me);
 		else
 			ev := os::wait_for_event(10);
 		endif
@@ -324,7 +324,6 @@ function Opendoors(me)
 endfunction
 
 function look_around()
-	LootSomething(me);
   foreach npc in ListMobilesInLineOfSight(me, areasize)
     if( CanFight(me, npc, align) )
         Fight(npc);
