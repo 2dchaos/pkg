@@ -43,7 +43,7 @@ program virtueachievements(params)
 
    endif
 
-   if (!elem)
+   if (!elem || !nomehabUm || !nomehabDois)
       nomehabUmFinal := "Nada";
       nomeHabDoisFinal := "Nada";
    endif
