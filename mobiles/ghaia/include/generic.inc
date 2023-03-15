@@ -680,31 +680,6 @@ function procura_em_volta(me)
     endforeach
 endfunction
 
-function feral(me)
-
-  var mycategory := lower(getnpccategory( mytemplate ));
-  if ( (mytemplate == "canibalgigante") || (mytemplate == "canibalbeta") || (mytemplate == "canibalalfa") 
-    || (mytemplate == "canibalbetafemale") || (mytemplate == "canibalaberracao") || (mytemplate == "matriarcacanibal"))
-    //var batemtudo := ListMobilesNearLocationEx( me.x, me.y, me.z, 12, LISTEX_FLAG_NORMAL, me.realm );
-    SetObjProperty(me, "canibal", "sim");
-  endif
-    //var mob := lower(getnpccategory( ParseTemplateName(mob.npctemplate).template ));
-/*    foreach mob in batemtudo
-      if (GetObjProperty(mob, "canibal"))
-        return 0;
-      else
-        Fight(mob);
-      endif
-		endforeach
-  endif */
-endfunction
-
-	//	if ( (mob.npctemplate == "canibalgigante") || (mob.npctemplate == "canibalbeta") || (mob.npctemplate == "canibalalfa") 
-    //    || (mob.npctemplate == "canibalbetafemale") || (mob.npctemplate == "canibalaberracao") || (mob.npctemplate == "matriarcacanibal"))
-		//		return 0;
-    //  else
-    //endif
-
 function LootSomething(me)
 
 	if ( !me.backpack )
