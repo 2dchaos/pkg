@@ -85,7 +85,7 @@ program skinning(parms)
 			SendSysMessage(who, "Voce ainda nao e experiente suficiente para matar!");
 			return;
 
-		else ( !YesNo(who, "Deseja mesmo matar esse jogador? Voce perdera 10 pontos mais " + bodycount + " em todas as suas skills.") );
+		elseif(YesNo(who, "Deseja mesmo matar esse jogador? Voce perdera 10 pontos mais " + bodycount + " em todas as suas skills.") );
 			var novovalor;
 			foreach skill in (chardata.Skills.keys())
 				novovalor := AP_GetSkill(who, skill);

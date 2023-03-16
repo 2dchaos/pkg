@@ -343,12 +343,12 @@ function TakeItem(ev)
 			SendSysMessage(ev.source, "Voce precisa esvaziar a mochila antes de coloca-la na montaria.");
 			return;
 		endif
-		if ( me.npctemplate == ":brainai:Horse3" )
+		if ( me.npctemplate == ":brainai:Horse3" || me.npctemplate == "Horse3")
 			SetObjProperty(me, "beforepack", me.graphic);
 			me.graphic := 291;
 			DestroyItem(ev.item);
 			PrintText(ev.source,"*prende uma mochila no cavalo*");
-		elseif ( me.npctemplate == ":brainai:Llama" )
+		elseif ( me.npctemplate == ":brainai:Llama" || me.npctemplate == "Llama")
 			SetObjProperty(me, "beforepack", me.graphic);
 			me.graphic := 292;
 			DestroyItem(ev.item);
