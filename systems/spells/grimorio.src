@@ -247,7 +247,7 @@ function CreateBookGump(book, who)
 
 		var rune_entry := rune_list[rune_pos];
 		WritespellInfo(who,  rune_entry);
-		rune_entry.description := "<BASEFONT COLOR=#000066>" +  cstr(rune_entry.description) + "<br>" + cstr(rune_entry.flavortext)  + "<br> <BASEFONT COLOR=#330000> Componentes Materiais: <br> ";
+		rune_entry.description := "<BASEFONT COLOR=#000066>" +  cstr(rune_entry.description) + "<br>" + cstr(rune_entry.flavortext)  + "<br> <BASEFONT COLOR=#330000> Circulo: " + cstr(rune_entry.difficulty/10) + " <br> ";
 		var regkeys := rune_entry.reagents.keys();
 		foreach r in (regkeys)
 			rune_entry.description := rune_entry.description + cstr( r ) + " " +  cstr(rune_entry.reagents[cstr(r)]) + "<br>" ;
@@ -281,7 +281,7 @@ function CreateBookGump(book, who)
 
 		rune_entry := rune_list[rune_pos];
 		WritespellInfo(who,  rune_entry);
-		 rune_entry.description := "<BASEFONT COLOR=#000066>" +  cstr(rune_entry.description) + "<br>" + cstr(rune_entry.flavortext)  + "<br> <BASEFONT COLOR=#330000> Componentes Materiais: <br> ";
+		 rune_entry.description := "<BASEFONT COLOR=#000066>" +  cstr(rune_entry.description) + "<br>" + cstr(rune_entry.flavortext)  + "<br> <BASEFONT COLOR=#330000> Circulo: " + cstr(rune_entry.difficulty/10) + " <br> ";
 		 regkeys := rune_entry.reagents.keys();
 		foreach r in (regkeys)
 		       rune_entry.description := rune_entry.description + cstr( r ) + " " +  cstr(rune_entry.reagents[cstr(r)]) + "<br>" ;
