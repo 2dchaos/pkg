@@ -19,7 +19,7 @@ program usaPergaminho(who, scroll)
 	//sendsysmessage(who, " " + spellinfo.description + "<br>" + spellinfo.flavortext);	
 
 	 GFTextLine(gump, 50, 10, 0, spellinfo.name);
-	GFHTMLArea( gump, 30, 40, 180, 120, cstr(spellinfo.description + "<br>" + spellinfo.flavortext) , 0, 1);
+	GFHTMLArea( gump, 30, 40, 180, 120, cstr(spellinfo.description + "<br>" + spellinfo.flavortext + "<br> Circulo: " + spellinfo.difficulty/10) , 0, 1);
 
 	GFTextLine(gump, 55, 170, 0, "Invocar pergaminho");
 	GFAddButton(gump, 40, 174, 2103, 2104, 1, 99);
