@@ -364,13 +364,20 @@ function CalculateRawDamage(attacker, weapon)
 endfunction
 
 function CheckForAmmo(who, bow, qty := 1)
-	var aljavas := array{0x791c, 0x2fb7};
-	var aljava;
-	if (aljava.objtype in aljavas)
-		aljava := GetEquipmentByLayer(who, 0x14);
-	else
-		aljava := GetEquipmentByLayer(who, 0xc);
+	// var aljavas := array{0x791c, 0x2fb7};
+	// var aljava;
+	// if (aljava.objtype in aljavas)
+	// 	aljava := GetEquipmentByLayer(who, 0x14);
+	// else
+	// 	aljava := GetEquipmentByLayer(who, 0xc);
+	// endif
+
+	var aljava := GetEquipmentByLayer(who, 20);
+	
+	if(aljava.objtype != 0x791c || aljava.objtype != 0x2fb7)
+		aljava := GetEquipmentByLayer(who, 12);
 	endif
+
 	var ammo := GetObjProperty(bow, "ammo");
 	if (!ammo)
 		SendSysMessageEx(who, "Você não definiu o tipo de flecha que vai usar. [clique 2x no arco fora do modo agressivo e na flecha ]");
