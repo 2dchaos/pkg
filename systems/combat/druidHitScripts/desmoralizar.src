@@ -5,22 +5,25 @@ include ":timedScripts:timedScripts";
 include "include/sysEvent";
 include "include/client";
 include "include/say"; 
+include ":charactercreation:resists";
+
 //
 
 program taunt(who)
 
-    if (TS_GetCooldown(who, "habilidade um"))
+    if (TS_GetCooldown(who, "habilidade dois"))
 		return SendSysMessageEX(who, "Habilidade em Cooldown!", SSM_FAIL);
 	endif
 
 	PrintText(who, "*urra*");
 	PlaySoundEffect( who, 96 );
 	PerformAction(who, ANIM_ATTACK_1HAND_WIDE);
-        var nearby := ListMobilesNearLocation( who.x ,who.y, who.z, 8);
-        foreach char in nearby
-			var event := struct{"type":=EVID_TAUNT, "source":=who};
-			SendEvent(char, event);
-        endforeach
-
+	
+	var targ := Target(who);
+	if (!CheckResist(targ, VONTADE, cint(AP_GetSkill(who, MAGICLORE))))
+		var event := struct{"type":=EVID_FLEE, "source":=who};
+		SendEvent(targ, event);
+		PrintTextAbove(targ, "*Em panico*");
+	endif
 endprogram
 
