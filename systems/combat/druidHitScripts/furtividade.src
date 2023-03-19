@@ -16,7 +16,7 @@ include ":timedScripts:timedScripts";
 
 program SpellScript(who)
 
-    if (TS_GetCooldown(who, "habilidadeum") && who.hidden == 0)
+    if (TS_GetCooldown(who, "habilidade um") && who.hidden == 0)
 		return SendSysMessageEX(who, "Habilidade em Cooldown!", SSM_FAIL);
 	endif
 

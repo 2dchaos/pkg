@@ -54,9 +54,9 @@ function ProccessHabum(who)
 	if (!elem)
 		//Check druida
 		if(GetObjProperty(who, "metamorfose") != error )
-
-			Start_Script(hab, who);
 			TS_StartCooldown(who, "habilidade um", delay);
+			Start_Script(hab, who);
+			
 
 			if(!TS_GetCooldown(who, "habilidade um"))
 				if (!AP_ConsumeVital(who, STAMINA, stam))

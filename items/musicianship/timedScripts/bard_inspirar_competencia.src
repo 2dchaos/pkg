@@ -23,7 +23,7 @@ program TimedScript_bard_inspirar_competencia(params)
 			AP_ModifySkillMod(alvo, SURVIVAL, modificador);
 			AP_ModifySkillMod(alvo, METALWORKING, modificador);
 			AP_ModifySkillMod(alvo, WOODWORKING, modificador);
-			AP_ModifySkillMod(alvo, WOMENSWORK, modificador); //UNICA CONSTANTE DECLARADA MINUSCULA
+			AP_ModifySkillMod(alvo, DOMESTICWORK, modificador); //UNICA CONSTANTE DECLARADA MINUSCULA
 			AP_ModifySkillMod(alvo, GATHERING, modificador);
 			AP_ModifySkillMod(alvo, HANDLEANIMAL, modificador);
 			Set_Critical(0);
@@ -45,7 +45,7 @@ program TimedScript_bard_inspirar_competencia(params)
 		AP_ModifySkillMod(alvo, SURVIVAL, modificador);
 		AP_ModifySkillMod(alvo, METALWORKING, modificador);
 		AP_ModifySkillMod(alvo, WOODWORKING, modificador);
-		AP_ModifySkillMod(alvo, WOMENSWORK, modificador); //UNICA CONSTANTE DECLARADA MINUSCULA
+		AP_ModifySkillMod(alvo, DOMESTICWORK, modificador); //UNICA CONSTANTE DECLARADA MINUSCULA
 		AP_ModifySkillMod(alvo, GATHERING, modificador);
 		AP_ModifySkillMod(alvo, HANDLEANIMAL, modificador);
 		Set_Critical(0);

@@ -53,8 +53,9 @@ function ProccessHabdois(who)
 	if (!elem)
 		//Check druida
 		if(GetObjProperty(who, "metamorfose") != error )
-			Start_Script(hab, who);
+			
 			TS_StartCooldown(who, "habilidade dois", delay);
+			Start_Script(hab, who);
 
 			if(!TS_GetCooldown(who, "habilidade dois"))
 				if (!AP_ConsumeVital(who, STAMINA, stam))

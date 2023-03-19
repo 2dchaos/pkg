@@ -568,7 +568,7 @@ function AddItemToSell(npc, player, item)
       elseif (item.objtype == 0xf3f || item.objtype == 0x1bfb)
          itemcategory := "Armas";
       elseif (itemcategory["Armadura"])
-         var womens := ReadConfigFile(":womenswork:itemdesc");
+         var womens := ReadConfigFile(":domesticwork:itemdesc");
          if (womens[item.objtype])
             itemcategory := "Roupas";
          endif

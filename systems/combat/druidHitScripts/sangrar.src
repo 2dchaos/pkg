@@ -12,7 +12,7 @@ program taunt(who)
 	var targ := Target(who);
 
 	if(CoordinateDistance(who.x, who.y, targ.x, targ.y) <= 1 && targ && targ != who)
-		if (TS_GetCooldown(who, "habilidadedois"))
+		if (TS_GetCooldown(who, "habilidade dois"))
 			return SendSysMessageEX(who, "Habilidade em Cooldown!", SSM_FAIL);
 		endif
 

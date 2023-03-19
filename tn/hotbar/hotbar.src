@@ -257,7 +257,7 @@ function BuildHotBar(who, byref hotbar, nomehabUmFinal, nomeHabDoisFinal)
             GFGumpPic(gump, 19 + pos_plus, pos_y+81, shortcut.Icon, 1000);
             GFGumpPic(gump, 22 + pos_plus, pos_y+85, 0x20, 1000);
 	         // GFTextLine(gump, 19 + pos_plus+12, pos_y+81+14, 40, "BLOCK");
-         if(TS_GetCooldown(who, "habilidade um"))
+         if(TS_GetCooldown(who, "habilidade um") != error)
             GFGumpPic(gump, 19 + pos_plus, pos_y+81, shortcut.Icon, 1000);
 	         GFTextLine(gump, 19 + pos_plus+12, pos_y+81+14, 40, "CD");
          else
@@ -269,7 +269,7 @@ function BuildHotBar(who, byref hotbar, nomehabUmFinal, nomeHabDoisFinal)
             GFGumpPic(gump, 19 + pos_plus, pos_y+81, shortcut.Icon, 1000);
             GFGumpPic(gump, 22 + pos_plus, pos_y+85, 0x20, 1000);
 	         // GFTextLine(gump, 19 + pos_plus+12, pos_y+81+14, 40, "BLOCK");
-         if(TS_GetCooldown(who, "habilidade dois"))
+         if(TS_GetCooldown(who, "habilidade dois") != error)
             GFGumpPic(gump, 19 + pos_plus, pos_y+81, shortcut.Icon, 1000);
 	         GFTextLine(gump, 19 + pos_plus+12, pos_y+81+14, 40, "CD");
          else

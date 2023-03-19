@@ -9,7 +9,7 @@ include "include/say";
 
 program taunt(who)
 
-    if (TS_GetCooldown(who, "habilidadeum"))
+    if (TS_GetCooldown(who, "habilidade um"))
 		return SendSysMessageEX(who, "Habilidade em Cooldown!", SSM_FAIL);
 	endif
 
